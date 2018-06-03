@@ -48,7 +48,9 @@ make install
 新建一个python3的软链接，不要删掉python2的，不然以前版本的会运行不了。
 ```
 ln -s /usr/local/python3/bin/python3 /usr/bin/python3
+```
 并将/usr/local/python3/bin加入PATH
+```
 PATH=$PATH:/usr/local/python3/bin/python3    # 设置环境变量
 export PATH
 ```
