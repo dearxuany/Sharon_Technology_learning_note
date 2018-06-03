@@ -7,7 +7,7 @@
 
 ## Python
 ### Python3 安装
-* Linux系统 python3 安装
+* [Linux系统 python3 安装](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/Linux%E4%B8%8A%E5%AE%89%E8%A3%85Python%203.MD)
 ### Python3 基础学习
 * Python基础语法
 * Python解释器
