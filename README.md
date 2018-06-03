@@ -6,6 +6,9 @@
 ## VMware
 
 ## Python
+### Python3 安装
+* Linux系统 python3 安装
+### Python3 基础学习
 * Python基础语法
 * Python解释器
 * Python列表和元组
