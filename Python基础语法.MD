@@ -9,7 +9,7 @@
 ## 标识符
 * 第一个字符必须是字母表中字母或下划线 _ 。
 * 标识符的其他的部分由字母、数字和下划线组成。
-* 标识符对大小写敏感。
+* 标识符对大小写敏感。<br>
 在 Python 3 中，非 ASCII 标识符也是允许的了。
 
 ## 保留字
@@ -43,30 +43,30 @@ description 7
 ```
 
 ## 行与缩进
-使用缩进来表示代码块，不需要使用大括号 {} 。
-缩进的空格数是可变的，但是同一个代码块的语句必须包含相同的缩进空格数。
-···
+使用缩进来表示代码块，不需要使用大括号 {} 。<br>
+缩进的空格数是可变的，但是同一个代码块的语句必须包含相同的缩进空格数。<br>
+```
 if True:
     print ("True")else:
     print ("False")
-···
+```
 以下代码最后一行语句缩进数的空格数不一致，会导致运行错误：
-···
+```
 if True:
     print ("Answer")
     print ("True")else:
     print ("Answer")
   print ("False")    # 缩进不一致，会导致运行错误
-···
+```
 以上程序由于缩进不一致，执行后会出现类似以下错误：
-···
+```
  File "test.py", line 6
     print ("False")    # 缩进不一致，会导致运行错误
                                       ^IndentationError: unindent does not match any outer indentation level
-···
+```
 ## 多行语句
-反斜杠(\)来实现多行语句；
-在 [], {}, 或 () 中的多行语句，不需要使用反斜杠(\)。
+反斜杠(\\)来实现多行语句；<br>
+在 [], {}, 或 () 中的多行语句，不需要使用反斜杠(\\)。
 
 ## 数字(Number)类型
 python中数字有四种类型：整数、布尔型、浮点数和复数。
@@ -79,8 +79,8 @@ Python将虚数视为实数为0的复数。
 ## 字符串(String)
 * python中单引号和双引号使用完全相同。
 * 使用三引号('''或""")可以指定一个多行字符串。
-* 转义符 '\'
-* 反斜杠可以用来转义，使用r可以让反斜杠不发生转义。。 如 r"this is a line with \n" 则\n会显示，并不是换行。
+* 转义符 '\\'
+* 反斜杠可以用来转义，使用r可以让反斜杠不发生转义, 如 r"this is a line with \n" 则\n会显示，并不是换行。
 * 按字面意义级联字符串，如"this " "is " "string"会被自动转换为this is string。
 * 字符串可以用 + 运算符连接在一起，用 * 运算符重复。
 * Python 中的字符串有两种索引方式，从左往右以 0 开始，从右往左以 -1 开始。
@@ -88,7 +88,7 @@ Python将虚数视为实数为0的复数。
 * Python 没有单独的字符类型，一个字符就是长度为 1 的字符串。
 * 字符串的截取的语法格式如下：变量[头下标:尾下标]
 
-···
+```
 >>> word="string"
 >>> sentence="This is a sentence."
 >>> paragraph="""This is a paragraph,
@@ -105,7 +105,7 @@ with serve lines.
 >>> str='abcdefg123'
 >>> print(str)			# 输出字符串
 abcdefg123
->>> print(str[0:-1])		# 输出第一个到倒数第二个字符
+>>> print(str[0:-1])	# 输出第一个到倒数第二个字符
 abcdefg12
 >>> print(str[0])		# 输出第一个字符
 a
@@ -135,32 +135,38 @@ let's go!
 >>> print('let\'s go!')
 let's go!
 >>> 
-···
+```
 
 
-空行
-函数之间或类的方法之间用空行分隔，表示一段新的代码的开始。类和函数入口之间也用一行空行分隔，以突出函数入口的开始。
-空行与代码缩进不同，空行并不是Python语法的一部分。书写时不插入空行，Python解释器运行也不会出错。但是空行的作用在于分隔两段不同功能或含义的代码，便于日后代码的维护或重构。
+## 空行
+函数之间或类的方法之间用空行分隔，表示一段新的代码的开始。类和函数入口之间也用一行空行分隔，以突出函数入口的开始。<br>
+空行与代码缩进不同，空行并不是Python语法的一部分。书写时不插入空行，Python解释器运行也不会出错。但是空行的作用在于分隔两段不同功能或含义的代码，便于日后代码的维护或重构。<br>
 记住：空行也是程序代码的一部分。
 
-获得用户输入
+## 获得用户输入
 单纯输入
+```
 input(“letter show on the screen:”)
+```
 变量赋值
+```
 x=input(“place input the value of x:”)
 y=input(“place input the value of y:”)
 print(x*y)
+```
+
    
 
-同一行显示多条语句
-语句之间使用分号(;)分割
+## 同一行显示多条语句
+语句之间使用分号(\;)分割
 
-多个语句构成代码组
-代码组：缩进相同的一组语句构成一个代码块。
+## 多个语句构成代码组
+* 代码组：缩进相同的一组语句构成一个代码块。<br>
 像if、while、def和class这样的复合语句，首行以关键字开始，以冒号( : )结束，该行之后的一行或多行代码构成代码组。
-子句(clause)：首行及后面的代码组。
+* 子句(clause)：首行及后面的代码组。
 
-print输出
+## print输出
+```
 >>> x=2
 >>> y=3
 >>> print(x*y)
@@ -170,19 +176,20 @@ x*y
 >>> 
 >>> print(x*y,"x*y")
 (6, 'x*y')
+```
 
-import与from...import
+## import与from...import
 在 python 用 import 或者 from...import 来导入相应的模块。
-将整个模块(somemodule)导入（除非特殊要求，一般建议用这种形式）
+* 将整个模块(somemodule)导入（除非特殊要求，一般建议用这种形式）
 import somemodule
-从某个模块中导入某个函数
+* 从某个模块中导入某个函数
 from somemodule import somefunction
-从某个模块中导入多个函数 
+* 从某个模块中导入多个函数 
 from somemodule import firstfunc, secondfunc, thirdfunc
-将某个模块中的全部函数导入
+* 将某个模块中的全部函数导入
 from somemodule import *
-
->>> import math			# 整个模块导入
+```
+>>> import math			    # 整个模块导入
 >>> math.floor(32.9)		# 调用模块中floor函数，将数字转换为小于或等于自己的整数
 32.0
 >>> math.ceil(32.9)			# 调用模块中ceil函数，将数字转换为小于或等于自己的整数
@@ -191,9 +198,11 @@ from somemodule import *
 >>> sqrt(9)
 3.0
 >>> 
+```
 
-命令行参数
-使用-h参数查看各参数帮助信息
+## 命令行参数
+### 使用-h参数查看各参数帮助信息
+```
 $ python -h
 usage: python [option] ... [-c cmd | -m mod | file | -] [arg] ...
 Options and arguments (and corresponding environment variables):
@@ -239,19 +248,28 @@ PYTHONHASHSEED: if this variable is set to 'random', the effect is the same
    as specifying the -R option: a random value is used to seed the hashes of
    str, bytes and datetime objects.  It can also be set to an integer
    in the range [0,4294967295] to get hash values with a predictable seed.
-Linux下启动python
+```
+
+### Linux下启动python
+```
 $ python
 Python 2.7.5 (default, Apr 11 2018, 08:07:30) 
 [GCC 4.8.5 20150623 (Red Hat 4.8.5-28)] on linux2
 Type "help", "copyright", "credits" or "license" for more information.
 >>> 
-Linux下打开python程序
+```
+
+### Linux下打开python程序
+```
 $ python python_program_name.py 
-Linux调用/usr/bin下的python解释器
+```
+
+### Linux调用/usr/bin下的python解释器
+```
 #!/usr/bin/python3  # 定义使用的语法，windows下可以不写
-
-
-help() 查询内置函数说明文档
+```
+## help() 查询内置函数说明文档
+```
 >>> help
 Type help() for interactive help, or help(object) for help about object.
 >>> help(round)
@@ -263,11 +281,12 @@ round(...)
     
     Round a number to a given precision in decimal digits (default 0 digits).
     This always returns a floating point number.  Precision may be negative.
+```
 
-函数
-内置函数
+## 函数
+### 内置函数
 编程语言中预先定义的函数
-round圆整
+* round圆整
 返回浮点数x的四舍五入值（区别向下圆整）
 round( x [, n] )
 x 待圆整数值
