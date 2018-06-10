@@ -8,7 +8,7 @@
 ## Python
 ### Python3 安装
 * [Linux系统 python3 安装](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/Linux%E4%B8%8A%E5%AE%89%E8%A3%85Python%203.MD)
-### Python3 基础学习
+### Python3 基础
 * [Python基础语法](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/Python%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95.MD)
 * [Python解释器](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/%E5%85%B3%E4%BA%8Epython%E8%A7%A3%E9%87%8A%E5%99%A8.MD)
 * [Python序列：序列类型、通用基本操作](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/Python%E5%BA%8F%E5%88%97%EF%BC%9A%E5%BA%8F%E5%88%97%E7%B1%BB%E5%9E%8B%E3%80%81%E9%80%9A%E7%94%A8%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C.MD)
