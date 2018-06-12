@@ -122,12 +122,30 @@ NameError: name 'var1' is not defined
 
 ## 字符串方法
 详见 Python的说明文档 https://docs.python.org/3.7/library/string.html
-* str.center(width[, fillchar])  
+* str.center(width[, fillchar])</br>
 在两边添加填充字符，默认为空格，使字符串居中。
-* str.find(str, beg=0, end=len(string)) 
+* str.find(str, beg=0, end=len(string))</br>
 检测字符串中是否包含子字符串，如果有则返回查找值对应第一个出现的元素的索引，反则返回-1。
-
-
+* str.join(seq)</br>
+将指定字符串插入到另外一个序列中，与split作用相反。
+* str.lower()</br>
+将字符串转换为小写。
+* str.upper()</br>
+将字符串转换为大写。
+* str.title()</br>
+将字符串转换为词首大写。
+* str.replace(obj1,obj2)</br>
+用字符串obj2替换字符串obj1。
+* str.split(str="", num=string.count(str))</br>
+通过指定分隔符对字符串进行拆分，如果参数num 有指定值，则仅分隔 num 个子字符串。作用上，与join相反。
+* str.strip([chars])</br>
+删除字符串前后的某些字符，默认为空格，返回删除后结果。
+* str.maketrans(intab, outtab，[char])</br>
+创建字符串的转换表，指出不同Unicode码点之间的转换关系。操作对象是单个字符，translate会用到。
+* str.translate(table)</br>
+根据转换表，对字符串中的字符进行转换或删除，可同时转换多个字符。
+* 判断字符串是否满足特定性质</br>
+以is打头的方法：判断字符串是否满足特定性质，满足返回True，否则返回False。
 
 ### center 居中
 str.center(width[, fillchar]) ：在两边添加填充字符，默认为空格，使字符串居中。</br>
