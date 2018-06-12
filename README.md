@@ -14,6 +14,7 @@
 * [Python序列：序列类型、通用基本操作](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/Python%E5%BA%8F%E5%88%97%EF%BC%9A%E5%BA%8F%E5%88%97%E7%B1%BB%E5%9E%8B%E3%80%81%E9%80%9A%E7%94%A8%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C.MD)
 * [Python序列：列表](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/Python%E5%BA%8F%E5%88%97%EF%BC%9A%E5%88%97%E8%A1%A8.MD)
 * [Python序列：元组](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/Python%E5%BA%8F%E5%88%97%EF%BC%9A%E5%85%83%E7%BB%84.MD)
+* [Python序列：字符串](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/Python%E5%BA%8F%E5%88%97%EF%BC%9A%E5%AD%97%E7%AC%A6%E4%B8%B2.MD)
 ## Software testing
 
 ## Networking
