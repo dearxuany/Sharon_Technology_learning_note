@@ -3,6 +3,9 @@
 
 ## Linux
 
+### Linux 相关积累总结
+[Linux 常用命令总结与积累](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/Linux%20command%20%26%20SHELL%20collection)
+
 ## VMware
 
 ## Python
