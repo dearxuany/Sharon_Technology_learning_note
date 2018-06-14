@@ -1,0 +1,1540 @@
+# Linux 常用命令总结与积累
+基本上都是曾经用过的命令，为方便以后查找就整理成文档。
+没有调整格式，有些命令可能有了更新改版，持续更新。
+
+
+
+快捷键
+[tab][tab] 补全命令
+开头字母[tab] bash shell下有自动补全目录名功能 
+[Ctrl]-c 强制终止某一命令运行
+[Ctrl]-d 直接離開文字介面，相当于exit
+[shift]+{[PageUP]|[Page Down] 翻页
+[alt]+[ctrl]+[backspace] X wins下登出（强制关闭X wins，卡住时用）
+
+tty快捷键
+組合按鍵	執行結果
+Ctrl + C	終止目前的命令
+Ctrl + D	輸入結束 (EOF)，例如郵件結束的時候；
+Ctrl + M	就是 Enter 啦！
+Ctrl + S	暫停螢幕的輸出
+Ctrl + Q	恢復螢幕的輸出
+Ctrl + U	在提示字元下，將整列命令刪除
+Ctrl + Z	『暫停』目前的命令
+
+关机
+1.检查系统当前状态
+登陆状态 who
+网络状态 netast -a
+后台运行程序 ps -aux
+2.将数据写入硬盘并执行多次  sync
+3.通知登陆用户关机时间
+shutdown (man shutdown 查格式)
+halt
+poweroff
+reboot
+
+
+root权限登陆
+su
+用此命令从一般账户到root后，是以root身份进入一般用户的主文件夹，即可以看到用户的/home里的文件
+exit 回到一般账户
+
+uname -r 查看linux内核版本
+lsb_release -a 查看lsb和distribution版本
+
+查询登录记录
+last
+
+寻求帮助
+
+info info
+
+date --help
+date  +"%Y%m%d" -d  "+n days"         今天的后n天日期  
+date  +"%Y%m%d" -d  "-n days"          今天的前n天日期
+[root@root ~]# date "+%Y-%m-%d"  
+2013-02-19  
+[root@root ~]# date "+%H:%M:%S"  
+13:13:59  
+[root@root ~]# date "+%Y-%m-%d %H:%M:%S"  
+2013-02-19 13:14:19  
+[root@root ~]# date "+%Y_%m_%d %H:%M:%S"    
+2013_02_19 13:14:58  
+[root@root ~]# date -d today   
+Tue Feb 19 13:10:38 CST 2013  
+[root@root ~]# date -d now  
+Tue Feb 19 13:10:43 CST 2013  
+[root@root ~]# date -d tomorrow  
+Wed Feb 20 13:11:06 CST 2013  
+[root@root ~]# date -d yesterday  
+Mon Feb 18 13:11:58 CST 2013  
+date [选项]... [+格式]
+　或：date [-u|--utc|--universal] [MMDDhhmm[[CC]YY][.ss]]
+以给定的格式显示当前时间，或是设置系统日期。
+
+  -d,--date=字符串              显示指定字符串所描述的时间，而非当前时间
+  -f,--file=日期文件            类似--date，从日期文件中按行读入时间描述
+  -r, --reference=文件          显示文件指定文件的最后修改时间
+  -R, --rfc-2822                以RFC 2822格式输出日期和时间
+                                例如：2006年8月7日，星期一 12:34:56 -0600
+      --rfc-3339=TIMESPEC       以RFC 3339 格式输出日期和时间。
+                                TIMESPEC=`date'，`seconds'，或 `ns' 
+                                表示日期和时间的显示精度。
+                                日期和时间单元由单个的空格分开：
+                                2006-08-07 12:34:56-06:00
+  -s, --set=字符串              设置指定字符串来分开时间
+  -u, --utc, --universal        输出或者设置协调的通用时间
+      --help            显示此帮助信息并退出
+      --version         显示版本信息并退出
+
+给定的格式FORMAT 控制着输出，解释序列如下：
+
+  %%    一个文字的 %
+  %a    当前locale 的星期名缩写(例如： 日，代表星期日)
+  %A    当前locale 的星期名全称 (如：星期日)
+  %b    当前locale 的月名缩写 (如：一，代表一月)
+  %B    当前locale 的月名全称 (如：一月)
+  %c    当前locale 的日期和时间 (如：2005年3月3日 星期四 23:05:25)
+  %C    世纪；比如 %Y，通常为省略当前年份的后两位数字(例如：20)
+  %d    按月计的日期(例如：01)
+  %D    按月计的日期；等于%m/%d/%y
+  %e    按月计的日期，添加空格，等于%_d
+  %F    完整日期格式，等价于 %Y-%m-%d
+  %g    ISO-8601 格式年份的最后两位 (参见%G)
+  %G    ISO-8601 格式年份 (参见%V)，一般只和 %V 结合使用
+  %h    等于%b
+  %H    小时(00-23)
+  %I    小时(00-12)
+  %c    按年计的日期(001-366)
+  %k    时(0-23)
+  %l    时(1-12)
+  %m    月份(01-12)
+  %M    分(00-59)
+  %n    换行
+  %N    纳秒(000000000-999999999)
+  %p    当前locale 下的"上午"或者"下午"，未知时输出为空
+  %P    与%p 类似，但是输出小写字母
+  %r    当前locale 下的 12 小时时钟时间 (如：11:11:04 下午)
+  %R    24 小时时间的时和分，等价于 %H:%M
+  %s    自UTC 时间 1970-01-01 00:00:00 以来所经过的秒数
+  %S    秒(00-60)
+  %t    输出制表符 Tab
+  %T    时间，等于%H:%M:%S
+  %u    星期，1 代表星期一
+  %U    一年中的第几周，以周日为每星期第一天(00-53)
+  %V    ISO-8601 格式规范下的一年中第几周，以周一为每星期第一天(01-53)
+  %w    一星期中的第几日(0-6)，0 代表周一
+  %W    一年中的第几周，以周一为每星期第一天(00-53)
+  %x    当前locale 下的日期描述 (如：12/31/99)
+  %X    当前locale 下的时间描述 (如：23:13:48)
+  %y    年份最后两位数位 (00-99)
+  %Y    年份
+  %z +hhmm              数字时区(例如，-0400)
+  %:z +hh:mm            数字时区(例如，-04:00)
+  %::z +hh:mm:ss        数字时区(例如，-04:00:00)
+  %:::z                 数字时区带有必要的精度 (例如，-04，+05:30)
+  %Z                    按字母表排序的时区缩写 (例如，EDT)
+
+默认情况下，日期的数字区域以0 填充。
+以下可选标记可以跟在"%"后:
+
+  - (连字符)不填充该域
+  _ (下划线)以空格填充
+  0 (数字0)以0 填充
+  ^ 如果可能，使用大写字母
+  # 如果可能，使用相反的大小写
+
+在任何标记之后还允许一个可选的域宽度指定，它是一个十进制数字。
+作为一个可选的修饰声明，它可以是E，在可能的情况下使用本地环境关联的
+表示方式；或者是O，在可能的情况下使用本地环境关联的数字符号。
+
+man date 查询命令用法
+quit 退出
+按下『空白鍵』往下翻頁
+
+代號	代表內容
+1	使用者在shell環境中可以操作的指令或可執行檔
+2	系統核心可呼叫的函數與工具等
+3	一些常用的函數(function)與函式庫(library)，大部分為C的函式庫(libc)
+4	裝置檔案的說明，通常在/dev下的檔案
+5	設定檔或者是某些檔案的格式
+6	遊戲(games)
+7	慣例與協定等，例如Linux檔案系統、網路協定、ASCII code等等的說明
+8	系統管理員可用的管理指令
+9	跟kernel有關的文件
+
+代號	內容說明
+NAME	簡短的指令、資料名稱說明
+SYNOPSIS	簡短的指令下達語法(syntax)簡介
+DESCRIPTION	較為完整的說明，這部分最好仔細看看！
+OPTIONS	針對 SYNOPSIS 部分中，有列舉的所有可用的選項說明
+COMMANDS	當這個程式(軟體)在執行的時候，可以在此程式(軟體)中下達的指令
+FILES	這個程式或資料所使用或參考或連結到的某些檔案
+SEE ALSO	可以參考的，跟這個指令或資料有相關的其他說明！
+EXAMPLE	一些可以參考的範例
+
+仅在man page模式下使用
+按鍵	進行工作
+空白鍵	向下翻一頁
+[Page Down]	向下翻一頁
+[Page Up]	向上翻一頁
+[Home]	去到第一頁
+[End]	去到最後一頁
+/string	向『下』搜尋 string 這個字串，如果要搜尋 vbird 的話，就輸入 /vbird
+?string	向『上』搜尋 string 這個字串
+n, N	利用 / 或 ? 來搜尋字串時，可以用 n 來繼續下一個搜尋 (不論是 / 或 ?) ，可以利用 N 來進行『反向』搜尋。舉例來說，我以 /vbird 搜尋 vbird 字串， 那麼可以 n 繼續往下查詢，用 N 往上查詢。若以 ?vbird 向上查詢 vbird 字串， 那我可以用 n 繼續『向上』查詢，用 N 反向查詢。
+q	結束這次的 man page
+
+man -f date 精确查找关键字为date的命令
+man -k date 查找含有date的命令
+
+查找文件路径
+whatis 相当于man -f
+-b 只查找二进制文件
+-m 只查找帮助文件
+-s 只查找源代码
+-u 排除指定类型文件
+-f 只显示文件名
+-B <目录> 在指定目录下查找二进制文件
+-M <目录> 在指定目录下查找帮助文件
+-S <目录> 在指定目录下查找源代码
+apropos 相当于man -k
+前提是要root简历whatis数据库
+
+
+date 显示日期和时间
+date +%Y/%m/%d 修改日期输出格式
+date +%H:%M  修改时间输出格式
+(注意大小写)
+
+cal 显示日历
+cal 10 2009 显示2009年10月日历
+cal 26 2 1993 显示日历形式的1993年2月26日
+
+time 命令  显示执行命令所花费的时间
+
+bc 进入计算机程序
+quit 退出程序
+运算符
++
+—
+*
+/
+^
+% 求余数
+默认仅输出整数
+1/3
+0
+1%3
+1
+显示小数点后n位
+scale=n
+1/3
+.333
+
+
+文本编辑器
+nano text.txt
+^ [ctrl]
+M [alt]
+[Enter] 保存离开
+
+
+root权限下查看文件
+ls
+ls -al 查看所有文件权限与属性
+ls -al dirname/filename 查看该目录的信息
+ls -l
+nl filename 输出带行号的文件内容
+
+chgrp [-R] groupname dirname/filename 改变文件用户组
+chown [-R] ownername dirname/filename 改变文件拥有者
+chown [-R] ownername:groupname dirname/filename 改变文件拥有者及用户组
+chown [-R] :groupname dirname/filename 改变文件用户组
+-R 修改一系列权限
+chmod [-R] axyz dirname/filename 数字修改权限
+r=4 w=2 x=1 a=SUID+SGID+SBIT SUID=4 SGID=2 SBIT=1
+chmod u=rwxs g=rx o=rw dirname/filename 字符修改权限（u.g.o 不需要全部包含）
+u user g group o others a all 
+chmod a+w dirname/filename 加入某权限
+chmod a-x dirname/filename 去除某权限
+
+cat filename 查看文本内容
+
+目录操作命令
+cd                 回到自己的主文件夹
+cd ~               同上
+cd ~sunnylinux     去到用户sunnylinux的主文件夹
+cd -               返回刚才所在的目录
+cd /var/spool/mail 去到/var/spool/mail
+cd ../mqueue       去到和/mail在同一目录下的/var/spool/mqueue
+pwd [-P]           显示当前所在目录（加-P显示完整目录）
+mkdir test         创建名为test的新目录
+mkdir -p test/test1/test2/test3 创建多层新目录
+mkdir -m 722 test4 创建目录同时给该目录设置权限
+rmdir test         删除test目录（前提是目录下没有其他文件或子目录）
+rmdir -m test      删除test目录及其下的所有文件
+rmdir -p test/test1/test2/test3 删除多层目录（由test开始删，不想删test就先进入test内，从test1开始删）
+echo $PATH         查看"被定义"的路径
+
+文件与目录管理
+查看文件与目录
+ls [-adl..] dirname  查看目录与文档
+-i 查i-node号码 
+ls [--color={never,auto,always}] dirname 修改显示颜色
+ls [--full-time] dirname 显示完整最后修改时间
+复制
+cp [-aip..] 源文件名 目标文件名（此处要写路径）
+cp textnano.txt ./ducumenttext/cptest/cptextnano.txt
+-a 相当于-pdr  -p 不改变文件属性（备份常用） -i 如果目录中已有该文件，复制前先询问 -l 建立快捷链接（hardlink）
+cp -r source1 source2 destination
+-r 复制多个文档或一系列目录到同一目录下
+删除
+rm [-ilr] dirname/filename 删除
+-f 忽略不存在文件 -i 交互警告确认 -r递归删除（非常危险）
+移动、更名
+mv [-fiu] source destination 移动des为目录，更名则des为新文件名
+mv [-fiu] source1 source2 source3 directory 移动多个文件到目录directory下  
+-f force强制，覆盖原有 -i 询问 -u update
+rename -v 原名字符 更名后字符 目标改名文件  文件更名后显示结果
+rename -v man_db vitest_man man_db.conf
+
+basename ~/test/mvtest/mvname.txt  取文件名
+dirname ~/test/mvtest/mvname.txt  取目录名
+
+文件查阅命令
+行数较少
+cat [-bnATEV] filename  由第一行开始顺序显示
+-b 显示行号，不包括空白行 -n 显示行号包括空白行 
+-A 显示特殊字符 -v 显示特殊字符
+-T [Tab]显示为^I  -E 显示断行符
+tac filename  由最后一行开始倒过来显示，cat的相反
+nl filemane   正向显示输出行数
+-b a 行数包括空白行 -b t 行数不包括空白行
+-n ln 行数在左 -n rn 行数在右不加零  -n rz 行数在右加零  默认在右
+-w 设定行数所占位数
+行数较多可翻页
+more filename
+空白鍵 (space)：代表向下翻一頁；
+Enter         ：代表向下翻『一行』；
+/字串         ：代表在這個顯示的內容當中，向下搜尋『字串』這個關鍵字；
+:f            ：立刻顯示出檔名以及目前顯示的行數；
+q             ：代表立刻離開 more ，不再顯示該檔案內容。
+b 或 [ctrl]-b ：代表往回翻頁，不過這動作只對檔案有用，對管線無用。
+less filename
+空白鍵    ：向下翻動一頁；
+[pagedown]：向下翻動一頁；
+[pageup]  ：向上翻動一頁；
+/字串     ：向下搜尋『字串』的功能；
+?字串     ：向上搜尋『字串』的功能；
+n         ：重複前一個搜尋 (與 / 或 ? 有關！)
+N         ：反向的重複前一個搜尋 (與 / 或 ? 有關！)
+g         ：前進到這個資料的第一行去；
+G         ：前進到這個資料的最後一行去 (注意大小寫)；
+q         ：離開 less 這個程式；
+数据选取
+head filename 显示前十行
+head -n 20 filename 显示前20行
+head -n -100 filename 显示前(总行数-100)行
+tail filename 显示最后十行
+tail -n 20 filename 显示最后20行
+tail -n +100 filename 显示100行（包括第100行）以后的内容
+tail -f filename 显示最后更新的内容（ctrl+c结束）
+head -n 20 filename| tail -n +11 显示第 11 到第 20 行
+cat -n filename| head -n 20| tail -n +11 带行号显示11至20行
+二进制文档读取
+od [-t type] filename type可叠加使用
+type  a       ：利用預設的字元來輸出；
+      c       ：使用 ASCII 字元來輸出
+      d[size] ：利用十進位(decimal)來輸出資料，每個整數佔用 size bytes ；
+      f[size] ：利用浮點數值(floating)來輸出資料，每個數佔用 size bytes ；
+      o[size] ：利用八進位(octal)來輸出資料，每個整數佔用 size bytes ；
+      x[size] ：利用十六進位(hexadecimal)來輸出資料，每個整數佔用 size bytes ；
+
+文件时间修改或创建新文件
+touch filename 新建大小为0的文档
+touch [-acdmt] filename 修改文档时间
+-a 改atime -c 改ctime -m 改mtime
+-d “2 days ago” -t YYMMDDHHMM
+
+文件默认权限
+umask 查看文件默认权限，输出为数字(文件实际权限=0666去掉输出表示的权限，目录实际权限=0777去掉输出表示的权限)
+umask -S 查看目录默认权限，输出为字符
+umask 002 修改权限
+
+文件隐藏属性
+chattr [-RVf] [-v version] [mode] filename/dirname  其中mode= +-= [ai....]
+a  ：當設定 a 之後，這個檔案將只能增加資料，而不能刪除也不能修改資料，只有root 才能設定這屬性
+i  ：這個 i 可就很厲害了！他可以讓一個檔案『不能被刪除、改名、設定連結也無法寫入或新增資料！』
+     對於系統安全性有相當大的助益！只有 root 能設定此屬性
+lsattr filename 查看隐藏属性
+
+查看文件类型
+file filename/dirname
+
+命令查找
+which [-a] programname 脚本文件名查找，-a显示所有而不是第一个找到，输出内容由PATH决定
+文件名查找
+数据库查找，较快
+whereis [-bmsu] filename 精确查找，不加参数显示所有
+-b 只查找二进制文件
+-m 只查找帮助文件
+-s 只查找源代码
+-u 排除指定类型文件
+-f 只显示文件名
+-B <目录> 在指定目录下查找二进制文件
+-M <目录> 在指定目录下查找帮助文件
+-S <目录> 在指定目录下查找源代码
+locate [-ir] filename 模糊查找，只需写文件名的部分字母, /var/lib/mlocate中查找
+-i 不区分大小写 -r 接正则表达式表示方式
+更新数据库
+updatedb 数据库默认每天更新一次，更新后更新/var/lib/mlocate
+硬盘查找，较慢
+find [PATH] [option] [action] PATH内在规定时间内被更改过的文件
+时间 option : -mtime n n天前“一天之内”被更新的文件
+              -mtime +n n天前（不包括第n天）被更新的文件
+              -mtime -n n天之内（不包括第n天）被更新的文件
+              -newer file 比file更新的文件 
+n ... 9 8 7 6 5 4 3 2 1 0（现在）
+ex. 3月9日 n为4 3月4日一天内更新的文件
+           +n为+4 3月3日当天及之前更新的文件
+           -n为-4 3月5日至现在更新的文件
+用户及用户组option ： -uid n -gid n -user name -group name
+                      -nouser -nogroup 不存在于/etc中的用户或用户组（第三方软件、文件适用）
+文件权限及名称option : -size [+-]50k +大于 -小于 C bytes k KB
+                       -type TYPE  f一般文件 b,c设备文件 d目录 l链接文件 s socket p FIFO
+                       -perm mode mode为4位权限数字，刚好等于某数字代表的权限
+                       -perm -mode 包含mode代表的权限的文件（必须四个均包含）
+                       -perm +mode 符号mode代表的某些权限的文件（符合其中一个）
+其他option：-exec command  可接命令command，让find所得的输出作为命令command的输入（不支持命令别名）
+find /usr/bin /usr/sbin -perm /7000 -exec ls -l {} \;   {}放前面find语句的输出，\;表示command语句结束
+
+查看linux支援的档案系统
+ls -l /lib/modules/$(uname -r)/kernel/fs 
+显示已载入的记忆体的文件档案系统
+cat /proc/filesystems
+
+对比两个目录中的区别
+diff -r dir1 dir2
+
+查看XFS文件系统资料
+xfs_info 挂载点/装备名
+
+列出文件系统整体磁盘的使用情况
+df [-hi...] dirname/filename 
+默认以1KB显示 
+-h 以GB、MB、KB显示 -i 以inode数显示
+-a 列出所有文件系统 -k KB -M MB  -H 以1000K代替1024K  
+-T 連同該 partition 的 filesystem 名稱 (例如 xfs) 也列出
+查看各个目录数据的占用情况（不含文件）
+du [-sS...] dirname
+默认以1KB显示，默认分析目前所在目录
+ -s 列出总量，不列个别项目占有容量 -S 不计算子目录所占容量
+-h 以GB、MB、KB显示 -a 列出所有文件系统 -k KB -M MB
+du -sm /* *表示每个项目，输出/下面每个目录的大小，仅显示下一层子目录（不包括子目录下的子目录）
+
+链接文件
+ln sourcename destination 建立硬链接 hardlink
+ln -s sourcename destination 建立快捷方式 symbolic link
+
+分区、格式化、检查、挂载
+lsblk [-dfimpt] [device] 列出设备上所有磁碟信息
+-d  ：僅列出磁碟本身，並不會列出該磁碟的分割資料
+-f  ：同時列出該磁碟內的檔案系統名稱
+-i  ：使用 ASCII 的線段輸出，不要使用複雜的編碼 (再某些環境下很有用)
+-m  ：同時輸出該裝置在 /dev 底下的權限資料 (rwx 的資料)
+-p  ：列出該裝置的完整檔名！而不是僅列出最後的名字而已。
+-t  ：列出該磁碟裝置的詳細資料，包括磁碟佇列機制、預讀寫的資料量大小等
+blkid 列出装置UUID
+parted /dev/sda print 查看磁盘分割方式
+
+MBR分割方式
+fdisk /dev/sda 
+   a   toggle a bootable flag
+   b   edit bsd disklabel
+   c   toggle the dos compatibility flag
+   d   delete a partition            <==刪除一個partition
+   l   list known partition types
+   m   print this menu
+   n   add a new partition           <==新增一個partition
+   o   create a new empty DOS partition table
+   p   print the partition table     <==在螢幕上顯示分割表
+   q   quit without saving changes   <==不儲存離開fdisk程式
+   s   create a new empty Sun disklabel
+   t   change a partition's system id
+   u   change display/entry units
+   v   verify the partition table
+   w   write table to disk and exit  <==將剛剛的動作寫入分割表
+   x   extra functionality (experts only)
+p 查看已有分区状况
+n 新建新分区
+[enter] fist sector设置
++1GB 分区容量设置
+p 
+w 保存
+partprobe 强制让内核重新找一次分区列表（不重启）
+
+
+格式化
+centOS 7 XFS文件系统 
+mkfs.xfs [-b bsize] [-d parms] [-i parms] [-l parms] [-L label] [-f] [-r parms] 裝置名稱
+mkfs.xfs /dev/sda5
+選項與參數：
+關於單位：底下只要談到『數值』時，沒有加單位則為 bytes 值，可以用 k,m,g,t,p (小寫)等來解釋
+          比較特殊的是 s 這個單位，它指的是 sector 的『個數』喔！
+-b  ：後面接的是 block 容量，可由 512 到 64k，不過最大容量限制為 Linux 的 4k 喔！
+-d  ：後面接的是重要的 data section 的相關參數值，主要的值有：
+      agcount=數值  ：設定需要幾個儲存群組的意思(AG)，通常與 CPU 有關
+      agsize=數值   ：每個 AG 設定為多少容量的意思，通常 agcount/agsize 只選一個設定即可
+      file          ：指的是『格式化的裝置是個檔案而不是個裝置』的意思！(例如虛擬磁碟)
+      size=數值     ：data section 的容量，亦即你可以不將全部的裝置容量用完的意思
+      su=數值       ：當有 RAID 時，那個 stripe 數值的意思，與底下的 sw 搭配使用
+      sw=數值       ：當有 RAID 時，用於儲存資料的磁碟數量(須扣除備份碟與備用碟)
+      sunit=數值    ：與 su 相當，不過單位使用的是『幾個 sector(512bytes大小)』的意思
+      swidth=數值   ：就是 su*sw 的數值，但是以『幾個 sector(512bytes大小)』來設定
+-f  ：如果裝置內已經有檔案系統，則需要使用這個 -f 來強制格式化才行！
+-i  ：與 inode 有較相關的設定，主要的設定值有：
+      size=數值     ：最小是 256bytes 最大是 2k，一般保留 256 就足夠使用了！
+      internal=[0|1]：log 裝置是否為內建？預設為 1 內建，如果要用外部裝置，使用底下設定
+      logdev=device ：log 裝置為後面接的那個裝置上頭的意思，需設定 internal=0 才可！
+      size=數值     ：指定這塊登錄區的容量，通常最小得要有 512 個 block，大約 2M 以上才行！
+-L  ：後面接這個檔案系統的標頭名稱 Label name 的意思！
+-r  ：指定 realtime section 的相關設定值，常見的有：
+      extsize=數值  ：就是那個重要的 extent 數值，一般不須設定，但有 RAID 時，
+                      最好設定與 swidth 的數值相同較佳！最小為 4K 最大為 1G 。
+产看CPU数量
+grep 'processor' /proc/cpuinfo
+
+检验/修复文件系统
+xfs_repair [-fnd] 裝置名稱
+選項與參數：
+-f  ：後面的裝置其實是個檔案而不是實體裝置
+-n  ：單純檢查並不修改檔案系統的任何資料 (檢查而已)
+-d  ：通常用在單人維護模式底下，針對根目錄 (/) 進行檢查與修復的動作！很危險！不要隨便使用
+fsck.ext4 [-pf] [-b superblock] 裝置名稱
+選項與參數：
+-p  ：當檔案系統在修復時，若有需要回覆 y 的動作時，自動回覆 y 來繼續進行修復動作。
+-f  ：強制檢查！一般來說，如果 fsck 沒有發現任何 unclean 的旗標，不會主動進入
+      細部檢查的，如果您想要強制 fsck 進入細部檢查，就得加上 -f 旗標囉！
+-D  ：針對檔案系統下的目錄進行最佳化配置。
+-b  ：後面接 superblock 的位置！一般來說這個選項用不到。但是如果你的 superblock 因故損毀時，
+      透過這個參數即可利用檔案系統內備份的 superblock 來嘗試救援。一般來說，superblock 備份在：
+      1K block 放在 8193, 2K block 放在 16384, 4K block 放在 32768
+dumpe2fs -h /dev/sda6 
+dumpe2fs [-bh] 装置文件名
+选项与参数：
+-b ：列出保留为坏轨的部分(一般用不到吧！？)
+-h ：仅列出 superblock 的数据，不会列出其他的区段内容！
+找出我的根目录磁盘文件名，并观察文件系统的相关信息
+
+挂载
+blkid 设备名 查UUID
+mkdir -p /data/xfs 新建xfs目录
+mount UUID="要挂载的磁盘的UUID" /data/xfs 挂载xfs
+df /data/xfs 查看文件系统
+mkdir /data/ext4 新建ext4目录
+mount UUID="要挂载的磁盘的UUID" /data/ext4 挂载ext4
+df /data/ext4 查看文件系统
+mkdir -p /data/cdrom 新建cdrom目录
+mount UUID="/dev/sr0 的UUID" /data/cdrom 挂载cd或DVD
+df /data/cdrom 查看文件系统
+mkdir /data/usb
+mount -o codepage=950,iocharset=utf8 UUID="35BC-6D6B" /data/usb 挂载USB，使用 iocharset 為 utf8
+mount -o codepage=950,iocharset=big5 UUID="35BC-6D6B" /data/usb 挂载USB，使用 iocharset 為 big5
+df /data/usb
+mount -o remount,rw,auto /   重新挂载根目录，并加入参数rw和auto
+mount --bind /var /data/var  将一个目录挂载到另外一目录上
+
+卸载
+mount 查看挂载情况
+[root@study ~]# umount /dev/vda4      <==用裝置檔名來卸載
+[root@study ~]# umount /data/ext4     <==用掛載點來卸載
+[root@study ~]# umount /data/cdrom    <==因為掛載點比較好記憶！
+[root@study ~]# umount /data/usb     
+[root@study ~]# umount /data/var      <==一定要用掛載點！因為裝置有被其他方式掛載
+
+开机自动挂载
+cat /etc/fstab 查看挂载情况
+nano /etc/fstab 利用nano修改挂载情况
+cat /etc/fstab 查看是否修改完成
+mount -a  检验语法是否错误
+df 查看挂载是否成功
+
+mount -n -o remount,rw /   / read only 的狀態，無法修改 /etc/fstab ，也無法更新 /etc/mtab时使用
+
+特殊loop设备挂载
+[root@study ~]# mkdir /data/centos_dvd
+[root@study ~]# mount -o loop /tmp/CentOS-7.0-1406-x86_64-DVD.iso /data/centos_dvd  挂载DVD镜像
+[root@study ~]# df /data/centos_dvd
+建立分割槽
+dd if=/dev/zero of=./test/looptest/loopdev bs=1M count=512 建立大文件
+ll -h ./test/looptest/loopdev 检验是否建立
+mkfs.xfs -f ./test/looptest/loopdev 格式化大文件
+
+du -s 查看文件和目录浪费的空间大小
+dlkid ./test/looptest/loopdev 查看UUID
+mount -o loop UUID="...." /mnt 挂载大文件
+df /mnt 查看是否挂载
+
+建立swap分区
+分配磁盘位置给swap
+fdisk /dev/sda
+m
+p
+n
+[enter]
++256M
+p
+t
+7
+82 修改system ID为28
+p
+w
+partprobe
+格式化为swap格式
+mkswap /dev/sda7
+启动swap
+swapon /dev/sda7
+查看内存
+free
+利用大文件建立swap分区
+dd if=/dev/zero of=/tmp/swap bs=1M count=128
+mkswap /tmp/swap
+swapon /tmp/swap
+swapon -s
+swapoff /tmp/swap /dev/vda6 关闭swap分区
+开机自动挂载
+/tmp/swap  swap  swap  defaults  0  0
+
+利用parted进行分割（脚本多用）
+parted /dev/sda print  显示分割信息
+parted /dev/sda mkpart primary fat32 36.0GB 36.5GB  新建主分区，格式为fat32，起始位为36GB结束位为36.5GB，磁盘大小0.5GB
+parted /dev/sda rm 8  删除/dev/sda8分区，不要打错，很危险！！！一执行就开始删除了！！！
+
+
+
+文件与文件系统的压缩和打包
+gzip技术压缩 *.gz
+gzip [-cvdt#] 文件名 （源文件会消失，只剩下*.gz）
+-c  ：將壓縮的資料輸出到螢幕上，可透過資料流重導向來處理；
+-d  ：解壓縮的參數；
+-t  ：可以用來檢驗一個壓縮檔的一致性～看看檔案有無錯誤；
+-v  ：可以顯示出原檔案/壓縮檔案的壓縮比等資訊；
+-#  ：# 為數字的意思，代表壓縮等級，-1 最快，但是壓縮比最差、-9 最慢，但是壓縮比最好！預設是 -6
+gzip -v services 压缩文件并显示压缩比
+gzip -9 -c services > services.gz 利用最佳压缩比，重定向保留源文件
+解压
+gzid -d 压缩文件名 (*.gz消失，恢复到源文件)
+读取压缩文件（纯文本文件）
+zcat ./services.gz
+zcat/zmore/zless 可对应 cat/more/less
+压缩文件内搜索关键字
+zgrep -n '要搜索的关键字' 文件名
+bzip2技术压缩 *.bz2
+bzip2 [-cdkzv#] 文件名
+-c  ：將壓縮的過程產生的資料輸出到螢幕上！
+-d  ：解壓縮的參數
+-k  ：保留原始檔案，而不會刪除原始的檔案喔！
+-z  ：壓縮的參數 (預設值，可以不加)
+-v  ：可以顯示出原檔案/壓縮檔案的壓縮比等資訊；
+-#  ：與 gzip 同樣的，都是在計算壓縮比的參數， -9 最佳， -1 最快！
+解压
+bzip2 -d ./services.bz2 
+读取压缩文件（纯文本文件）
+bzcat ./services.bz2
+bzcat/bzmore/bzless 可对应 cat/more/less
+保留源文件
+bzip2 -k ./services
+bzip2 -9 -c services > services.bz2 利用最佳压缩比，重定向保留源文件
+xz技术压缩 *.xz
+xz [-dtlkc#] 文件名
+-d  ：解壓縮
+-t  ：測試壓縮檔的完整性，看有沒有錯誤
+-l  ：列出壓縮檔的相關資訊，和上面的-v参数显示格式一样,可是这个操作的对象是*.xz，压缩比=压后/压前
+-k  ：保留原本的檔案不刪除
+-c  ：將資料由螢幕上輸出的意思！
+-#  ：在計算壓縮比的參數， -9 最佳， -1 最快
+-v  : 压缩后/压缩前
+解压
+xz -d services.xz
+保留源文件
+xz -k ./services
+
+打包指令
+打包压缩
+tar [-z|-j|-J] [cv] [-f 新建的文件名.扩展名] filename   打包压缩，但不会删除源文件
+tar [-z|-j|-J] [tv] [-f 已被打包压缩的文件名]           查看已打包压缩的文件里面的文件名
+tar [-z|-j|-J] [xv] [-f 已被打包压缩的文件名] [-C 目錄] 解压
+選項與參數：
+-c  ：建立打包檔案，可搭配 -v 來察看過程中被打包的檔名(filename)
+-t  ：察看打包檔案的內容含有哪些檔名，重點在察看『檔名』就是了；
+-x  ：解打包或解壓縮的功能，可以搭配 -C (大寫) 在特定目錄解開
+      特別留意的是， -c, -t, -x 不可同時出現在一串指令列中。
+-z  ： gzip  *.tar.gz
+-j  ： bzip2 *.tar.bz2
+-J  ： xz    *.tar.xz
+      特別留意， -z, -j, -J 不可以同時出現在一串指令列中
+-v  ：在壓縮/解壓縮的過程中，將正在處理的檔名顯示出來！
+-f filename：-f 後面要立刻接要被處理的檔名！建議 -f 單獨寫一個選項囉！(比較不會忘記)
+-C 目錄    ：這個選項用在解壓縮，若要在特定目錄解壓縮，可以使用這個選項。
+其他後續練習會使用到的選項介紹：
+-p(小寫) ：保留備份資料的原本權限與屬性，常用於備份(-c)重要的設定檔
+-P(大寫) ：保留絕對路徑，亦即允許備份資料中含有根目錄存在之意；(保留的话解压时会覆盖掉同名源文件的数据)
+--exclude=FILE：在壓縮的過程中，不要將 FILE 打包！
+最简打包压缩方法
+仅打包，不压缩 tarfile 
+tar -cv -f /tmp/etc.tar /etc
+一次性打包到移动磁盘
+tar -cv -f /dev/st0 /home /root /etc
+打包压缩 tarball （不删除源文件，注意是否去除根目录，是否是绝对路径）
+time tar -zpcv -f ./test.tar.gz ./test  利用gzip压缩，计时
+time tar -jpcv -f ./test.tar.bz2 ./test 利用bzip2压缩，计时
+time tar -Jpcv -f ./test.tar.xz ./test 利用xz压缩。计时
+查看已打包压缩的文件中的文件名（注意是否存在根目录）
+tar -tvz -f ./test.tar.gz
+tar -tvj -f ./test.tar.bz2
+tar -tvJ -f ./test.tar.xz
+解压到本目录
+不推荐
+解压到指定目录(解压后原压缩文件不会被删除)
+tar -xvz -f ./test.tar.gz -C 目标目录 
+tar -xvj -f ./test.tar.bz2 -C 目标目录 
+tar -xvJ -f ./test.tar.XZ -C 目标目录 
+仅解压其中一个文件
+先搜索关键字（查看压缩包中是否存在该文件）
+tar -jtv -f ./test3.tar.bz2 | grep 'mvtest'  'mvtest' 为要单一打开的文件名
+解压该文件 
+tar -jxv -f 打包檔.tar.bz2 待解開檔名
+tar -jxv -f ./test3.tar.bz2 test/mvtest
+压缩某一目录下的文件，并排除某些不需要的文件
+tar -jvc -f testexcludetar.tar.bz2 test --exclude=*.txt 压缩test目录并排除txt格式文件
+tar -jvc -f testexcludetar2.tar.bz2 test --exclude=cptest 压缩test目录并排除子目录cptest下的文件（不要打成/cptest会出错）
+压缩备份比某时刻新的文件
+tar -jvc -f testnewertar.tar.bz2 --newer-mtime="2018/03/06" test 压缩mtime比2018/03/06新的文件，not dumped表示没有被备份的文件
+
+xfsdump文件系统备份 
+[root@study ~]# xfsdump [-L S_label] [-M M_label] [-l #] [-f 備份檔] 待備份資料
+[root@study ~]# xfsdump -I
+選項與參數：
+-L  ：xfsdump 會紀錄每次備份的 session 標頭，這裡可以填寫針對此檔案系統的簡易說明
+-M  ：xfsdump 可以紀錄儲存媒體的標頭，這裡可以填寫此媒體的簡易說明
+-l  ：是 L 的小寫，就是指定等級～有 0~9 共 10 個等級喔！ (預設為 0，即完整備份)
+-f  ：有點類似 tar 啦！後面接產生的檔案，亦可接例如 /dev/st0 裝置檔名或其他一般檔案檔名等
+-I  ：從 /var/lib/xfsdump/inventory 列出目前備份的資訊狀態
+对独立文件系统进行备份
+完整备份 *.dump
+xfsdump -l 0 -L boot_full_backup -M boot_full_backup -f /srv/boot_full_backup_20180322.dump /boot 完整备份/boot且将备份信息写到了 /var/lib/xfsdump/inventory
+查看是否进行过xfsdump备份
+xfsdump -I
+积累备份 *.dump1
+xfsdump -l 1 -L boot_incre_backup -M  boot_incre_backup -f /srv/boot_incre_backup_20180322.dump1 /boot
+xfsrestore文件系统还原
+xfsrestore -I                                       <==用來察看備份檔案資料
+xfsrestore [-f 備份檔] [-L S_label] [-s] 待復原目錄 <==單一檔案全系統復原
+xfsrestore [-f 備份檔] -r 待復原目錄                <==透過累積備份檔來復原系統
+xfsrestore [-f 備份檔] -i 待復原目錄                <==進入互動模式
+選項與參數：
+-I  ：跟 xfsdump 相同的輸出！可查詢備份資料，包括 Label 名稱與備份時間等
+-f  ：後面接的就是備份檔！企業界很有可能會接 /dev/st0 等磁帶機！我們這裡接檔名！
+-L  ：就是 Session 的 Label name 喔！可用 -I 查詢到的資料，在這個選項後輸入！
+-s  ：需要接某特定目錄，亦即僅復原某一個檔案或目錄之意！
+-r  ：如果是用檔案來儲存備份資料，那這個就不需要使用。如果是一個磁帶內有多個檔案，
+      需要這東西來達成累積復原
+-i  ：進入互動模式，進階管理員使用的！一般我們不太需要操作它！
+查看xfsdump备份状况
+注意看session label name
+xfsrestore -I  
+完整还原备份
+xfsrestore -f /srv/boot_full_backup_20180322.dump -L boot_full_backup /boot 仅覆盖同名文件，不覆盖非同名文件和存档内没有的文件
+仅复原备份中的某个文件
+xfsrestore -f /srv/boot_full_backup_20180322.dump -L boot_full_backup -s grub2 /tmp/boot2   待复原的文件 grub2 目标目录/tmp/boot2
+累积还原（必须按 level 0 -> level 1 -> level 2... 来进行还原）
+xfsrestore -f /srv/boot_incre_backup_20180322.dump1 /tmp/boot 
+进入互动模式，仅还原部分文件
+xfsrestore -f /srv/boot_full_backup_20180322.dump -i /tmp/boot3
+ls 查看备份内文件
+add 待还原文件名 
+extract 退出
+
+dd
+dd if="input_file" of="output_file" bs="block_size" count="number"
+if :inputfile，可以为设备
+of :outputfile，可以为设备
+bs ：规划的一个block大小，默认为512bytes（一个sector大小） 
+备份文件（不压缩，大小一致） *.back
+dd if="待备份文件名" of="目标目录/备份文件名.back" 
+dd if=/etc/passwd of=/tmp/passwd.back 输出3+1表示占3个完整block，一个未完全使用block
+烧录文件到USB
+dd if=/tmp/system.iso of=USB对应文件名
+mount 设备名 /mnt
+ll /mnt
+备份整个文件系统 *.img *.disk
+lsblk 查看各个文件系统大小，注意待备份文件系统位置、容量和目标位置、容量
+dd if=/dev/sda2 of=/tmp/bootbbbackup.img 速度很慢
+dd if=/dev/sda2 of=/tmp/bootbb/boot.whole.disk 速度也很慢
+备份一个分区的内容到一个未格式化和挂载的分区(不成功)
+dd of=dev/sda2 of=dev/sda8
+
+cpio
+[root@study ~]# cpio -ovcB  > [file|device] <==備份
+[root@study ~]# cpio -ivcdu < [file|device] <==還原
+[root@study ~]# cpio -ivct  < [file|device] <==察看
+備份會使用到的選項與參數：
+  -o ：將資料 copy 輸出到檔案或裝置上 
+  -B ：讓預設的 Blocks 可以增加至 5120 bytes ，預設是 512 bytes ！ 
+　  　 這樣的好處是可以讓大檔案的儲存速度加快(請參考 i-nodes 的觀念) 
+還原會使用到的選項與參數：
+  -i ：將資料自檔案或裝置 copy 出來系統當中 
+  -d ：自動建立目錄！使用 cpio 所備份的資料內容不見得會在同一層目錄中，因此我們
+       必須要讓 cpio 在還原時可以建立新目錄，此時就得要 -d 選項的幫助！
+  -u ：自動的將較新的檔案覆蓋較舊的檔案！
+  -t ：需配合 -i 選項，可用在"察看"以 cpio 建立的檔案或裝置的內容 
+一些可共用的選項與參數：
+  -v ：讓儲存的過程中檔案名稱可以在螢幕上顯示 
+  -c ：一種較新的 portable format 方式儲存 
+
+
+
+Vi快捷键
+进入界面 command mode
+输入字母 进入编辑模式 insert mode
+：/ ? 命令行模式 command-line mode（屏幕最后一行）
+[esc] 退出当前模式（编辑模式和命令行模式间不能相互切换）
+[ctrl]+z vim到后台工作
+
+进入vi/vim模式
+vi filename root模式
+/username vi filename 一般用户
+
+vi环境更改
+ ~/.viminfo 环境设定记录文档，记录用户行为，自动生成
+:set nu 设置行号
+:set nonu 取消行号
+:set all 查看当前设置
+:set hlsearch
+:set nohlsearch	hlsearch 就是 high light search(高亮度搜尋)。 這個就是設定是否將搜尋的字串反白的設定值。預設值是 hlsearch
+:set autoindent
+:set noautoindent	是否自動縮排？autoindent 就是自動縮排。
+:set backup	是否自動儲存備份檔？一般是 nobackup 的， 如果設定 backup 的話，那麼當你更動任何一個檔案時，則原始檔案會被另存成一個檔名為 filename~ 的檔案。 舉例來說，我們編輯 hosts ，設定 :set backup ，那麼當更動 hosts 時，在同目錄下，就會產生 hosts~ 檔名的檔案，記錄原始的 hosts 檔案內容
+:set ruler	還記得我們提到的右下角的一些狀態列說明嗎？ 這個 ruler 就是在顯示或不顯示該設定值的啦！
+:set showmode	這個則是，是否要顯示 --INSERT-- 之類的字眼在左下角的狀態列。
+:set backspace=(012)	一般來說， 如果我們按下 i 進入編輯模式後，可以利用倒退鍵 (backspace) 來刪除任意字元的。 但是，某些 distribution 則不許如此。此時，我們就可以透過 backspace 來設定囉～ 當 backspace 為 2 時，就是可以刪除任意值；0 或 1 時，僅可刪除剛剛輸入的字元， 而無法刪除原本就已經存在的文字了！
+:set	顯示與系統預設值不同的設定參數， 一般來說就是你有自行變動過的設定參數啦！
+:syntax on
+:syntax off	是否依據程式相關語法顯示不同顏色？ 舉例來說，在編輯一個純文字檔時，如果開頭是以 # 開始，那麼該列就會變成藍色。 如果你懂得寫程式，那麼這個 :syntax on 還會主動的幫你除錯呢！但是， 如果你僅是編寫純文字檔案，要避免顏色對你的螢幕產生的干擾，則可以取消這個設定 。
+:set bg=dark
+:set bg=light	可用以顯示不同的顏色色調，預設是『 light 』。如果你常常發現註解的字體深藍色實在很不容易看， 那麼這裡可以設定為 dark 喔！試看看，會有不同的樣式呢！
+
+
+一般模式操作
+移动
+n[向上] n[向下] 上下移动n行,为数字
+n[向右] n[向左] 左右移动n个字符
+H  回到当前页的第一行第一个字符
+[ctrl]+[f]或[pagedown] 向下翻一页
+[ctrl]+[d]或[pageup] 向上翻一页
+撤销
+u 撤销上一步操作
+查找替换
+/gzip 向光标一下搜索gzip这个字符串
+:n1,n2s/word1/word2/g 从第n1行到n2行，将word1替换为word2，不询问，最后改为gc为逐个询问 
+:1,$s/word1/word2/gc 从第一行开始到最后一行，将word1替换为word2，逐个询问
+复制粘贴
+nyy 复制光标所在行的向下n行(包括光标所在一行)
+p   粘贴在复制的原文之后
+P   粘贴在复制的原文之前
+删除
+nx 删除光标之后n个字符
+ndd 删除光标所在行的向下n行（包括光标所在一行）
+命令行模式操作
+:w 写入
+:q 退出
+:wq 写入并退出
+:wq! 强制写入
+:w newfilename 另存为
+
+
+vim暂存挡和恢复
+.filename.swp （隐藏文件）进入vim后生成，正常退出vim后被自动删除。非正常退出，再次进入时会提示暂存档的存在。
+选项
+[O]pen Read-Only 打开为只读模式
+(E)dit anyway 用正常方式打开文件，不载入暂存档（多人编辑时，容易造成相互覆盖导致混乱或数据丢失）
+(R)ecover 载入暂存档，用完后需手动删除.filename.swp 
+(D)elete it 删除无用或不明目的暂存档，以避免后续问题（centOS7好像没有这个选项，要打命令删）
+(Q)uit 离开vim
+(A)bort 忽略这次编辑行为
+
+vim区块选择 Visual Block
+區塊選擇的按鍵意義
+v	字元選擇，會將游標經過的地方反白選擇！
+V	列選擇，會將游標經過的列反白選擇！
+[Ctrl]+v	區塊選擇，可以用長方形的方式選擇資料
+y	將反白的地方複製起來
+d	將反白的地方刪除掉
+p	將剛剛複製的區塊，在游標所在處貼上！
+
+多檔案編輯的按鍵
+:sp filename 开启多个文档，不加文件名开同一个档案
+[ctrl]+w+[向上] 移到上面视窗
+[ctrl]+w+[向下] 移到下面视窗
+:files	列出目前這個 vim 的開啟的所有檔案
+；q 结束当前窗口
+
+vim补全功能
+[ctrl]+x -> [ctrl]+n	透過目前正在編輯的這個『檔案的內容文字』作為關鍵字，予以補齊
+[ctrl]+x -> [ctrl]+f	以當前目錄內的『檔名』作為關鍵字，予以補齊
+[ctrl]+x -> [ctrl]+o	以副檔名作為語法補充，以 vim 內建的關鍵字，予以補齊（注意使用扩展名提示linux调用何种语言的语法）
+
+断行符变更
+[dmtsai@study ~]$ dos2unix [-kn] file [newfile]
+[dmtsai@study ~]$ unix2dos [-kn] file [newfile]
+選項與參數：
+-k  ：保留該檔案原本的 mtime 時間格式 (不更新檔案上次內容經過修訂的時間)
+-n  ：保留原本的舊檔，將轉換後的內容輸出到新檔案，如： dos2unix -n old new
+将断行符改为CR ^M$ 
+[dmtsai@study vitest]$ unix2dos -k man_db.conf 
+将断行符改为LF $
+unix2dos: converting file man_db.conf to DOS format ...
+[dmtsai@study vitest]$ dos2unix -k -n man_db.conf man_db.conf.linux
+dos2unix: converting file man_db.conf to file man_db.conf.linux in Unix format ...
+
+显示当前系统支持语系
+locale -a
+常用中文语系 zh_CN.big5(大五码 繁体) zh_CN.utf8（Unicode万国码 繁简体）zh_CN.gb2312(简体)
+常用英文语系 en_US.utf8
+echo $LANG 显示目前支持语言
+LANG=en_US 修改支持语言为英文
+LANG=en_US.utf8
+export LC_ALL=en_US.utf8 修改全局语言变量
+语系编码转换  big5, utf8，gb2312  
+[dmtsai@study ~]$ iconv --list
+[dmtsai@study ~]$ iconv -f 原本編碼 -t 新編碼 filename [-o newfile]
+選項與參數：
+--list ：列出 iconv 支援的語系資料
+-f     ：from ，亦即來源之意，後接原本的編碼格式；
+-t     ：to ，亦即後來的新編碼要是什麼格式；
+-o file：如果要保留原本的檔案，那麼使用 -o 新檔名，可以建立新編碼檔案。
+
+
+bash 内外建命令查询
+type [-tpa] name (name为要查询的命令)
+不加任何選項與參數時，type 會顯示出 name 是外部指令還是 bash 內建指令
+-t  ：當加入 -t 參數時，type 會將 name 以底下這些字眼顯示出他的意義：
+      file    ：表示為外部指令；
+      alias   ：表示該指令為命令別名所設定的名稱；
+      builtin ：表示該指令為 bash 內建的指令功能；
+-p  ：如果後面接的 name 為外部指令時，才會顯示完整檔名；
+-a  ：會由 PATH 變數定義的路徑中，將所有含 name 的指令都列出來，包含 alias
+
+
+变量规则
+①　= 赋值
+②　两边均不支持空格
+③　可为数字或英文，变量名不可以数字开头
+④　有空格时，用（）括起
+⑤　对特殊符号$或\等，‘’为纯文本，“”为可执行的变量，必须成对使用
+⑥　变量中有其他命令传递的结果，用$或``(键盘1旁边)来嵌套命令，优先执行
+⑦　约定系统变量为大写，自定义变量为小写
+
+变量操作
+echo 
+显示当前变量指代内容
+echo $PATH
+echo ${PATH}
+变量设置
+echo $myname
+myname=Sharon
+echo $myname
+取消变量
+unset myname
+查询环境变量
+env 
+export
+将变量设置为环境变量
+export PATH
+随机数输出
+echo $RANDOM 0-32767随机数一个
+declare -i num=$RANDOM*10/32768 
+echo $num 0-9  随机一个
+
+PS1 命令提示符
+\d ：可顯示出『星期 月 日』的日期格式，如："Mon Feb 2"
+\H ：完整的主機名稱。舉例來說，鳥哥的練習機為『study.centos.vbird』
+\h ：僅取主機名稱在第一個小數點之前的名字，如鳥哥主機則為『study』後面省略
+\t ：顯示時間，為 24 小時格式的『HH:MM:SS』
+\T ：顯示時間，為 12 小時格式的『HH:MM:SS』
+\A ：顯示時間，為 24 小時格式的『HH:MM』
+\@ ：顯示時間，為 12 小時格式的『am/pm』樣式
+\u ：目前使用者的帳號名稱，如『dmtsai』；
+\v ：BASH 的版本資訊，如鳥哥的測試主機版本為 4.2.46(1)-release，僅取『4.2』顯示
+\w ：完整的工作目錄名稱，由根目錄寫起的目錄名稱。但家目錄會以 ~ 取代；
+\W ：利用 basename 函數取得工作目錄名稱，所以僅會列出最後一個目錄名。
+\# ：下達的第幾個指令。
+\$ ：提示字元，如果是 root 時，提示字元為 # ，否則就是 $ 
+修改PS1
+PS1="[\u@\h \w \A #\#]#" PS1注意要大写
+
+查看本SHELL的PID
+echo $$
+查看上一条命令回传值
+echo $? 0为成功，错误返回“错误代码”
+
+变量键盘读取
+read [-tp] variable
+-p 加注释提示输入，不加默认空白行等待输入
+-t 设置等待时间，单位为秒，默认一直等待
+read -p 'What are you doing?' answer 
+echo $answer
+
+变量声明
+declare [-airxp] variable
+-a array 数组
+-i int 整形
+-x 环境变量
++x 取消环境变量
+-r read only 不可被更改内容，也不能重设
+-p 单独列出已设置的变量类型
+declare -i a
+a=1+2
+echo $a
+
+一维数组
+数组名[数组元素序号]=元素值 (直接赋值，不需要初始化)
+a[0]=1
+a[1]=2
+a[2]=3
+a[3]=4
+echo "${a[0]} ${a[1]} ${a[2]} ${a[3]}"
+
+文件系统及程序的系统资源限制
+ulimit [-HSacfdltu] 配额
+-H hard limit 设置绝对不能超过的数值
+-S soft limit 可以超过，但会发警告，一般设比H小
+-a 不接配额，列出现有限制配额，0为无限制
+-c corefile的最大容量
+-f shell可创建的最大文件容量，单位KB，可达2GB
+-d 最大帧片段segment容量
+-l 锁定lock的内存量
+-t 最大CPU时间，单位为s
+-u 单一用户可使用的最大进程量process
+撤销以上限制:重新登录
+
+变量输出值
+删除
+echo ${变量名#关键字}
+ # 从变量内容的开头开始搜索关键字，删除开头到搜到的第一个和关键字相同的字符之间的内容（包括搜到的第一个关键字）
+符号	搜索方向	删除内容
+#	从左向右	开始字符 *（关键字初始字符）至 第一个和关键字结束字符相同的字符
+##	从左向右	开始字符 *（关键字初始字符）至 最后一个和关键字结束字符相同的字符
+%	从右向左	关键字初始字符 至 第一个和关键字结束字符相同的字符 *
+%%	从右向左	关键字初始字符 至 最后一个和关键字结束字符相同的字符 *
+echo ${变量名/旧字符/新字符}
+符号	方向	        替换
+/	从左向右	第一个和关键字相同的字符
+//	从左向右	所有字符
+
+检测替换
+变量1=${变量2-新变量内容}
+符号	检测变量2	变量1值	变量2值
+-	未设	新变量内容	不变
+	已设	变量2值	
+:-	未设	新变量内容	
+	空	新变量内容	
+	不为空	变量2值	
++	未设	空	
+	已设	新变量内容	
+：+	未设	空	
+	空	空	
+	不为空	新变量内容	
+？	未设	错误信息	
+	已设	变量2值	
+：？	未设	错误信息	
+	空	错误信息	
+	不为空	变量2值	
+=	未设	新变量内容	新变量内容
+	已设	变量2值	        不变
+：=	未设	新变量内容	新变量内容
+	空	新变量内容	新变量内容
+	不为空	变量2值	        不变
+
+alias 查询已有命令别名
+alias 建立命令别名
+alias 新命令=’旧命令’（注销后会失效）
+alias md=’mkdir’
+unalias md 取消命令别名
+
+历史命令
+history n 查询最近执行的最后n条命令
+history -w 将目前命令写到histfile中，默认下写在~/.bash_history中，记录条数由HISTSIZE决定
+echo $HISTSIZE 查看HISTSIZE大小
+
+修改登陆界面
+文件 /etc/issue（telnet远程登陆时为/etc/issue.net）
+字符直接输入
+\d 本地端时间
+\l 显示第几个终端机接口
+\m 显示硬件等级（i386 i686 ...）
+\n 主机网络名称
+\o 主机名
+\r 操作系统版本
+\t 本地终端时间
+\s 操作系统名称
+\v 操作系统版本（版本发行时间）
+登录后输出信息
+文件 /etc/motd （不能使用issue的参数）
+
+通配符
+*      0到无限个任意字符
+？     一个？代表一个任意字符
+[]    [非任意字符]，一定有非任意字符中的其中一个，[abc]有abc其中一个
+[0-9]  有0到9其中一个数字，-省略写法
+[^]    [^abc]一定有一个字符属于非a，非b，非c 
+例子
+含有0-9其中一个字符   *[0-9]* 
+开头为0-9其中一个字符 *[0-9]
+结尾为0-9其中一个字符  [0-9]*
+中间有一个字符不为小写字母 *[^a-z]*
+
+通配符特殊字符
+#   注释
+\   转意字符，将特殊字符还原成一般字元（如\$和换行输入）
+|   管线
+;   连续命令分隔符（例如C中的;）
+~   使用者家目录（文件名没事不要用这符号）
+$   取用变量前导符
+&   命令后台工作
+!   非
+/   目录符号
+>   数据流导向，输出，“替换”
+>>  数据流导向，输出，“累加”
+<   数据流导向，输入 
+<<  数据流导向，输入 
+‘’不具变量置换功能
+“”具有变量置换功能
+``  可优先执行命令$()
+()  子SHELL起始和结束
+{}  中间命令块组合
+
+传送用特殊字符
+名称	                代码	特殊符号	用途
+标准输入stdin	        0	< 或 <<	        < 提取文件信息 << 当键盘输入某字符串时结束输入
+标准输出stdout	        1	> 或 >>	        传输正确运行信息  > 自动创建文件，覆盖已有文件 >> 自动创建文件，在已有文件的末尾添加内容
+标准错误输出 stderr	2	2>或 2>>	传输错误运行信息  2> 自动创建文件，覆盖已有文件 2>> 自动创建文件，在已有文件的末尾添加内容
+特殊用法		        2>&1 或 &>	同时输出标准输出和标准错误输出到同一文件
+		                2>/dev/null	丢弃无用错误信息
+
+上一执行命令的回传值
+echo $?  成功为0，不成功回传“错误代码”
+根据$?决定是否执行下一命令
+$?=0 成功执行，$?=1 执行失败
+cmd1&&cmd2  cmd1的$?为0时，执行cmd2，否则不执行
+cmd1||cmd2  cmd1的$?为1时，执行cmd2, 否则不执行
+cmd1&&cmd2||cmd3 cmd1的$?为0时执行cmd2，为1时执行cmd3
+
+管线选取命令
+cut 截取
+处理对象| cut -d ‘分隔字符’ -f 要取出的列的编号（可用,隔开）
+处理对象| cut -c 12-20（要分隔的字符区间）
+echo $PATH | cut -b ‘:’ -f 2，3
+echo $PATH | cut -c 12-20
+
+grep 关键词筛选（显示按行为单位）
+grep [-acinv] ‘关键字’ filename
+处理对象 |  grep [-acinv] ‘关键字’
+-a 将binary以text的方式查找数据
+-c 计算查找到‘关键字’的次数
+-i 忽略大小写
+-n 输出行号
+-v 反向选择
+grep 高级参数
+grep -A2 -B3 '关键字' filename
+在文件中查找关键字，并显示关键字所在行及其后面两行，前面三行
+
+sort 按照数据类型排序
+sort [-fbMnrtuk] filename
+排序对象 | sort [-fbMnrtuk]
+默认按字符串排序a-z
+-f  ：忽略大小寫的差異，例如 A 與 a 視為編碼相同；
+-b  ：忽略最前面的空白字元部分；
+-M  ：以月份的名字來排序，例如 JAN, DEC 等等的排序方法；
+-n  ：使用『純數字』進行排序(預設是以文字型態來排序的)；
+-r  ：反向排序；
+-u  ：就是 uniq ，相同的資料中，僅出現一行代表；
+-t  ：分隔符號，預設是用 [tab] 鍵來分隔；
+-k  ：以那個區間 (field) 來進行排序的意思
+cat /etc/passwd | sort -t ‘:’ -k 3 -n 分隔关键字为:，按第三列进行排序，以数字作为排序基准
+
+unique 排序后有重复仅列出一列
+uniq [-ic]
+-i 不区分大小写
+-c 进行计数
+
+wc 统计文件中有多少行、字数、字符数
+wc [-lwm]
+默认输出为 行数、字数、字符数
+-l 行数
+-w 英文词数
+-m 字符数
+
+字符转换命令
+tr
+tr -d 待删除的字符串
+tr -s 待替换的字符串 要替换的字符串
+col
+col -x 将[tab]转换为对等的空格键
+col -b 当有/时仅保留/最后接的那个字符
+join 比较后将两个文件的数据连在一起
+join -t ‘:’file1 file2
+以：为分隔符，判断两文档字段1，相同则以行为单位将2的内容黏在1后面
+join -i -t ‘:’-1 2 file1 -2 4 file2 
+不区分大小写，file11取字段2，file2取字段4
+paste 将两个文件的同一行粘贴在一起
+paste [-d] /etc/passwd /etc/shadow
+-d 接分隔字符，默认[tab]来分隔
+-  文件部分可以用stdin代替
+expand 将[tab]换成空格
+expand [-t] file
+-t 后接数字表示替换空格数，一个[tab]键最多可以使用8个空格来替换
+unexpand 空格转换成[tab]
+cat -A 显示[tab]为^I
+split 将大文件切割为小文件
+split -b 300k  /etc/termcap termcap 切割/etc/termcap为名为termcap开头的300k小文件
+文件名为 termcapaa  termcapab  termcapac 
+-l 按行切割
+cat termcap* >> termcapback 合并文件
+xargs 参数代换
+xargs [-0epn] command
+選項與參數：
+-0  ：如果輸入的 stdin 含有特殊字元，例如 `, \, 空白鍵等等字元時，這個 -0 參數
+      可以將他還原成一般字元。這個參數可以用於特殊狀態喔！
+-e  ：這個是 EOF (end of file) 的意思。後面可以接一個字串，當 xargs 分析到這個字串時，
+      就會停止繼續工作！
+-p  ：在執行每個指令的 argument 時，都會詢問使用者的意思；
+-n  ：後面接次數，每次 command 指令執行時，要使用幾個參數的意思。
+當 xargs 後面沒有接任何的指令時，預設是以 echo 來進行輸出喔！
+关联
+账号 /etc/passwd /etc/shadow
+GID  /etc/passwd /etc/group
+
+sed
+sed [-nefr] ‘n1,n2 function’
+-n  仅输出经过sed处理的行数
+-e  sed后面同时执行多个sed动作时使用 sed -e ‘4d’ -e ‘6c no six line’
+-f
+-r
+-i  直接修改文件，而不是单纯的管道命令
+function
+a 新增内容到当前行后面一行 ‘2a plus’
+c 替换当前行内容 ‘2,5c replace 2 to 5 comtent’
+d 删除，后面不接字符串 ‘2,$d’
+i 新增内容到当前行前面一行 ‘2i plus’
+p 仅列出其中某几行 ‘2,5p’
+s 查找替换 ‘s/原来字符/新字符/g’
+nl /etc/passwd |sed ‘2,5d’ 删除2至5行
+nl /etc/passwd |sed ‘2d’ 删除第二行
+nl /etc/passwd |sed ‘2,$d’ 删除第二行到最后一行
+nl /etc/passwd |sed ‘2a sharon’ 新增内容到当前行后面一行
+nl /etc/passwd |sed ‘2i sharon’ 新增内容到当前行后面一行，多行内容用\隔开
+nl /etc/passwd |sed ‘2,3c replace’ 替换当前行内容
+nl /etc/passwd |sed -n ‘2,4p’ 仅列出2-4行
+nl /etc/passwd |sed -n ‘33p’|sed ‘s/^.*ntp://g’ 查找替换将行首到ntp:的多个字符替换成"无"
+nl /etc/passwd |sed -n ‘33p’|sed ‘s/sbin.*$//g’ 查找替换将sbin到行尾的多个字符替换成"无"
+
+正则表达式
+[]    [非任意字符]，一定有非任意字符中的其中一个，[abc]有abc其中一个
+[0-9]  有0到9其中一个数字，-省略写法
+[^]    [^abc]一定有一个字符属于非a，非b，非c 
+^      ^the 找行首the，区别[^]
+$      the$ 找行尾the
+^$     找空白行
+*      和通配符的不一样，此处代表重复的0到无限多个同一字符
+       0到无限个字符
+       o* 所有字符
+       oo* 至少含有一个o
+       ooo* 至少很有两个o
+？     一个？代表一个任意字符
+.      任意一个字符
+.*     0个到多个字符
+\      转义字符
+\{2，5\}  o\{2\} 找含有两个o的字符串，o\{2，5\}找含有2-5个o的字符串
+
+
+特殊符號	代表意義
+[:alnum:]	代表英文大小寫字元及數字，亦即 0-9, A-Z, a-z
+[:alpha:]	代表任何英文大小寫字元，亦即 A-Z, a-z
+[:blank:]	代表空白鍵與 [Tab] 按鍵兩者
+[:cntrl:]	代表鍵盤上面的控制按鍵，亦即包括 CR, LF, Tab, Del.. 等等
+[:digit:]	代表數字而已，亦即 0-9
+[:graph:]	除了空白字元 (空白鍵與 [Tab] 按鍵) 外的其他所有按鍵
+[:lower:]	代表小寫字元，亦即 a-z
+[:print:]	代表任何可以被列印出來的字元
+[:punct:]	代表標點符號 (punctuation symbol)，亦即：" ' ? ! ; : # $...
+[:upper:]	代表大寫字元，亦即 A-Z
+[:space:]	任何會產生空白的字元，包括空白鍵, [Tab], CR 等等
+[:xdigit:]	代表 16 進位的數字類型，因此包括： 0-9, A-F, a-f 的數字與字元
+
+扩展正则表达式
+egrep
+egrep -v ‘^$|^#’ filename  
+符号
+|      或，用于egrep
++      o+ 至少有一个o，区别o*,相当于oo*
+()     组，一次搜索多个字母组合g（la|oo）d，找glad或good
+()+    多个重复组，g(xyz)+d，找g和d间有n个xyz的任意组合
+
+文件格式化及相关处理
+数据输出结果格式化
+printf '%s\t %s\t %s\t %s\t %s\t \n' $(cat printf.txt)
+%s    无限定长度string
+\t     [tab]
+printf '%10s %5i %5i %5i %8.2f \n' $(cat printf.txt | grep -v Name)
+%10s 10个bit的string
+%5i  5个bit的int
+%8.2f  8个bit的float，小数点占一位，小数点后两位，00000.00
+\n    换行
+字段处理工具 awk
+awk ‘条件1{动作1} 条件2{动作2} ...’ filename
+last -n 5 | awk '{print $1 "\t" $3}'
+每个字段变量名称 $1, $2, $3...
+当前行 $0
+last -n 5| awk ‘{print $1 “\tlines:”NR “\tcolume:”NF}’ 
+
+特殊变量  
+NF  每一行拥有的字段总数
+NR  当前处理“第几行”
+FS   目前分隔字符，默认空格键
+awk逻辑运算符
+>	大於
+<	小於
+>=	大於或等於
+<=	小於或等於
+==	等於
+!=	不等於
+注意
+{按分隔符划分字段}默认为空格，且第二行生效；要从第一行生效，应改为BEGIN{FS=“：”}
+多个辅助命令时，；隔开
+可作基本运算，$1+$2+$3
+格式化输出末尾必须加上\n
+注意\t的反斜杠，而且要写在“”里面
+
+文件比较工具
+以“行”作单位比较
+diff [-bBi] filename.old filename.new
+filename 可以用-代替，standard input
+-b 忽略仅有多个空白的区别
+-B 忽略空白行区别
+-i 忽略大小写区别
+同一文件（软件）新旧版本的比较
+diff passwd passwd.new
+输出
+4d3 左边文件第4行被删除，变为有右边文件第三行
+6c5 左边文件第六行被替换，变为右边文件第五行
+<   左边文字
+>   右边文字
+不同目录下，相同档名的文件比较
+diff /etc/rc3.d/ /etc/rc5.d/
+以“字节”作单位比较，比较二进制文件
+cmp [-s] file1 file2
+-s 输出所有不同的字节点，默认仅输出第一个不同字节点
+patch
+比较新旧文件后，制作补丁文件（比较文件）
+格式
+制作补丁文件
+diff -Naur filename.old filename.new > filename.patch
+更新旧文件
+patch -pN < filename.patch
+还原新文件
+patch -R -pN < filename.patch
+-p 取消N层目录
+作用：文件打印准备，标题加入文件时间、文件名、页码
+pr filename
+
+shell算数运算
+var=$(seq 1 100)  var在循环中分别为1-100
+var=$((var1*var2))
+((i=$j+$k))    等价于 i=`expr $j + $k`
+((i=$j-$k))    等价于   i=`expr $j -$k`
+((i=$j*$k))    等价于   i=`expr $j \*$k`
+((i=$j/$k))    等价于   i=`expr $j /$k`
+在VIM中按“i”键进入插入模式，然后输入下面的代码。
+代码4-2  数学运算实例：\源文件\04\4.4.sh
+
+#!/bin/bash
+
+#4.4.sh
+
+s=0                                    #定义一个求和变量，初值为0。
+
+t=`expr$1**$2`                        #用expr改变运算顺序，求x的y次方。
+
+t=$[t*3]                               #t乘以3。
+
+s=$[s+t]                               #结果相加。
+
+t=$[$1**2]                             #求x的平方。
+
+t=$[t*4]                               #结果乘以4。
+
+s=$[s+t]                               #结果相加。
+
+t=`expr$2*5`                          #求5y的值。
+
+s=$[s+t]                               #结果相加。
+
+s=$[s+6]                               #结果加上6。
+
+echo$s                                #输出结果。
+
+echo$((a%b))                          #取余
+
+ 在这个程序中，需要注意算术运算的写法。如果没有expr或$[]更改运算顺序，则会将运算式以字符串的形式赋值，而不会赋值运算结果。
+
+ 按“Esc”键返回到普通模式。然后输入“:w 4.4.sh”保存文件。
+
+ 输入“:q”命令，按“Enter”键退出VIM。
+
+ 在终端中，输入下面的命令对4.4.sh文件添加可执行权限。
+
+chmod +x 4.4.sh
+
+ 输入下面的命令运行程序。在命令中需要输入两个参数。
+
+./4.4.sh 2 4
+
+ 程序会完成S=3(xy)+4x2+5y+6的数学运算并输出结果，结果如下所示。
+
+90
+
+
+逻辑判断
+test [-option] filename
+測試的標誌	代表意義
+1. 關於某個檔名的『檔案類型』判斷，如 test -e filename 表示存在否
+-e	該『檔名』是否存在？(常用)
+-f	該『檔名』是否存在且為檔案(file)？(常用)
+-d	該『檔名』是否存在且為目錄(directory)？(常用)
+-b	該『檔名』是否存在且為一個 block device 裝置？
+-c	該『檔名』是否存在且為一個 character device 裝置？
+-S	該『檔名』是否存在且為一個 Socket 檔案？
+-p	該『檔名』是否存在且為一個 FIFO (pipe) 檔案？
+-L	該『檔名』是否存在且為一個連結檔？
+2. 關於檔案的權限偵測，如 test -r filename 表示可讀否 (但 root 權限常有例外)
+-r	偵測該檔名是否存在且具有『可讀』的權限？
+-w	偵測該檔名是否存在且具有『可寫』的權限？
+-x	偵測該檔名是否存在且具有『可執行』的權限？
+-u	偵測該檔名是否存在且具有『SUID』的屬性？
+-g	偵測該檔名是否存在且具有『SGID』的屬性？
+-k	偵測該檔名是否存在且具有『Sticky bit』的屬性？
+-s	偵測該檔名是否存在且為『非空白檔案』？
+3. 兩個檔案之間的比較，如： test file1 -nt file2
+-nt	(newer than)判斷 file1 是否比 file2 新
+-ot	(older than)判斷 file1 是否比 file2 舊
+-ef	判斷 file1 與 file2 是否為同一檔案，可用在判斷 hard link 的判定上。 主要意義在判定，兩個檔案是否均指向同一個 inode 哩！
+4. 關於兩個整數之間的判定，例如 test n1 -eq n2
+-eq	兩數值相等 (equal)
+-ne	兩數值不等 (not equal)
+-gt	n1 大於 n2 (greater than)
+-lt	n1 小於 n2 (less than)
+-ge	n1 大於等於 n2 (greater than or equal)
+-le	n1 小於等於 n2 (less than or equal)
+5. 判定字串的資料
+test -z string	判定字串是否為 0 ？若 string 為空字串，則為 true
+test -n string	判定字串是否非為 0 ？若 string 為空字串，則為 false。
+註： -n 亦可省略
+test str1 == str2	判定 str1 是否等於 str2 ，若相等，則回傳 true
+test str1 != str2	判定 str1 是否不等於 str2 ，若相等，則回傳 false
+6. 多重條件判定，例如： test -r filename -a -x filename
+-a	(and)兩狀況同時成立！例如 test -r file -a -x file，則 file 同時具有 r 與 x 權限時，才回傳 true。
+-o	(or)兩狀況任何一個成立！例如 test -r file -o -x file，則 file 具有 r 或 x 權限時，就可回傳 true。
+!	反相狀態，如 test ! -x file ，當 file 不具有 x 時，回傳 true
+
+shell script 默认变量
+在执行脚本的同时输入变量
+sh scriptname opt1 opt2 opt3
+$0		$1	$2 	$3
+$#   变量个数
+$@   各个独立变量
+$*   $1c$2c$3c$4, c为分隔符，默认为空格
+$0   scriptname
+变量偏移
+shift n （n为数字，偏移量）
+
+函数function
+function fname() { 
+程式段 
+}
+
+条件判断式
+if ... then ...
+if [判断条件1]; then
+分支1
+elif [判断条件2]; then
+分支2
+else[判断条件3]; then
+分支3
+fi
+case ..... esac 
+case $变量名 in
+“变量值1” ）
+分支1
+;;
+“变量值2” ）
+分支2
+;;
+“变量值2” ）
+分支2
+;;
+esac
+
+循环 loop
+不成立-终止
+while [condition]
+do
+程序主体
+done
+
+成立-终止
+until [condition]
+do
+程序主体
+done
+
+固定循环
+account_all里有多少个值就循环多少次，account不需要提前设置，每次循环对应account_all里的一个值
+account_all=$(cat /etc/passwd |cut -d ':' -f1) 
+t=1
+for account in $account_all
+do
+        echo "The $t account is $account."
+        t=$((t+1))
+done
+
+数值处理
+for ((i==1；i<=100；i++))
+do
+程序段
+done
+
+shell script 语法检测
+sh [-nvx] script.sh
+-n 不执行script，仅查询语法，语法正确无输出
+-v 先输出script再执行script
+-x 边输出script内容，边执行script，走查
+
+shell script 声明
+#!/bin/bash
+# Progarm
+#	This program helps users to set new filenames by themselves with the changing date.
+# History
+# 2018/05/02 Sharon first release
+PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
+export PATH
+
+批量重命名
+rename a b ./a.sh  改名为b.sh
+
+whoami  显示当前用户
+pwd	显示当前目录
+
+
