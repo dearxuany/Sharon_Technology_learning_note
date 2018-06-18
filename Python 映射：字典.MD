@@ -183,7 +183,7 @@ copy.deepcopy(dict)：深复制副本可以作为一个独立的原件，和原�
 参数：无</br>
 返回值：无</br>
 ```
-import copy                     #必须要加这句，否则deepcopy会出错
+import copy                     #必须要加这句，否则deepcopy会出错，调用deepcopy(),deepcopy()在模块copy中
 dict2={'a':[1,2,3,4],'b':5}
 print('dict2=',dict2)
 dict3=dict2.copy()              	#浅复制
