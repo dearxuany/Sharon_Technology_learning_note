@@ -200,6 +200,27 @@ from somemodule import *
 >>> 
 ```
 
+如果两个模块都包含同一个同名函数：
+* 导入这两个模块，调用方法为 module1.function()、module2.function()。
+* 在语句末尾添加as给它指定名字，可以给module起名，也可以给function起名。
+```
+import math as mathematics      #给模块命名
+a=mathematics.sqrt(100)
+print(a)
+
+from math import sqrt as square_root    #给函数命名
+b=square_root(10)
+print(b)
+
+import math		#不想上面的命名影响后面语句要重新导入模块
+c=math.sqrt(4)	#没有import，只有这句会出错
+print(c)
+
+10.0
+3.1622776601683795
+2.0
+```
+
 ## 命令行参数
 ### 使用-h参数查看各参数帮助信息
 ```
