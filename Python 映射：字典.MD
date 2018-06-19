@@ -321,13 +321,13 @@ dict7= {'b': 'c'}
 ### popitem 随机抛出项并删除
 dict.popitem()：随机抛出一个字典项并删除它。</br>
 参数：无</br>
-返回值：项</br>
+返回值：以被弹出项为值的元组</br>
 ```
 people={'Sharon': {'age': 25, 'birthday': '0226'}, 'Tom': {'age': 22, 'birthday': '0708'}, 'Lily': {'age': 23, 'birthday': '0125'}}
 print(people.popitem())
 print(people)
 
-('Lily', {'age': 23, 'birthday': '0125'})
+('Lily', {'age': 23, 'birthday': '0125'})	#注意返回值是个元组
 {'Sharon': {'age': 25, 'birthday': '0226'}, 'Tom': {'age': 22, 'birthday': '0708'}}
 ```
 ### setdefault 查询添加
