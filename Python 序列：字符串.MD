@@ -334,6 +334,7 @@ str.endswitch(chars[,start[,end]])：判断字符串str是否为chars结束，�
 参数：要查询的字符串，起始位置。</br>
 返回：布尔型</br>
 ```
+str2= hello_world
 print(str2.endswith('world'))             #判断结尾
 print(len(str2))
 print(str2.endswith('orl',6,10))          #限制范围
@@ -346,6 +347,22 @@ True
 False
 False
 ```
+
+### startswith 判断开头
+str.startswitch(chars[,start[,end]])：判断字符串str是否为chars开始，是返回True，否返回False。</br>
+参数：要查询的字符串，起始位置。</br>
+返回：布尔型</br>
+```
+str2= hello_world
+print(str2.startswith('hello'))         #判断开头
+print(str2.startswith('hello',0,4))
+print(str2.startswith('hello',0,5))
+
+True
+False
+True
+```
+
 
 ### 判断字符串是否满足特定性质
 以is打头的方法：判断字符串是否满足特定性质，满足返回True，否则返回False。</br>
