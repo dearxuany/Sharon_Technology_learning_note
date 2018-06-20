@@ -117,7 +117,7 @@ NameError: name 'var1' is not defined
 ## 字符串基本操作
 支持序列通用基本操作</br>
 详见
-[Python序列：序列类型、通用基本操作](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/Python%E5%BA%8F%E5%88%97%EF%BC%9A%E5%BA%8F%E5%88%97%E7%B1%BB%E5%9E%8B%E3%80%81%E9%80%9A%E7%94%A8%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C.MD)
+[Python序列：序列类型、通用基本操作](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/Python%20%E5%BA%8F%E5%88%97%EF%BC%9A%E5%BA%8F%E5%88%97%E7%B1%BB%E5%9E%8B%E3%80%81%E9%80%9A%E7%94%A8%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C.MD)
 
 
 ## 字符串方法
@@ -144,6 +144,8 @@ NameError: name 'var1' is not defined
 创建字符串的转换表，指出不同Unicode码点之间的转换关系。操作对象是单个字符，translate会用到。
 * str.translate(table)</br>
 根据转换表，对字符串中的字符进行转换或删除，可同时转换多个字符。
+* str.endswith(obj[,start[,end]])</br>
+判断字符串str是否为chars结束，是返回True，否返回False。
 * 判断字符串是否满足特定性质</br>
 以is打头的方法：判断字符串是否满足特定性质，满足返回True，否则返回False。
 
@@ -325,6 +327,24 @@ print(str8.translate(tab2))               #字符转换及删除
 
 ~~~~~he!!0~w0r!d~~~~~
 he!!0w0r!d
+```
+
+### endswitch 判断结尾
+str.endswitch(chars[,start[,end]])：判断字符串str是否为chars结束，是返回True，否返回False。</br>
+参数：要查询的字符串，起始位置。</br>
+返回：布尔型</br>
+```
+print(str2.endswith('world'))             #判断结尾
+print(len(str2))
+print(str2.endswith('orl',6,10))          #限制范围
+print(str2.endswith('orl'))
+print(str2.endswith('hello',7,11))
+
+True
+11
+True
+False
+False
 ```
 
 ### 判断字符串是否满足特定性质
