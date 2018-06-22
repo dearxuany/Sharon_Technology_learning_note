@@ -17,10 +17,10 @@ Python中唯一内置的映射类型，值不按顺序排列，而存储在键�
 键与值间用冒号：分隔，项之间用逗号，分隔，字典用花括号{}括起。空字典用{ }表示。</br>
 键必须是唯一的，但是值不需要。同一字典中的键不需要是相同类型。</br>
 ```
->>> dictionary={"Sharon":25,"Jack":22,"Ben":22}			#创建一个新字典，注意有等号
->>> dictionary										#查看整个字典
+>>> dictionary={"Sharon":25,"Jack":22,"Ben":22}		#创建一个新字典，注意有等号
+>>> dictionary						#查看整个字典
 {'Sharon': 25, 'Jack': 22, 'Ben': 22}
->>> dictionary["Jack"]								#查看某个键对应的值
+>>> dictionary["Jack"]					#查看某个键对应的值
 22
 ```
 键是不但不能重复，还区分大小写。
@@ -39,9 +39,9 @@ KeyError: 'Lulu'
 ## dict()函数 转换为字典
 函数dict()：可以把其他已存在的映射或有item结构的序列转换为字典。
 ```
-items1=[('Sharon',25),('Ben',22),('lulu',21)]           #注意item的写法
+items1=[('Sharon',25),('Ben',22),('lulu',21)]		#注意item的写法
 print('items1: ',items1)
-dict1=dict(items1)                      #将序列转换为字典
+dict1=dict(items1)					#将序列转换为字典
 print('dict1:',dict1)
 print('dict1["lulu"]:',dict1['lulu'])
 
@@ -77,15 +77,15 @@ ValueError: dictionary update sequence element #0 has length 1; 2 is required
 ```
 dict1= {'Sharon': 25, 'Ben': 22, 'lulu': 21}
 print('dict1:',dict1)
-print('dict1["lulu"]:',dict1['lulu'])   #查询键为lulu的值
+print('dict1["lulu"]:',dict1['lulu'])	#查询键为lulu的值
 
-len(dict1)              #输出dict1的项数
+len(dict1)				#输出dict1的项数
 
-dict1['Tom']=33         #将键Tom关联到值33，注意这是不需要额外的方法的
+dict1['Tom']=33				#将键Tom关联到值33，注意这是不需要额外的方法的
 print('dict1: ',dict1)
 
-del dict1['Ben']       	 #删除键Ben的项
-print('Ben' in dict1)   	#检查'Ben'是否是dict1的键
+del dict1['Ben']			#删除键Ben的项
+print('Ben' in dict1)			#检查'Ben'是否是dict1的键
 print('Tom' in dict1)
 
 dict1: {'Sharon': 25, 'Ben': 22, 'lulu': 21}
@@ -183,15 +183,15 @@ copy.deepcopy(dict)：深复制副本可以作为一个独立的原件，和原�
 参数：无</br>
 返回值：无</br>
 ```
-import copy                     #必须要加这句，否则deepcopy会出错，调用deepcopy(),deepcopy()在模块copy中
+import copy			#必须要加这句，否则deepcopy会出错，调用deepcopy(),deepcopy()在模块copy中
 dict2={'a':[1,2,3,4],'b':5}
 print('dict2=',dict2)
-dict3=dict2.copy()              	#浅复制
-dict4=copy.deepcopy(dict2)      ·#深复制
+dict3=dict2.copy()		#浅复制
+dict4=copy.deepcopy(dict2)	#深复制
 
-dict2['b']='c' 			#修改原件值
-dict2['a'].remove(4)   	#删除原件值
-dict2['a'].append('e')  	#添加原件值
+dict2['b']='c'			#修改原件值
+dict2['a'].remove(4)		#删除原件值
+dict2['a'].append('e')		#添加原件值
 print('dict2=',dict2)
 print('dict3=',dict3)
 print('dict4=',dict4)
@@ -208,9 +208,9 @@ print('dict2=',dict2)
 dict3=dict2.copy()              #浅复制
 dict4=copy.deepcopy(dict2)      #深复制
 
-dict3['b']='c'  #修改浅复制值
-dict3['a'].remove(4)    #删除浅复制值
-dict3['a'].append('e')  #添加浅复制值
+dict3['b']='c'		#修改浅复制值
+dict3['a'].remove(4)	#删除浅复制值
+dict3['a'].append('e')	#添加浅复制值
 print('dict2=',dict2)
 print('dict3=',dict3)
 print('dict4=',dict4)
@@ -227,9 +227,9 @@ print('dict2=',dict2)
 dict3=dict2.copy()              #浅复制
 dict4=copy.deepcopy(dict2)      #深复制
 
-dict4['b']='c'  #修改深复制值
-dict4['a'].remove(4)    #删除深复制值
-dict4['a'].append('e')  #添加深复制值
+dict4['b']='c'			#修改深复制值
+dict4['a'].remove(4)    	#删除深复制值
+dict4['a'].append('e')  	#添加深复制值
 print('dict2=',dict2)
 print('dict3=',dict3)
 print('dict4=',dict4)
@@ -269,7 +269,7 @@ Place input a key: oo
 None
 absent
 
-Place input a key: a		#含有该键正常返回
+Place input a key: a			#含有该键正常返回
 c
 c
 ```
@@ -332,6 +332,8 @@ print(people)
 ```
 ### setdefault 查询添加
 dict.setdefault(key)：在字典中查找key对应的值，键存在则返回值，键不存在则在字典中添加新项（key:None），项的值可以指定。</br>
+参数：key</br>
+返回值：当key存在时，返回key对应的value。当key不存在时，返回指定的值或默认None。value是什么类型，返回值就是什么类型。</br>
 ```
 dict7={'a': 'c', 'b': 'c'}
 key7=input('Place input a key: ')
