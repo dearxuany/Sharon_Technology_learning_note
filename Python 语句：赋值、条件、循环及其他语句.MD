@@ -651,3 +651,19 @@ Place input an arithmetic expression: 9*3-4
 9*3-4
 23
 ```
+
+## 扩展
+* 制表符</br>
+盘上的Tab键位于大小写键（ Caps Lock ）的上面，Tab 键是 tabulator key 的缩写，其含义是“作表的人，制表机，（打字机上为制表用的）跳格键”。它最基本的用法就是用来绘制无边框的表格。单词之间的间隔都是按下一次 Tab键来实现的。它一般等于 8 个空格的长度，当它的前面有单词的时候，和单词长度加起来刚好能被 8 整除。
+
+* Unicode码点</br>
+Unicode 官方表格 Unicode 11.0 Character Code Charts  http://unicode.org/charts/ </br>
+/wiki/Unicode https://en.wikipedia.org/wiki/Unicode</br>
+比较直观的网站 https://unicode-table.com/cn/</br>
+
+* 斐波纳契数列</br>
+斐波那契数列（Fibonacci sequence），又称黄金分割数列、因数学家列昂纳多·斐波那契（Leonardoda Fibonacci）以兔子繁殖为例子而引入，故又称为“兔子数列”，指的是这样一个数列：1、1、2、3、5、8、13、21、34、……在数学上，斐波纳契数列以如下被以递归的方法定义：F(1)=1，F(2)=1, F(n)=F(n-1)+F(n-2)(n>=2，n∈N*)，当前数的值为前面两个数相加所得和。
+
+* Python中的for循环和C中的for循环的区别</br>
+个人认为很可能是觉得for的条件判断和if和while的功能有所重叠，所以在Python中去掉了C中for循环的某些功能。</br>
+https://zhidao.baidu.com/question/265895484049393565.html </br>
