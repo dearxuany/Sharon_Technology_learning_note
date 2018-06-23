@@ -27,7 +27,7 @@
 * [Python 迭代与推导](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/Python%20%E8%BF%AD%E4%BB%A3%E4%B8%8E%E6%8E%A8%E5%AF%BC.MD)
 
 ### Python 相关积累总结
-[Python 常用函数]
+[Python 常用函数](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/Python3%20function%20collection.MD)
 ## Software testing
 
 ## Networking
