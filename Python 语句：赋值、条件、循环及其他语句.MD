@@ -294,12 +294,14 @@ TypeError: ord() expected string of length 1, but int found
 120
 >>> ord('A')
 65
-
+```
+```
 >>> chr(97)
 'a'
 >>> chr(36)
 '$'
-
+```
+```
 >>> 'a'<'x'
 True
 >>> 'abc'<'ab'
@@ -623,8 +625,8 @@ exec(str) ：内置函数，以前是语句，可将用户提供的字符串当�
 >>> exec("print('hello')")
 hello
 # exec()本身不返回任何东西，只是执行了print，返回值是print的返回值
-
-
+```
+```
 str_input=input("Place input a command to execute: ")
 exec(str_input)
 
