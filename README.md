@@ -23,6 +23,9 @@
 * [Python 序列：元组](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/Python%20%E5%BA%8F%E5%88%97%EF%BC%9A%E5%85%83%E7%BB%84.MD)
 * [Python 序列：字符串](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/Python%20%E5%BA%8F%E5%88%97%EF%BC%9A%E5%AD%97%E7%AC%A6%E4%B8%B2.MD)
 * [Python 映射：字典](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/Python%20%E6%98%A0%E5%B0%84%EF%BC%9A%E5%AD%97%E5%85%B8.MD)
+* [Python 语句：赋值、条件、循环及其他语句](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/Python%20%E8%AF%AD%E5%8F%A5%EF%BC%9A%E8%B5%8B%E5%80%BC%E3%80%81%E6%9D%A1%E4%BB%B6%E3%80%81%E5%BE%AA%E7%8E%AF%E5%8F%8A%E5%85%B6%E4%BB%96%E8%AF%AD%E5%8F%A5.MD)
+* [Python 迭代与推导](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/Python%20%E8%BF%AD%E4%BB%A3%E4%B8%8E%E6%8E%A8%E5%AF%BC.MD)
+
 ## Software testing
 
 ## Networking
