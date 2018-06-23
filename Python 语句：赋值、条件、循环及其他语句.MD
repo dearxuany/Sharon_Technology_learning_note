@@ -275,7 +275,7 @@ False
 Python3中都是Unicode字符，字符按码点排序。</br>
 ord(char)：可以获取char的Unicode码点。</br>
 chr(num)：可将码点num转换成Unicode中对应的字符。</br>
-字符串比较：比价Unicode码点大小，由左向右逐个比较。如果前面的已经可以作出判断，则不再比较后面的字符。</br>
+字符串比较：比较Unicode码点大小，由左向右逐个比较。如果前面的已经可以作出判断，则不再比较后面的字符。</br>
 ```
 >>> ord(%)
   File "<stdin>", line 1
