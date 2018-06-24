@@ -70,6 +70,14 @@ print(list5)
 <zip object at 0xb70ea80c>
 [('Sharon', 19930226, 25), ('Jack', 19960102, 22), ('Ben', 19960102, 22), ('lulu', 20150905, 3)]
 ```
+zip(seq1,seq2,...,seqn)也适用于字典，但仅是将字典的key和数组的元素值连起来。
+```
+>>> dict1={'first':{},'middle':{},'last':{}}
+>>> names['Xua','Yu','L']
+>>> list(zip(dict1,names))
+[('first', 'Xua'), ('middle', 'Yu'), ('last', 'L')]
+```
+
 #### 迭代时获取索引 enumerate(seq)
 在使用元素值进行迭代的同时获取元素对应的索引，即使用index-value来对序列进行迭代，有点像字典中根据项来迭代一样。</br>
 根据index-value来进行迭代，需要用到内置函数enumerate(seq) 枚举。</br>
@@ -84,6 +92,8 @@ number 1: ('Jack', 19960102, 22)
 number 2: ('Ben', 19960102, 22) 
 number 3: ('lulu', 20150905, 3) 
 ```
+
+
 ### 和迭代相关的函数：sorted(seq)排序与reversed(seq)反向 
 #### sorted(seq) 排序
 sorted(seq) ：内置函数，序列元素排序，适用于任何序列或可迭代对象，不修改原序列，返回排序后的新序列。</br>
