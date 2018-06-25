@@ -30,7 +30,8 @@ lulu corresponds to 3
 >>> student_ID
 {1: {'Lily': 2, 'Ben': 26}, 2: {'Sharon': 26, 'Lu': 30}, 5: {'Jack': 40}}
 
->>> course(student_ID)class 1:Lily ID 2
+>>> course(student_ID)
+class 1:Lily ID 2
 class 1:Ben ID 26
 class 2:Sharon ID 26
 class 2:Lu ID 30
