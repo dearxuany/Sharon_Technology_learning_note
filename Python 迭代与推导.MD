@@ -18,6 +18,26 @@ Jack corresponds to 22
 Ben corresponds to 22
 lulu corresponds to 3
 ```
+多层字典迭代
+```
+>>> def course(IDdict):
+...     for classnum in IDdict:
+...         student_dict=IDdict[classnum]
+...         for name in student_dict:
+...             print('class {}:{} ID {}'.format(classnum,name,student_dict[name]))
+... 
+
+>>> student_ID
+{1: {'Lily': 2, 'Ben': 26}, 2: {'Sharon': 26, 'Lu': 30}, 5: {'Jack': 40}}
+
+>>> course(student_ID)class 1:Lily ID 2
+class 1:Ben ID 26
+class 2:Sharon ID 26
+class 2:Lu ID 30
+class 5:Jack ID 40
+>>> 
+```
+
 #### 根据项进行迭代
 ```
 for key,value in dict1.items():
@@ -28,6 +48,7 @@ Jack's age is 22.
 Ben's age is 22.
 lulu's age is 3.
 ```
+
 
 ### 序列迭代
 #### 并行迭代 zip(seq1,seq2,...,seqn)
