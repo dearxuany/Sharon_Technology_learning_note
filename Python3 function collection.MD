@@ -212,3 +212,42 @@ Place input an arithmetic expression: 9*3-4
 9*3-4
 23
 ```
+
+## vars() 查看命名空间字典
+vars()：内置函数，可查看程序的命名空间。返回的字典内容取决于vars()执行的位置。</br>
+参数：无</br>
+返回值：当前程序的命名空间字典</br>
+
+```
+# 查看所有全局变量的命名空间
+>>> vars()
+{'__name__': '__main__', '__doc__': None, '__package__': None, '__loader__': <class '_frozen_importlib.BuiltinImporter'>, '__spec__': None, '__annotations__': {}, '__builtins__': <module 'builtins' (built-in)>, 'course': <function course at 0xb70badf4>, 'student_ID': {1: {'Lily': 2, 'Ben': 26}, 2: {'Sharon': 26, 'Lu': 30}, 5: {'Jack': 40}}, 'x': 1, 'y': 2}
+>>> 
+
+# 查看局部变量的命名空间
+>>> def vars_func2():
+...     x=2
+...     y=8
+...     print(vars())
+... 
+>>> vars_func2()
+{'y': 8, 'x': 2}
+>>> 
+
+```
+
+## 函数中查看全局变量 globals() 和局部变量 locals()
+ globals()返回的是全局变量字典，locals()返回的是当前函数局部变量字典。
+ 
+```
+>>> def vars_func():
+...     x=3
+...     y=7
+...     print(locals())					        # 查看局部变量
+...     print(globals()['x'],globals()['y'])    # 查看全局变量
+... 
+>>> vars_func()
+{'y': 7, 'x': 3}
+1 2
+>>> 
+```
