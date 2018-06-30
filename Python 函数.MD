@@ -597,6 +597,21 @@ NameError: name 'testing' is not defined
 >>> 
 ```
 
+## lambda表达式
+lambda表达式：创建内嵌的简单函数，可以不使用嵌套和缩进。
+
+```
+>>> def square(x):
+...    return x*x
+... 
+>>> squa=lambda x:x*x	# lambda表达式
+>>> square(3)
+9
+>>> squa(5)			# 调用方式和普通函数一样
+25
+>>> 
+```
+
 ## 递归
 递归：函数自己引用自己，此处用的是return。</br>
 
