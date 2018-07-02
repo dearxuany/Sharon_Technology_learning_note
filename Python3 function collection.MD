@@ -251,3 +251,82 @@ vars()：内置函数，可查看程序的命名空间。返回的字典内容�
 1 2
 >>> 
 ```
+
+## issubclass(class1,class2) 子类判断
+issubclass(class1,class2) ：判断class1是否为class2的子类，返回布尔型。（不能用于实例的检验）</br>
+参数：要被判断的类</br>
+返回值：布尔型</br>
+```
+class Filter:
+    def __init__(self):
+        self.blocked =[]		# 不作任何过虑
+    def filter(self,sequence):
+        return [x for x in sequence if x not in self.blocked]
+
+class SpaceFilter(Filter):			# 将SpaceFilter设置为Filter的子类
+    def __init__(self):
+        self.blocked=['']
+
+print(issubclass(SpaceFilter,Filter))
+print(issubclass(Filter,SpaceFilter))
+
+# 输出结果
+True
+False
+```
+
+## isinstance(instance,class) 实例判断
+isinstance(instance,class) ：判断instance是否是class的实例。</br>
+参数：实例名，类名</br>
+返回值：布尔型</br>
+注意：子类的实例也是超类的实例。</br>
+
+```
+class Filter:
+    def __init__(self):
+        self.blocked =[]
+    def filter(self,sequence):
+        return [x for x in sequence if x not in self.blocked]
+
+class SpaceFilter(Filter):
+    def __init__(self):
+        self.blocked=['']
+
+f1=Filter()
+print(f1.filter(['abc','Sharon',3,4,'']))
+f2=SpaceFilter()			# f2在SpaceFilter下实例化
+print(f2.filter(['abc','Sharon',3,4,'']))
+
+print(isinstance(f1,Filter))
+print(isinstance(f2,Filter))	# f2也是Filter的实例
+
+# 输出结果
+True
+True
+```
+
+## 获悉实例所属类
+### instance.__class__
+```
+print(f1.__class__)
+print(f2.__class__)
+print(SpaceFilter.__class__)
+
+
+# 输出结果
+<class '__main__.Filter'>
+<class '__main__.SpaceFilter'>
+<class 'type'>
+```
+
+### type(instance)
+```
+print(type(f1))
+print(type(f2))
+print(type(SpaceFilter))
+
+# 输出结果
+<class '__main__.Filter'>
+<class '__main__.SpaceFilter'>
+<class 'type'>
+```
