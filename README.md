@@ -8,13 +8,14 @@
 ## Linux
 
 ### Linux 相关积累总结
-[Linux 常用命令(无格式)](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/Linux%20command%20%26%20SHELL%20collection)
+[Linux 常用命令(无格式)](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20command%20%26%20SHELL%20collection)
+/[Linux 文件目录命名规则](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E6%96%87%E4%BB%B6%E5%90%8D%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99.MD)
 
 ## VMware
 
 ## Python
 ### Python3 安装
-* [Linux系统 python3 安装](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/Linux%E4%B8%8A%E5%AE%89%E8%A3%85Python%203.MD)
+* [Linux系统 python3 安装](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E4%B8%8A%E5%AE%89%E8%A3%85Python%203.MD)
 ### Python3 基础
 * [Python 基础语法](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/Python%20%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95.MD)
 * [Python 解释器](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/Python%20%E8%A7%A3%E9%87%8A%E5%99%A8.MD)
