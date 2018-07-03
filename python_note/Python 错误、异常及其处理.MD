@@ -12,14 +12,14 @@ https://docs.python.org/3.7/library/exceptions.html?highlight=built%20exception<
 Exception：通用异常，所有异常类均由此派生。语句raise可引发，还可添加错误信息。</br>
 All built-in, non-system-exiting exceptions are derived from this class. All user-defined exceptions should also be derived from this class.
 ```
->>> raise Exception					# raise引发通用错误
+>>> raise Exception                   # raise引发通用错误
 Traceback (most recent call last):
   File "<stdin>", line 1, in <module>
 Exception
->>> raise Exception('hello world!')		# 添加错误信息
+>>> raise Exception('hello world!')   # 添加错误信息
 Traceback (most recent call last):
   File "<stdin>", line 1, in <module>
-Exception: hello world!				# 错误信息显示
+Exception: hello world!               # 错误信息显示
 >>> 
 ```
 
@@ -37,8 +37,8 @@ class Commodity:
 commodity1=Commodity('milk')	
 commodity2=Commodity('cake')
 
-commodity2.sell()				# 此句没有出错，实例属性是可以正常被调用的
-print(commodity1.__name)		# 出错的是这句，__ 禁止访问属性，删除此句程序会运行正常
+commodity2.sell()           # 此句没有出错，实例属性是可以正常被调用的
+print(commodity1.__name)    # 出错的是这句，__ 禁止访问属性，删除此句程序会运行正常
 
 # 输出结果
 Traceback (most recent call last):
@@ -151,28 +151,28 @@ ZeroDivisionError: integer division or modulo by zero
 ## 自定义异常类
 可自定义异常类，但必须继承Exception，可以添加方法，创建自定义异常类和创建普通类方法一样。</br>
 ```
->>> class SomeException(Exception):			# 创建异常类
+>>> class SomeException(Exception):             # 创建异常类
 ...     def doSomething(self):
 ...         return 1+1
 ... 
 
->>> raise SomeException					# 引发新建的异常类
+>>> raise SomeException                         # 引发新建的异常类
 Traceback (most recent call last):
   File "<stdin>", line 1, in <module>
 __main__.SomeException
 ```
 ```
->>> raise SomeException('This is a new errot.')	# 给新的异常类加错误信息
+>>> raise SomeException('This is a new errot.') # 给新的异常类加错误信息
 Traceback (most recent call last):
   File "<stdin>", line 1, in <module>
 __main__.SomeException: This is a new errot.
 ```
 ```
->>> SomeException.doSomething()			#  SomeException还没有实例化，所以会出现错误
+>>> SomeException.doSomething()                 #  SomeException还没有实例化，所以会出现错误
 Traceback (most recent call last):
   File "<stdin>", line 1, in <module>
 TypeError: doSomething() missing 1 required positional argument: 'self'
->>> Error1=SomeException()					# 实例化，也可以参考抽象基类
+>>> Error1=SomeException()                      # 实例化，也可以参考抽象基类
 >>> Error1.doSomething()
 2
 ```
@@ -296,9 +296,9 @@ def div():
 try:
     c=div()
     print(c)
-except ZeroDivisionError:	# 捕捉除数为0引发的异常
+except ZeroDivisionError:     # 捕捉除数为0引发的异常
 print('The second number connot be zero.')	  
-except Exception:			# 捕捉其他异常，也可以改为except:
+except Exception:             # 捕捉其他异常，也可以改为except:
 print('other errors')		
 ~                           
 
