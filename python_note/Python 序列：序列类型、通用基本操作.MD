@@ -99,7 +99,7 @@ another way to print your birth-year:  1993
 Your birth-year and birthday:  19930226
 ```
 
-* 步长
+* 步长</br>
 步长：从一个元素移动到另外一个元素的间隔，默认为1，不能为0，为负数时由右边开始提取元素。</br>
 ```
 number=[1,2,3,4,5,6,7,8,9,10]
