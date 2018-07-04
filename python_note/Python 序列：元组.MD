@@ -35,9 +35,9 @@
 和列表基本相同，元组的切片也是元组，但不支持count等列表方法。</br>
 详见</br> 
 * 关于序列基本操作</br>
-[Python序列：序列类型、通用基本操作](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/Python%E5%BA%8F%E5%88%97%EF%BC%9A%E5%BA%8F%E5%88%97%E7%B1%BB%E5%9E%8B%E3%80%81%E9%80%9A%E7%94%A8%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C.MD)
+[Python序列：序列类型、通用基本操作](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E5%BA%8F%E5%88%97%EF%BC%9A%E5%BA%8F%E5%88%97%E7%B1%BB%E5%9E%8B%E3%80%81%E9%80%9A%E7%94%A8%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C.MD)
 * 关于元素赋值、删除元素、切片赋值</br>
-[Python序列：列表](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/Python%E5%BA%8F%E5%88%97%EF%BC%9A%E5%88%97%E8%A1%A8.MD)
+[Python序列：列表](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E5%BA%8F%E5%88%97%EF%BC%9A%E5%88%97%E8%A1%A8.MD)
 ```
 lst=('h', 'e', 'l', 'l', 'o', '_', 'w', 'o', 'r', 'l', 'd')
 >>> lst[3:6]
