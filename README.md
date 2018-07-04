@@ -30,7 +30,7 @@
 * [Python 面向对象](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1.MD)
 * [Python 错误和异常](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E9%94%99%E8%AF%AF%E3%80%81%E5%BC%82%E5%B8%B8%E5%8F%8A%E5%85%B6%E5%A4%84%E7%90%86.MD)
 ### Python 相关积累总结
-[Python 常用函数](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/Python3%20function%20collection.MD)
+[Python 常用函数](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python3%20function%20collection.MD)
 ## Software testing
 
 ## Networking
