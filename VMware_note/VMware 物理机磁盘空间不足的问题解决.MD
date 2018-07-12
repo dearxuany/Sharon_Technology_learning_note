@@ -1,7 +1,7 @@
 # VMware 物理机磁盘空间不足的问题解决
 ## 清理磁盘
 VM - manage - clear up disks</br>
-![](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/VMware/VMware%20images/VMware%20%E7%89%A9%E7%90%86%E6%9C%BA%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4%E4%B8%8D%E8%B6%B3%E7%9A%84%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3.png)</br>
+![]()</br>
 （此处显示不用清理，未能解决我的问题）
 
 ## 重启物理机
