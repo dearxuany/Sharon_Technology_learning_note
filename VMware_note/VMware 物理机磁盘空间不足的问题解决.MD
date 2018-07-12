@@ -19,6 +19,7 @@ VM - manage - clear up disks</br>
 ## VMware删除多余快照
 正常删除的情况下，能有效释放大量空间。</br>
 可是操作间容易出现错误，容易造成数据丢失。</br>
+具体操作查看：[VMware 删除旧的快照](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/VMware_note/VMware%20%E5%88%A0%E9%99%A4%E6%97%A7%E7%9A%84%E5%BF%AB%E7%85%A7.MD)
 
 ## full clone 虚拟机
 完整克隆虚拟机为一台新的计算机，将所有快照合成为一个，正常运行后，删除原来的虚拟机及其文件夹。</br>
