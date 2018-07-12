@@ -14,7 +14,8 @@ VM - manage - clear up disks</br>
 
 ## 合并多个vmdk
 命令行操作，个人觉得也挺方便。</br>
-不过合成后的vmdk不会包含child snapshot，释放的空间可能不多。
+不过合成后的vmdk不会包含child snapshot，释放的空间可能不多。</br>
+具体操作查看：[VMware 合并多个vmdk](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/VMware_note/VMware%20%E5%90%88%E5%B9%B6%E5%A4%9A%E4%B8%AAvmdk.MD)
 
 ## VMware删除多余快照
 正常删除的情况下，能有效释放大量空间。</br>
