@@ -9,9 +9,7 @@
 
 ### Linux 相关积累总结
 [Linux 常用命令(无格式)](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20command%20%26%20SHELL%20collection)
-/[Linux 文件目录命名规则](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E6%96%87%E4%BB%B6%E5%90%8D%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99.MD)
-
-## VMware
+| [Linux 文件目录命名规则](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E6%96%87%E4%BB%B6%E5%90%8D%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99.MD)
 
 ## Python
 ### Python3 安装
@@ -29,8 +27,16 @@
 * [Python 函数](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E5%87%BD%E6%95%B0.MD)
 * [Python 面向对象：类、实例、属性、方法](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%EF%BC%9A%E7%B1%BB%E3%80%81%E5%AE%9E%E4%BE%8B%E3%80%81%E5%B1%9E%E6%80%A7%E3%80%81%E6%96%B9%E6%B3%95.MD)
 * [Python 错误和异常](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E9%94%99%E8%AF%AF%E3%80%81%E5%BC%82%E5%B8%B8%E5%8F%8A%E5%85%B6%E5%A4%84%E7%90%86.MD)
+* [Python 面向对象：Special method 魔法方法、property特性、iterator 迭代器](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%EF%BC%9ASpecial%20method%20%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95%E3%80%81property%E7%89%B9%E6%80%A7%E3%80%81iterator%20%E8%BF%AD%E4%BB%A3%E5%99%A8.MD)
 ### Python 相关积累总结
 [Python 常用函数](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python3%20function%20collection.MD)
+
+## VMware
+### VMware 相关积累总结
+[VMware 物理机磁盘空间不足问题解决](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/VMware_note/VMware%20%E7%89%A9%E7%90%86%E6%9C%BA%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4%E4%B8%8D%E8%B6%B3%E7%9A%84%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3.MD)
+| [VMware 删除旧快照](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/VMware_note/VMware%20%E5%88%A0%E9%99%A4%E6%97%A7%E7%9A%84%E5%BF%AB%E7%85%A7.MD)
+| [VMware 合并多个vmdk](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/VMware_note/VMware%20%E5%90%88%E5%B9%B6%E5%A4%9A%E4%B8%AAvmdk.MD)
+
 ## Software testing
 
 ## Networking
