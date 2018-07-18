@@ -42,5 +42,5 @@
 
 ## Networking
 ### Cisco Certified Network Associate
-思科认证 网络工程师 CCNA 986/1000
+思科认证 网络工程师 CCNA  Score: 986/1000
 [ Cisco Certified Network Associate Routing and Switching](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/note_images/Networking_note_images/ccna_11105536_certificate.png)
