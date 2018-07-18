@@ -6,6 +6,10 @@
 
 
 ## Linux
+### Linux上的环境搭建
+[Linux 安装python3](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E5%AE%89%E8%A3%85Python%203.MD)
+| [Linux 安装Nginx](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E5%AE%89%E8%A3%85Nginx.MD)
+| [Linux 安装配置Node.js](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AENode.js%20.MD)
 
 ### Linux 相关积累总结
 [Linux 常用命令(无格式)](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20command%20%26%20SHELL%20collection)
@@ -13,8 +17,6 @@
 | [Nginx 安装配置](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E5%AE%89%E8%A3%85Nginx.MD)
 
 ## Python
-### Python3 安装
-* [Linux系统 python3 安装](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E4%B8%8A%E5%AE%89%E8%A3%85Python%203.MD)
 ### Python3 基础
 * [Python 基础语法](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95.MD)
 * [Python 解释器](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E8%A7%A3%E9%87%8A%E5%99%A8.MD)
