@@ -1,4 +1,4 @@
-# Linux 上 Node.js 安装配置
+# Linux 上安装配置 Node.js
 Node.js安装包及源码下载地址为：https://nodejs.org/en/download/</br>
 安装 node-v8.11.3-linux-x86 LTS(长期支持版本)版本</br>
 注意：Linux上安装Node.js需要安装Python 2.6 或 2.7 ，不建议安装Python 3.0以上版本。</br>
