@@ -12,6 +12,7 @@ cd /usr/local/src
 ```
 ## 解压
 ```
+[root@centOSlearning src]# xz -d node-v8.11.3-linux-x86.tar.xz
 [root@centOSlearning src]# tar -xvJ -f ./node-v8.11.3-linux-x86.tar
 ```
 
@@ -28,7 +29,7 @@ vim /etc/profile
 ```
 文件末尾添加，保存
 ```
-export NODE_HOME=/usr/local/src/node-v8.11.3-linux-x86
+export NODE_HOME=/usr/local/src/node-v8.11.3-linux-x86    #等号后面填node.js的安装路径
 export PATH=$PATH:$NODE_HOME/bin
 export NODE_PATH=$NODE_HOME/lib/node_modules
 ```
