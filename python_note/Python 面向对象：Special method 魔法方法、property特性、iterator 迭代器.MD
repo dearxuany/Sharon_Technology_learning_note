@@ -184,7 +184,7 @@ key没有类型要求;</br>
 参数：self、key</br>
 返回值：value</br>
 
-* \_\_\setitem\_\_(self,key,value) 给key设置对应的value</br>
+* \_\_setitem\_\_(self,key,value) 给key设置对应的value</br>
 \_\_setitem\_\_(self,key,value)：特殊方法，给key设置对应的value，适用于可以变对象。</br>
 参数：self、key、value</br>
 返回值：无</br>
@@ -350,8 +350,7 @@ fdel - deleting an attribute value</br>
 doc - creates a docstring for the attribute</br>
 
 
-对比面向对象-访问限制里的例子写法</br>
-https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1.MD</br>
+[对比面向对象-访问限制里的例子写法](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%EF%BC%9A%E7%B1%BB%E3%80%81%E5%AE%9E%E4%BE%8B%E3%80%81%E5%B1%9E%E6%80%A7%E3%80%81%E6%96%B9%E6%B3%95.MD#%E8%AE%BF%E9%97%AE%E9%99%90%E5%88%B6)
 ```
 class Commodity:
     def __init__(self,name,price):
