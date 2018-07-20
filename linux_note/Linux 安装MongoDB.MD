@@ -57,8 +57,8 @@ cd /usr/local/mongodb-linux-i686-3.2.20/bin
 2018-07-20T18:19:12.059+0800 I NETWORK  [initandlisten] waiting for connections on port 27017
 ```
 
-另外一个命令行，原来的那个不要关闭，打开MongoDB Shell
-进入mongo安装目录中的bin目录
+打开另外一个命令行界面，原来的那个不要关闭，打开MongoDB Shell</br>
+进入mongo安装目录中的bin目录</br>
 ```
 [sunnylinux@centOSlearning bin]$ ./mongo
 MongoDB shell version: 3.2.20
