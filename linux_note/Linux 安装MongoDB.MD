@@ -31,8 +31,9 @@ export PATH=/usr/local/mongodb-linux-i686-3.2.20/bin:$PATH
 ```
 
 ## 创建数据库目录
-MongoDB的数据存储在data目录的db目录下，这个目录必须手动创建。此处创建在更目录下。</br>
+MongoDB的数据存储在data目录的db目录下，这个目录必须手动创建。</br>
 注意：/data/db 是 MongoDB 默认的启动的数据库路径(--dbpath)。</br>
+然后，创建一个日志文件，也记下它的路径。</br>
 
 * 启动数据库目录路径
 ```
@@ -79,4 +80,19 @@ Welcome to the MongoDB shell.
 #现在暂且不想它这么做，所以暂且没有设置，仅记个方法
 echo "/usr/local/mongodb-linux-i686-3.2.20/bin/mongod --storageEngine=mmapv1 --journal
 --dbpath=/usr/local/mongodb-linux-i686-3.2.20/data --logpath=/usr/local/mongodb-linux-i686-3.2.20/bin/log --logappend  --port=27017 --auth" >> /etc/rc.local
+```
+
+## 关闭Mongodb
+关闭Mongodb的方式有很多种，此处使用数据库命令。</br>
+在Mongodb SHELL 里输入以下命令关闭 MongoDB 服务：
+```
+> use admin
+switched to db admin
+> db.shutdownServer()
+#以下为输出
+server should be down...
+2018-07-21T01:51:03.601+0800 I NETWORK  [thread1] trying reconnect to 127.0.0.1:27017 (127.0.0.1) failed
+2018-07-21T01:51:03.610+0800 W NETWORK  [thread1] Failed to connect to 127.0.0.1:27017, in(checking socket for error after poll), reason: errno:111 Connection refused
+2018-07-21T01:51:03.610+0800 I NETWORK  [thread1] reconnect 127.0.0.1:27017 (127.0.0.1) failed failed 
+> 
 ```
