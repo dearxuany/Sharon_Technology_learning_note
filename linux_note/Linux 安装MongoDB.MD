@@ -65,7 +65,7 @@ MongoDB shell version: 3.2.20
 connecting to: test
 Welcome to the MongoDB shell.
 ```
-由于它是一个JavaScript shell，您可以运行一些简单的算术运算:
+由于它是一个JavaScript shell，可以运行一些简单算术运算:
 ```
 > 2+2
 4
