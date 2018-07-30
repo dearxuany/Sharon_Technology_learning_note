@@ -104,6 +104,7 @@ document.getElementById("lname").innerHTML=obj.students[0].lastName
 First Name: Sharon
 Last Name: Li
 ```
+还可使用JSON.parse()来转换
 
 ## js对象转换为JSON
 把任何JavaScript对象变成JSON，就是把这个对象序列化成一个JSON格式的字符串。
