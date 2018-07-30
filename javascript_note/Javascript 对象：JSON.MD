@@ -157,7 +157,20 @@ console.log(s);
   "zipcode": null
 }
 ```
+仅输出指定属性
+```
+var s = JSON.stringify(person,['tags'],'  ');
+console.log(s);
 
+//输出
+{
+  "tags": [
+    "js",
+    "web",
+    "mobile"
+  ]
+}
+```
 
 
 
