@@ -5,6 +5,9 @@ JSON 使用 JavaScript 语法来描述数据对象，但是 JSON 仍然独立于
 JSON 能够使用内建的 JavaScript eval() 方法进行解析,可使用 AJAX 进行传输;</br>
 JSON 解析器和 JSON 库支持许多不同的编程语言;</br>
 
+## JSON文件
+JSON 文件的文件类型是 ".json"，JSON 文本的 MIME 类型是 "application/json"。
+
 ## JSON语法规则
 ### JSON数据书写格式 key:value
 ```
@@ -59,7 +62,48 @@ var students=[
 ]；
 ```
 
+## JSON使用
+### 把 JSON 文本转换为 JavaScript 对象
+创建包含 JSON 语法的 JavaScript 字符串，注意单引号和连字符：
+```
+var txt = '{"students":['+
+'{"firstName":"Sharon","lastName":"Li"},'+
+'{"firstName":"Tom","lastName":"Tang"},'+
+'{"firstName":"Jack","lastName":"Tang"}]}';
+```
+### 用JS中的eval()将 JSON 文本转换为 JavaScript 对象
+```
+var obj = eval ("(" + txt + ")");
+```
+### 在网页中使用js对象
+```
+<html>
+<body>
+<h2>通过 JSON 字符串来创建对象</h3>
+<p>
+First Name: <span id="fname"></span><br /> 
+Last Name: <span id="lname"></span><br /> 
+</p> 
+<script type="text/javascript">
+var txt = '{"students":['+
+'{"firstName":"Sharon","lastName":"Li"},'+
+'{"firstName":"Tom","lastName":"Tang"},'+
+'{"firstName":"Jack","lastName":"Tang"}]}';
 
+var obj = eval ("(" + txt + ")");
+
+document.getElementById("fname").innerHTML=obj.students[0].firstName 
+document.getElementById("lname").innerHTML=obj.students[0].lastName 
+</script>
+</body>
+</html>
+```
+打开浏览器执行html文件,以下为输出结果
+```
+通过 JSON 字符串来创建对象
+First Name: Sharon
+Last Name: Li
+```
 
 
 
