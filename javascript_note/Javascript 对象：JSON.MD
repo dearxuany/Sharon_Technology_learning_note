@@ -138,7 +138,25 @@ chrome输出
 ```
 {"name":"Bob","age":20,"tags":["js","web","mobile"],"city":"Beijing","hasCar":true,"zipcode":null}
 ```
+也可更改参数，添加格式
+```
+var s = JSON.stringify(person,null,'  ');
+console.log(s);
 
+//输出
+{
+  "name": "Bob",
+  "age": 20,
+  "tags": [
+    "js",
+    "web",
+    "mobile"
+  ],
+  "city": "Beijing",
+  "hasCar": true,
+  "zipcode": null
+}
+```
 
 
 
