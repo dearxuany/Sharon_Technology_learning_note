@@ -1,4 +1,4 @@
-# SQL语句
+# SQL基础语句
 SQL 对大小写不敏感，SELECT 与 select 是相同的，新建的数据库时名称要用小写，语句用大写会比较好分辨。
 ```
 常用语句
@@ -152,3 +152,107 @@ truncate 和不带 where 子句的 delete, 以及 drop 都会删除表内的数�
 想删除表, 当然用 drop。</br>
 想保留表而将所有数据删除。如果和事务无关, 用 truncate 即可。 如果和事务有关, 或者想触发 trigger, 还是用 delete。</br>
 如果是整理表内部的碎片, 可以用 truncate 跟上 reuse stroage, 再重新导入/插入数据。</br>
+
+# SQL进阶语句
+## TOP
+规定要返回的记录的数目(mySQL语法)
+```
+SELECT column_name(s)
+FROM table_name
+LIMIT number
+```
+```
+SELECT * FROM sakila.actor LIMIT 20;
+```
+## LIKE
+LIKE 操作符用于在 WHERE 子句中搜索列中的指定模式
+```
+SELECT column_name(s)
+FROM table_name
+LIMIT number
+```
+通配符%，搜索last_name以g开头的行
+```
+SELECT * FROM sakila.actor WHERE last_name LIKE 'g%';
+```
+搜索last_name以g结束的行
+```
+SELECT * FROM sakila.actor WHERE last_name LIKE '%g';
+```
+搜索last_name中间有特定字符的行
+```
+SELECT * FROM sakila.actor WHERE last_name LIKE '%oo%';
+```
+SQL 通配符:SQL 通配符必须与 LIKE 运算符一起使用。
+```
+%                             替代一个或多个字符
+_                             仅替代一个字符
+[charlist]                    字符列中的任何单一字符
+[^charlist]或者[!charlist]    不在字符列中的任何单一字符
+```
+```
+SELECT * FROM sakila.actor WHERE last_name LIKE '_K%';      第二个字母为k的姓
+SELECT * FROM sakila.actor WHERE last_name LIKE '[DB]%';    选以D或B开头的姓（没有成功）
+SELECT * FROM sakila.actor WHERE last_name LIKE '[！DB]%';  选不以D或B开头的姓（没有成功）
+```
+## IN
+选取多个值为value的行
+```
+SELECT column_name(s)
+FROM table_name
+WHERE column_name IN (value1,value2,...)
+```
+```
+SELECT * FROM sakila.actor WHERE last_name IN ('CHASE','DAVIS');
+```
+## BETWEEN
+选取介于两个值之间的数据范围，这些值可以是数值、文本或者日期。
+```
+SELECT column_name(s)
+FROM table_name
+WHERE column_name
+BETWEEN value1 AND value2
+```
+范围50（包括）到100（包括）
+```
+SELECT * FROM sakila.actor WHERE actor_id BETWEEN 50 AND 100;
+```
+当value为字符串时，按字母顺序排序后选取,但是输出结果只是选取了在范围之间的值，并没有排序的。</br>
+mySQL范围A（包括）到C（不包括），不同数据库之前有差异。
+```
+SELECT * FROM sakila.actor WHERE first_name BETWEEN 'A%' AND 'C%';
+```
+选范围之外
+```
+SELECT * FROM sakila.actor WHERE first_name NOT BETWEEN 'A%' AND 'C%';
+```
+## Alias
+为列名称和表名称指定别名Alias，AS的位置紧跟要定别名的表或列名，别名使查询程序更易阅读和书写。</br>
+表
+```
+SELECT column_name(s)
+FROM table_name
+AS alias_name
+```
+列
+```
+SELECT column_name AS alias_name
+FROM table_name
+```
+```
+SELECT first_name AS fname FROM sakila.actor
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
