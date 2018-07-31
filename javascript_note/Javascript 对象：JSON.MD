@@ -3,7 +3,7 @@ JavaScript 对象表示法（JavaScript Object Notation）;</br>
 JSON 是轻量级的文本数据交换格式（纯文本）,字符集必须是UTF-8;</br>
 JSON 使用 JavaScript 语法来描述数据对象，但是 JSON 仍然独立于语言和平台;</br>
 JSON 能够使用内建的 JavaScript eval() 方法进行解析,可使用 AJAX 进行传输;</br>
-JSON 解析器和 JSON 库支持许多不同的编程语言;</br>
+JSON 解析器和 JSON 库支持许多不同的编程语言。</br>
 
 ## JSON文件
 JSON 文件的文件类型是 ".json"，JSON 文本的 MIME 类型是 "application/json"。
@@ -79,7 +79,7 @@ var obj = eval ("(" + txt + ")");
 ```
 <html>
 <body>
-<h2>通过 JSON 字符串来创建对象</h3>
+<h2>通过 JSON 字符串来创建对象</h2>
 <p>
 First Name: <span id="fname"></span><br /> 
 Last Name: <span id="lname"></span><br /> 
