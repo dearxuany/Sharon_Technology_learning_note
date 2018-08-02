@@ -21,7 +21,7 @@ cd ./VMware 9_i386
 vmware-vdiskmanager.exe -r "D:\CentOS\Clone of CentOS7 40GB\CentOS7 learning 40GB-cl1.vmdk" -t 0 "C:\Users\Tommy\Desktop\VMware虚拟机备份文件\MyNewImage.vmdk"
 ```
 ![](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/note_images/VMware_note_images/VMware%20%E5%90%88%E5%B9%B6%E5%A4%9A%E4%B8%AAvmdk2.png)</br>
-（其实路径最后也不要有中文，很有可能会出现乱码或者其他问题。这里虽然乱码了，但合并还是成功的。）
+（其实路径最好也不要有中文，很有可能会出现乱码或者其他问题。这里虽然乱码了，但合并还是成功的。）
 
 
 ## 检验测试
