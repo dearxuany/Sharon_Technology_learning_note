@@ -34,10 +34,11 @@
 [Python 常用函数](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python3%20function%20collection.MD)
 
 ## VMware
+[VMware 删除旧快照](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/VMware_note/VMware%20%E5%88%A0%E9%99%A4%E6%97%A7%E7%9A%84%E5%BF%AB%E7%85%A7.MD)
+| [VMware 合并多个vmdk](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/VMware_note/VMware%20%E5%90%88%E5%B9%B6%E5%A4%9A%E4%B8%AAvmdk.MD)
 ### VMware 相关积累总结
 [VMware 物理机磁盘空间不足问题解决](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/VMware_note/VMware%20%E7%89%A9%E7%90%86%E6%9C%BA%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4%E4%B8%8D%E8%B6%B3%E7%9A%84%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3.MD)
-| [VMware 删除旧快照](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/VMware_note/VMware%20%E5%88%A0%E9%99%A4%E6%97%A7%E7%9A%84%E5%BF%AB%E7%85%A7.MD)
-| [VMware 合并多个vmdk](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/VMware_note/VMware%20%E5%90%88%E5%B9%B6%E5%A4%9A%E4%B8%AAvmdk.MD)
+
 
 ## Software testing
 
