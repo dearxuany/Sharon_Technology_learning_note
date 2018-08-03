@@ -72,7 +72,8 @@ SELECT * FROM university.department WHERE building = 'waston';
 用于where后面的符合条件筛选，where后面可用括号括起
 ```
 SELECT * FROM database_name.table_name WHERE column_name1 >= value AND column_name2 = value ; 
-SELECT * FROM database_name.table_name WHERE (column_name1 >= value AND column_name2 = value) OR column_name3 <= value;
+SELECT * FROM database_name.table_name 
+WHERE (column_name1 >= value AND column_name2 = value) OR column_name3 <= value;
 ```
 ```
 SELECT * FROM university.department WHERE building = 'waston' AND budget < 6000;
@@ -226,7 +227,7 @@ SELECT * FROM sakila.actor WHERE first_name BETWEEN 'A%' AND 'C%';
 ```
 SELECT * FROM sakila.actor WHERE first_name NOT BETWEEN 'A%' AND 'C%';
 ```
-## Alias
+## ALIAS
 为列名称和表名称指定别名Alias，AS的位置紧跟要定别名的表或列名，别名使查询程序更易阅读和书写。</br>
 表
 ```
@@ -234,6 +235,13 @@ SELECT column_name(s)
 FROM table_name
 AS alias_name
 ```
+将一个含有演员信息的表 sakila.actor指定别名为a，将另外一个有电影参演演员信息的表sakila.film_actor指定别名为fa，查演员ID为1的演员的名称和他参演过的电影的ID。
+```
+SELECT a.first_name, a.last_name, fa.film_id 
+FROM sakila.actor AS a, sakila.film_actor AS fa 
+WHERE a.actor_id=1 AND fa.actor_id=1;
+```
+
 列
 ```
 SELECT column_name AS alias_name
@@ -242,6 +250,59 @@ FROM table_name
 ```
 SELECT first_name AS fname FROM sakila.actor
 ```
+
+## JOIN
+join 用于根据两个或多个表中的列之间的关系，从这些表中查询数据。</br>
+数据库中的表可通过键将彼此联系起来。</br>
+主键（Primary Key）是一个列，在这个列中的每一行的值都是唯一的。在表中，每个主键的值都是唯一的。</br>
+这样做的目的是在不重复每个表中的所有数据的情况下，把表间的数据交叉捆绑在一起。</br>
+</br>
+实例：有三个表，分别是actor、file_actor、file，查询每个演员各自演过的电影。</br>
+```
+SELECT a.first_name, a.last_name, f.title 
+FROM sakila.actor AS a, sakila.film_actor AS fa, sakila.film AS f
+WHERE a.actor_id=fa.actor_id AND fa.film_id=f.film_id;
+```
+使用join来获取数据
+```
+SELECT a.first_name, a.last_name, f.title 
+FROM sakila.actor AS a 
+INNER JOIN sakila.film_actor AS fa
+ON a.actor_id=fa.actor_id
+INNER JOIN sakila.film AS f
+ON fa.film_id=f.film_id;
+```
+不同的JOIN
+* JOIN: INNER JOIN 与 JOIN 是相同的，如果表中有至少一个匹配，则返回行
+* LEFT JOIN: 即使右表中没有匹配，也从左表返回所有的行
+* RIGHT JOIN: 即使左表中没有匹配，也从右表返回所有的行
+* FULL JOIN: 只要其中一个表中存在匹配，就返回行
+
+## LEFT JOIN
+LEFT JOIN 关键字会从左表 (table_name1) 那里返回所有的行，即使在右表 (table_name2) 中没有匹配的行。
+```
+SELECT column_name(s)
+FROM table_name1
+LEFT JOIN table_name2 
+ON table_name1.column_name=table_name2.column_name
+```
+实例：</br>
+actor、file_actor，查询每个演员各自演过的电影的电影编号，同时就算这个演员没演过电影也返回他的信息。
+在前面的表格插一个没演过电影的人的信息：</br>
+```
+INSERT INTO sakila.actor VALUES (201,'SHARON','LI','2015-08-03 18:20:11')
+```
+因为数据太多会显示不全，所以加最后一句限制范围
+```
+SELECT a.first_name, a.last_name, fa.film_id
+FROM sakila.actor AS a 
+LEFT JOIN sakila.film_actor AS fa
+ON a.actor_id=fa.actor_id
+WHERE a.actor_id BETWEEN 199 AND 201
+```
+
+
+
 
 
 
