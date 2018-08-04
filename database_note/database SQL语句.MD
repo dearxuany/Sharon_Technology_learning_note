@@ -2,7 +2,8 @@
 SQL特性： 
 * 对大小写不敏感，SELECT 与 select 是相同的，新建的数据库时名称要用小写，语句用大写会比较好分辨;
 * 对空格不敏感，可以换行，增加可读性；
-* 多条SQL语句必须用分号；分隔，单条语句部分RDBMS不需要用分号分隔。
+* 多条SQL语句必须用分号；分隔，单条语句部分RDBMS不需要用分号分隔;
+* 不同数据库中的SQL语法会有略微不同（此处主要记录mySQL）。
 ```
 常用语句
 SELECT - 从数据库中提取数据
@@ -399,7 +400,45 @@ SELECT column_name(s)
 FROM table1;
 ```
 
+## CREATE DATABASE
+CREATE DATABASE 用于创建数据库。
+```
+CREATE DATABASE database_name
+```
+新建一个名为personalFinancialDB的数据库
+```
+CREATE DATABASE personalFinancialDB;
+```
 
+## CREATE TABLE
+CREATE TABLE 语句用于创建数据库中的表。
+```
+CREATE TABLE new_table_name
+(
+column_name1 data_type(size),
+column_name2 data_type(size),
+column_name3 data_type(size),
+)
+```
+数据类型
+* 仅容纳整数,在括号内规定数字的最大位数：</br>
+integer(size)</br>
+int(size)</br>
+smallint(size)</br>
+tinyint(size)</br>
+
+* 容纳带有小数的数字, "size" 规定数字的最大位数，"d" 规定小数点右侧的最大位数：</br>
+decimal(size,d)</br>
+numeric(size,d)</br>
+
+* 容纳固定长度的字符串（可容纳字母、数字以及特殊字符），在括号中规定字符串的长度：</br>
+char(size)</br>
+
+* 容纳可变长度的字符串（可容纳字母、数字以及特殊的字符），在括号中规定字符串的最大长度；</br>
+varchar(size)</br>
+
+* 容纳日期：</br>
+date(yyyymmdd)</br>
 
 
 
