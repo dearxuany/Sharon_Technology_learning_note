@@ -109,6 +109,11 @@ INSERT INTO database_name.table_name (column1,column3) VALUES (value1,value3)
 insert into university.department values ('math','harry',3000)
 insert into university.department (building,budget) values ('iron',6000)  #这条好像没成功
 ```
+同时插入多行数据
+```
+INSERT INTO dbtest.orders
+VALUES (1,77895,3),(2,44678,3),(3,22456,1),(4,24562,1),(5,34764,65);
+```
 ## UPDATE和SET 修改value
 修改表中数据，where后面是选择要修改的位置的条件（修改 column_name2=value处的column_name1的值）
 ```
@@ -287,7 +292,7 @@ LEFT JOIN table_name2
 ON table_name1.column_name=table_name2.column_name
 ```
 实例：</br>
-actor、file_actor，查询每个演员各自演过的电影的电影编号，同时就算这个演员没演过电影也返回他的信息。
+actor、file_actor，查询每个演员各自演过的电影的电影编号，同时就算这个演员没演过电影也返回他的信息。</br>
 在前面的表格插一个没演过电影的人的信息：</br>
 ```
 INSERT INTO sakila.actor VALUES (201,'SHARON','LI','2015-08-03 18:20:11')
@@ -300,6 +305,39 @@ LEFT JOIN sakila.film_actor AS fa
 ON a.actor_id=fa.actor_id
 WHERE a.actor_id BETWEEN 199 AND 201
 ```
+
+## RIGHT JOIN 
+RIGHT JOIN 关键字会右表 (table_name2) 那里返回所有的行，即使在左表 (table_name1) 中没有匹配的行。
+```
+SELECT column_name(s)
+FROM table_name1
+RIGHT JOIN table_name2 
+ON table_name1.column_name=table_name2.column_name
+```
+实例：</br>
+actor、file_actor，查询每个演员各自演过的电影的电影编号，同时就算这个演员没演过电影也返回他的信息。这次把两个表的顺序调转一下。</br>
+```
+SELECT sakila.actor.first_name,sakila.actor.last_name,sakila.film_actor.film_id
+FROM sakila.film_actor
+RIGHT JOIN sakila.actor
+ON sakila.film_actor.actor_id = sakila.actor.actor_id
+WHERE sakila.actor.actor_id BETWEEN 199 AND 201
+```
+
+## FULL JOIN
+列出两个表里面的所有数据，不管有没有对应的匹配。
+```
+SELECT column_name(s)
+FROM table_name1
+FULL JOIN table_name2 
+ON table_name1.column_name=table_name2.column_name
+```
+
+
+
+
+
+
 
 
 
