@@ -333,6 +333,33 @@ FULL JOIN table_name2
 ON table_name1.column_name=table_name2.column_name
 ```
 
+## UNION 和 UNION ALL
+UNION 操作符用于合并两个或多个 SELECT 语句的结果集。</br>
+注意：</br>
+两句SELECT后面必须有相同数量的column；</br>
+要整合的column的顺序必须一一对应；</br>
+column内数据的数据类型必须相同；</br>
+UNION会删去重复的数据，仅显示一条；</br>
+如果允许出现重复的值，可使用UNION ALL。
+
+```
+SELECT column_name(s) FROM table_name1
+UNION
+SELECT column_name(s) FROM table_name2
+```
+整合两个表格中的城市数据
+```
+SELECT city FROM sakila.city
+union
+SELECT city FROM dbtest.persons
+```
+```
+SELECT city FROM sakila.city
+union all
+SELECT city FROM dbtest.persons
+```
+
+
 
 
 
