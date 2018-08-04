@@ -1,5 +1,8 @@
 # SQL基础语句
-SQL 对大小写不敏感，SELECT 与 select 是相同的，新建的数据库时名称要用小写，语句用大写会比较好分辨。
+SQL特性： 
+* 对大小写不敏感，SELECT 与 select 是相同的，新建的数据库时名称要用小写，语句用大写会比较好分辨;
+* 对空格不敏感，可以换行，增加可读性；
+* 多条SQL语句必须用分号；分隔，单条语句部分RDBMS不需要用分号分隔。
 ```
 常用语句
 SELECT - 从数据库中提取数据
@@ -14,7 +17,12 @@ DROP TABLE - 删除表
 CREATE INDEX - 创建索引（搜索键）
 DROP INDEX - 删除索引
 ```
-
+```
+注释
+# 整行注释
+-- 行内注释
+/* 多行注释 */
+```
 
 ## select 选择
 选出需要的列
@@ -162,22 +170,35 @@ truncate 和不带 where 子句的 delete, 以及 drop 都会删除表内的数�
 如果是整理表内部的碎片, 可以用 truncate 跟上 reuse stroage, 再重新导入/插入数据。</br>
 
 # SQL进阶语句
-## TOP
+## LIMIT 和 OFFSET
 规定要返回的记录的数目(mySQL语法)
 ```
 SELECT column_name(s)
 FROM table_name
 LIMIT number
 ```
+返回前20行
 ```
 SELECT * FROM sakila.actor LIMIT 20;
 ```
+由第5行开始，返回后面6行数据。
+SQL中检索行号是由0开始，即4代表第5行。
+```
+SELECT * FROM sakila.actor
+LIMIT 6 OFFSET 4;
+```
+也可简写，前面数字对应OFFSET起始行号，后面数字代表LIMIT显示行数。
+```
+SELECT * FROM sakila.actor
+LIMIT 4,6;
+```
+
 ## LIKE
-LIKE 操作符用于在 WHERE 子句中搜索列中的指定模式
+LIKE 操作符用于在 WHERE 子句中搜索列中的指定格式
 ```
 SELECT column_name(s)
 FROM table_name
-LIMIT number
+WHERE column LIKE sth;
 ```
 通配符%，搜索last_name以g开头的行
 ```
