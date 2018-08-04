@@ -420,7 +420,29 @@ column_name2 data_type(size),
 column_name3 data_type(size),
 )
 ```
-数据类型
+
+实例：</br>
+在上面创建的数据库中，创建一个名为persons的空白表。
+其中主键是ID，ID的号码在插入新数据时自动增加，而不需要额外插入（使用关键词 AUTO_INCREMENT）。
+```
+CREATE TABLE personalFinancialDB.persons
+(
+ID int NOT NULL AUTO_INCREMENT,
+LastName varchar(255) NOT NULL,
+FirstName varchar(255),
+Address varchar(255),
+City varchar(255),
+PRIMARY KEY (ID)
+)
+```
+尝试插入数据
+```
+insert into personalFinancialDB.persons (LastName,FirstName)
+VALUES ('Li','Sharon')
+```
+ID自动增加为1，插入上面的values，其他位置为null。
+
+### 数据类型 data type
 * 仅容纳整数,在括号内规定数字的最大位数：</br>
 integer(size)</br>
 int(size)</br>
@@ -439,6 +461,39 @@ varchar(size)</br>
 
 * 容纳日期：</br>
 date(yyyymmdd)</br>
+
+
+### 约束 Constraints
+约束用于限制加入表的数据的类型；</br>
+可以在创建表时规定约束（通过 CREATE TABLE 语句），或者在表创建之后也可以（通过 ALTER TABLE 语句）。</br>
+</br>
+主要有以下几种约束：
+
+* NOT NULL</br>
+强制列不接受 NULL 值，如果不向字段添加值，就无法插入新记录或者更新记录。
+
+* UNIQUE</br>
+唯一标识数据库表中的每条记录，为列或列集合提供了唯一性的保证，每个表可以有多个 UNIQUE 约束。
+
+* PRIMARY KEY</br>
+主键，唯一标识数据库表中的每条记录，不能包含 NULL 值，每个表都应该有一个主键，并且每个表只能有一个主键。</br>
+使用多列作为主键，可使用以下语法：
+```
+CONSTRAINT pk_PersonID PRIMARY KEY (Id_P,LastName)
+```
+
+* FOREIGN KEY</br>
+外键，一个表中的 FOREIGN KEY 指向另一个表中的 PRIMARY KEY。</br>
+用于预防破坏表之间连接的动作，能防止非法数据插入外键列，因为它必须是它指向的那个表中的值之一。</br>
+
+* CHECK</br>
+CHECK 用于限制列中的值的范围。</br>
+如果对单个列定义 CHECK 约束，那么该列只允许特定的值。</br>
+如果对一个表定义 CHECK 约束，那么此约束会在特定的列中对值进行限制。</br>
+
+* DEFAULT
+插入默认值，如果没有规定其他的值，那么会将默认值添加到所有的新记录。</br>
+
 
 
 
