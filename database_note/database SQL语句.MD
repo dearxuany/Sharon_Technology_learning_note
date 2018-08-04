@@ -102,12 +102,14 @@ INSERT INTO database_name.table_name VALUES (value1,value2,value3...)
 ```
 给指定行插入数据，没有指定的列的值为NULL
 ```
-INSERT INTO database_name.table_name (column1,column3) VALUES (value1,value3)
+INSERT INTO database_name.table_name (column1,column3) 
+VALUES (value1,value3)
 ```
 (注意插入是没有输出的！)
 ```
-insert into university.department values ('math','harry',3000)
-insert into university.department (building,budget) values ('iron',6000)  #这条好像没成功
+insert into university.department values ('math','harry',3000);
+insert into university.department (building,budget) 
+values ('iron',6000);  #这条好像没成功
 ```
 同时插入多行数据
 ```
@@ -357,6 +359,23 @@ SELECT city FROM dbtest.persons
 SELECT city FROM sakila.city
 union all
 SELECT city FROM dbtest.persons
+```
+
+##  INSERT INTO SELECT
+INSERT INTO SELECT 语句从一个表复制数据，然后把数据插入到一个已存在的表中。目标表中任何已存在的行都不会受影响。
+（注意：mySQL比较特殊，用的INSERT INTO SELECT，其他数据库的语法是SELECT INTO）
+</br>
+将所有列插入新表，新表必须是已存在的。
+```
+INSERT INTO table2
+SELECT * FROM table1;
+```
+将部分列插入新表
+```
+INSERT INTO table2
+(column_name(s))
+SELECT column_name(s)
+FROM table1;
 ```
 
 
