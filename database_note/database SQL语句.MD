@@ -427,12 +427,12 @@ column_name3 data_type(size),
 ```
 CREATE TABLE personalFinancialDB.persons
 (
-ID int NOT NULL AUTO_INCREMENT,     -- ID自动增加，不能为空
+ID_persons int NOT NULL AUTO_INCREMENT,     -- ID自动增加，不能为空
 LastName varchar(255) NOT NULL,     -- 姓不能为空
 FirstName varchar(255),
 Address varchar(255),
 City varchar(255),
-PRIMARY KEY (ID)                    -- 将ID设为主键
+PRIMARY KEY (ID_persons)                    -- 将ID设为主键
 )
 ```
 尝试插入数据
@@ -440,7 +440,7 @@ PRIMARY KEY (ID)                    -- 将ID设为主键
 insert into personalFinancialDB.persons (LastName,FirstName)
 VALUES ('Li','Sharon')
 ```
-ID自动增加为1，插入上面的values，其他位置为null。
+ID_persons自动增加为1，插入上面的values，其他位置为null。
 
 ### 数据类型 data type
 * 仅容纳整数,在括号内规定数字的最大位数：</br>
@@ -478,7 +478,7 @@ date(yyyymmdd)</br>
 #### NOT NULL
 强制列不接受 NULL 值，如果不向字段添加值，就无法插入新记录或者更新记录。
 ```
-ID int NOT NULL AUTO_INCREMENT,
+ID_persons int NOT NULL AUTO_INCREMENT,
 LastName varchar(255) NOT NULL,
 ```
 
@@ -507,6 +507,25 @@ CONSTRAINT constraint_name PRIMARY KEY (column_name1，column_name2,...)
 #### FOREIGN KEY</br>
 外键，一个表中的 FOREIGN KEY 指向另一个表中的 PRIMARY KEY。</br>
 用于预防破坏表之间连接的动作，能防止非法数据插入外键列，因为它必须是它指向的那个表中的值之一。</br>
+```
+ID_persons int,
+FOREIGN KEY (ID_persons) REFERENCES persons(ID_persons)
+```
+实例：
+创建支出表 expenditure（支出ID ID_expenditure，支出明细 expenseDetail，支出金额 expenseAmount，支出日期 expenseDate，支出用户 ID_persons）；</br>
+将之前创建的persons表中的ID_persons设为支出表的外键，以表示“这是谁的支出”。
+```
+CREATE TABLE personalFinancialDB.expenditure
+(
+ID_expenditure int NOT NULL AUTO_INCREMENT,
+expenseDetail varchar(255) NOT NULL,  
+expenseAmount decimal(7,1),
+expenseDate DATETIME,
+ID_persons int,
+PRIMARY KEY (ID_expenditure),
+FOREIGN KEY (ID_persons) REFERENCES persons(ID_persons)
+)
+```
 
 
 #### CHECK</br>
@@ -570,14 +589,23 @@ DROP primary key
 
 #### FOREIGN KEY
 
+
 #### CHECK
 
 
 #### DEFAULT
 
 
-
-
+## 其他修改
+修改列名
+```
+ALTER TABLE table_name CHANGE COLUMN old_column_name new_column_name datatype
+```
+实例：
+```
+ALTER TABLE personalFinancialDB.persons CHANGE COLUMN ID ID_persons int NOT NULL AUTO_INCREMENT
+```
+如果修改的是表的主键，注意添加后面的 NOT NULL AUTO_INCREMENT ，不然插入数据的时候会报错。
 
 
 
