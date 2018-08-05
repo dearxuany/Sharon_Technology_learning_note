@@ -460,7 +460,7 @@ char(size)</br>
 varchar(size)</br>
 
 * 容纳日期：</br>
-date(yyyymmdd)</br>
+mySQL: DATETIME、TIMESTAMP、DATE、TIME、YEAR</br>
 
 
 ### 约束 Constraints
@@ -526,21 +526,60 @@ PRIMARY KEY (ID_expenditure),
 FOREIGN KEY (ID_persons) REFERENCES persons(ID_persons)
 )
 ```
-
+日期那里的datatype用了DATETIME，其格式为 YYYY-MM-DD HH:MM:SS。
+尝试插入一条数据，日期处使用了函数 now()。
+```
+INSERT INTO personalFinancialDB.expenditure (expenseDetail,expenseAmount,expenseDate,ID_persons)
+VALUES ('Mucha Milktea', 2.7, now(),1)
+```
 
 #### CHECK</br>
 CHECK 用于限制列中的值的范围。</br>
 如果对单个列定义 CHECK 约束，那么该列只允许特定的值。</br>
 如果对一个表定义 CHECK 约束，那么此约束会在特定的列中对值进行限制。</br>
+</br>
+新建表时，在括号内创建CHECK约束：
+```
+CHECK (column_name>0)
+```
+同时给约束起名字：
+```
+CONSTRAINT constraint_name CHECK (column_name1>0 AND column_name3='sth')
+```
 
 #### DEFAULT</br>
 插入默认值，如果没有规定其他的值，那么会将默认值添加到所有的新记录。</br>
-
+在新建表时，在datatype后面添加DEFAULTA约束，default_value为要设置的默认值：
+```
+column_name datatype DEFAULT default_value
+```
+如果插入的默认值需要函数参与，则可以改为以下样子：
+```
+column_name date DEFAULT NOW()
+```
+此处默认值为，当前系统时间。</br>
 
 ## ALTER TABLE
 ALTER TABLE 用于在已有的表，如修改约束，添加、修改或删除列等。
 
 ### 修改已有表的约束
+通用格式
+```
+ALTER TABLE table_name
+ADD 约束类型 （约束内容）
+```
+改名的约束
+```
+ALTER TABLE table_name
+ADD CONSTRAINT constraint_name
+约束类型 （约束内容）
+```
+输出约束
+```
+ALTER TABLE table_name
+DROP 约束类型 constraint_name
+```
+
 #### UNIQUE</br>
 给已有表创建单列 UNIQUE 约束：
 ```
@@ -550,7 +589,8 @@ ADD UNIQUE (column_name)
 如需命名 UNIQUE 约束，并定义多个列的 UNIQUE 约束：
 ```
 ALTER TABLE table_name
-ADD CONSTRAINT constraint_name UNIQUE (column_name1，column_name2,...)
+ADD CONSTRAINT constraint_name 
+UNIQUE (column_name1，column_name2,...)
 ```
 删除已有约束：
 ```
@@ -579,7 +619,8 @@ ADD PRIMARY KEY (column_name)
 创建已有表的多列主键：
 ```
 ALTER TABLE table_name
-ADD CONSTRAINT constraint_name PRIMARY KEY (column_name1，column_name2,...)
+ADD CONSTRAINT constraint_name 
+PRIMARY KEY (column_name1，column_name2,...)
 ```
 撤销主键：
 ```
@@ -588,16 +629,55 @@ DROP primary key
 ```
 
 #### FOREIGN KEY
-
+给已有表设置FOREIGN KEY，前提是新建表时已新建外键用的column：
+```
+ALTER TABLE table_name2
+ADD FOREIGN KEY (column_name)
+REFERENCES table_name1(column_name)
+```
+也可给 FOREIGN KEY 约束改名：
+```
+ALTER TABLE  table_name2
+ADD CONSTRAINT constraint_name
+FOREIGN KEY (column_name)
+REFERENCES table_name1(column_name)
+```
+撤销 FOREIGN KEY 约束：
+```
+ALTER TABLE table_name
+DROP FOREIGN KEY constraint_name
+```
 
 #### CHECK
-
+给已有表创建CHECK约束：
+```
+ALTER TABLE personalFinancialDB.expenditure
+ADD CHECK (expenseAmount>0)
+```
+删除CHECK约束：
+```
+ALTER TABLE table_name
+DROP CHECK constraint_name
+```
 
 #### DEFAULT
+给已有表的已有列创建默认值：
+```
+ALTER TABLE table_name
+ALTER column_name SET DEFAULT default_value
+```
+注意：</br>
+使用函数来生成默认值貌似是不能在新建表之后再更改的，所以最好新建表的时候就设置好，不然就可能需要像修改列名那样改了，不能像其他约束那样修改。</br>
+</br>
+删除默认值：
+```
+ALTER TABLE table_name
+ALTER column_name DROP DEFAULT
+```
 
 
-## 其他修改
-修改列名
+### 其他修改
+#### 改列名
 ```
 ALTER TABLE table_name CHANGE COLUMN old_column_name new_column_name datatype
 ```
