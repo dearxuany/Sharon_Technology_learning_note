@@ -427,12 +427,12 @@ column_name3 data_type(size),
 ```
 CREATE TABLE personalFinancialDB.persons
 (
-ID int NOT NULL AUTO_INCREMENT,
-LastName varchar(255) NOT NULL,
+ID int NOT NULL AUTO_INCREMENT,     -- ID自动增加，不能为空
+LastName varchar(255) NOT NULL,     -- 姓不能为空
 FirstName varchar(255),
 Address varchar(255),
 City varchar(255),
-PRIMARY KEY (ID)
+PRIMARY KEY (ID)                    -- 将ID设为主键
 )
 ```
 尝试插入数据
@@ -465,34 +465,116 @@ date(yyyymmdd)</br>
 
 ### 约束 Constraints
 约束用于限制加入表的数据的类型；</br>
-可以在创建表时规定约束（通过 CREATE TABLE 语句），或者在表创建之后也可以（通过 ALTER TABLE 语句）。</br>
+可以在创建表时规定约束（通过 CREATE TABLE 语句,写在括号内），或者在表创建之后也可以（通过 ALTER TABLE 语句）。</br>
 </br>
 主要有以下几种约束：
+* NOT NULL
+* UNIQUE
+* PRIMARY KEY
+* FOREIGN KEY
+* CHECK
+* DEFAULT
 
-* NOT NULL</br>
+#### NOT NULL
 强制列不接受 NULL 值，如果不向字段添加值，就无法插入新记录或者更新记录。
+```
+ID int NOT NULL AUTO_INCREMENT,
+LastName varchar(255) NOT NULL,
+```
 
-* UNIQUE</br>
-唯一标识数据库表中的每条记录，为列或列集合提供了唯一性的保证，每个表可以有多个 UNIQUE 约束。
+#### UNIQUE
+唯一标识数据库表中的每条记录，为列或列集合提供了唯一性的保证，每个表可以有多个 UNIQUE 约束。</br>
+新建表时，将单个列创建UNIQUE约束：
+```
+UNIQUE (column_name)
+```
+新建表时，给多个列创建UNIQUE约束：
+```
+CONSTRAINT constraint_name UNIQUE (column_name1，column_name2,...)
+```
 
-* PRIMARY KEY</br>
+#### PRIMARY KEY
 主键，唯一标识数据库表中的每条记录，不能包含 NULL 值，每个表都应该有一个主键，并且每个表只能有一个主键。</br>
-使用多列作为主键，可使用以下语法：
+单列定义的主键：
 ```
-CONSTRAINT pk_PersonID PRIMARY KEY (Id_P,LastName)
+PRIMARY KEY (column_name)
+```
+使用多列作为主键：
+```
+CONSTRAINT constraint_name PRIMARY KEY (column_name1，column_name2,...)
 ```
 
-* FOREIGN KEY</br>
+#### FOREIGN KEY</br>
 外键，一个表中的 FOREIGN KEY 指向另一个表中的 PRIMARY KEY。</br>
 用于预防破坏表之间连接的动作，能防止非法数据插入外键列，因为它必须是它指向的那个表中的值之一。</br>
 
-* CHECK</br>
+
+#### CHECK</br>
 CHECK 用于限制列中的值的范围。</br>
 如果对单个列定义 CHECK 约束，那么该列只允许特定的值。</br>
 如果对一个表定义 CHECK 约束，那么此约束会在特定的列中对值进行限制。</br>
 
-* DEFAULT
+#### DEFAULT</br>
 插入默认值，如果没有规定其他的值，那么会将默认值添加到所有的新记录。</br>
+
+
+## ALTER TABLE
+ALTER TABLE 用于在已有的表，如修改约束，添加、修改或删除列等。
+
+### 修改已有表的约束
+#### UNIQUE</br>
+给已有表创建单列 UNIQUE 约束：
+```
+ALTER TABLE table_name
+ADD UNIQUE (column_name)
+```
+如需命名 UNIQUE 约束，并定义多个列的 UNIQUE 约束：
+```
+ALTER TABLE table_name
+ADD CONSTRAINT constraint_name UNIQUE (column_name1，column_name2,...)
+```
+删除已有约束：
+```
+ALTER TABLE table_name
+DROP INDEX constraint_name
+```
+实例：</br>
+给上面创建的表的ID和LastName两列创建UNIQUE约束
+```
+ALTER TABLE personalFinancialDB.persons
+ADD CONSTRAINT uqPersonID UNIQUE (ID,LastName)
+```
+删除UNIQUE约束
+```
+ALTER TABLE personalFinancialDB.persons
+DROP INDEX uqPersonID
+```
+
+#### PRIMARY KEY
+用 ALTER TABLE 语句添加主键前提： 表在新建的时，该column必须有not null的约束。
+创建已有表的单列主键：
+```
+ALTER TABLE table_name
+ADD PRIMARY KEY (column_name)
+```
+创建已有表的多列主键：
+```
+ALTER TABLE table_name
+ADD CONSTRAINT constraint_name PRIMARY KEY (column_name1，column_name2,...)
+```
+撤销主键：
+```
+ALTER TABLE table_name
+DROP primary key
+```
+
+#### FOREIGN KEY
+
+#### CHECK
+
+
+#### DEFAULT
+
 
 
 
