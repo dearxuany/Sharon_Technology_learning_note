@@ -155,20 +155,6 @@ delete from university.department where budget='5000'  #删不掉
 delete from university.department  #删不掉
 ```
 
-# DROP、TRUNCATE、 DELETE 的区别
-truncate table 命令将快速删除数据表中的所有记录，但保留数据表结构。这种快速删除与 delete from 数据表的删除全部数据表记录不一样，delete 命令删除的数据将存储在系统回滚段中，需要的时候，数据可以回滚恢复，而 truncate 命令删除的数据是不可以恢复的。
-## 相同点
-truncate 和不带 where 子句的 delete, 以及 drop 都会删除表内的数据。
-## 不同点 
-* truncate 和 delete 只删除数据不删除表的结构(定义) ，drop 语句将删除表的结构被依赖的约束(constrain), 触发器(trigger), 索引(index); 依赖于该表的存储过程/函数将保留, 但是变为 invalid 状态。</br>
-* delete 语句是 dml, 这个操作会放到 rollback segement 中, 事务提交之后才生效; 如果有相应的 trigger, 执行的时候将被触发。 truncate, drop 是 ddl, 操作立即生效, 原数据不放到 rollback segment 中, 不能回滚。 操作不触发 trigger。</br>
-* delete 语句不影响表所占用的 extent, 高水线(high watermark)保持原位置不动。 显然 drop 语句将表所占用的空间全部释放 。 truncate 语句缺省情况下见空间释放到 minextents 个 extent, 除非使用 reuse storage; truncate会将高水线复位(回到最开始)。</br>
-* 速度：一般来说: drop > truncate > delete 。</br>
-* 安全性: 小心使用 drop 和 truncate, 尤其没有备份的时候。</br>
-使用上, 想删除部分数据行用 delete, 注意带上 where 子句。 回滚段要足够大。</br>
-想删除表, 当然用 drop。</br>
-想保留表而将所有数据删除。如果和事务无关, 用 truncate 即可。 如果和事务有关, 或者想触发 trigger, 还是用 delete。</br>
-如果是整理表内部的碎片, 可以用 truncate 跟上 reuse stroage, 再重新导入/插入数据。</br>
 
 # SQL进阶语句
 ## LIMIT 和 OFFSET
@@ -400,6 +386,30 @@ SELECT column_name(s)
 FROM table1;
 ```
 
+## CREATE INDEX
+CREATE INDEX 语句用于在表中创建索引，索引使数据库应用程序可以更快地查找数据。</br>
+注意：</br>
+更新一个包含索引的表需要比更新一个没有索引的表更多的时间，这是由于索引本身也需要更新。</br>
+因此，理想的做法是仅仅在常常被搜索的列（以及表）上面创建索引。</br>
+
+CREATE INDEX 语句允许使用重复的值：
+```
+CREATE INDEX index_name
+ON table_name (column_name)
+```
+CREATE UNIQUE INDEX 语句创建一个唯一的索引，唯一的索引意味着两个行不能拥有相同的索引值：
+```
+CREATE UNIQUE INDEX index_name
+ON table_name (column_name)
+```
+实例：</br>
+给多个列添加索引，以便直接查询全名</br>
+```
+CREATE INDEX personFullnameIndex
+ON personalFinancialDB.persons (LastName,FirstName)
+```
+
+
 ## CREATE DATABASE
 CREATE DATABASE 用于创建数据库。
 ```
@@ -456,7 +466,7 @@ numeric(size,d)</br>
 * 容纳固定长度的字符串（可容纳字母、数字以及特殊字符），在括号中规定字符串的长度：</br>
 char(size)</br>
 
-* 容纳可变长度的字符串（可容纳字母、数字以及特殊的字符），在括号中规定字符串的最大长度；</br>
+* 容纳可变长度的字符串（可容纳字母、数字以及特殊的字符），在括号中规定字符串的最大长度:</br>
 varchar(size)</br>
 
 * 容纳日期：</br>
@@ -675,9 +685,8 @@ ALTER TABLE table_name
 ALTER column_name DROP DEFAULT
 ```
 
-
 ### 其他修改
-#### 改列名
+#### 改列名或列的数据类型
 ```
 ALTER TABLE table_name CHANGE COLUMN old_column_name new_column_name datatype
 ```
@@ -687,10 +696,48 @@ ALTER TABLE personalFinancialDB.persons CHANGE COLUMN ID ID_persons int NOT NULL
 ```
 如果修改的是表的主键，注意添加后面的 NOT NULL AUTO_INCREMENT ，不然插入数据的时候会报错。
 
+## DROP
+删除索引(mySQL)
+```
+ALTER TABLE table_name 
+DROP INDEX index_name
+```
+删除表
+```
+DROP TABLE table_name
+```
+删除数据库
+```
+DROP DATABASE database_name
+```
+
+## TRUNCATE TABLE 
+TRUNCATE TABLE 仅仅需要除去表内的数据，但并不删除表本身。</br>
+即是仅清空数据内容，表和表中的column还是存在的，不会被清空。
+```
+TRUNCATE TABLE table_name
+```
 
 
-
-
+# 拓展
+## DROP、TRUNCATE、 DELETE 的区别
+truncate table 命令将快速删除数据表中的所有记录，但保留数据表结构。这种快速删除与 delete from 数据表的删除全部数据表记录不一样，delete 命令删除的数据将存储在系统回滚段中，需要的时候，数据可以回滚恢复，而 truncate 命令删除的数据是不可以恢复的。
+### 相同点
+truncate 和不带 where 子句的 delete, 以及 drop 都会删除表内的数据。
+### 不同点 
+1. truncate 和 delete 只删除数据不删除表的结构(定义) ，drop 语句将删除表的结构被依赖的约束(constrain), 触发器(trigger), 索引(index); </br>
+依赖于该表的存储过程/函数将保留, 但是变为 invalid 状态。</br>
+2. delete 语句是 dml, 这个操作会放到 rollback segement 中, 事务提交之后才生效; </br>
+如果有相应的 trigger, 执行的时候将被触发。 truncate, drop 是 ddl, 操作立即生效, 原数据不放到 rollback segment 中, 不能回滚。</br>
+操作不触发 trigger。</br>
+3. delete 语句不影响表所占用的 extent, 高水线(high watermark)保持原位置不动。 显然 drop 语句将表所占用的空间全部释放 。</br>
+truncate 语句缺省情况下见空间释放到 minextents 个 extent, 除非使用 reuse storage; truncate会将高水线复位(回到最开始)。</br>
+4. 速度：一般来说: drop > truncate > delete 。</br>
+5. 安全性: 小心使用 drop 和 truncate, 尤其没有备份的时候。</br>
+使用上, 想删除部分数据行用 delete, 注意带上 where 子句。 回滚段要足够大。</br>
+想删除表, 当然用 drop。</br>
+想保留表而将所有数据删除。如果和事务无关, 用 truncate 即可。 如果和事务有关, 或者想触发 trigger, 还是用 delete。</br>
+如果是整理表内部的碎片, 可以用 truncate 跟上 reuse stroage, 再重新导入/插入数据。</br>
 
 
 
