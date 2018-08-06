@@ -1537,4 +1537,31 @@ rename a b ./a.sh  改名为b.sh
 whoami  显示当前用户
 pwd	显示当前目录
 
+rmp RedHat Package Manager（RedHat软件包管理工具）
+常用命令组合：
+－ivh：安装显示安装进度--install--verbose--hash
+－Uvh：升级软件包--Update；
+－qpl：列出RPM软件包内的文件信息[Query Package list]；
+－qpi：列出RPM软件包的描述信息[Query Package install package(s)]；
+－qf：查找指定文件属于哪个RPM软件包[Query File]；
+－Va：校验所有的RPM软件包，查找丢失的文件[View Lost]；
+－e：删除包
+常用参数：
+Install/Upgrade/Erase options:
+-i, --install                     install package(s)
+-v, --verbose                     provide more detailed output
+-h, --hash                        print hash marks as package installs (good with -v)
+-e, --erase                       erase (uninstall) package
+-U, --upgrade=<packagefile>+      upgrade package(s)
+－-replacepkge                    无论软件包是否已被安装，都强行安装软件包
+--test                            安装测试，并不实际安装
+--nodeps                          忽略软件包的依赖关系强行安装
+--force                           忽略软件包及文件的冲突
+Query options (with -q or --query):
+-a, --all                         query/verify all packages
+-p, --package                     query/verify a package file
+-l, --list                        list files in package
+-d, --docfiles                    list all documentation files
+-f, --file                        query/verify package(s) owning file
+
 
