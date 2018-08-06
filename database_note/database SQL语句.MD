@@ -796,8 +796,7 @@ DATE_FORMAT()	用不同的格式显示日期/时间
 
 
 ## 内建函数
-SQL 拥有很多可用于计数和计算的内建函数，如AVG(column)、MAX(column)、MIN(column)、SUM(column)等。
-
+SQL 拥有很多可用于计数和计算的内建函数。
 使用内建函数的语法：
 ```
 SELECT function(column_name)
@@ -807,6 +806,42 @@ FROM table_name
 ```
 select avg(amount) from sakila.payment
 ```
+### 合计函数 Aggregate 
+常用内建合计函数：AVG(column)、MAX(column)、MIN(column)、SUM(column)、COUNT(column)、 FIRST(column)、LAST(column)。
+
+#### GROUP BY
+合计函数函数通常和 GROUP BY 合用，以便对不同种类的信息进行分组分析计算并获得想要的结果。
+```
+SELECT column_name, aggregate_function(column_name)
+FROM table_name
+WHERE column_name operator value
+GROUP BY column_name
+```
+实例：
+在一个payment表中，计算各个客户各自在本店消费的总金额。
+```
+select customer_id, SUM(amount)
+from sakila.payment
+GROUP BY customer_id
+```
+进一步细分到各个客户在本店每日的消费总额。
+```
+select customer_id, payment_date,SUM(amount)
+from sakila.payment
+GROUP BY customer_id, payment_date
+```
+添加筛选，例如仅看客户2
+```
+select customer_id, payment_date,SUM(amount)
+from sakila.payment
+WHERE customer_id=2
+GROUP BY customer_id, payment_date
+```
+
+
+
+
+
 
 
 
