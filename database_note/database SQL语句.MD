@@ -806,7 +806,7 @@ FROM table_name
 ```
 select avg(amount) from sakila.payment
 ```
-### 合计函数 Aggregate 
+### 合计函数 Aggregate functions
 常用内建合计函数：AVG(column)、MAX(column)、MIN(column)、SUM(column)、COUNT(column)、 FIRST(column)、LAST(column)。
 
 #### GROUP BY
@@ -838,9 +838,91 @@ WHERE customer_id=2
 GROUP BY customer_id, payment_date
 ```
 
+#### HAVING
+HAVING 用于和合计函数配合，设置条件进而对数据进行筛选。
+类似于WHERE，但是WHERE语法上无法与合计函数一起用，所以就设计了HAVING这个东西。
+```
+SELECT column_name, aggregate_function(column_name)
+FROM table_name
+WHERE column_name operator value
+GROUP BY column_name
+HAVING aggregate_function(column_name) operator value
+```
+实例：
+在一个payment表中，计算各个客户各自在本店消费的总金额，筛选出消费总额大于100的用户。
+```
+select customer_id, SUM(amount)
+from sakila.payment
+GROUP BY customer_id
+HAVING SUM(amount)>100
+```
 
-
-
+### Scalar 函数
+常用Scalar函数：</br>
+* UCASE()  把字段的值转换为大写</br>
+* LCASE()  把字段的值转换为小写</br>
+* LEN()    返回文本字段中值的长度</br>
+* MID()    从文本字段中提取字符</br>
+```
+SELECT MID(column_name,start[,length]) FROM table_name
+```
+参数：</br>
+start  - 必需，规定开始位置（起始值是 1）</br>
+length - 可选，要返回的字符数。如果省略，则 MID() 函数返回剩余文本</br>
+* ROUND()  把数值字段舍入为指定的小数位数</br>
+（未确定是四舍五入，还是向下圆整...）
+```
+SELECT ROUND(column_name,decimals) FROM table_name
+```
+参数：</br>
+decimals - 必需，规定要返回的小数位数</br>
+* FORMAT()  用于对字段的显示进行格式化</br>
+普通字段调格式用FORMAT()，日期调格式用的DATE_FORMAT()</br>
+```
+SELECT FORMAT(column_name,format) FROM table_name
+```
+参数：</br>
+format - 必需，规定格式</br>
+实例：
+```
+select customer_id, SUM(amount), DATE_FORMAT(Now(),'%b %d %Y %h:%i %p')
+from sakila.payment
+GROUP BY customer_id
+```
+参数格式：
+```
+%a	缩写星期名
+%b	缩写月名
+%c	月，数值
+%D	带有英文前缀的月中的天
+%d	月的天，数值(00-31)
+%e	月的天，数值(0-31)
+%f	微秒
+%H	小时 (00-23)
+%h	小时 (01-12)
+%I	小时 (01-12)
+%i	分钟，数值(00-59)
+%j	年的天 (001-366)
+%k	小时 (0-23)
+%l	小时 (1-12)
+%M	月名
+%m	月，数值(00-12)
+%p	AM 或 PM
+%r	时间，12-小时（hh:mm:ss AM 或 PM）
+%S	秒(00-59)
+%s	秒(00-59)
+%T	时间, 24-小时 (hh:mm:ss)
+%U	周 (00-53) 星期日是一周的第一天
+%u	周 (00-53) 星期一是一周的第一天
+%V	周 (01-53) 星期日是一周的第一天，与 %X 使用
+%v	周 (01-53) 星期一是一周的第一天，与 %x 使用
+%W	星期名
+%w	周的天 （0=星期日, 6=星期六）
+%X	年，其中的星期日是周的第一天，4 位，与 %V 使用
+%x	年，其中的星期一是周的第一天，4 位，与 %v 使用
+%Y	年，4 位
+%y	年，2 位
+```
 
 
 
