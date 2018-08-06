@@ -3,6 +3,7 @@ SQL特性：
 * 对大小写不敏感，SELECT 与 select 是相同的，新建的数据库时名称要用小写，语句用大写会比较好分辨;
 * 对空格不敏感，可以换行，增加可读性；
 * 多条SQL语句必须用分号；分隔，单条语句部分RDBMS不需要用分号分隔;
+* 复合语句，用括号（）括起内部优先执行的语句；
 * 不同数据库中的SQL语法会有略微不同（此处主要记录mySQL）。
 ```
 常用语句
@@ -794,6 +795,18 @@ DATE_FORMAT()	用不同的格式显示日期/时间
 ```
 
 
+## 内建函数
+SQL 拥有很多可用于计数和计算的内建函数，如AVG(column)、MAX(column)、MIN(column)、SUM(column)等。
+
+使用内建函数的语法：
+```
+SELECT function(column_name)
+FROM table_name
+```
+实例：
+```
+select avg(amount) from sakila.payment
+```
 
 
 
