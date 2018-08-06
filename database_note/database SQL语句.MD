@@ -76,6 +76,18 @@ SELECT * FROM university.department WHERE budget = 6000;
 SELECT budget FROM university.department WHERE budget = 6000;
 SELECT * FROM university.department WHERE building = 'waston';
 ```
+对于NULL值的处理：</br>
+选取表中不为空的数据，使用 IS NOT NULL；</br>
+选取表中为空的数据，使用 IS NULL。</br>
+```
+select lastName,FirstName,City FROM personalFinancialDB.persons
+WHERE city IS NOT NULL
+```
+```
+select lastName,FirstName,City FROM personalFinancialDB.persons
+WHERE city IS NULL
+```
+
 
 ## and和or 复合条件判断
 用于where后面的符合条件筛选，where后面可用括号括起
@@ -118,7 +130,7 @@ VALUES (value1,value3)
 ```
 insert into university.department values ('math','harry',3000);
 insert into university.department (building,budget) 
-values ('iron',6000);  #这条好像没成功
+values ('iron',6000); 
 ```
 同时插入多行数据
 ```
@@ -453,6 +465,7 @@ VALUES ('Li','Sharon')
 ID_persons自动增加为1，插入上面的values，其他位置为null。
 
 ### 数据类型 data type
+不同数据库对数据类型的定义不一样，使用前注意查询官方文档！！
 * 仅容纳整数,在括号内规定数字的最大位数：</br>
 integer(size)</br>
 int(size)</br>
@@ -471,7 +484,13 @@ varchar(size)</br>
 
 * 容纳日期：</br>
 mySQL: DATETIME、TIMESTAMP、DATE、TIME、YEAR</br>
-
+```
+DATE()        日期，格式：YYYY-MM-DD，支持的范围是从 '1000-01-01' 到 '9999-12-31'
+DATETIME()    日期和时间的组合，格式：YYYY-MM-DD HH:MM:SS，支持的范围是从 '1000-01-01 00:00:00' 到 '9999-12-31 23:59:59'
+TIMESTAMP()   时间戳，TIMESTAMP 值使用 Unix 纪元('1970-01-01 00:00:00' UTC) 至今的描述来存储，格式：YYYY-MM-DD HH:MM:SS，支持的范围是从 '1970-01-01 00:00:01' UTC 到 '2038-01-09 03:14:07' UTC
+TIME()        时间，格式：HH:MM:SS，支持的范围是从 '-838:59:59' 到 '838:59:59'
+YEAR()        2 位或 4 位格式的年，4 位格式所允许的值：1901 到 2155。2 位格式所允许的值：70 到 69，表示从 1970 到 2069
+```
 
 ### 约束 Constraints
 约束用于限制加入表的数据的类型；</br>
@@ -486,7 +505,7 @@ mySQL: DATETIME、TIMESTAMP、DATE、TIME、YEAR</br>
 * DEFAULT
 
 #### NOT NULL
-强制列不接受 NULL 值，如果不向字段添加值，就无法插入新记录或者更新记录。
+默认可接受NULL值，强制列不接受 NULL 值，如果不向字段添加值，就无法插入新记录或者更新记录。
 ```
 ID_persons int NOT NULL AUTO_INCREMENT,
 LastName varchar(255) NOT NULL,
@@ -685,16 +704,54 @@ ALTER TABLE table_name
 ALTER column_name DROP DEFAULT
 ```
 
-### 其他修改
-#### 改列名或列的数据类型
+### 添加、删除、修改列
+#### 修改列
+##### 改列名
+改列名的同时注意把后面的datatype也填好，不然容易出错。
 ```
-ALTER TABLE table_name CHANGE COLUMN old_column_name new_column_name datatype
+ALTER TABLE table_name 
+CHANGE COLUMN old_column_name new_column_name datatype
 ```
 实例：
 ```
-ALTER TABLE personalFinancialDB.persons CHANGE COLUMN ID ID_persons int NOT NULL AUTO_INCREMENT
+ALTER TABLE personalFinancialDB.persons 
+CHANGE COLUMN ID ID_persons int NOT NULL AUTO_INCREMENT
 ```
 如果修改的是表的主键，注意添加后面的 NOT NULL AUTO_INCREMENT ，不然插入数据的时候会报错。
+
+##### 改列的数据类型
+mySQL语法中，改列名和改数据类型使用的语法是相同的，仅是修改的位置不同。
+```
+ALTER TABLE table_name
+CHANGE COLUMN column_name column new_datatype
+```
+实例：
+```
+ALTER TABLE expenditure
+CHANGE COLUMN expenseDate expenseDate DATE
+```
+
+#### 添加列
+```
+ALTER TABLE table_name
+ADD column_name datatype
+```
+实例：
+```
+ALTER TABLE personalfinancialdb.persons
+ADD registrationDate DATETIME
+```
+
+#### 删除列
+```
+ALTER TABLE table_name 
+DROP COLUMN column_name
+```
+实例：
+```
+ALTER TABLE university.department
+DROP COLUMN budget
+```
 
 ## DROP
 删除索引(mySQL)
@@ -718,26 +775,24 @@ TRUNCATE TABLE 仅仅需要除去表内的数据，但并不删除表本身。</
 TRUNCATE TABLE table_name
 ```
 
+# SQL函数
+## 日期函数
+日期函数常用于插入数据时，让系统自动插入要求格式的日期。</br>
+注意：如希望使查询简单且更易维护，不要在日期中使用时间部分！单用日期是无法查询到带时间的数据的。</br>
+</br>
+mySQL支持以下日期函数：
+```
+NOW()	        返回当前的日期和时间
+CURDATE()	    返回当前的日期
+CURTIME()	    返回当前的时间
+DATE()	      提取日期或日期/时间表达式的日期部分
+EXTRACT()	    返回日期/时间按的单独部分
+DATE_ADD()	  给日期添加指定的时间间隔
+DATE_SUB()	  从日期减去指定的时间间隔
+DATEDIFF()	  返回两个日期之间的天数
+DATE_FORMAT()	用不同的格式显示日期/时间
+```
 
-# 拓展
-## DROP、TRUNCATE、 DELETE 的区别
-truncate table 命令将快速删除数据表中的所有记录，但保留数据表结构。这种快速删除与 delete from 数据表的删除全部数据表记录不一样，delete 命令删除的数据将存储在系统回滚段中，需要的时候，数据可以回滚恢复，而 truncate 命令删除的数据是不可以恢复的。
-### 相同点
-truncate 和不带 where 子句的 delete, 以及 drop 都会删除表内的数据。
-### 不同点 
-1. truncate 和 delete 只删除数据不删除表的结构(定义) ，drop 语句将删除表的结构被依赖的约束(constrain), 触发器(trigger), 索引(index); </br>
-依赖于该表的存储过程/函数将保留, 但是变为 invalid 状态。</br>
-2. delete 语句是 dml, 这个操作会放到 rollback segement 中, 事务提交之后才生效; </br>
-如果有相应的 trigger, 执行的时候将被触发。 truncate, drop 是 ddl, 操作立即生效, 原数据不放到 rollback segment 中, 不能回滚。</br>
-操作不触发 trigger。</br>
-3. delete 语句不影响表所占用的 extent, 高水线(high watermark)保持原位置不动。 显然 drop 语句将表所占用的空间全部释放 。</br>
-truncate 语句缺省情况下见空间释放到 minextents 个 extent, 除非使用 reuse storage; truncate会将高水线复位(回到最开始)。</br>
-4. 速度：一般来说: drop > truncate > delete 。</br>
-5. 安全性: 小心使用 drop 和 truncate, 尤其没有备份的时候。</br>
-使用上, 想删除部分数据行用 delete, 注意带上 where 子句。 回滚段要足够大。</br>
-想删除表, 当然用 drop。</br>
-想保留表而将所有数据删除。如果和事务无关, 用 truncate 即可。 如果和事务有关, 或者想触发 trigger, 还是用 delete。</br>
-如果是整理表内部的碎片, 可以用 truncate 跟上 reuse stroage, 再重新导入/插入数据。</br>
 
 
 
