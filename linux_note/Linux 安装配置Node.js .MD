@@ -12,8 +12,7 @@ cd /usr/local/src
 ```
 ## 解压
 ```
-[root@centOSlearning src]# xz -d node-v8.11.3-linux-x86.tar.xz
-[root@centOSlearning src]# tar -xvJ -f ./node-v8.11.3-linux-x86.tar
+[root@centOSlearning src]# tar -xvJ -f ./node-v8.11.3-linux-x86.tar.xz
 ```
 
 ## 修改配置文件
