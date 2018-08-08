@@ -95,6 +95,19 @@ pip 9.0.1 from /usr/local/python3/lib/python3.7/site-packages (python 3.7)
 pip 18.0 from /usr/lib/python2.7/site-packages/pip (python 2.7)
 ```
 
+## 更新pip3
+进入到之前下好和解压好的pip-18.0目录
+```
+# cd pip-18.0
+# python3 setup.py build
+# python3 setup.py install
+```
+更新好后，查看一下版本号
+```
+# pip3 -V
+pip 18.0 from /usr/local/python3/lib/python3.7/site-packages/pip-18.0-py3.7.egg/pip (python 3.7)
+```
+
 结论：</br>
 貌似是由于缺少libffi-devel模块的原因，才导致一开始安装3.7的时候没有配套的pip3。</br>
 安装好模块后，重新编译一下就好了。如果想用更新版本的pip3也可以自行安装。</br>
