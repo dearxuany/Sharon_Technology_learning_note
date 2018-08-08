@@ -1,4 +1,4 @@
-# CentOS7 在python2、python3共存状态下安装pip2和pip3
+# Linux CentOS7 在python2、python3共存状态下安装pip2和pip3
 ## 安装驱动
 ### pip一般安装方法
 pip 是一个通用的 Python 包管理工具，提供了对 Python 包的查找、下载、安装、卸载的功能。</br>
