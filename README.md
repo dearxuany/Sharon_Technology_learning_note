@@ -8,10 +8,8 @@
 ## Linux
 ### Linux上的环境搭建
 [Linux 安装Nginx](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E5%AE%89%E8%A3%85Nginx.MD)</br>
-
 [Linux 安装配置MySQL（MariaDB）](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEMySQL%EF%BC%88MariaDB%EF%BC%89.MD)
 | [Linux 安装MongoDB](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E5%AE%89%E8%A3%85MongoDB.MD)</br>
-
 [Linux 安装python3](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E5%AE%89%E8%A3%85Python%203.MD)
 | [Linux 安装配置Node.js](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AENode.js%20.MD)
 
