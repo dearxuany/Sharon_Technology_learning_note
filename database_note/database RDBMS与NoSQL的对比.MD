@@ -25,6 +25,7 @@ NoSQL = Not Only SQL</br>
 适用于高负载、超大规模数据的存储，常用于存储用户的个人信息，社交网络，地理位置，用户生成的数据和用户操作日志。</br>
 
 ### NoSQL遵循CAP Theorem
+其实RDBMS也需要符合CAP理论，只是NoSQL不符合ACID而已。</br>
 #### CAP Theorem组成
 * Consistency 一致</br>
 Every read receives the most recent write or an error.</br>
