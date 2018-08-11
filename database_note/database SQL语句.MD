@@ -657,6 +657,7 @@ PRIMARY KEY (column_name1，column_name2,...)
 ALTER TABLE table_name
 DROP primary key
 ```
+注意：如果一行数据被删除，这行数据对应的主键号码是不会再次被分配的。例如，删除了主键号码为3、4的两行数据，之后再新增两行数据，这两行新数据的主键号码会被设置为5和6，在同一个表格中号码3和4不会再被使用了。
 
 #### FOREIGN KEY
 给已有表设置FOREIGN KEY，前提是新建表时已新建外键用的column：
