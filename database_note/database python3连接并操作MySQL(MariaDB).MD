@@ -158,7 +158,7 @@ Python查询Mysql使用 fetchone() 方法获取单条数据, 使用fetchall() �
 
 import pymysql
 
-db=pymysql.connect('localhost','sharonli','sharonli','personalFinancialDB')
+db=pymysql.connect('localhost','username','password','personalFinancialDB')
 
 cursor=db.cursor()
 
