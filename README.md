@@ -37,6 +37,13 @@
 * [Python 面向对象：Special method 魔法方法、property特性、iterator 迭代器](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%EF%BC%9ASpecial%20method%20%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95%E3%80%81property%E7%89%B9%E6%80%A7%E3%80%81iterator%20%E8%BF%AD%E4%BB%A3%E5%99%A8.MD)
 ### Python 相关积累总结
 [Python 常用函数](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python3%20function%20collection.MD)
+
+## Databases
+### 数据库基础
+[database RDBMS与NoSQL的对比(CAP理论)](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/database_note/database%20RDBMS%E4%B8%8ENoSQL%E7%9A%84%E5%AF%B9%E6%AF%94.MD)
+| [database SQL语句](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/database_note/database%20SQL%E8%AF%AD%E5%8F%A5.MD)
+
+
 ## VMware
 [VMware 删除旧快照](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/VMware_note/VMware%20%E5%88%A0%E9%99%A4%E6%97%A7%E7%9A%84%E5%BF%AB%E7%85%A7.MD)
 | [VMware 合并多个vmdk](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/VMware_note/VMware%20%E5%90%88%E5%B9%B6%E5%A4%9A%E4%B8%AAvmdk.MD)
