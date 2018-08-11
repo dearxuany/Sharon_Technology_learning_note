@@ -657,7 +657,6 @@ PRIMARY KEY (column_name1，column_name2,...)
 ALTER TABLE table_name
 DROP primary key
 ```
-注意：如果一行数据被删除，这行数据对应的主键号码是不会再次被分配的。例如，删除了主键号码为3、4的两行数据，之后再新增两行数据，这两行新数据的主键号码会被设置为5和6，在同一个表格中号码3和4不会再被使用了。
 
 #### FOREIGN KEY
 给已有表设置FOREIGN KEY，前提是新建表时已新建外键用的column：
@@ -926,9 +925,39 @@ SELECT FORMAT(column_name,format) FROM table_name
 format - 必需，规定格式</br>
 
 
-
-
-
+## 拓展记录
+### 关于删除一行数据时自增主键的处理
+实例: 要求删除主键为3和4的重复数据
+```
+MariaDB [personalFinancialDB]> SELECT * FROM expenditure;
++----------------+---------------+---------------+-------------+------------+
+| ID_expenditure | expenseDetail | expenseAmount | expenseDate | ID_persons |
++----------------+---------------+---------------+-------------+------------+
+|              1 | Mucha Milktea |           2.7 | 2016-08-11  |          1 |
+|              2 | Bubble        |          20.0 | 2016-08-11  |          1 |
+|              3 | Mucha Milktea |           2.7 | 2016-08-11  |          1 |
+|              4 | Bubble        |          20.0 | 2016-08-11  |          1 |
++----------------+---------------+---------------+-------------+------------+
+```
+用 delete 删除3和4的数据
+```
+DELETE FROM expenditure WHERE ID_expenditure=3;
+DELETE FROM expenditure WHERE ID_expenditure=4;
+```
+重新插入新数据
+```
+MariaDB [personalFinancialDB]> SELECT * FROM expenditure;
++----------------+---------------+---------------+-------------+------------+
+| ID_expenditure | expenseDetail | expenseAmount | expenseDate | ID_persons |
++----------------+---------------+---------------+-------------+------------+
+|              1 | Mucha Milktea |           2.7 | 2016-08-11  |          1 |
+|              2 | Bubble        |          20.0 | 2016-08-11  |          1 |
+|              5 | Mucha Milktea |           2.7 | 2016-08-11  |          1 |
+|              6 | Bubble        |          20.0 | 2016-08-11  |          1 |
++----------------+---------------+---------------+-------------+------------+
+```
+如果一行数据被删除，这行数据对应的主键号码是不会再次被分配的。</br>
+例如，删除了主键号码为3、4的两行数据，之后再新增两行数据，这两行新数据的主键号码会被设置为5和6，在同一个表格中号码3和4不会再被使用了。</br>
 
 
 
