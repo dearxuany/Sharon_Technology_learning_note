@@ -40,8 +40,10 @@
 
 ## Databases
 ### 数据库基础
-[database RDBMS与NoSQL的对比(CAP理论)](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/database_note/database%20RDBMS%E4%B8%8ENoSQL%E7%9A%84%E5%AF%B9%E6%AF%94.MD)
-| [database SQL语句](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/database_note/database%20SQL%E8%AF%AD%E5%8F%A5.MD)
+[RDBMS与NoSQL的对比(CAP理论)](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/database_note/database%20RDBMS%E4%B8%8ENoSQL%E7%9A%84%E5%AF%B9%E6%AF%94.MD)
+| [SQL语句](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/database_note/database%20SQL%E8%AF%AD%E5%8F%A5.MD)
+### 数据库操作
+[python3连接并操作MySQL(MariaDB)](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/database_note/database%20python3%E8%BF%9E%E6%8E%A5%E5%B9%B6%E6%93%8D%E4%BD%9CMySQL(MariaDB).MD)
 
 
 ## VMware
