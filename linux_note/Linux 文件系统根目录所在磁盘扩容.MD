@@ -43,7 +43,7 @@ sda               8:0    0   60G  0 disk
 sr0              11:0    1 1024M  0 rom  
 ```
 根目录是在/dev/sda3，sda5、sda6、sda7是扩展分区sda4上的逻辑分区。
-（话说，有这么多个分区其实是我很久之前做linux练习时建的分区，4,5,6,7都是我之前练习建的... 已经被我删除了，此处暂不记录）
+（话说，有这么多个分区其实是我很久之前做linux练习时建的分区，4,5,6,7都是我之前练习建的... 已经被我删除了，详情见：[Linux 删除多余无用分区](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E5%88%A0%E9%99%A4%E5%A4%9A%E4%BD%99%E6%97%A0%E7%94%A8%E5%88%86%E5%8C%BA.MD)）
 
 ## 给根目录所在分区扩容
 ### PV阶段
