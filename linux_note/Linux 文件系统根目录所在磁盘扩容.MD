@@ -1,6 +1,6 @@
 # Linux 文件系统根目录所在磁盘扩容
 起因：</br>
-
+![](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/note_images/Linux_note_images/Linux%20%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E6%A0%B9%E7%9B%AE%E5%BD%95%E6%89%80%E5%9C%A8%E7%A3%81%E7%9B%98%E6%89%A9%E5%AE%B9.png) </br>
 机器是在VMware上搭建的CentOS7，磁盘容量占40GB。</br>
 开头以为是物理硬盘不够了，还给虚拟机在VMware上扩大了容量，结果发现根目录所在的磁盘还有一部分位置没有使用，重新把它们分配给根目录用就可以了。</br>
 此处主要涉及linux的LVM部分的知识，如果是真的是虚拟机的物理磁盘不够用了，配置会比这个复杂一些，具体还是要查看LVM的资料。</br>
