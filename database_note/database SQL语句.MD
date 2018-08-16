@@ -777,6 +777,16 @@ TRUNCATE TABLE table_name
 ```
 
 # SQL函数
+字段：</br>
+在执行查询操作时，由函数新建出来的column并不真实存在于原始数据表中，用的时候才会自动生成，这个被生成的column被称为 “字段 field”。</br>
+由计算得出的结果被称为“计算字段”，支持使用内建函数和一般的算术运算来生成。</br>
+由字符串拼接所得的结果被称为“拼接字段”，支持内建函数或一些通配符来生成，而 MySQL 貌似仅能通过函数来生成。</br>
+</br>
+注意：</br>
+插入操作时使用函数处理插入的VALUE的格式时，这些格式是真实存在于原始数据表中的。</br>
+插入的数据的类型、格式一定要和表创建时给该列设置的类型、格式匹配才可以。</br>
+不过，查询的时候可以不直接显示原始数据的格式，而按实际需求来调整。</br>
+
 ## 日期函数
 日期函数常用于插入数据时，让系统自动插入要求格式的日期。</br>
 注意：如希望使查询简单且更易维护，不要在日期中使用时间部分！单用日期是无法查询到带时间的数据的。</br>
@@ -835,9 +845,10 @@ from sakila.payment
 GROUP BY customer_id
 ```
 
-## 内建函数
-SQL 拥有很多可用于计数和计算的内建函数。
-使用内建函数的语法：
+## 其他内建函数
+内建函数：</br>
+SQL 拥有很多可用于计数和计算的内建函数。</br>
+使用内建函数的语法：</br>
 ```
 SELECT function(column_name)
 FROM table_name
@@ -847,7 +858,7 @@ FROM table_name
 select avg(amount) from sakila.payment
 ```
 ### 合计函数 Aggregate functions
-常用内建合计函数：AVG(column)、MAX(column)、MIN(column)、SUM(column)、COUNT(column)、 FIRST(column)、LAST(column)。
+常用内建合计函数：AVG(column)、MAX(column)、MIN(column)、SUM(column)、COUNT(column)、 FIRST(column)、LAST(column)。</br>
 
 #### GROUP BY
 合计函数函数通常和 GROUP BY 合用，以便对不同种类的信息进行分组分析计算并获得想要的结果。
@@ -923,6 +934,7 @@ SELECT FORMAT(column_name,format) FROM table_name
 ```
 参数：</br>
 format - 必需，规定格式</br>
+
 
 # 视图
 视图：</br>
