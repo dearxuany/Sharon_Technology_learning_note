@@ -776,16 +776,61 @@ TRUNCATE TABLE 仅仅需要除去表内的数据，但并不删除表本身。</
 TRUNCATE TABLE table_name
 ```
 
-# SQL函数
+# 字段与函数
+## 字段
 字段：</br>
-在执行查询操作时，由函数新建出来的column并不真实存在于原始数据表中，用的时候才会自动生成，这个被生成的column被称为 “字段 field”。</br>
-由计算得出的结果被称为“计算字段”，支持使用内建函数和一般的算术运算来生成。</br>
-由字符串拼接所得的结果被称为“拼接字段”，支持内建函数或一些通配符来生成，而 MySQL 貌似仅能通过函数来生成。</br>
+在执行查询操作时，由函数新建出来的column并不真实存在于原始数据表中，用的时候才会自动生成，这个被生成的column被称为 “字段 field”，也通常被称为“计算字段”。</br>
+支持使用内建函数和一般的算术运算来生成特定的算术结果，也可由内建函数或一些通配符来生成“拼接字段”，而 MySQL 貌似仅能通过函数来生成。</br>
 </br>
 注意：</br>
 插入操作时使用函数处理插入的VALUE的格式时，这些格式是真实存在于原始数据表中的。</br>
 插入的数据的类型、格式一定要和表创建时给该列设置的类型、格式匹配才可以。</br>
 不过，查询的时候可以不直接显示原始数据的格式，而按实际需求来调整。</br>
+### 算术计算
+支持以下符号，并用()标示计算优先级:
+```
++
+-
+*
+/
+```
+
+实例：
+有单价和产品数量，算出各个商品的消费总价
+```
+SELECT expenseDetail, unitPrice, expenseNumber,
+unitPrice*expenseNumber AS expandedAmount
+FROM expenditure
+```
+
+### 拼接
+实例：</br>
+输出每位顾客的ID和姓名以及在店内的总消费，MySQL中使用contac()函数。</br>
+```
+# 无格式
+select sakila.customer.customer_id,sakila.customer.first_name, sakila.customer.last_name, SUM(sakila.payment.amount)
+from sakila.payment,sakila.customer
+WHERE sakila.payment.customer_id = sakila.customer.customer_id
+GROUP BY sakila.customer.customer_id
+```
+将顾客的姓名合起来输出，并设置格式</br>
+```
+# 有格式
+select sakila.customer.customer_id, 
+concat(sakila.customer.first_name,' ',sakila.customer.last_name), SUM(sakila.payment.amount)
+from sakila.payment,sakila.customer
+WHERE sakila.payment.customer_id = sakila.customer.customer_id
+GROUP BY sakila.customer.customer_id
+```
+也可以给这个拼接字段改名，改完之后列名就会变成 full_name
+```
+select sakila.customer.customer_id, 
+concat(sakila.customer.first_name,' ',sakila.customer.last_name) AS full_name, 
+SUM(sakila.payment.amount)
+from sakila.payment,sakila.customer
+WHERE sakila.payment.customer_id = sakila.customer.customer_id
+GROUP BY sakila.customer.customer_id
+```
 
 ## 日期函数
 日期函数常用于插入数据时，让系统自动插入要求格式的日期。</br>
