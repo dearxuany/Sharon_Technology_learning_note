@@ -146,6 +146,8 @@ NameError: name 'var1' is not defined
 根据转换表，对字符串中的字符进行转换或删除，可同时转换多个字符。
 * str.endswith(obj[,start[,end]])</br>
 判断字符串str是否为chars结束，是返回True，否返回False。
+* str.startwith(obj)</br>
+判断字符串str是否以obj开头，返回布尔型。
 * 判断字符串是否满足特定性质</br>
 以is打头的方法：判断字符串是否满足特定性质，满足返回True，否则返回False。
 
