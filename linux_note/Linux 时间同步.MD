@@ -1,4 +1,4 @@
-# linux 时间同步
+# Linux 时间同步
 起因：</br>
 ![](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/note_images/Linux_note_images/linux_time01.png) </br>
 linux CentOS7 是安装在 win7 上的VMware虚拟机。</br>
