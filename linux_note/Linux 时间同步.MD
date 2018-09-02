@@ -75,6 +75,7 @@ Created symlink from /etc/systemd/system/multi-user.target.wants/ntpd.service to
 #### 设置定期同步时间间隔
 这个操作是依靠cron服务的，要完成定期时间同步的任务，前提要求cron可以正常使用并能开机自启。</br>
 cron是一个linux下的定时执行工具，可以在无需人工干预的情况下定时地运行任务task。</br>
+详情： [Linux 例行性工作 crontab](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E4%BE%8B%E8%A1%8C%E6%80%A7%E5%B7%A5%E4%BD%9C.MD)</br>
 </br>
 打开配置文件/etc/crontab (用于记录需要定时执行的命令的文件)
 ```
