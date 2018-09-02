@@ -82,10 +82,20 @@ cron是一个linux下的定时执行工具，可以在无需人工干预的情�
 ```
 添加以下一句，让系统每两小时自动更新系统时间
 ```
-0 */2 * * * /usr/sbin/ntpdate time.windows.com cn.pool.ntp.org
+0 */2 * * * root ntpdate time.windows.com cn.pool.ntp.org
 ```
 重启crond
 ```
-#service crond restart
+# service crond restart
 ```
 至此，linux 系统时间的ntp自动同步就配置完成了。
+
+#### 检测自动同步是否成功
+查看cron 运行记录
+```
+# tail -f /var/log/cron
+Sep  1 04:00:01 centOSlearning CROND[5251]: (root) CMD (ntpdate time.windows.com cn.pool.ntp.org)
+Sep  2 16:20:02 centOSlearning CROND[5289]: (root) CMD (/usr/lib/sa/sa1 1 1)
+Sep  2 16:25:59 centOSlearning crontab[5318]: (root) LIST (root)
+```
+可以看到ntpdate成功自动运行，而且时间自动和网络同步了。
