@@ -147,3 +147,13 @@ mkdir /root/runcron
 # 修改/etc/corntab给目录规划一个循环周期，如每两分钟执行目录下所有文件
 */2 * * * * root run-parts /root/runcron
 ```
+
+#### anacron
+anacron 是cron服务下的一个程序。</br>
+当linux关机时，一些定时的crontab任务则无法正常执行。 anacron 在linux系统开机的时候或在crontab中指定的时候运行，读取timestamps分析检测关机时没有被运行的crontab任务，随后anacron会运行这些错误的任务，运行完成后anacron会自动停止。 </br>
+anacron 会以一天、七天、一个月为周期检测系统未进行的crontab任务。anacron 在centOS中已被加入到crontab调度。anacron并不需要额外设置，使用默认值即可。</br>
+```
+# ll /etc/cron*/*ana*
+-rwxr-xr-x. 1 root root 392 4月  11 09:49 /etc/cron.hourly/0anacron
+```
+这里看到，anacron是每小时进行一次的，为保证anacron优先运行，所以文件名前面有个0。
