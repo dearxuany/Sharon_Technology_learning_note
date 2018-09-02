@@ -12,6 +12,9 @@
 | [Linux 安装 MongoDB](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E5%AE%89%E8%A3%85MongoDB.MD)</br>
 [Linux 安装 python3](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E5%AE%89%E8%A3%85Python%203.MD)
 | [Linux 安装配置 Node.js](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AENode.js%20.MD)
+</br>
+</br>
+[Linux CentOS7 在 python2、python3 共存状态下安装 pip2 和 pip3](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20CentOS7%20%E5%9C%A8python2%E3%80%81python3%E5%85%B1%E5%AD%98%E4%B8%8B%E5%AE%89%E8%A3%85pip2%E5%92%8Cpip3.MD)
 
 
 ### Linux 相关积累总结
@@ -22,8 +25,8 @@
 [Linux 删除多余无用分区](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E5%88%A0%E9%99%A4%E5%A4%9A%E4%BD%99%E6%97%A0%E7%94%A8%E5%88%86%E5%8C%BA.MD)
 | [Linux 文件系统根目录所在磁盘扩容](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E6%A0%B9%E7%9B%AE%E5%BD%95%E6%89%80%E5%9C%A8%E7%A3%81%E7%9B%98%E6%89%A9%E5%AE%B9.MD)
 | [Linux 时间同步](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E6%97%B6%E9%97%B4%E5%90%8C%E6%AD%A5.MD)
-</br>
-[Linux CentOS7 在 python2、python3 共存状态下安装 pip2 和 pip3](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20CentOS7%20%E5%9C%A8python2%E3%80%81python3%E5%85%B1%E5%AD%98%E4%B8%8B%E5%AE%89%E8%A3%85pip2%E5%92%8Cpip3.MD)
+
+
 
 ## Python
 ### Python3 基础
