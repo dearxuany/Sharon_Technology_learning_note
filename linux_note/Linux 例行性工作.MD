@@ -94,7 +94,7 @@ MAILTO=root       # 若有STOUT，以e-mail推送数据给谁
 0 */2 * * * root ntpdate time.windows.com cn.pool.ntp.org
 ```
 * MAILTO=root </br>
-例行性工作出错或有STOUT时，以邮件形式发送数据的收件人。默认为root，可以直接填邮箱地址。</br>
+例行性工作出错或有STOUT时，以邮件形式发送数据的收件人。默认为root，可以直接填邮箱地址。如果一直出错，而又不想接受邮件，可以设置为/dev/null，将输出放到垃圾桶当中</br>
 * user-name</br>
 使用/etc/crontab 来编辑例行性工作必须填写user-name 即后面执行后续命令的对象。</br>
 * job definition 格式</br>
@@ -104,7 +104,7 @@ MAILTO=root       # 若有STOUT，以e-mail推送数据给谁
 * 代表所有的取值范围内的数字；</br>
 / 代表每的意思，"*/5"表示每5个单位；</br>
 - 代表从某个数字到某个数字，即某个区间；</br>
-, 分开几个离散的数字。</br>
+, 分开几个离散的数字，可用于分散任务执行时间，以免多个任务在同一时间执行。</br>
 ```
 ```
 # 每天早上6点 
@@ -118,7 +118,10 @@ MAILTO=root       # 若有STOUT，以e-mail推送数据给谁
 # 1月1日早上4点
 0 4 1 1 * command line 
 ```
-注意：单纯echo，从屏幕上看不到任何输出，因为cron把任何输出都email到root的信箱了。 
+注意：</br>
+单纯echo，从屏幕上看不到任何输出，因为cron把任何输出都email到root的信箱了。</br>
+循环周期，周和日月不可同时并存，仅能单独用周或者日、月来作为循环周期，否则会出错。</br>
+
 
 命令格式：</br>
 job definition 的命令格式有两种写法</br>
