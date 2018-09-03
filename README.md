@@ -33,19 +33,20 @@
 * [Python 基础语法](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95.MD)
 * [Python 解释器](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E8%A7%A3%E9%87%8A%E5%99%A8.MD)
 * [Python 序列：序列类型、通用基本操作](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E5%BA%8F%E5%88%97%EF%BC%9A%E5%BA%8F%E5%88%97%E7%B1%BB%E5%9E%8B%E3%80%81%E9%80%9A%E7%94%A8%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C.MD)
-* [Python 序列：列表](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E5%BA%8F%E5%88%97%EF%BC%9A%E5%88%97%E8%A1%A8.MD)
-* [Python 序列：元组](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E5%BA%8F%E5%88%97%EF%BC%9A%E5%85%83%E7%BB%84.MD)
-* [Python 序列：字符串](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E5%BA%8F%E5%88%97%EF%BC%9A%E5%AD%97%E7%AC%A6%E4%B8%B2.MD)
-* [Python 映射：字典](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E6%98%A0%E5%B0%84%EF%BC%9A%E5%AD%97%E5%85%B8.MD)
+* [Python 序列：列表 list](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E5%BA%8F%E5%88%97%EF%BC%9A%E5%88%97%E8%A1%A8.MD)
+* [Python 序列：元组 tuple](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E5%BA%8F%E5%88%97%EF%BC%9A%E5%85%83%E7%BB%84.MD)
+* [Python 序列：字符串 string](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E5%BA%8F%E5%88%97%EF%BC%9A%E5%AD%97%E7%AC%A6%E4%B8%B2.MD)
+* [Python 映射：字典 dictionary](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E6%98%A0%E5%B0%84%EF%BC%9A%E5%AD%97%E5%85%B8.MD)
 * [Python 语句：赋值、条件、循环及其他语句](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E8%AF%AD%E5%8F%A5%EF%BC%9A%E8%B5%8B%E5%80%BC%E3%80%81%E6%9D%A1%E4%BB%B6%E3%80%81%E5%BE%AA%E7%8E%AF%E5%8F%8A%E5%85%B6%E4%BB%96%E8%AF%AD%E5%8F%A5.MD)
 * [Python 迭代与推导](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E8%BF%AD%E4%BB%A3%E4%B8%8E%E6%8E%A8%E5%AF%BC.MD)
 * [Python 函数](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E5%87%BD%E6%95%B0.MD)
 * [Python 面向对象：类、实例、属性、方法](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%EF%BC%9A%E7%B1%BB%E3%80%81%E5%AE%9E%E4%BE%8B%E3%80%81%E5%B1%9E%E6%80%A7%E3%80%81%E6%96%B9%E6%B3%95.MD)
 * [Python 错误和异常](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E9%94%99%E8%AF%AF%E3%80%81%E5%BC%82%E5%B8%B8%E5%8F%8A%E5%85%B6%E5%A4%84%E7%90%86.MD)
-* [Python 面向对象：Special method 魔法方法、property 特性、iterator 迭代器](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%EF%BC%9ASpecial%20method%20%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95%E3%80%81property%E7%89%B9%E6%80%A7%E3%80%81iterator%20%E8%BF%AD%E4%BB%A3%E5%99%A8.MD)
+* [Python 面向对象：魔法方法 Special method、特性 property、迭代器 iterator](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%EF%BC%9ASpecial%20method%20%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95%E3%80%81property%E7%89%B9%E6%80%A7%E3%80%81iterator%20%E8%BF%AD%E4%BB%A3%E5%99%A8.MD)
 * [Python 模块](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E6%A8%A1%E5%9D%97.MD)
-* [Python 集合、堆、双端队列](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E9%9B%86%E5%90%88%E3%80%81%E5%A0%86%E3%80%81%E5%8F%8C%E7%AB%AF%E9%98%9F%E5%88%97.MD)
+* [Python 集合 set、堆 heapq、双端队列 deque ](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E9%9B%86%E5%90%88%E3%80%81%E5%A0%86%E3%80%81%E5%8F%8C%E7%AB%AF%E9%98%9F%E5%88%97.MD)
 * [Python 日期与时间 time](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E6%97%A5%E6%9C%9F%E4%B8%8E%E6%97%B6%E9%97%B4.MD)
+* [Python 随机与统计 random](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E9%9A%8F%E6%9C%BA%E4%B8%8E%E7%BB%9F%E8%AE%A1.MD)
 
 
 ## Databases
@@ -61,7 +62,7 @@
 | [VMware 合并多个 vmdk](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/VMware_note/VMware%20%E5%90%88%E5%B9%B6%E5%A4%9A%E4%B8%AAvmdk.MD)
 | [VMware 虚拟机扩容](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/VMware_note/VMware%20%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%89%A9%E5%AE%B9.MD)
 </br>
-[VMware 物理机磁盘空间不足问题解决](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/VMware_note/VMware%20%E7%89%A9%E7%90%86%E6%9C%BA%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4%E4%B8%8D%E8%B6%B3%E7%9A%84%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3.)
+[VMware 物理机磁盘空间不足问题解决](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/VMware_note/VMware%20%E7%89%A9%E7%90%86%E6%9C%BA%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4%E4%B8%8D%E8%B6%B3%E7%9A%84%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3.MD)
 
 
 
