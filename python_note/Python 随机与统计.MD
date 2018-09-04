@@ -67,7 +67,7 @@ def diceGame():
 
     resultList=[]
     for n in range(1,diceNum+1):
-        result=random.randrange(1,diceFace)
+        result=random.randrange(1,diceFace+1)
         resultList.append(result)
 
     print(resultList)
