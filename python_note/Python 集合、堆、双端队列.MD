@@ -28,19 +28,18 @@ Pyhon 中有双端队列 deque 和其他一些 collection 类型，它们被包�
 <class 'dict'>
 ```
 
-可以让变量关联到数字，然后再用该变量作为集合元素，但是字符串是无法作为集合元素的。
+可以让变量关联到数字，然后再用该变量作为集合元素，也可用字符串作为集合元素的。
 ```
 >>> a=3
 >>> {a,7}
 {3, 7}
->>> {d,8}
-Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
-NameError: name 'd' is not defined
 >>> d=4
 >>> {a,d}
 {3, 4}
 >>> 
+>>> {'a','b',1}
+{1, 'b', 'a'}
+
 ```
 集合set是可变的，但是集合的元素不能是可变的，即是集合中不能包含集合。
 ```
