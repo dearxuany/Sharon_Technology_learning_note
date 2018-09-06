@@ -48,7 +48,7 @@
 * [Python 日期与时间 time](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E6%97%A5%E6%9C%9F%E4%B8%8E%E6%97%B6%E9%97%B4.MD)
 * [Python 随机与统计 random](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E9%9A%8F%E6%9C%BA%E4%B8%8E%E7%BB%9F%E8%AE%A1.MD)
 * [Python 原始类与 JSON 对象转换](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E5%8E%9F%E5%A7%8B%E7%B1%BB%E4%B8%8EJSON%E5%AF%B9%E8%B1%A1%E8%BD%AC%E6%8D%A2.MD)
-* [python 正则表达式 re](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/python%20%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%20re.MD)
+* [Python 正则表达式 re](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/python%20%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%20re.MD)
 
 
 
