@@ -221,7 +221,7 @@ FileNotFoundError: [Errno 2] No such file or directory: 'python3_fileTest2.txt'
 'pythonworld!good moring!'
 ```
 
-### 配合linux管道命令重定向输出
+## 配合linux管道命令重定向输出
 linux管道命令：</br>
 管道将一个命令的标准输出连接到下一个命令的标准输入，整个过程不影响提供数据来源的文件本身。</br>
 </br>
@@ -250,3 +250,160 @@ wordsCount=len(words)
 
 print('Wordscount:',wordsCount)
 ```
+
+
+## 迭代文件内容
+Python中，迭代文件内容的方法有很多，常见的方法有以下三种：</br>
+1.使用while循环，利用read()对字符进行迭代，利用readline()对行进行迭代（最罕见）；</br>
+2.使用模块fileinput模块中的功能；</br>
+3.使用for循环直接对文件内容进行以行为单位的迭代（最常见）。</br>
+注意：stdin和文件一样也是可迭代的，语法上和文件一样只是导入的模块不一样。</br>
+```
+# 被迭代文本
+/home/sunnylinux/pythontest/python3_file/python3_fileTest3.txt
+$ cat python3_fileTest3.txt 
+a testingb
+Words is a standard file on all Unix and Unix-like operating systems, and is simply a newline-delimited list of dictionary words. It is used, for instance, by spell-checking programs.
+```
+### 迭代每个字符
+```
+#! /usr/bin/python3
+
+import io
+
+filename=input('Place input the path of the file you want to iterate: ')
+
+with open(filename) as f:
+    while True:
+        char=f.read(1)    # 下一个字符
+        if not char: break  # 当前字符为空时跳出循环
+        print(char)
+
+
+# 输出（截取部分）
+Place input the path of the file you want to iterate: /home/sunnylinux/pythontest/python3_file/python3_fileTest3.txt
+a
+ 
+t
+e
+s
+t
+i
+n
+g
+b
+```
+
+### 迭代每一行
+```
+#! /usr/bin/python3
+
+import io
+
+filename=input('Place input the path of the file you want to iterate: ')
+
+with open(filename) as f:
+    i=0
+    for line in f:
+        i=i+1
+        print(i,':',line)
+~                               
+```
+```
+# 输出
+Place input the path of the file you want to iterate: /home/sunnylinux/pythontest/python3_file/python3_fileTest3.txt
+1 : a testingb
+
+2 : Words is a standard file on all Unix and Unix-like operating systems, and is simply a newline-delimited list of dictionary words. It is used, for instance, by spell-checking programs.
+```
+```
+# 迭代这个脚本自己：空行也会被算作一行
+1 : #! /usr/bin/python3
+
+2 : 
+
+3 : import io
+
+4 : 
+
+5 : filename=input('Place input the path of the file you want to iterate: ')
+
+6 : 
+
+7 : with open(filename) as f:
+
+8 :     i=0
+
+9 :     for line in f:
+
+10 :         i=i+1
+
+11 :         print(i,':',line)
+```
+
+### 模块fileinput
+fileimput 模块：提供迭代一系列文本中所有行的功能。</br>
+不过和之前的迭代不同，fileinput的迭代是可以直接将修改后的结果保存到源文件，也提供修改前源文件的备份功能，也可以只作处理不作保存。</br>
+
+fileinput.input([files[, inplace[, backup[, bufsize[, mode[, openhook]]]]]])：</br>
+fileinput.input()和readlines()有点相似，它返回的是一个内容为目标文件内容的可迭代对象，通常以for line in fileinput.input() 这种形式出现。对于较大的文件，用fileinput.input()比用readlines()更加合适。</br>
+参数：</br>
+files	文件的路径列表，默认是stdin方式，多文件['1.txt','2.txt',...]；</br>
+inplace 	是否将标准输出的结果写回文件，默认不取代，True则写回文件，应谨慎使用；</br>
+backup	备份文件的扩展名，只指定扩展名，如.bak。如果该文件的备份文件已存在，则会自动覆盖；</br>
+bufsize	缓冲区大小，默认为0，如果文件很大，可以修改此参数，一般默认即可；</br>
+mode	读写模式，默认为只读；</br>
+openhook	该钩子用于控制打开的所有文件，比如说编码方式等。</br>
+
+其他常用函数</br>
+fileinput.input()       #返回能够用于for循环遍历的对象</br>
+fileinput.filename()    #返回当前文件的名称</br>
+fileinput.lineno()      #返回当前已经读取的行的数量（或者序号）</br>
+fileinput.filelineno()  #返回当前读取的行的行号</br>
+fileinput.isfirstline() #检查当前行是否是文件的第一行</br>
+fileinput.isstdin()     #判断最后一行是否从stdin中读取</br>
+fileinput.close()       #关闭队列</br>
+```
+# stdin方式调用脚本
+$ python3 fileinput.py /home/sunnylinux/pythontest/python3_file/python3_fileTest3.txt
+line 1 : a testingb
+
+line 2 : Words is a standard file on all Unix and Unix-like operating systems, and is simply a newline-delimited list of dictionary words. It is used, for instance, by spell-checking programs.
+
+Total:  2
+```
+```
+$ python3 fileinput.py fileinput.py
+line 1 : #! /usr/bin/python3
+
+line 2 : 
+
+line 3 : import fileinput
+
+line 4 : 
+
+line 5 : for line in fileinput.input():
+
+line 6 :     num=fileinput.lineno()  # 累积行数，不累积用filelineno()
+
+line 7 :     print('line',num,':',line)
+
+line 8 : 
+
+line 9 : print('Total: ',num)
+
+Total:  9
+```
+```
+# 同时迭代多个文件，lineno()的行数不会随文件的改变而清零，而是累积计算
+$ python3 fileinput.py fileinput.py specialmethod.py
+
+line 1 : #! /usr/bin/python3
+（省略部分输出）
+line 48 : duck.eat()
+
+line 49 : 
+
+Total:  49
+```
+
