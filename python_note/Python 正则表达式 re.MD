@@ -1,4 +1,4 @@
-# python 正则表达式 re
+# Python 正则表达式 re
 python 中的正则表达式，由模块re来提供支持。</br>
 python 的正则表达式貌似语法上和linux SHELL的正则表达式差不多，可是还有些许不一样，要注意区别。</br>
 详情见：[linux 的正则表达式](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E6%96%87%E4%BB%B6%E5%90%8D%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99.MD#%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F)
