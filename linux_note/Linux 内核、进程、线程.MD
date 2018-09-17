@@ -25,6 +25,11 @@ bash是ps的父进程，ps其实就是执行ps -l触发的，是bash的子进程
 2.exec 执行</br>
 之后，暂存进程会以exec的方式加载实际要执行的程序，然后改变程序名，成为一个真正的子进程。</br>
 </br>
+
+实际上，当计算机开机的时候，内核(kernel)只建立了一个init进程（systemd）。Linux内核并不提供直接建立新进程的系统调用。剩下的所有进程都是init进程通过fork机制建立的。每个子进程都在内存中分配得属于自己的空间 (address space)，之后父进程空间中的内容会被复制到子进程的空间中，此后两个进程同时运行。</br>
+关于Linux 系统中最新的初始化系统（init）systemd ： </br>
+https://www.ibm.com/developerworks/cn/linux/1407_liuming_init3/index.html</br>
+</br>
 一些常用的简单命令如ls -al、rm、mkdir等，它们执行完就结束了，所以PID很快就停止了。也有一些常驻进程，他们一般被称为系统服务daemon，例如crond是开机自启的，它的PID是1223。
 ```
 $ service crond status
@@ -35,6 +40,152 @@ Redirecting to /bin/systemctl status crond.service
  Main PID: 1223 (crond)
    CGroup: /system.slice/crond.service
            └─1223 /usr/sbin/crond -n
+```
+
+### 进程管理
+#### 进程查看
+ps 静态输出进程状态；</br>
+top 动态输出进程状态；</br>
+pstree 输出进程树。</br>
+ 
+##### 查询操作环境bash中和当前终端有关的进程
+```
+$ ps -l
+F S   UID   PID  PPID  C PRI  NI ADDR SZ WCHAN  TTY          TIME CMD
+0 S  1000  3291  3281  0  80   0 -  2016 do_wai pts/0    00:00:00 bash
+0 T  1000  5039  3291  3  80   0 -  2850 do_sig pts/0    00:00:00 python3
+0 R  1000  5046  3291  0  80   0 -  2423 -      pts/0    00:00:00 ps
+
+# 同一账号X windows下打开第二个terminal
+$ ps -l
+F S   UID   PID  PPID  C PRI  NI ADDR SZ WCHAN  TTY          TIME CMD
+0 S  1000  5200  3281  2  80   0 -  2016 do_wai pts/1    00:00:00 bash
+0 R  1000  5244  5200  0  80   0 -  2423 -      pts/1    00:00:00 ps
+```
+
+由ps -l可见，对于用户个人，最上层的父进程是bash，而没有扩展到init处。</br>
+F：process flags 代表进程权限 </br>
+S：status 进程状态 </br>
+```
+S  sleep 正在睡眠状态idle，可以被唤醒signal；
+R  running 正在运行；
+T  stop 后台暂停或除错traced状态；
+D  不可被唤醒的睡眠状态，通常是进程处于正在等待I/O（阻塞）的状态；
+Z  zombie 传说中的“僵尸进程”，进程被终止但无法释放其占用的内存空间，CMD后面标<defunct>。
+```
+C：CPU占用率</br>
+PRI/NI：被CPU执行的优先级，数字越小，优先级越高</br>
+ADDR：kernel function 指出进程在内存的哪个部分，如果进程处于running则显示“-”</br>
+SZ：占用多少内存</br>
+WCHAN：进程运行状态</br>
+TTY：登录者终端机位置
+```
+tty 即tty1-6，当在tty下执行ps -l 就会显示出当前tty的号码，例如X window的TTY就是tty1；
+pts 虚拟终端，当在图形化界面下打开一个终端，这个终端叫pts/0，再打开一个终端，这个新的终端就叫pts /1，如果是远程登录的会显示为pts/n。
+```
+TIME：CPU使用时间
+
+##### 查询系统所有的进程
+```
+$ ps aux
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root         1  0.0  0.3  27052  3760 ?        Ss   02:12   0:16 /usr/lib/system
+root         2  0.0  0.0      0     0 ?        S    02:12   0:00 [kthreadd]
+root         3  0.0  0.0      0     0 ?        S    02:12   0:04 [ksoftirqd/0]
+root         5  0.0  0.0      0     0 ?        S<   02:12   0:00 [kworker/0:0H]
+# 输出太多，省略部分
+sunnyli+  3291  0.0  0.1   8064  1960 pts/0    Ss   14:52   0:00 bash
+sunnyli+  5039  0.0  0.4  11400  4552 pts/0    T    21:49   0:00 python3
+sunnyli+  5200  0.0  0.2   8064  2500 pts/1    Ss+  22:25   0:00 bash
+root      5254  0.1  0.3  11076  3660 ?        Ss   22:31   0:00 login -- sunnylinu
+sunnyli+  5268  0.0  0.2   7964  2744 tty2     Ss+  22:31   0:00 -bash
+postfix   5349  0.0  0.2  16540  3004 ?        S    22:34   0:00 pickup -l -t unix 
+sunnyli+  5384  0.0  0.1   9768  1628 pts/0    R+   22:41   0:00 ps aux
+```
+%MEM：占用物理内存空间百分比；</br>
+VSZ：占用虚拟内存空间KB；</br>
+RSS：占用固定内存空间KB；</br>
+STAT：同ps -l中的S；</br>
+START：进程被触发的时间。</br>
+</br>
+使用管道命令和正则表达式查询
+```
+$ ps aux | egrep '(python3|cron)'
+root      1223  0.0  0.0   7984   680 ?        Ss   14:47   0:01 /usr/sbin/crond -n
+sunnyli+  5039  0.0  0.4  11400  4552 pts/0    T    21:49   0:00 python3
+sunnyli+  5429  0.0  0.0   6708   892 pts/0    R+   22:58   0:00 grep -E --color=auto (python3|cron)
+```
+##### 列出进程树
+适用于找进程间的关系
+```
+$ pstree
+systemd─┬─ModemManager───2*[{ModemManager}]
+        ├─NetworkManager───2*[{NetworkManager}]
+        ├─2*[abrt-watch-log]
+        ├─abrtd
+        ├─accounts-daemon───2*[{accounts-daemon}]
+        ├─alsactl
+        ├─at-spi-bus-laun─┬─dbus-daemon───{dbus-daemon}
+        │                 └─3*[{at-spi-bus-laun}]
+        ├─at-spi2-registr───2*[{at-spi2-registr}]
+        ├─atd
+        ├─auditd─┬─audispd─┬─sedispatch
+        │        │         └─{audispd}
+        │        └─{auditd}
+# 省略极多输出
+```
+##### 动态查询进程状态
+top可动态查询进程状况，可设置刷新间隔（默认5s）和次数，可根据需求对输出进行排序，可指定查询特定的PID进程，退出top按q。一般用top内查找最耗费CPU或其他资源的进程，因为它可以排序（按P大写！！）。
+```
+$ top
+
+# 当前时间，开机持续时间，当前用户数，1/5/15min平均工作负载 
+top - 23:34:15 up  8:47,  4 users,  load average: 0.42, 0.18, 0.10
+# 进程数量，进程状态
+Tasks: 202 total,   3 running, 198 sleeping,   1 stopped,   0 zombie
+# CPU整体负载，%wa指I/Owait要注意，多核CPU按1切换显示不同CPU负载
+%Cpu(s): 35.3 us, 20.3 sy,  0.0 ni, 44.4 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+# 物理内存和虚拟内存，虚拟内存用量要尽量地少
+KiB Mem :  1027732 total,    78428 free,   683992 used,   265312 buff/cache
+KiB Swap:  1048572 total,   962044 free,    86528 used.   136816 avail Mem 
+
+  PID USER      PR  NI    VIRT    RES    SHR S %CPU %MEM     TIME+ COMMAND                 
+ 1399 root      20   0  118352  22596   5676 R 35.0  2.2   4:11.44 X                       
+ 2380 sunnyli+  20   0 1072824 169672  28616 R 11.9 16.5   3:53.77 gnome-shell             
+ 3281 sunnyli+  20   0  144308  25456  11480 S  6.9  2.5   0:37.70 gnome-terminal-         
+  833 root      20   0   31224   1840   1512 S  0.3  0.2   1:41.20 vmtoolsd                
+ 1635 mysql     20   0  589928  29832    528 S  0.3  2.9   0:45.20 mysqld                  
+ 2736 sunnyli+  20   0   64748   5588   3072 S  0.3  0.5   1:37.27 vmtoolsd                
+ 3189 sunnyli+  20   0   55956   2712   1268 S  0.3  0.3   0:03.99 ibus-daemon             
+ 5557 sunnyli+  20   0   10236   1932   1340 R  0.3  0.2   0:00.67 top                     
+    1 root      20   0   27052   3896   2664 S  0.0  0.4   0:17.70 systemd   
+```
+
+平均工作负载：
+代表在1,、5、15分钟内，系统平均要负责运行几个进程，数字越小，系统越闲。如果高于1要注意调整系统压力。
+
+在 top 执行过程当中可以使用的按键指令：
+```
+? ：显示在 top 当中可以输入的按键指令；
+P ：以 CPU 的使用资源排序显示；
+M ：以 Memory 的使用资源排序显示；
+N ：以 PID 来排序；
+T ：由该 Process 使用的 CPU 时间累积 (TIME+) 排序；
+k ：给予某个 PID 一个讯号  (signal)；
+r ：给予某个 PID 重新制订一个 nice 值；
+q ：离开 top 软件的按键。
+```
+```
+$ top -d 2 -p $$  # d参数修改刷新时间, p指定PID，此处$$表示bash的进程号
+  PID USER      PR  NI    VIRT    RES    SHR S %CPU %MEM     TIME+ COMMAND                 
+ 3291 sunnyli+  20   0    8064   1964   1032 S  0.0  0.2   0:01.13 bash  
+```
+```
+$ ps -l|egrep 'python3'
+0 T  1000  5039  3291  0  80   0 -  2850 do_sig pts/0    00:00:00 python3
+$ top -d 2 -p 5039
+  PID USER      PR  NI    VIRT    RES    SHR S %CPU %MEM     TIME+ COMMAND                 
+ 5039 sunnyli+  20   0   11400   4552   2560 T  0.0  0.4   0:00.32 python3    
 ```
 ### linux多用户、多任务环境
 linux的进程设计能很好地利用CPU的性能，每一个任务(进程)被创建时，系统会为他分配存储空间等必要资源，然后在内核管理区为该进程创建管理节点，以便后来控制和调度该任务的执行。进程真正进入执行阶段，系统会给进程分配必要的CPU资源，这个行为被称为“调度”。除CPU而外，系统会为每个进程分配独有的存储空间，还有其他外设的可使用状态等。即是子进程和父进程一样，有它自己独立的硬件资源。</br>
