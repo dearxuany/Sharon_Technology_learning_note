@@ -187,6 +187,99 @@ $ top -d 2 -p 5039
   PID USER      PR  NI    VIRT    RES    SHR S %CPU %MEM     TIME+ COMMAND                 
  5039 sunnyli+  20   0   11400   4552   2560 T  0.0  0.4   0:00.32 python3    
 ```
+#### 进程优先级
+和进程优先级有关的两个参数是PRI和NI：</br>
+PRI由内核动态决定，PRI越小，优先级越高；</br>
+NI可由用户决定，root NI范围为 -20到19，一般用户NI范围0到19且仅能把NI值调高；</br>
+PRI_new = PRI_old + NI，但是不是绝对的，最终PRI值还是由系统决定的，NI值会从父进程传递给子进程。</br>
+
+##### 调整NI且触发进程
+```
+nice [-n NI数值] command
+```
+注意：有参数-n且注意后面NI值的符号，如果是负数必须root权限</br>
+```
+# 修改vi的NI且让vi在后台执行，修改前PRI为80
+# nice -n -5 vi &
+[1]6204  # [1]表示vi的job number，6204为PID
+# ps -l
+F S   UID   PID  PPID  C PRI  NI ADDR SZ WCHAN  TTY          TIME CMD
+4 T     0  6103  3291  0  80   0 -  5379 do_sig pts/0    00:00:00 sudo
+4 S     0  6147  3291  0  80   0 -  3759 do_wai pts/0    00:00:00 su
+4 S     0  6155  6147  0  80   0 -  1984 do_wai pts/0    00:00:00 bash
+4 T     0  6204  6155  0  75  -5 -  1928 do_sig pts/0    00:00:00 vi
+0 R     0  6211  6155  0  80   0 -  2423 -      pts/0    00:00:00 ps
+# 通过PID杀掉vi进程，-9为signal中SIGKILL的代号，强制中断进程
+# kill -9 6204
+[1]+  已杀死               nice -n -5 vi
+```
+
+##### 修改已有进程的NI
+```
+renice [NI数值] PID
+```
+注意：子进程NI值会跟随父进程</br>
+```
+# 修改bash的NI
+# renice 2 6155
+6155 (进程 ID) 旧优先级为 0，新优先级为 2
+# ps -l
+F S   UID   PID  PPID  C PRI  NI ADDR SZ WCHAN  TTY          TIME CMD
+4 T     0  6103  3291  0  80   0 -  5379 do_sig pts/0    00:00:00 sudo
+4 S     0  6147  3291  0  80   0 -  3759 do_wai pts/0    00:00:00 su
+4 S     0  6155  6147  0  82   2 -  2004 do_wai pts/0    00:00:00 bash
+0 R     0  6250  6155  0  82   2 -  2423 -      pts/0    00:00:00 ps
+```
+#### 杀死进程
+##### 杀死单个进程
+```
+kill -signal PID或%jobnumber
+```
+Signal 内容：
+```
+1   SIGHUP	
+启动被终止的程序，可让该 PID 重新读取自己的设定档，类似重新启动；
+2   SIGINT	
+相当于用键盘输入 [ctrl]-c 来中断一个程序的进行；
+9   SIGKILL	
+代表强制中断一个程序的进行，如果该程序进行到一半， 那么尚未完成的部分可能会导致半产品产生，如vim会有 .filename.swp 保留下来；
+15  SIGTERM	
+以正常的结束程序来终止该程序。由于是正常的终止， 所以后续的动作会将他完成。不过，如果该程序已经发生问题，就是无法使用正常的方法终止时， 输入这个 signal 也是没有用的；
+19  SIGSTOP	
+相当于用键盘输入 [ctrl]-z 来暂停一个程序的进行。
+```
+注意：1用于重启，9用于在不正常状态下关闭中断进程，15让进程跑完之后正常关闭。
+```
+# ps aux|egrep 'vi'
+sunnyli+  6036  0.0  0.1   7712  1372 pts/0    T    07:57   0:00 vi
+# 杀掉vi进程
+# kill -9 6036
+```
+##### 杀死由某个命令触发的多个进程（服务）
+```
+killall -signal command
+```
+注意：被处理的对象是命令，不是PID，被kill的是命令所触发的多个进程
+```
+# killall -9 python3
+[1]+  已杀死               python3
+```
+#### 前台后台工作管理
+后台执行 command & </br>
+暂停 [ctrl]+[z]</br>
+查看后台状态 jobs -l</br>
+将后台进程调到前台   fg %jobnumber</br>
+让暂停进程在后台run  bg %jobnumber</br>
+删除后台进程 kill -signal %jobnumber</br>
+```
+# vim vitest_man.conf 
+（vi一般模式下按 [ctrl]+[z]）
+[1]+  已停止               vim vitest_man.conf
+# jobs -l
+[1]+  6786 停止                  vim vitest_man.conf
+# fg %1
+```
+
 ### linux多用户、多任务环境
 linux的进程设计能很好地利用CPU的性能，每一个任务(进程)被创建时，系统会为他分配存储空间等必要资源，然后在内核管理区为该进程创建管理节点，以便后来控制和调度该任务的执行。进程真正进入执行阶段，系统会给进程分配必要的CPU资源，这个行为被称为“调度”。除CPU而外，系统会为每个进程分配独有的存储空间，还有其他外设的可使用状态等。即是子进程和父进程一样，有它自己独立的硬件资源。</br>
 </br>
