@@ -1,4 +1,4 @@
-# Python 多任务/多连接：</br>线程Thread、进程 Process、协程 Coroutine
+# Python 多任务/多连接：</br>线程 Thread、进程 Process、协程 Coroutine
 
 多任务：对于本地计算机，让CPU同时处理多项工作</br>
 多连接：对于网络，让服务器同时处理多个客户端连接请求</br>
