@@ -24,3 +24,176 @@ master主进程/主线程负责分配任务，worker负责执行任务。</br>
 多线程和多进程只是因为CPU在多任务情景下在任务间切换的速度非常快，所以在用户角度来看好像多个任务在同时进行而已。但无论是多进程还是多线程，任务一多，效率还是不高的。因为操作系统在切换进程或者线程时需要先保存当前执行的现场环境（CPU寄存器状态、内存页等），然后把新任务的执行环境准备好（恢复上次的寄存器状态，切换内存页等），才能开始执行。这个切换过程虽然很快，但是也需要耗费时间。当多任务的任务量达到一定程度，任务间切换消耗掉系统大部分的资源，便有可能让多进程或多线程系统瘫痪。</br>
 </br>
 对于单进程单线程来说，要实现多任务会采用异步的数据传输方式。现时比较新的异步I/O模型是“事件驱动模型”，让系统在在单核CPU上采用单进程模型就可以高效地支持多任务。在多核CPU上，可以运行多个进程（数量与CPU核心数相同），充分利用多核CPU。对于Python，单线程的异步编程模型称为协程，有了协程的支持，就可以基于事件驱动编写高效的多任务程序。Python基于“事件驱动模型”的网络框架有Twisted，可在基本类的基础上通过定义专用类来定义更细致的事件，以应对服务器多连接的状况。</br>
+
+## 进程
+### 多任务
+#### Linux和Mac平台上的多进程
+Python以多进程 multiprocessing 的方式实现多任务主要涉及到模块os（小写！）。</br>
+os模块封装了常见的系统调用，多进程主要用到的是函数fork()。</br>
+fork()和普通函数的主要区别：</br>
+普通函数调用一次return一次，而fork()调用一次return两次。这是因为操作系统自动把当前进程（称为父进程）复制了一份（称为子进程），fork()的两个返回分别是父进程和子进程内的返回。</br>
+子进程永远返回0，而父进程返回子进程的ID。因为父进程可以fork出很多个子进程，如果子进程想获得父进程的ID可用getppid()，自身的ID用getpid()。</br>
+注意：win没有fork，只有Unix/linux可以，Mac据说也是可以的。</br>
+</br>
+关于linux进程：[Linux 内核、进程、线程](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E5%86%85%E6%A0%B8%E3%80%81%E8%BF%9B%E7%A8%8B%E3%80%81%E7%BA%BF%E7%A8%8B.MD#%E8%BF%9B%E7%A8%8B-process)</br>
+```
+#! /usr/bin/python3
+
+import os
+
+print('process pid (now):',os.getpid())
+
+# 先返回父进程的返回值即子进程的pid，再返回子进程的返回值0
+returnValue=os.fork()
+
+if returnValue == 0:
+    print('I\'m a subprocess. My pid is {}. My parent process is {}.'.format(os.getpid(),os.getppid()))
+else:
+    print('I\'m the parent process. My pid is {}. My subprocess is {}.'.format(os.getpid(),returnValue))
+```
+```
+# 注意是先出了父进程的ID然后再出子进程的ID
+process pid (now): 4780
+I'm the parent process. My pid is 4780. My subprocess is 4781.
+I'm a subprocess. My pid is 4781. My parent process is 4780.
+```
+#### 跨平台的多进程（包括Win）
+multiprocessing模块是Python跨平台版本的多进程模块，它提供了一个Process类来代表一个进程对象。</br>
+用multiprocessing中Process来创建的子进程能比较直观地控制其开始、等待、结束，join()用于进程间的同步。</br>
+官方文档：https://docs.python.org/3.7/library/multiprocessing.html
+
+关于__name__=’\_\_main\_\_’ ：[Python 模块](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E6%A8%A1%E5%9D%97.MD#%E5%9C%A8%E6%A8%A1%E5%9D%97%E4%B8%AD%E6%B7%BB%E5%8A%A0%E6%B5%8B%E8%AF%95%E4%BB%A3%E7%A0%81)
+
+```
+#! /usr/bin/python3
+
+from multiprocessing import Process
+import os
+
+def subprocessCode(num):
+    print('The subprocess is running. Pid:',os.getpid(),' PPid:',os.getppid())
+    print('{}*{}={}'.format(num,num,num*num))
+
+if __name__ == '__main__':
+    print('The pid now： ',os.getpid())
+num=int(input('Place input a number: '))
+# 新建子进程，调用子进程要执行的代码以及传入参数
+    subprocess=Process(target=subprocessCode,args=(num,))
+print('The subprocess will start...')
+# 正式开启子进程
+    subprocess.start()
+subprocess.join()
+# 回到父进程
+    print('The subprocess is finished.')
+```
+```
+The pid now：  5038
+Place input a number: 6
+The subprocess will start...
+The subprocess is running. Pid: 5039  PPid: 5038
+6*6=36
+The subprocess is finished.
+```
+#### 进程池Pool：批量创建子进程
+用multiprocessing中的Pool模块可批量创建子进程，Pool()的默认大小是CPU的核数，超过此默认值会产生需要后面的子进程等待前面的子进程结束的状况。（Pool的首字母为大写！！）
+
+* 异步非阻塞
+```
+#! /usr/bin/python3
+
+from multiprocessing import Pool
+import os,random,time
+
+def timeWaitTask(name):
+    print('Run task {},PID:{},PPID:{}'.format(name,os.getpid(),os.getppid()))
+    start=time.time()  # 获取当前时间
+    time.sleep(random.random()*3)  # 随机沉睡n秒
+    end=time.time()
+    print('task {} have run {} second.'.format(name,(end-start)))
+
+if __name__ == '__main__':
+    print('Parent process pid:',os.getpid())
+    num=int(input('How many subprocess do you want to create?' ))
+    startP=time.time()
+    # 创建进程池
+    p=Pool(num)
+    for i in range(num):
+        # 以异步非阻塞方式执行子进程代码并传入参数
+        p.apply_async(timeWaitTask,args=(i,))
+    print('Waiting for all subprocesses done...')
+    p.close()
+    p.join()
+    endP=time.time()
+print('All subprocesses done. Used time:',(endP-startP))
+```
+```
+# 异步非阻塞输出：进程池进程数设为3，迭代进程数为3
+Parent process pid: 6075
+How many subprocess do you want to create?3
+Waiting for all subprocesses done...
+Run task 0,PID:6076,PPID:6075
+Run task 1,PID:6077,PPID:6075
+Run task 2,PID:6078,PPID:6075
+task 2 have run 0.5290088653564453 second.
+task 1 have run 0.7186739444732666 second.
+task 0 have run 0.8787143230438232 second.
+All subprocesses done. Used time: 1.0688724517822266
+```
+注意p.close() 必须在p.join()前面！！ 
+p.close()和 p.join()主要用于及时告诉主进程等着所有子进程运行完毕后运行剩余部分。
+</br>
+* 修改for循环语句为for i in range(num+1):
+```
+# 异步非阻塞输出：进程池进程数设为3，迭代进程数为4
+Parent process pid: 5684
+How many subprocess do you want to create?3
+Waiting for all subprocesses done...
+Run task 0,PID:5685,PPID:5684
+Run task 1,PID:5686,PPID:5684
+Run task 2,PID:5687,PPID:5684
+task 0 have run 1.0141069889068604 second.
+Run task 3,PID:5685,PPID:5684
+task 2 have run 1.2155463695526123 second.
+task 3 have run 1.312908411026001 second.
+task 1 have run 2.806411027908325 second.
+All subprocesses done. Used time: 2.984306812286377
+```
+注意由于迭代的进程数大于进程池设置的进程数量，所以进程3出现了等待行为，它等待进程0完成后才开始执行，然而它完成得比进程1快，因为它的睡眠时间比1短。
+
+* 固定睡眠时间为3秒time.sleep(3) 
+```
+# 异步非阻塞输出：进程池进程数设为3，迭代进程数为4
+Parent process pid: 6096
+How many subprocess do you want to create?3
+Waiting for all subprocesses done...
+Run task 0,PID:6097,PPID:6096
+Run task 1,PID:6098,PPID:6096
+Run task 2,PID:6099,PPID:6096
+task 0 have run 3.0008528232574463 second.
+Run task 3,PID:6097,PPID:6096
+task 1 have run 3.002493381500244 second.
+task 2 have run 3.0034074783325195 second.
+task 3 have run 3.00197696685791 second.
+All subprocesses done. Used time: 6.27057957649231
+```
+* 将异步非阻塞方式改为同步方式，修改 p.apply_async(timeWaitTask,args=(i,))为 p.apply(timeWaitTask,args=(i,))
+```
+# 同步阻塞输出：进程池进程数设为3，迭代进程数为4
+Parent process pid: 6117
+How many subprocess do you want to create?3
+Run task 0,PID:6118,PPID:6117
+task 0 have run 3.003875732421875 second.
+Run task 1,PID:6119,PPID:6117
+task 1 have run 3.003229856491089 second.
+Run task 2,PID:6120,PPID:6117
+task 2 have run 3.003627300262451 second.
+Run task 3,PID:6118,PPID:6117
+task 3 have run 3.0002846717834473 second.
+Waiting for all subprocesses done...
+All subprocesses done. Used time: 12.214302062988281
+```
+可见p.apply_async() 异步非阻塞方式和p.apply() 同步阻塞方式是不一样的。</br>
+p.apply_async() 异步非阻塞方式进程池内三个进程同时开始，多个进程以并行方式执行代码；</br>
+p.apply() 同步阻塞方式进程池内每个进程按顺序执行且只能等上一个进程完成了才开始下一个进程，多个进程以串行方式执行代码，功能上其实和单个进程多次调用同一个函数没有什么区别。</br>
+</br>
+关于同步/异步、阻塞/非阻塞：[Linux IO模型：同步、异步、阻塞、非阻塞](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20IO%E6%A8%A1%E5%9E%8B%EF%BC%9A%E5%90%8C%E6%AD%A5%E3%80%81%E5%BC%82%E6%AD%A5%E3%80%81%E9%98%BB%E5%A1%9E%E3%80%81%E9%9D%9E%E9%98%BB%E5%A1%9E.MD)
