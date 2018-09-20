@@ -76,7 +76,7 @@ def subprocessCode(num):
 
 if __name__ == '__main__':
     print('The pid now： ',os.getpid())
-num=int(input('Place input a number: '))
+    num=int(input('Place input a number: '))
 # 新建子进程，调用子进程要执行的代码以及传入参数
     subprocess=Process(target=subprocessCode,args=(num,))
 print('The subprocess will start...')
