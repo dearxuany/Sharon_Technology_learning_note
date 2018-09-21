@@ -1,4 +1,4 @@
-# Python 集合、堆、双端队列
+# Python 集合、堆、双端队列、队列
 集合 set、堆 heap、双端队列deque 是除序列和映射外的另外一些常用数据结构。</br>
 Python中有现成的集合set类型；</br>
 Python中没有独立的堆类型，必须使用列表来表示堆本身，但是包含一个有堆操作函数的模块heapq；</br>
@@ -325,3 +325,30 @@ deque([9, 127, 87, 95, 66, 3, 32, 8, 60, 51, 22])
 >>> deque_lst
 deque([95, 66, 3, 32, 8, 60, 51, 22, 9, 127, 87])
 ```
+
+## 队列 queue
+queue 队列：<br>
+一种线性的数据结构，python中由模块queue.Queue支持，此模块支持三种类型的queue。<br>
+queue常被用作进程间或线程间的通信，multiprocesing中有专门用于进程通信的Queue模块。</br>
+官方文档 https://docs.python.org/3.7/library/queue.html<br>
+
+### queue的三种类型
+FIFO  - 先进先出，1st in 1st out，即队尾入队头出，class Queue.Queue(maxsize)，默认 ；<br>
+LIFO  - 后进先出/先进后出，last in 1st out，有点像堆栈/栈stack，class queue.LifoQueue(maxsize) ；<br>
+优先级 - 进入的元素会被分类，最小的元素会被优先弹出，有点像最小堆heapq，class queue.PriorityQueue(maxsize)。<br>
+
+### queue常用的方法
+* Queue.put(item, block=True, timeout=None)<br>
+Put item into the queue. <br>
+如果block是true而且timeout没有设置，在没有空位之前会一直阻塞；<br>
+如果timeout是个正数，在timeout期间会一直阻塞而且如果在此期间没有出现空位会引起Full exception报错；<br>
+如果在其他情况，例如block被设为false，无论是否设置timeout只要有空位就马上把item放进队列中，否则引起 Full exception。 <br>
+
+* Queue.get(block=True, timeout=None)<br>
+Remove and return an item from the queue. <br>
+和上面的put基本情况一样，只是操作换成了remove and return item以及报错是用 Empty exception。<br>
+
+* Queue.join()<br>
+Blocks until all items in the queue have been gotten and processed.<br>
+大概就是等待queue中的所有元素全部被处理完。<br>
+注意和multiprocessing中Process中的join()方法区分，不要搞错了对象。<br>
