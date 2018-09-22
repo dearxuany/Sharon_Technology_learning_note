@@ -197,3 +197,95 @@ p.apply_async() 异步非阻塞方式进程池内三个进程同时开始，多�
 p.apply() 同步阻塞方式进程池内每个进程按顺序执行且只能等上一个进程完成了才开始下一个进程，多个进程以串行方式执行代码，功能上其实和单个进程多次调用同一个函数没有什么区别。</br>
 </br>
 关于同步/异步、阻塞/非阻塞：[Linux IO模型：同步、异步、阻塞、非阻塞](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20IO%E6%A8%A1%E5%9E%8B%EF%BC%9A%E5%90%8C%E6%AD%A5%E3%80%81%E5%BC%82%E6%AD%A5%E3%80%81%E9%98%BB%E5%A1%9E%E3%80%81%E9%9D%9E%E9%98%BB%E5%A1%9E.MD)
+
+#### 将外部进程作为子进程
+subprocess模块可启动一个子进程并控制其输入和输出，可将一个外部进程作为子进程。</br>
+call()的参数是一个列表，列表的元素是字符串。</br>
+如果子进程还需要输入，则可以通过communicate()方法输入。</br>
+```
+#! /usr/bin/python3
+
+import subprocess,os
+
+print('Using python to run \'ps -l\'. pid:',os.getpid())
+# 用python启动子进程执行bash命令ps -l
+r = subprocess.call(['ps','-l'])
+print('Exit code:',r)
+
+Using python to run 'ps -l'. pid: 6961
+F S   UID   PID  PPID  C PRI  NI ADDR SZ WCHAN  TTY          TIME CMD
+0 S  1000  4372  4355  0  80   0 -  2016 do_wai pts/0    00:00:01 bash
+0 S  1000  6961  4372  9  80   0 -  2932 do_wai pts/0    00:00:00 python3
+0 R  1000  6962  6961  0  80   0 -  2423 -      pts/0    00:00:00 ps
+Exit code: 0
+```
+可见这个程序的第一个进程是python3，子进程是ps且返回值为0，其父进程是python3。
+
+#### 进程间通信
+操作系统提供了很多方法供进程间的通信，Python主要通过multiprocessing下的Queue （意为“队列”）、Pipes来实现进程间的通信。</br>
+
+##### 通过Queue来进行进程间的通信
+Python中multiprocessing的Queue默认类型是FIFO先进先出，进程间可通过队列进行通信，且Queue允许多个进程放入，多个进程从队列取出对象。Queue使用mutiprocessing.Queue(maxsize)创建，maxsize表示队列中可以存放对象的最大数量。Queue其实可以被看作一个媒介，先在父进程创建Queue，然后再将这个Queue作为参数传给要进行通信的进程。其实Queue在多线程通信中也会用到。multiprocessing中的Queue是queue.Queue的一个克隆。</br>
+</br>
+官方文档：</br>
+https://docs.python.org/3.7/library/multiprocessing.html#exchanging-objects-between-processes</br>
+关于 queue：[Python 集合、堆、双端队列、队列](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E9%9B%86%E5%90%88%E3%80%81%E5%A0%86%E3%80%81%E5%8F%8C%E7%AB%AF%E9%98%9F%E5%88%97%E3%80%81%E9%98%9F%E5%88%97.MD#%E9%98%9F%E5%88%97-queue)</br>
+</br>
+实例：
+建立两个进程，一个进程用于写入队列，另一个进程用于输出队列。
+```
+#! /usr/bin/python3
+
+from multiprocessing import Queue,Process
+import os
+
+def putI(q):
+    print('Process used to put items into the queue, pid:',os.getpid())
+    q.put(['Sharon','Tom','Jack',26])
+
+
+def printO(q):
+    print('Process used to print the items of the queue, pid:',os.getpid())
+    print(q.get())
+
+if __name__ == '__main__':
+    print('Parent process,pid:',os.getpid())
+    q=Queue()
+    pI=Process(target=putI, args=(q,))
+    pO=Process(target=printO, args=(q,))
+    pI.start()
+    pO.start()
+    pI.join()
+    pO.join()
+    print('Fin!')
+~                   
+
+Parent process,pid: 8393
+Process used to put items into the queue, pid: 8394
+Process used to print the items of the queue, pid: 8395
+['Sharon', 'Tom', 'Jack', 26]
+Fin!
+```
+##### 通过Pipe进行进程间的通信
+Python中multiprocessing的Pipe也支持进程通信且可双向，但是仅支持两个进程间的通信，不支持多个进程间的通信。通过mutiprocessing.Pipe(duplex=False)创建单向管道 (默认为双向)。一个进程从Pipe一端输入对象，然后被PIPE另一端的进程接收，单向管道只允许管道一端的进程输入，而双向管道则允许从两端输入。Pipe用send()方法来传送对象，在另一端使用recv()来接收。
+```
+#! /usr/bin/python3
+
+from multiprocessing import Process,Pipe
+
+def f(conn):
+    conn.send('Hello, Papa!')
+    print('Father:',conn.recv())
+
+if __name__ == '__main__':
+    parentconn,subprocessconn=Pipe()
+    p=Process(target=f, args=(subprocessconn,))
+    p.start()
+    parentconn.send('Hello, Child!')
+    print('Child:',parentconn.recv())
+    p.join
+~             
+
+Father: Hello, Child!
+Child: Hello, Papa!
+```
