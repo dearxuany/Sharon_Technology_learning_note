@@ -289,3 +289,28 @@ if __name__ == '__main__':
 Father: Hello, Child!
 Child: Hello, Papa!
 ```
+
+#### 分布式进程
+分布式进程：manager object控制服务进程server process作为调度者master，通过网络proxies将任务分布到其他多个worker进程中。</br>
+Python中multiprocessing的managers子模块支持把多进程分布到多台机器上。分布式进程依然需要使用Queue来进行进程间的通信，但是多了一步通过managers模块把Queue通过网络暴露出去的操作，让其他机器的进程可以通过网络访问Queue。</br>
+有关managers的官方文档：https://docs.python.org/3.7/library/multiprocessing.html?highlight=managers#managers </br>
+
+##### master进程 
+创建Queue队列，一个发送队列，一个接收队列；</br>
+BaseManager是managers中的一个类，要定义自己的managers要先从BaseManager创建一个子类以继承BaseManager的属性和方法；</br>
+调用BaseManager的方法register()，注册之前的两Queue到网络上，QueueManager.register(typeid[, callable[, proxytype[, exposed[, method_to_typeid[, create_method]]]]])，需要注意的是typeid用于必须是字符，callable用于给typeid定义的其内容、一般用lambda函数调用之前创建的Queue，其余参数可设为None ；</br>
+绑定端口，QueueManager([address[, authkey]])，地址是manager process要监听的IP和端口号，如果地址为None就随机选一个，authkey密钥用于检测连接的安全性，通常为一个字节的字符串，如果为None则调用current_process().authkey；</br>
+创建子类后，调用start() 或 get_server().serve_forever()，让这个子类被开启的manager process所引用；</br>
+暴露Queue到网络上，写法为manager.typeid()；</br>
+放置任务；</br>
+manager.shutdown() 关闭服务进程。</br>
+注意：重点在于register()那一步，这一步将queue注册到网络上。对比之前单台机器的进程间通信可见，之前multiprocessing中的Queue实例化之后会直接被用到Process(target=funtionName, args=(q,)) 的args 中。而分布式的情况下会多了一层封装，每个Queue要求有一个typeid，之后再通过这个typeid来将Queue暴露到网络上，所以这大概是不能直接使用multiprocessing中的Queue而使用queue中的Queue的原因。其次，Queue的作用是用来传递任务和接收结果，每个任务的描述数据量要尽量小。</br>
+
+###### worker进程
+从BaseManager创建一个子类以继承BaseManager的属性和方法，类名要和master进程中的子类名相同；</br>
+QueueManager.register('typeid')网络上注册，因为只需要从网络上获取Queue中的信息，所以只需提供typeid；</br>
+QueueManager(address, authkey)输入master机器的IP、端口号和密码；</br>
+m.connect()方法实现网络连接；</br>
+从网络上获取Queue，写法为m.typeid()；</br>
+从Queue中获取数据和任务，处理完毕后，写入数据。</br>
+
