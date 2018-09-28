@@ -4,9 +4,13 @@
 多连接：对于网络，让服务器同时处理多个客户端连接请求</br>
 </br>
 实现多任务/多连接的常见方法：</br>
-1.多进程forking（分叉）</br>
-2. 多线程threading</br>
-3. 异步I/O asynchronous I/O ：select和poll、epoll、Twisted框架（协程：单线程的异步编程、事件驱动模型）</br>
+1. 多进程 forking或multiprocessing（分叉）：</br>
+多任务涉及 os 或 multiprocessing 模块 </br>
+2. 多线程 multithreading ： </br>
+多任务涉及 threading 模块 </br>
+3. 异步I/O asynchronous I/O （协程：单线程的异步编程、事件驱动模型） ： </br>
+多任务涉及 asyncio 模块 </br>
+多连接涉及 select、poll、epoll 模块以及 Twisted 框架</br>
 </br>
 其中，win不支持分叉，而linux会把线程看作一种特殊的进程。</br>
 多进程和多线程是在以并行的方式解决多连接/多任务问题，而异步是基于单线程单进程来讨论的。比如一个物理硬件的IO接口，并行接口和串行接口，对于单个接口，数据传输方式又有同步和异步之分，接口和数据传输的方式都会影响到物理硬件间数据传输的速率。</br>
