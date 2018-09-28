@@ -314,3 +314,285 @@ m.connect()方法实现网络连接；</br>
 从网络上获取Queue，写法为m.typeid()；</br>
 从Queue中获取数据和任务，处理完毕后，写入数据。</br>
 
+## 线程
+### 多任务
+Python的标准库提供了两个模块：\_thread和threading </br>
+\_thread是低级模块，threading是高级模块，对\_thread进行了封装，一般情况下，使用threading比较多。</br>
+官方文档：https://docs.python.org/3.7/library/threading.html?highlight=thread#module-threading </br>
+
+#### 线程启动
+和进程启动的方法有点相似，使用start()启动线程，线程任务完成后使用join()结束；</br>
+线程任务的定义用threading.Thread(target=function_name, name=thread_name)来完成；</br>
+threading.current_thread()返回现时的线程对象，可调用多种方法，如name为输出线程名；</br>
+任何进程默认启动一个线程，我们把该线程称为主线程MainThread，主线程可以启动新的线程。</br>
+注意：全局变量和局部变量的作用域</br>
+```
+#! /usr/bin/python3
+
+import threading,time,random,os
+
+def loop():
+    loops=time.time()
+    print('pid:',os.getpid())
+    n = 0
+    print('Running Thread {}'.format(threading.current_thread().name))
+    while n < 6:
+        ns=time.time()
+        n=n+1
+        print('Running Thread {}'.format(threading.current_thread().name))
+        print('n = ',n)
+        time.sleep(random.random()*3)
+        ne=time.time()
+        print('Using time:',ne-ns)
+    loope=time.time()
+    print('Thread {} ended.'.format(threading.current_thread().name))
+    print('Using time:',ne-ns,'n=',n)
+
+ms=time.time()
+n=10
+print('pid:',os.getpid())
+print('Running Thread {}'.format(threading.current_thread().name))
+# 新建线程并起名
+t=threading.Thread(target=loop,name='LoopThread')
+# 开启线程
+t.start()
+# 线程运行完毕
+t.join()
+me=time.time()
+print('Thread {} ended.'.format(threading.current_thread().name))
+print('Using time:',me-ms,'n=',n))
+
+pid: 11293
+Running Thread MainThread
+pid: 11293
+Running Thread LoopThread
+Running Thread LoopThread
+n =  1
+Using time: 0.4696667194366455
+Running Thread LoopThread
+n =  2
+Using time: 0.08289432525634766
+Running Thread LoopThread
+n =  3
+Using time: 0.6425638198852539
+Running Thread LoopThread
+n =  4
+Using time: 2.0970077514648438
+Running Thread LoopThread
+n =  5
+Using time: 1.0783932209014893
+Running Thread LoopThread
+n =  6
+Using time: 0.6027817726135254
+Thread LoopThread ended.
+Using time: 0.6027817726135254 n= 6
+Thread MainThread ended.
+Using time: 5.016706228256226 n= 10
+```
+#### Lock 
+多进程中，同一个变量，各自有一份拷贝存在于每个进程中，互不影响。</br>
+多线程中，所有线程共享所有变量，则任何一个变量都可以被任何一个线程修改，由于线程的调度是由操作系统决定的，当两个线程交替执行时，线程们有可能在同一时间修改同一变量，只要循环次数足够多就有可能造成数据的混乱。</br>
+```
+import threading,time,random,os
+
+def loop(n):
+    loops=time.time()
+    print('pid:',os.getpid())
+    print('Running Thread {}'.format(threading.current_thread().name))
+    while n < 6:
+        ns=time.time()
+        n=n+1
+        print('Running Thread {}'.format(threading.current_thread().name))
+        print('n = ',n)
+        time.sleep(random.random()*3)
+        ne=time.time()
+        print('Using time:',ne-ns)
+    loope=time.time()
+    print('Thread {} ended.'.format(threading.current_thread().name))
+    print('Using time:',ne-ns,'n=',n)
+
+def loops(n):
+    for i in range(6):
+        print('Running Thread {}'.format(threading.current_thread().name))
+        n=n+1
+        print('Thread {} ended.'.format(threading.current_thread().name))
+    print('n=',n)
+
+ms=time.time()
+n=10
+print('pid:',os.getpid())
+print('Running Thread {}'.format(threading.current_thread().name))
+# 新建线程
+t1=threading.Thread(target=loop,args=(0,))
+t2=threading.Thread(target=loops,args=(20,))
+# 开启线程
+t1.start()
+t2.start()
+# 线程运行完毕
+t1.join()
+t2.join()
+me=time.time()
+print('Thread {} ended.'.format(threading.current_thread().name))
+print('Using time:',me-ms,'n=',n)
+
+
+pid: 11782
+Running Thread MainThread
+pid: 11782
+Running Thread Thread-1
+Running Thread Thread-1
+n =  1
+Running Thread Thread-2
+Thread Thread-2 ended.
+Running Thread Thread-2
+Thread Thread-2 ended.
+Running Thread Thread-2
+Thread Thread-2 ended.
+Running Thread Thread-2
+Thread Thread-2 ended.
+Running Thread Thread-2
+Thread Thread-2 ended.
+Running Thread Thread-2
+Thread Thread-2 ended.
+n= 26
+Using time: 1.2297306060791016
+Running Thread Thread-1
+n =  2
+Using time: 1.575538158416748
+Running Thread Thread-1
+n =  3
+Using time: 0.44245243072509766
+Running Thread Thread-1
+n =  4
+Using time: 2.7796084880828857
+Running Thread Thread-1
+n =  5
+Using time: 2.2670271396636963
+Running Thread Thread-1
+n =  6
+Using time: 0.09868454933166504
+Thread Thread-1 ended.
+Using time: 0.09868454933166504 n= 6
+Thread MainThread ended.
+Using time: 8.424857378005981 n= 10
+```
+
+可见Thread-1执行途中，Thread-2就开始执行了。同时可以看到，包括MainThread在内的三个线程，它们各自的n值都是不一样的。在多线程环境下，每个线程都有自己的局部变量。一个线程使用自己的局部变量比使用全局变量好，因为局部变量只有线程自己能看见，不会影响其他线程，而全局变量的修改必须加锁。但局部变量不利于函数调用，Python用ThreadLocal来解决这个问题。
+```
+import threading,os
+
+def loop(n):
+    global a
+    print('pid:',os.getpid())
+    for c in range(6):
+        print('Running Thread {}'.format(threading.current_thread().name),'a=',a)
+        a=a+n
+        a=a-n
+        print('Thread {} ended.'.format(threading.current_thread().name,'a=',a))
+
+def loops(n):
+    for i in range(2):
+        loop(n)
+
+a=0
+print('pid:',os.getpid())
+print('Running Thread {}'.format(threading.current_thread().name,'a=',a))
+# 新建线程
+t1=threading.Thread(target=loop,args=(0,))
+t2=threading.Thread(target=loops,args=(20,))
+# 开启线程
+t1.start()
+t2.start()
+# 线程运行完毕
+t1.join()
+t2.join()
+print('Thread {} ended.'.format(threading.current_thread().name),'a=',a)
+```
+如果这段程序像上一段那样，当Thread-1执行循环中途，Thread-2开始执行了。如果在Thread-2没有执行完的过程中，Thread-1同时执行了下一次循环，就有可能把Thread-2循环中的某个a值拿去Thread-1中用了，然后导致Thread-1中的a值发生错误。</br>
+</br>
+如果要确保多个进程不同时修改同一个变量，则需要加锁 threading.Lock()；</br>
+当多个线程同时执行lock.acquire()时，只有一个线程能成功地获取锁，然后继续执行代码，其他线程就继续等待直到获得锁为止；</br>
+只有获得锁的那个进程可以进行change_it()操作；</br>
+获得锁的线程用完后一定要释放锁，否则其余线程永远无法获得锁，则成为死线程，所以要用try...finally和lock.release()来确保锁一定会被释放。</br>
+加锁确保了某段关键代码只能由一个线程从头到尾完整地执行，但由于阻止了多线程并行执行，则貌似让多线程失去了些许意义。其次，由于可以存在多个锁，不同的线程持有不同的锁，并试图获取对方持有的锁时，可能会造成死锁，导致多个线程全部挂起，既不能执行，也无法结束，只能靠操作系统强制终止。</br>
+```
+import threading,os
+
+def change_it(n):
+    global a
+    print('pid:',os.getpid())
+    for c in range(6):
+        print('Running Thread {}'.format(threading.current_thread().name),'a=',a)
+        a=a+n
+        a=a-n
+        print('Thread {} ended.'.format(threading.current_thread().name,'a=',a))
+
+def loops(n):
+    for i in range(6):
+        lock.acquire()
+        try:
+            change_it(n)
+        finally:
+            lock.release()
+
+
+a=0
+lock=threading.Lock()
+print('pid:',os.getpid())
+print('Running Thread {}'.format(threading.current_thread().name,'a=',a))
+# 新建线程
+t1=threading.Thread(target=loops,args=(0,))
+t2=threading.Thread(target=loops,args=(20,))
+# 开启线程
+t1.start()
+t2.start()
+# 线程运行完毕
+t1.join()
+t2.join()
+print('Thread {} ended.'.format(threading.current_thread().name),'a=',a)
+```
+
+由进程和线程逻辑的严谨定义上可知，每个进程都占有各自的CPU内存空间和各自的一套数据，而线程是多个线程共用同一CPU内存空间（即其所在进程中的空间）且公用全局变量。</br>
+通常，当CPU个数和多线程线程数相等时，效率会比线程数多于核数的情况高，除非其中一个线程没有耗尽CPU的资源。线程是CPU的调度单位，也即是CPU实际看到的是线程而不是进程，进程是OS上的概念而且一个进程默认启动一个进程，所以CPU还是会把单个进程当做是一个线程看待的。</br>
+单核CPU使用多线程，其实本质是时分复用，即不同时间段，不同的线程获得CPU的使用权，只是CPU切换得很快让外界看起来多个线程在单个CPU里好像是实现了并发而已，实则上因为需要频繁在线程间切换，单核CPU上使用多线程效率是不高的。</br>
+Python的线程虽然是真正的线程，但解释器执行代码时，有一个GIL锁：Global Interpreter Lock，任何Python线程执行前，必须先获得GIL锁，然后每执行100条字节码，解释器就自动释放GIL锁，让别的线程有机会执行。这个GIL全局锁实际上把所有线程的执行代码都给上了锁，所以多线程在Python中只能交替执行，即使100个线程跑在100核CPU上，也只能用到1个核。这个问题就导致Python的多线程因为实际上只能使用单个CPU而导致效率无法提高，大概有点本末倒置的感觉吧。</br>
+总体来说，对linux和python来说，多进程会比多线程更有优势。  </br>
+    
+#### ThreadLocal 线程变量
+ThreadLocal最常用的地方就是为每个线程绑定一个数据库连接，HTTP请求，用户身份信息等。threading.local()在模块Threading下，ThreadLocal可让每一个线程有自己的局部变量，同时不影响这个变量在多个线程间的多个函数中的传递。</br>
+</br>
+关于Python类中的属性绑定：[对比两种属性绑定方法](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%EF%BC%9A%E7%B1%BB%E3%80%81%E5%AE%9E%E4%BE%8B%E3%80%81%E5%B1%9E%E6%80%A7%E3%80%81%E6%96%B9%E6%B3%95.MD#%E5%B1%9E%E6%80%A7)
+
+```
+import threading
+
+# 实例化一个Threadlocal对象
+localStudent=threading.local()
+
+def studentName(name):
+    # localStudent实例绑定属性name
+    localStudent.name=name
+    getStudentName()
+
+def getStudentName():
+    # 获取name属性中的值
+    stuName=localStudent.name
+    print('{}: Hello,{}!'.format(threading.current_thread().name,stuName))
+
+if __name__ == '__main__':
+    print('Thread:',threading.current_thread().name)
+    # 分别用两个线程调用StudentName函数
+    t1=threading.Thread(target=studentName,args=('Sharon',))
+    t2=threading.Thread(target=studentName,args=('Jack',))
+    t1.start()
+    t2.start()
+    t1.join()
+    t2.join()
+    print('Thread {} ended.'.format(threading.current_thread().name))
+
+Thread: MainThread
+Thread-1: Hello,Sharon!
+Thread-2: Hello,Jack!
+Thread MainThread ended.
+```
+
