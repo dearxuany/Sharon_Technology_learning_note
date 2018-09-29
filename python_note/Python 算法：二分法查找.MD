@@ -11,7 +11,6 @@
 #! /usr/bin/python3
 
 def binarySearch(goalRange,goalNum):
-    global mid
     rangeLength=len(goalRange)
     high=len(goalRange)-1
     low=0
