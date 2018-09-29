@@ -22,7 +22,7 @@ def binarySearch(goalRange,goalNum):
         if goalNum < goalRange[mid]:
             high=mid-1
         if goalNum == goalRange[mid]:
-            return goalRange[mid]
+            return mid
     return None
 ```
 将以上代码放入python3的自定义模块所在的目录中
