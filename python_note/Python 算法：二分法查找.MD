@@ -1,5 +1,5 @@
 # Python 算法
-## 二分法查找 Binary search
+## 二分法查找 Binary Search
 时间复杂度：O(logN)</br>
 缺点：数据必须是有序的</br>
 
@@ -112,4 +112,40 @@ Is the number equals or smaller/bigger than 3236?(e/s/b)b
 Is the number equals or smaller/bigger than 3245?(e/s/b)b
 Is the number equals or smaller/bigger than 3249?(e/s/b)e
 3249
+```
+
+## 选择排序 Selection Sort
+时间复杂度：O(n^2)</br>
+缺点：慢</br>
+
+### 选择排序的 python3 实现
+利用选择排序来对列表中的元素进行以小到大的排序。</br>
+先找出列表中的最小值，然后将其从原列表中弹出并插入到新列表，再从原列表中找出新的最小值，然后再次从原列表弹出这个新最小值插入到新列表末尾，循环以上操作直到所有元素迭代完成。</br>
+注意：for n in range(0)时，即迭代次数为0，实际上没有进入到for循环当中。</br>
+```
+#! /usr/bin/python3
+
+# 找出列表中的最小值
+def findSmallest(lst):
+    listLen=len(lst)
+    smallest=lst[0]
+    for n in range(len(lst)-1):
+        if smallest > lst[n+1]:
+            smallest=lst[n+1]
+    return smallest
+
+# 将最小值从原列表弹出并插入到新列表
+def smallToBig(lst):
+    lstNew=[]
+    for i in range(len(lst)):
+        smallest=findSmallest(lst)
+        lstNew.append(lst.pop(lst.index(smallest)))
+    return lstNew
+```
+将以上代码放入到自定义模块所在文件夹中
+```
+>>> import python3_algorithms_SelectionSort
+>>> lst=[0,56,22,69,57,62,15,4878,366,36,3]
+>>> python3_algorithms_SelectionSort.smallToBig(lst)
+[0, 3, 15, 22, 36, 56, 57, 62, 69, 366, 4878]
 ```
