@@ -10,11 +10,11 @@
 ```
 def rangeTest():
     global start,end
-try: 
-    #　基线条件：导致函数不再调用自己，防止无限循环
+    try: 
+        # 基线条件：导致函数不再调用自己，防止无限循环
         start=int(input('Please input the start number of the guessing range: '))
         end=int(input('Please input the end number of the guessing range: '))
-　　　　#　递归条件：导致函数自己调用自己
+　　　　 # 递归条件：导致函数自己调用自己
         if start > end:
             raise Exception
     except:  
