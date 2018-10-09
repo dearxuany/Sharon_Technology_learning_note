@@ -149,3 +149,48 @@ def smallToBig(lst):
 >>> python3_algorithms_SelectionSort.smallToBig(lst)
 [0, 3, 15, 22, 36, 56, 57, 62, 69, 366, 4878]
 ```
+
+## 快速排序 Quick sort
+快速排序（Quicksort）是对冒泡排序的一种改进。</br>
+基本思想：</br>
+通过一趟排序将要排序的数据分割成独立的两部分，其中一部分的所有数据都比另外一部分的所有数据都要小；</br>
+然后再按此方法对这两部分数据分别进行快速排序，整个排序过程可以递归进行，以此达到整个数据变成有序序列。</br>
+
+### D&C 工作原理
+1.最简单的基线条件；</br>
+2.可以缩小问题规模使其符合基线条件的递归条件。</br>
+对于数组排序来说，不用排序的有空数组和只有一个元素的数组，所以这个是排序的基线条件。
+
+### 快速排序原理
+1.基准值 pivot </br>
+从数组中选一个元素值作为基准值，基准值的选择影响排序速度；</br>
+2.分区 partitioning </br>
+根据基准值可得三个无序分区，子数组内所有元素小于基准值、基准值、子数组内所有元素大于基准值；</br>
+3.再次循环以上步骤，将子数组划分为更小的数组，直到所有元素被划分排序完毕</br>
+4.合并多个子数组</br>
+```
+#! usr/bin/python3
+
+def quicksort(array):
+    # 基准条件
+    if len(array) < 2 :
+        return array
+    else:
+       # 基准值
+       pivot = array[0]
+       smaller=[x for x in array[1:] if x <= pivot]
+       bigger=[x for x in array[1:] if x > pivot]
+       # 递归
+       return quicksort(smaller)+[pivot]+quicksort(bigger)
+```
+```
+>>> from python3_algorithms_Quicksort import quicksort
+>>> lst=[49,38,65,97,76,13,27,49]
+>>> quicksort(lst)
+[13, 27, 38, 49, 49, 65, 76, 97]
+```
+### 快速排序的运行时间
+快排是最快的排序算法之一，基准值的选择影响排序速度：</br>
+在最糟情况下，快速排序运行时间为O(n^2)，通常是序列有序而且把元素中的最大值/最小值作为pivot的时候发生；</br>
+平均状况下，快速排序的运行时间为O(n log n)，每次选的pivot都刚好是序列元素的中值；</br>
+由于大O表示法的常量问题，快排的常量比合并排序小，所以尽管运行时间是一样的，但平均状况下快排会比合并排序快。</br>
