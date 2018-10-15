@@ -1,4 +1,4 @@
-# Python使用CGI创建动态网页 cgi、cgitb
+# Python 使用CGI创建动态网页 cgi、cgitb
 CGI 通用网关接口 Common Gateway Interface ：</br>
 CGI 是Web 服务器运行时外部程序的规范，按CGI 编写的程序可以扩展服务器功能。CGI是一种创建web应用的简单方式，CGI规范允许Web服务器执行外部程序，并将它们的输出发送给Web浏览器，CGI将Web的一组简单的静态超媒体文档变成一个完整的新的交互式媒体。CGI 应用程序能与浏览器进行交互，还可通过数据库API 与数据库服务器等外部数据源进行通信，从数据库服务器中获取数据。几乎所有服务器都支持CGI,可用任何语言编写CGI。
 Python 中和cgi编程有关的模块是cgi和cgitb。</br>
