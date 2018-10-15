@@ -55,6 +55,7 @@
 * [Python 正则表达式 re](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%20re.MD)
 * [Python IO编程：文件](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20IO%E7%BC%96%E7%A8%8B%EF%BC%9A%E6%96%87%E4%BB%B6.MD)
 * [Python 程序打包 Setuptools](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E7%A8%8B%E5%BA%8F%E6%89%93%E5%8C%85%20Setuptools.MD)
+* [Python 使用CGI创建动态网页 cgi、cgitb](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E4%BD%BF%E7%94%A8CGI%E5%88%9B%E5%BB%BA%E5%8A%A8%E6%80%81%E7%BD%91%E9%A1%B5%20cgi%E3%80%81cgitb.MD)
 
 
 ## Databases
