@@ -56,7 +56,7 @@
 * [Python IO编程：文件](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20IO%E7%BC%96%E7%A8%8B%EF%BC%9A%E6%96%87%E4%BB%B6.MD)
 * [Python 程序打包 Setuptools](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E7%A8%8B%E5%BA%8F%E6%89%93%E5%8C%85%20Setuptools.MD)
 * [Python 使用CGI创建动态网页 cgi、cgitb](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E4%BD%BF%E7%94%A8CGI%E5%88%9B%E5%BB%BA%E5%8A%A8%E6%80%81%E7%BD%91%E9%A1%B5%20cgi%E3%80%81cgitb.MD)
-
+* [Python 算法：二分法查找、选择排序、快速排序](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E7%AE%97%E6%B3%95%EF%BC%9A%E4%BA%8C%E5%88%86%E6%B3%95%E6%9F%A5%E6%89%BE%E3%80%81%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F%E3%80%81%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F.MD)
 
 ## Databases
 ### 数据库基础
@@ -64,7 +64,6 @@
 | [SQL 语句](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/database_note/database%20SQL%E8%AF%AD%E5%8F%A5.MD)
 ### 数据库操作
 [python3 连接并操作 MySQL(MariaDB)](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/database_note/database%20python3%E8%BF%9E%E6%8E%A5%E5%B9%B6%E6%93%8D%E4%BD%9CMySQL(MariaDB).MD)
-
 
 
 ## VMware
