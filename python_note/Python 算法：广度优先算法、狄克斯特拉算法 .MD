@@ -187,5 +187,15 @@ print(dijkstra_Algorithm(graph,parentNode,costs))
 >>> parentNode={'a': 'start', 'b': 'start', 'end': None}
 >>> dijkstra_Algorithm(graph,parentNode,costs)
 ({'a': 5, 'b': 2, 'end': 6}, {'a': 'b', 'b': 'start', 'end': 'a'})
+# 作为模块导入计算另外一个加权图
+>>> graph
+{'start': {'a': 5, 'b': 2}, 'a': {'c': 2, 'd': 4}, 'b': {'a': 8, 'c': 7}, 'c': {'end': 1}, 'd': {'end': 3, 'c': 6}, 'end': {}}
+>>> costs
+{'a': 5, 'b': 2, 'c': inf, 'd': inf, 'end': inf}
+>>> parentNode
+{'a': 'start', 'b': 'start', 'c': None, 'd': None, 'end': None}
+>>> dijkstra_Algorithm(graph,parentNode,costs)
+({'a': 5, 'b': 2, 'c': 7, 'd': 9, 'end': 8}, {'a': 'start', 'b': 'start', 'c': 'a', 'd': 'a', 'end': 'c'})
+# 可见花销最小的路径是 start-a-c-end 花销为8
 ```
 
