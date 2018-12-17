@@ -7,6 +7,7 @@
 
 ## Linux
 ### Linux上的环境搭建
+#### 服务器
 * [Linux 安装 Nginx](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E5%AE%89%E8%A3%85Nginx.MD)</br>
 #### 数据库
 * [Linux 安装配置 MySQL（MariaDB）](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEMySQL%EF%BC%88MariaDB%EF%BC%89.MD)
