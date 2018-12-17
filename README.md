@@ -65,7 +65,7 @@
 
 ### Python3 算法
 * [Python 算法：二分法查找、选择排序、快速排序](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E7%AE%97%E6%B3%95%EF%BC%9A%E4%BA%8C%E5%88%86%E6%B3%95%E6%9F%A5%E6%89%BE%E3%80%81%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F%E3%80%81%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F.MD)
-* [Python 算法：广度优先算法、狄克斯特拉算法](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E7%AE%97%E6%B3%95%EF%BC%9A%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E7%AE%97%E6%B3%95%E3%80%81%E7%8B%84%E5%85%8B%E6%96%AF%E7%89%B9%E6%8B%89%E7%AE%97%E6%B3%95%20.MD)
+* [Python 算法：广度优先算法（路径最短）、狄克斯特拉算法（花销最少）](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E7%AE%97%E6%B3%95%EF%BC%9A%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E7%AE%97%E6%B3%95%E3%80%81%E7%8B%84%E5%85%8B%E6%96%AF%E7%89%B9%E6%8B%89%E7%AE%97%E6%B3%95%20.MD)
 
 
 ## Databases
