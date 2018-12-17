@@ -60,7 +60,7 @@ def gameStartInfor(start,end):
     print('The game will start 3 second later.')
     time.sleep(3)
     print('Game start: Please answer the following questions honestly!')
-return
+    return
 
 def createGuessRange(star,end):
     global guessRange
