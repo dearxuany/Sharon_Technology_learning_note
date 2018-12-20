@@ -1,37 +1,5 @@
-# shell 特殊字符、数据流重定向、逻辑判断 
-## shell 特殊字符
-```
-#   注释
-\   转意字符，将特殊字符还原成一般字符（如\$和换行输入）
-|   管线
-;   连续命令分隔符（例如C中的;）
-~   使用者家目录（文件名没事不要用这符号）
-$   取用变量前导符
-&   命令后台工作
-!   非
-/   目录符号
->   数据流导向，输出，“替换”
->>  数据流导向，输出，“累加”
-<   数据流导向，输入 
-<<  数据流导向，输入 
-‘’不具变量置换功能
-“”具有变量置换功能
-``  可优先执行命令$()
-()  子SHELL起始和结束
-{}  中间命令块组合
-```
-
-
-## 数据流重定向
-### redirect 定义
-standard output与standard error output</br>
-standard output：命令执行成功时回传的信息</br>
-standard error output：命令执行失败时回传的信息</br>
-以SHELL作为参考对象，文件信息到SHELL用输入，SHELL到文件为输出</br>
-### 传送用特殊字符
-![](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/note_images/shell_images/shell%20%E6%95%B0%E6%8D%AE%E9%87%8D%E5%AE%9A%E5%90%91.png)
-
-## 逻辑判断
+# shell 逻辑判断 
+## && 和 ||
 根据$?决定是否执行下一命令</br>
 $?=0 成功执行，$?=非0 执行失败</br>
 ```
@@ -40,7 +8,7 @@ cmd1||cmd2         cmd1的$?为非0时，执行cmd2, 否则不执行
 cmd1&&cmd2||cmd3   cmd1的$?为0时执行cmd2，cmd2的$?为非0时执行cmd3；cmd1的$?为非0时，直接执行cmd3
 ```
 
-### 测试的标志与代表意义
+## 测试的标志与代表意义
 关于某个档名的『档案类型』判断，如 test -e filename 表示存在否
 ```
 -e	该『档名』是否存在？(常用)
@@ -93,7 +61,7 @@ test str1 != str2	判定 str1 是否不等于 str2 ，若相等，则回传 fals
 !	反相状态，如 test ! -x file ，当 file 不具有 x 时，回传 true
 ```
 
-### test命令
+## test命令
 上面的&&和||常与test命令合用，用于检测文件或目录是否存在、文件的类型及权限检测、两个文件间的比较
 ```
 test [-option] filename
@@ -121,7 +89,7 @@ echo "$filename's permission is $perm"
 exit 0
 
 ```
-### 判断符号 []
+## 判断符号 []
 常与上面的多重条件符号合用</br>
 []可以和&&、||合用，也可以和if判断合用做条件判断</br>
 * []内要用两空格括住组件
@@ -141,8 +109,8 @@ exit 0
 [ $a == z* ]     # File globbing 和word splitting将会发生。
 [ "$a" == "z*" ] # 如果$a等于z*(字符匹配)，当a的值为z*时，结果为true。
 ```
-### 条件判断
-#### if ... then ...
+## 条件判断
+### if ... then ...
 分支结构</br>
 * 单个分支
 ```
