@@ -110,6 +110,92 @@ PATH=$PATH:/usr/local/python3/bin/python3    #设置环境变量
 export PATH
 ```
 
+### 一些特殊变量
+#### 语系变量
+查看语系
+```
+$ locale
+LANG=zh_CN.UTF-8
+LC_CTYPE="zh_CN.UTF-8"
+LC_NUMERIC="zh_CN.UTF-8"
+LC_TIME="zh_CN.UTF-8"
+LC_COLLATE="zh_CN.UTF-8"
+LC_MONETARY="zh_CN.UTF-8"
+LC_MESSAGES="zh_CN.UTF-8"
+LC_PAPER="zh_CN.UTF-8"
+LC_NAME="zh_CN.UTF-8"
+LC_ADDRESS="zh_CN.UTF-8"
+LC_TELEPHONE="zh_CN.UTF-8"
+LC_MEASUREMENT="zh_CN.UTF-8"
+LC_IDENTIFICATION="zh_CN.UTF-8"
+LC_ALL=
+```
+语系文件目录 /usr/lib/locale/</br>
+常用中文语系：</br>
+```
+zh_CN.big5(大五码 繁体)
+zh_CN.utf8（Unicode万国码 繁简体）
+zh_CN.gb2312(简体)
+```
+常用英文语系： 
+```
+en_US.utf8
+```
+#### PID 进程号
+输出本SHELL的PID
+```
+$ echo $$
+3179
+```
+#### 上个执行命令的回传码
+? 表示上个执行命令的回传码，0为执行成功，非0为执行不成功
+```
+$ echo $$
+3179
+$ echo $?
+0
+$ name=sharon li
+bash: li: 未找到命令...
+$ echo $?
+127
+
+```
+
+## 变量键盘读取
+read [-tp] variable
+-p 加注释提示输入，不加默认空白行等待输入</br>
+-t 设置等待时间，单位为秒，默认一直等待</br>
+```
+$ read -p 'Place input your name: ' name
+Place input your name: sharon
+$ echo $name
+sharon
+```
+
+## 变量类型声明
+bash中变量类型</br>
+* 默认为char 字符串 
+* 默认仅能达到整数类型，没有浮点型
+
+### declare
+declare [-airx] variable
+-a array 数组 </br>
+-i int 整形 </br>
+-x 环境变量 +x 取消环境变量</br>
+-r read only 不可被更改内容，也不能重设（设置后要注销再登录才能复原变量类型）</br>
+-p 查看变量类型</br>
+取消声明将-改为+
+```
+$ sum=6+2+9
+$ echo $sum
+6+2+9
+$ declare -i sum=6+2+9
+$ echo $sum
+17
+
+```
+
+
 
 
 
