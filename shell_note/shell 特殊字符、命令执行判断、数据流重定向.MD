@@ -26,8 +26,8 @@ $   取用变量前导符
 $?=0 成功执行，$?=非0 执行失败</br>
 ```
 cmd1&&cmd2         cmd1的$?为0时，执行cmd2，否则不执行
-cmd1||cmd2         cmd1的$?为1时，执行cmd2, 否则不执行
-cmd1&&cmd2||cmd3   cmd1的$?为0时执行cmd2，为1时执行cmd3
+cmd1||cmd2         cmd1的$?为非0时，执行cmd2, 否则不执行
+cmd1&&cmd2||cmd3   cmd1的$?为0时执行cmd2，cmd2的$?为非0时执行cmd3；cmd1的$?为非0时，直接执行cmd3
 ```
 ## 数据流重定向
 ### redirect 定义
