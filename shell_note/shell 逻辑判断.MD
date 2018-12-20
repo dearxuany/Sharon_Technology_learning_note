@@ -136,3 +136,76 @@ else[判断条件3]; then
 分支3
 fi
 ```
+shell script 实例</br>
+输入生日，当前日期，显示年龄，计算自己活了多少天，下次过生日还有几天
+```
+#!/bin/bash
+# Program
+#       
+# History
+#       2018/5/19 Sharon 1st
+PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
+export PATH
+
+read -p "place input your birth-year(YYYY ex 2018 ): " birth_year
+#输入出生年份
+read -p "place input your birthday(MMDD ex 0519): " birth_md
+#输入出生日期
+birthday=$birth_year$birth_md
+echo "your birthday :" $birthday
+#输出用户生日
+echo "the date of today :" $(date +%Y%m%d)
+#输出当天日期
+
+sb=$(date --date="$(date +%Y)$birth_md" +%s)
+#今年生日的UTC秒数
+sd=$(date +%s)
+#今天的UTC秒数
+day=$(($((sd-sb))/60/60/24))
+#计算今天日期与今年生日相差天数
+
+a=$(date +%Y)$birth_md
+b=$(date +%Y%m%d)
+if (("$a" <= "$b")); then
+        declare -i age=$(($(date +%Y)-birth_year))
+        echo "your age :" $age
+        #计算并输出用户年龄
+        lifetime=$((age*365+age/4+day))
+        echo "You have lived for $lifetime days."
+        #计算用户已活天数
+        next_birth=$(($((age+1))*365+$((age+1))/4-lifetime))
+        echo "Your next birthday will be $next_birth days later."
+        #计算离下次生日差距天数
+else
+        declare -i age=$(($(date +%Y)-birth_year-1))
+        echo "your age :" $age
+        #计算并输出用户年龄
+        lifetime=$(($((age+1))*365+$((age+1))/4+day))
+        echo "You have lived for $lifetime days."
+        #计算用户已活天数
+        next_birth=$(($((age+1))*365+$((age+1))/4-lifetime))
+        echo "Your next birthday will be $next_birth days later."
+fi
+
+exit 0
+```
+输出结果
+```
+$ sh birthday_count.sh 
+place input your birth-year(YYYY ex 2018 ): 1993
+place input your birthday(MMDD ex 0519): 0226
+your birthday : 19930226
+the date of today : 20180519
+your age : 25
+You have lived for 9213 days.
+Your next birthday will be 283 days later.
+
+$ sh birthday_count.sh 
+place input your birth-year(YYYY ex 2018 ): 1969
+place input your birthday(MMDD ex 0519): 0708
+your birthday : 19690708
+the date of today : 20180519
+your age : 48
+You have lived for 17848 days.
+Your next birthday will be 49 days later.
+```
