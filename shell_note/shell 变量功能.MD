@@ -162,7 +162,7 @@ $ echo $?
 ```
 
 ## 变量键盘读取
-read [-tp] variable
+read [-tp] variable</br>
 -p 加注释提示输入，不加默认空白行等待输入</br>
 -t 设置等待时间，单位为秒，默认一直等待</br>
 ```
