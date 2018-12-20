@@ -213,11 +213,80 @@ $ echo $sum
 ```
 
 ### 变量表达式
-变量表达式和通配符配合使用，可用于快速修改变量内容
+变量表达式和通配符配合使用，可用于快速修改变量内容输出，但不改变变量本身的值
 #### 删除
+echo ${变量名#关键字}
+注意：不会修改原变量的值
+![](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/note_images/shell_images/shell%20%E5%8F%98%E9%87%8F%E5%8A%9F%E8%83%BD1.png)
+```
+$ var=abcabcadc12367
+$ echo $var
+abcabcadc12367
+$ echo ${var#a*c}
+abcadc12367
+$ echo $var
+abcabcadc12367
+$ echo ${var##a*c}
+12367
+$ echo ${var%c*7}
+abcabcad
+$ echo ${var%%c*7}
+ab
+$ echo $var
+abcabcadc12367
+$ echo ${var#ab*a}
+bcadc12367
+$ echo ${var#ab*c}
+abcadc12367
+$ echo ${var##ab*c}
+12367
+```
+#### 替换
+echo ${变量名/旧字符/新字符}
+![](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/note_images/shell_images/shell%20%E5%8F%98%E9%87%8F%E5%8A%9F%E8%83%BD2.png)
+```
+$ echo $var
+abcabcadc12367
+$ echo ${var/ab/123}
+123cabcadc12367
+$ echo ${var//ab/123}
+123c123cadc12367
+$ echo $var
+abcabcadc12367
+```
+#### 检测、替换、赋值
+* 对单一变量</br>
+echo 变量名=${变量名-新变量内容}</br>
+检测该变量是否已被设置</br>
+未被设置：变量被赋值为新变量内容</br>
+已被设置：变量保存原值不变</br>
+```
+$ echo var=${var-hello}
+var=abcabcadc12367
+$ echo var3=${var3-hello}
+var3=hello
+$ echo $var
+abcabcadc12367
+$ echo $var3
 
+```
+* 对两个变量</br>
+echo 变量1=${变量2-新变量内容}</br>
+检测该变量2是否已被设置</br>
+未被设置：变量1被赋值为新变量内容</br>
+已被设置：变量1被赋值为变量2的值</br>
+变量2的值始终保持不变</br>
+```
+$ echo $var3
 
-
-
+$ echo var=${var3-hello}
+var=hello
+$ echo $var
+abcabcadc12367
+$ var3=world
+$ echo var=${var3-hello}
+var=world
+```
+![](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/note_images/shell_images/shell%20%E5%8F%98%E9%87%8F%E5%8A%9F%E8%83%BD3.png)
 
 
