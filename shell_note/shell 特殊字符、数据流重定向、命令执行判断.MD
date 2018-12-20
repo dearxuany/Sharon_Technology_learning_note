@@ -1,4 +1,4 @@
-# shell 特殊字符、数据流重定向、命令执行判断 
+# shell 特殊字符、数据流重定向、逻辑判断 
 ## shell 特殊字符
 ```
 #   注释
@@ -31,7 +31,7 @@ standard error output：命令执行失败时回传的信息</br>
 ### 传送用特殊字符
 ![](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/note_images/shell_images/shell%20%E6%95%B0%E6%8D%AE%E9%87%8D%E5%AE%9A%E5%90%91.png)
 
-## 命令执行判断
+## 逻辑判断
 根据$?决定是否执行下一命令</br>
 $?=0 成功执行，$?=非0 执行失败</br>
 ```
@@ -39,13 +39,8 @@ cmd1&&cmd2         cmd1的$?为0时，执行cmd2，否则不执行
 cmd1||cmd2         cmd1的$?为非0时，执行cmd2, 否则不执行
 cmd1&&cmd2||cmd3   cmd1的$?为0时执行cmd2，cmd2的$?为非0时执行cmd3；cmd1的$?为非0时，直接执行cmd3
 ```
-### test命令
-#### test 测试判断作用
-上面的&&和||常与test命令合用，用于检测文件或目录是否存在、文件的类型及权限检测、两个文件间的比较
-```
-test [-option] filename
-```
-#### 测试的标志与代表意义
+
+### 测试的标志与代表意义
 关于某个档名的『档案类型』判断，如 test -e filename 表示存在否
 ```
 -e	该『档名』是否存在？(常用)
@@ -97,6 +92,12 @@ test str1 != str2	判定 str1 是否不等于 str2 ，若相等，则回传 fals
 -o	(or)两状况任何一个成立！例如 test -r file -o -x file，则 file 具有 r 或 x 权限时，就可回传 true。
 !	反相状态，如 test ! -x file ，当 file 不具有 x 时，回传 true
 ```
+
+### test命令
+上面的&&和||常与test命令合用，用于检测文件或目录是否存在、文件的类型及权限检测、两个文件间的比较
+```
+test [-option] filename
+```
 一个用于文件存在性、类型、权限判断的 shell script</br>
 ![](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/note_images/shell_images/shell%20test%E6%96%87%E4%BB%B6%E5%88%A4%E6%96%AD.png)
 ```
@@ -121,7 +122,8 @@ exit 0
 
 ```
 ### 判断符号 []
-常与上面的多重条件符号合用
+常与上面的多重条件符号合用</br>
+[]可以和&&、||合用，也可以和if判断合用做条件判断</br>
 * []内要用两空格括住组件
 [ "$filename" == "" ]注意括号[  ]内两边的两个空格，不然编译会出错；
 * 变量用双引号引起来，常量用单引号引起来；
@@ -139,4 +141,30 @@ exit 0
 [ $a == z* ]     # File globbing 和word splitting将会发生。
 [ "$a" == "z*" ] # 如果$a等于z*(字符匹配)，当a的值为z*时，结果为true。
 ```
-
+### 条件判断
+#### if ... then ...
+分支结构</br>
+* 单个分支
+```
+if [判断条件1]；then
+分支1
+fi
+```
+* 两个分支
+```
+if [判断条件1]; then
+分支1
+else
+分支2
+fi
+```
+* 多个分支
+```
+if [判断条件1]; then
+分支1
+elif [判断条件2]; then
+分支2
+else[判断条件3]; then
+分支3
+fi
+```
