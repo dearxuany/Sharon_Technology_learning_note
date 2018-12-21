@@ -29,9 +29,11 @@
 * [Linux 例行性工作 crontab](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E4%BE%8B%E8%A1%8C%E6%80%A7%E5%B7%A5%E4%BD%9C.MD)
 * [Linux 时间同步 NTP](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E6%97%B6%E9%97%B4%E5%90%8C%E6%AD%A5.MD)
 
-
-
-
+## shell
+* [shell linux 默认shell bash](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/shell_note/shell%20linux%E9%BB%98%E8%AE%A4shell%20bash.MD)
+* [shell 变量功能](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/shell_note/shell%20%E5%8F%98%E9%87%8F%E5%8A%9F%E8%83%BD.MD)
+* [shell 特殊字符、数据流重定向](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/shell_note/shell%20%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6%E3%80%81%E6%95%B0%E6%8D%AE%E6%B5%81%E9%87%8D%E5%AE%9A%E5%90%91.MD)
+* [shell 逻辑判断](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/shell_note/shell%20%E9%80%BB%E8%BE%91%E5%88%A4%E6%96%AD.MD)
 
 ## Python
 ### Python3 基础
