@@ -60,8 +60,6 @@ history [n]
 ```
 $ history
 (省略很多输出)
- 995  cd ./script
-  996  cd ./scripttest/
   997  ls -al
   998  shutdown now
   999  type ls
