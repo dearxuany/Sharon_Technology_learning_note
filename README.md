@@ -20,7 +20,7 @@
 ### Linux 相关知识积累总结
 * [Linux 常用命令(无格式)](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20command%20%26%20SHELL%20collection)
 * [Linux 文件目录命名规则](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E6%96%87%E4%BB%B6%E5%90%8D%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99.MD)
-* [Linux Linux 内核、进程、线程 （命令 ps top kill）](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E5%86%85%E6%A0%B8%E3%80%81%E8%BF%9B%E7%A8%8B%E3%80%81%E7%BA%BF%E7%A8%8B.MD)
+* [Linux 内核、进程、线程 （命令 ps top kill）](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E5%86%85%E6%A0%B8%E3%80%81%E8%BF%9B%E7%A8%8B%E3%80%81%E7%BA%BF%E7%A8%8B.MD)
 * [Linux IO模型：同步、异步、阻塞、非阻塞](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20IO%E6%A8%A1%E5%9E%8B%EF%BC%9A%E5%90%8C%E6%AD%A5%E3%80%81%E5%BC%82%E6%AD%A5%E3%80%81%E9%98%BB%E5%A1%9E%E3%80%81%E9%9D%9E%E9%98%BB%E5%A1%9E.MD)
 
 ### Linux 相关操作配置
@@ -87,7 +87,7 @@
 * [VMware 虚拟机扩容](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/VMware_note/VMware%20%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%89%A9%E5%AE%B9.MD)
 * [VMware 物理机磁盘空间不足问题解决](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/VMware_note/VMware%20%E7%89%A9%E7%90%86%E6%9C%BA%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4%E4%B8%8D%E8%B6%B3%E7%9A%84%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3.MD)
 
-## Networking
+## Network
 ### Cisco Certified Network Associate
 思科认证 网络工程师 CCNA  Score: 986/1000
 [ Cisco Certified Network Associate Routing and Switching](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/note_images/Networking_note_images/ccna_11105536_certificate.png)
