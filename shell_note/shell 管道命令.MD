@@ -160,5 +160,72 @@ root      1223  0.0  0.0   7984   680 ?        Ss   14:47   0:01 /usr/sbin/crond
 sunnyli+  5039  0.0  0.4  11400  4552 pts/0    T    21:49   0:00 python3
 sunnyli+  5429  0.0  0.0   6708   892 pts/0    R+   22:58   0:00 grep -E --color=auto (python3|cron)
 ```
+## 排序命令
+### sort
+sort 可根据数据的类型来对数据进行排序，可是也要注意语系</br>
+和grep一样，可作为管道命令，也可直接对文件中的数据进行操作</br>
+sort 不改变文件内容本身</br>
+```
+sort [-fbMnrtuk] filename
+排序对象 | sort [-fbMnrtuk]
 
+默认按字符串排序a-z
+-f  ：忽略大小写的差异，例如 A 与 a 视为编码相同；
+-b  ：忽略最前面的空格符部分；
+-M  ：以月份的名字来排序，例如 JAN, DEC 等等的排序方法；
+-n  ：使用『纯数字』进行排序(预设是以文字型态来排序的)；
+-r  ：反向排序；
+-u  ：就是 uniq ，相同的资料中，仅出现一行代表；
+-t  ：分隔符，预设是用 [tab] 键来分隔；
+-k  ：以那个区间 (field) 来进行排序的意思
+```
 
+### uniq
+uniq 和sort中-u功能相同，可是有个参数-c，可用于计算相同筛选结果的重复次数</br>
+```
+#计算每位用户的登录次数
+$ last|cut -d ' ' -f 1|sort|uniq -c
+      1 
+    102 reboot
+     39 root
+    238 sunnylin
+      1 wtmp
+```
+注意：使用uniq计数前，必须先用sort排序，否则会出现计数错误
+
+### wc
+wc 常用于文件字数、行数、字符数的统计
+```
+wc [-lwm]
+默认输出为 行数、字数、字符数
+-l 行数
+-w 英文词数
+-m 字符数
+```
+三个输出分别是 行数、词数、字符数
+```
+$ cat /usr/share/dict/words|wc
+ 479828  479828 4953680
+```
+计算月登录系统的人数
+```
+#选出8月有关的数据，然后筛掉reboot的数据
+last|grep 'Aug'|grep -v 'reboot'
+sunnylin pts/0        :0               Thu Aug 30 14:27 - 13:13 (3+22:46)   
+sunnylin :0           :0               Thu Aug 30 14:25 - 13:13 (3+22:47)   
+sunnylin pts/0        :0               Thu Aug 30 12:15 - 14:10  (01:54)    
+sunnylin :0           :0               Thu Aug 30 09:38 - down   (04:33)    
+sunnylin pts/1        :0               Wed Aug 29 10:28 - 10:28  (00:00)    
+sunnylin pts/0        :0               Wed Aug 29 09:50 - 09:34  (23:44)    
+（省略部分输出）
+
+#统计出8月的登录人数
+$ last|grep 'Aug'|grep -v 'reboot'|wc -l
+43
+```
+计算该月各用户登录次数
+```
+$ last|grep 'Aug'|grep -v 'reboot'|cut -d ' ' -f 1|sort|uniq -c
+      4 root
+     39 sunnylin
+```
