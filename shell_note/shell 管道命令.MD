@@ -8,7 +8,7 @@
 
 常见管道命令</br>
 * 选取命令 cut grep egrep</br>
-* 排序命令 sort wc uniq</br>
+* 排序统计命令 sort wc uniq</br>
 * 双重定向 tee</br>
 * 字符转换 tr col join paste expand</br>
 * 参数代换 xargs</br>
@@ -160,7 +160,7 @@ root      1223  0.0  0.0   7984   680 ?        Ss   14:47   0:01 /usr/sbin/crond
 sunnyli+  5039  0.0  0.4  11400  4552 pts/0    T    21:49   0:00 python3
 sunnyli+  5429  0.0  0.0   6708   892 pts/0    R+   22:58   0:00 grep -E --color=auto (python3|cron)
 ```
-## 排序命令
+## 排序统计命令
 ### sort
 sort 可根据数据的类型来对数据进行排序，可是也要注意语系</br>
 和grep一样，可作为管道命令，也可直接对文件中的数据进行操作</br>
