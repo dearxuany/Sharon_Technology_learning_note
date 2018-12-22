@@ -229,3 +229,30 @@ $ last|grep 'Aug'|grep -v 'reboot'|cut -d ' ' -f 1|sort|uniq -c
       4 root
      39 sunnylin
 ```
+
+## 双向重定向
+### tee
+数据流重定向用于将stdout输出到文件，而管道命令用于将stdout输出到屏幕</br>
+tee 可用于把stdout输出到文件同时输出到屏幕，但要注意输出和筛选顺序，会影响结果</br>
+```
+tee [-a] filename
+-a  append以累加方式添加数据
+```
+将某月的登录数据输出到文件并进行该月的用户登录统计
+```
+$ last|grep 'Aug'|grep -v 'reboot'|tee last_list_aug|cut -d ' ' -f 1|sort|uniq -c
+      4 root
+     39 sunnylin
+
+$ ls -l ./last_list_aug 
+-rw-rw-r--. 1 sunnylinux sunnylinux 3311 12月 22 12:58 ./last_list_aug
+$ cat ./last_list_aug 
+sunnylin pts/0        :0               Thu Aug 30 14:27 - 13:13 (3+22:46)   
+sunnylin :0           :0               Thu Aug 30 14:25 - 13:13 (3+22:47)   
+sunnylin pts/0        :0               Thu Aug 30 12:15 - 14:10  (01:54)    
+sunnylin :0           :0               Thu Aug 30 09:38 - down   (04:33)    
+sunnylin pts/1        :0               Wed Aug 29 10:28 - 10:28  (00:00) 
+```
+
+
+
