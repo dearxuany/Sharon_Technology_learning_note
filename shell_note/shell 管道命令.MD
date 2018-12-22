@@ -277,18 +277,18 @@ sed 的-f -i参数会直接修改文件，要谨慎使用</br>
 sed [-nefr] [n1[,n2]] function
 
 -n  仅输出经过sed处理的行数
--e  sed后面同时执行多个sed动作时使用 sed -e ‘4d’ -e ‘6c no six line’
+-e  sed后面同时执行多个sed动作时使用 sed -e ‘4d’ -e ‘6c content’
 -f  直接将sed的动作写入到一个文件内，-f filename 则可执行文件内的sed动作
 -r  让sed支持扩展正则表达式
 -i  直接修改文件，而不是单纯的管道命令
 
-n1,n2 起始行号
+n1,n2 起始行号，逗号表示“至”，2至5行则为2,5
 
 function
-a 新增内容到当前行后面一行 ‘2a plus’
-c 替换当前行内容 ‘2,5c replace 2 to 5 comtent’
+a 新增内容到当前行后面一行 ‘2a content’
+c 替换当前行内容 ‘2,5c content’
 d 删除，后面不接字符串 ‘2,$d’
-i 新增内容到当前行前面一行 ‘2i plus’
+i 新增内容到当前行前面一行 ‘2i content’
 p 仅列出其中某几行 ‘2,5p’
 s 查找替换 ‘s/原来字符/新字符/g’
 ```
