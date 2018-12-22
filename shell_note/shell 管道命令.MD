@@ -96,3 +96,69 @@ grep [-acinv] ‘关键字’ filename
 -n 输出行号
 -v 反向选择
 ```
+#### grep 管道命令用法
+仅选出和root有关的登录信息
+```
+$ last | grep root
+root     tty2                          Mon Oct  1 17:28 - 17:29  (00:01)    
+root     pts/1        :1               Wed Aug  8 20:16 - 20:21  (00:05)    
+root     pts/1        :1               Wed Aug  8 20:10 - 20:16  (00:05)    
+root     :1           :1               Wed Aug  8 18:36 - crash  (09:47)    
+root     tty2                          Tue Aug  7 16:31 - 16:32  (00:01)    
+root     tty2                          Fri Jul 20 18:01 - 18:02  (00:00)    
+root     tty2                          Fri May 18 12:50 - 12:51  (00:00)   
+(省略很多输出)
+```
+反选
+```
+$ last | grep -v root
+sunnylin pts/2        :0               Fri Dec 21 15:52 - 15:52  (00:00)    
+sunnylin pts/1        :0               Fri Dec 21 15:52 - 15:52  (00:00)    
+sunnylin pts/0        :0               Fri Dec 21 15:52   still logged in   
+sunnylin :0           :0               Fri Dec 21 15:45   still logged in   
+reboot   system boot  3.10.0-862.2.3.e Fri Dec 21 15:29 - 11:37  (20:07)    
+sunnylin tty2                          Fri Dec 21 15:27 - 15:28  (00:01)    
+```
+查看特定进程信息
+```
+$ ps -aux|grep python3
+sunnyli+  4804  0.5  0.4  11400  4448 pts/0    T    11:39   0:00 python3
+sunnyli+  4827  0.0  0.0   6704   884 pts/0    R+   11:40   0:00 grep --color=auto python3
+```
+#### grep 对文件内容进行筛选
+linux和macOS 标准字典文件：/usr/share/dict/words </br>
+https://en.wikipedia.org/wiki/Words_(Unix) </br>
+</br>
+查找含有特定的字符的行并输出行号
+```
+$ cat /usr/share/dict/words|grep -n 'apple'
+22097:apple
+22098:appleberry
+22099:appleblossom
+22101:applecart
+22102:apple-cheeked
+22103:appled
+22105:appledrane
+22106:appledrone
+22107:apple-eating
+22108:apple-faced
+22109:apple-fallow
+22111:applegrower
+22112:applejack
+22113:applejacks
+（省略很多输出）
+
+#不用管道命令的写法，输出同上
+$ grep -n 'apple' /usr/share/dict/words
+```
+
+### egrep
+egrep和grep功能基本相似，除了支持基础正则表达式外，还支持扩展正则表达式，以实现更谨慎的筛选。
+```
+$ ps aux | egrep '(python3|cron)'
+root      1223  0.0  0.0   7984   680 ?        Ss   14:47   0:01 /usr/sbin/crond -n
+sunnyli+  5039  0.0  0.4  11400  4552 pts/0    T    21:49   0:00 python3
+sunnyli+  5429  0.0  0.0   6708   892 pts/0    R+   22:58   0:00 grep -E --color=auto (python3|cron)
+```
+
+
