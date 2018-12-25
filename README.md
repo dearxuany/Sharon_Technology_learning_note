@@ -36,7 +36,7 @@
 * [shell 正则表达式](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/shell_note/shell%20%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F.MD)
 * [shell 管道命令](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/shell_note/shell%20%E7%AE%A1%E9%81%93%E5%91%BD%E4%BB%A4.MD)
 * [shell 逻辑判断](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/shell_note/shell%20%E9%80%BB%E8%BE%91%E5%88%A4%E6%96%AD.MD)
-* [shell function、循环、script 追踪调试](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/shell_note/shell%20function%E3%80%81%E5%BE%AA%E7%8E%AF%E3%80%81script%20%E8%BF%BD%E8%B8%AA%E8%B0%83%E8%AF%95.MD)
+* [shell 变量、函数、循环、追踪调试](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/shell_note/shell%20%E5%8F%98%E9%87%8F%E3%80%81%E5%87%BD%E6%95%B0%E3%80%81%E5%BE%AA%E7%8E%AF%E3%80%81%E8%BF%BD%E8%B8%AA%E8%B0%83%E8%AF%95.MD)
 ## Python
 ### Python3 基础
 * [Python 基础语法](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95.MD)
