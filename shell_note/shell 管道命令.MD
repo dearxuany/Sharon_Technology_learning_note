@@ -272,7 +272,7 @@ xargs [-0epn] command
 ### sed
 sed 的功能和cut类似，但是sed的处理对象是文件，而cut的处理对象是命令的输出</br>
 sed 对显示的数据进行筛选，对文件本身不影响（-i参数时直接修改），以行为单位操作</br>
-sed 的-f -i参数会直接修改文件，要谨慎使用</br>
+sed 的-f -i参数会直接修改文件，要谨慎使用！！！</br>
 ```
 sed [-nefr] [n1[,n2]] function
 
@@ -282,7 +282,7 @@ sed [-nefr] [n1[,n2]] function
 -r  让sed支持扩展正则表达式
 -i  直接修改文件，而不是单纯的管道命令
 
-n1,n2 起始行号，逗号表示“至”，2至5行则为2,5
+n1,n2 起始行号，逗号表示“至”，2至5行则为2,5，$ 可用于指代最后一行
 
 function
 a 新增内容到当前行后面一行 ‘2a content’
@@ -291,6 +291,90 @@ d 删除，后面不接字符串 ‘2,$d’
 i 新增内容到当前行前面一行 ‘2i content’
 p 仅列出其中某几行 ‘2,5p’
 s 查找替换 ‘s/原来字符/新字符/g’
+```
+实例 Linux /etc/passwd</br>
+在Linux /etc/passwd文件中每个用户都有一个对应的记录行，它记录了这个用户的一些基本属性</br>
+系统管理员经常会接触到这个文件的修改以完成对用户的管理工作，这个文件对所有用户都是可读的</br>
+```
+$ cat /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+bin:x:1:1:bin:/bin:/sbin/nologin
+daemon:x:2:2:daemon:/sbin:/sbin/nologin
+adm:x:3:4:adm:/var/adm:/sbin/nologin
+lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
+sync:x:5:0:sync:/sbin:/bin/sync
+shutdown:x:6:0:shutdown:/sbin:/sbin/shutdown
+halt:x:7:0:halt:/sbin:/sbin/halt
+mail:x:8:12:mail:/var/spool/mail:/sbin/nologin
+operator:x:11:0:operator:/root:/sbin/nologin
+games:x:12:100:games:/usr/games:/sbin/nologin
+ftp:x:14:50:FTP User:/var/ftp:/sbin/nologin
+nobody:x:99:99:Nobody:/:/sbin/nologin
+(省略部分...)
+sunnylinux:x:1000:1000:sunnylinux:/home/sunnylinux:/bin/bash
+sunnylinux2:x:1001:1001:sunnylinux2:/home/sunnylinux2:/bin/bash
+unbound:x:992:986:Unbound DNS resolver:/etc/unbound:/sbin/nologin
+www:x:1002:1002::/home/www:/bin/bash
+mysql:x:1003:1003::/home/mysql:/bin/bash
+```
+字段 </br>
+用户名:口令:用户标识号:组标识号:注释性描述:主目录:登录Shell</br>
+* 用户名(login_name):是代表用户账号的字符串</br>
+* 用户标识号(UID):是一个整数，系统内部用它来标识用户</br>
+* 组标识号(GID):字段记录的是用户所属的用户组</br>
+* 注释性描述(users):字段记录着用户的一些个人情况</br>
+* 主目录(home_directory):用户的起始工作目录，它是用户在登录到系统之后所处的目录</br>
+* 登录Shell: </br>
+用户使用的shell，通常使用/bin/bash这个shell，也即是默认shell；</br>
+/sbin/nologin 作用限制某些用户通过ssh登陆到shell上；</br>
+可使用nologin命令来修改用户是否可ssh登录。</br>
+
+```
+# 在指定行下添加一行
+$ nl /etc/passwd |sed '2a hello world'
+     1	root:x:0:0:root:/root:/bin/bash
+     2	bin:x:1:1:bin:/bin:/sbin/nologin
+hello world
+     3	daemon:x:2:2:daemon:/sbin:/sbin/nologin
+     
+# 在指定行上添加一行
+$ nl /etc/passwd |sed '2i hello world'
+     1	root:x:0:0:root:/root:/bin/bash
+hello world
+     2	bin:x:1:1:bin:/bin:/sbin/nologin
+     3	daemon:x:2:2:daemon:/sbin:/sbin/nologin
+     
+# 替换某一行
+$ nl /etc/passwd |sed '4c hello world'
+     1	root:x:0:0:root:/root:/bin/bash
+     2	bin:x:1:1:bin:/bin:/sbin/nologin
+     3	daemon:x:2:2:daemon:/sbin:/sbin/nologin
+hello world
+     5	lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
+     
+# 输出删除2至6行
+$ nl /etc/passwd |sed '2,6d'
+     1	root:x:0:0:root:/root:/bin/bash
+     7	shutdown:x:6:0:shutdown:/sbin:/sbin/shutdown
+     8	halt:x:7:0:halt:/sbin:/sbin/halt
+     9	mail:x:8:12:mail:/var/spool/mail:/sbin/nologin
+
+# 仅列出某几行，注意必须和-n参数一起用
+$ nl /etc/passwd |sed -n '20,24p'
+    20	rtkit:x:172:172:RealtimeKit:/proc:/sbin/nologin
+    21	pulse:x:171:171:PulseAudio System Daemon:/var/run/pulse:/sbin/nologin
+    22	rpc:x:32:32:Rpcbind Daemon:/var/lib/rpcbind:/sbin/nologin
+    23	tss:x:59:59:Account used by the trousers package to sandbox the tcsd daemon:/dev/null:/sbin/nologin
+    24	usbmuxd:x:113:113:usbmuxd user:/:/sbin/nologin
+
+# 结合正则表达式对字符进行替换
+$ nl /etc/passwd |sed -n '20,24p'|sed s/nologin/hello/g
+    20	rtkit:x:172:172:RealtimeKit:/proc:/sbin/hello
+    21	pulse:x:171:171:PulseAudio System Daemon:/var/run/pulse:/sbin/hello
+    22	rpc:x:32:32:Rpcbind Daemon:/var/lib/rpcbind:/sbin/hello
+    23	tss:x:59:59:Account used by the trousers package to sandbox the tcsd daemon:/dev/null:/sbin/hello
+    24	usbmuxd:x:113:113:usbmuxd user:/:/sbin/hello
+
 ```
 
 
