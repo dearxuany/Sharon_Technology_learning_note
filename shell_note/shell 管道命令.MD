@@ -273,6 +273,7 @@ xargs [-0epn] command
 sed 的功能和cut类似，但是sed的处理对象是文件，而cut的处理对象是命令的输出</br>
 sed 对显示的数据进行筛选，对文件本身不影响（-i参数时直接修改），以行为单位操作</br>
 sed 的-f -i参数会直接修改文件，要谨慎使用！！！</br>
+sed 适合于数据量大的文本处理！</br>
 ```
 sed [-nefr] [n1[,n2]] function
 
@@ -377,9 +378,94 @@ $ nl /etc/passwd |sed -n '20,24p'|sed s/nologin/hello/g
 
 ```
 
+### awk
+awk 和sed的作用相似，但是awk和cut一样利用字段来分解数据</br>
+awk 最大的特点是可以使用逻辑运算符对字段信息进行筛选，还可以对数据进行算术计算，还提供输出信息的格式化功能</br>
+```
+awk ‘{按分隔符划分字段}条件1{动作1} 条件2{动作2} ...’ filename
 
+{按分隔符划分字段} 默认为空格，且第二行生效；要从第一行生效，应改为BEGIN{FS=“：”}
+多个辅助命令时，；隔开
+可作基本运算，$1+$2+$3
+格式化输出末尾必须加上\n
 
+每个字段：变量名称 $1, $2, $3...
+          当前行 $0
+          
+特殊变量  
+NF  每一行拥有的字段总数
+NR  当前处理“第几行”
+FS   目前分隔字符，默认空格键
 
+awk逻辑运算符
+>	大于
+<	小于
+>=	大于或等于
+<=	小于或等于
+==	等于
+!=	不等于
+```
+通过print功能输出第1和第3部分，并用/tab隔开（要用双引号）
+```
+$ last -n 5
+sunnylin pts/1        :0               Tue Dec 25 14:41   still logged in   
+sunnylin pts/2        :0               Fri Dec 21 15:52 - 15:52  (00:00)    
+sunnylin pts/1        :0               Fri Dec 21 15:52 - 15:52  (00:00)    
+sunnylin pts/0        :0               Fri Dec 21 15:52   still logged in   
+sunnylin :0           :0               Fri Dec 21 15:45   still logged in   
 
+wtmp begins Sun Feb 25 22:13:15 2018
+
+$ last -n 5|awk '{print $1 "\t" $3}'
+sunnylin	:0
+sunnylin	:0
+sunnylin	:0
+sunnylin	:0
+sunnylin	:0
+	
+wtmp	Sun
+
+```
+指定分割字段，并筛选出符合要求的信息
+注意：指定分割字段修改由第二行开始生效，所以要用BEGIN这个关键字
+```
+# 用户所属的用户组<10的数据
+$ cat /etc/passwd|awk '{FS=":"} $3 < 10 {print $1 "\t" $3}'
+root:x:0:0:root:/root:/bin/bash	
+bin	1
+daemon	2
+adm	3
+lp	4
+sync	5
+shutdown	6
+halt	7
+mail	8
+
+$ cat /etc/passwd|awk 'BEGIN {FS=":"} $3 < 10 {print $1 "\t" $3}'
+root	0
+bin	1
+daemon	2
+adm	3
+lp	4
+sync	5
+shutdown	6
+halt	7
+mail	8
+
+```
+修改格式
+```
+$ cat /etc/passwd|awk 'BEGIN {FS=":"} $3 < 10 {print "login_name:"$1 "\t GID:" $3}'
+login_name:root	 GID:0
+login_name:bin	 GID:1
+login_name:daemon	 GID:2
+login_name:adm	 GID:3
+login_name:lp	 GID:4
+login_name:sync	 GID:5
+login_name:shutdown	 GID:6
+login_name:halt	 GID:7
+login_name:mail	 GID:8
+
+```
 
 
