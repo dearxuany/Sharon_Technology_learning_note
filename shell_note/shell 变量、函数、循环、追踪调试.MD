@@ -1,5 +1,6 @@
-# shell function、循环、script 追踪调试
-## shell script 中的默认变量
+# shell 变量、函数、循环、追踪调试
+## 变量
+### shell script 中的默认变量
 在执行脚本的同时输入变量
 ```
 sh scriptname opt1 opt2 opt3
@@ -33,6 +34,57 @@ the parameter number: 3
 all parameters: 3 4 6
 1st=3, 2nd=4, 3rd=6
 
+```
+### 变量偏移
+```
+shift n
+```
+拿掉前面n个变量，同一个script中可叠加
+```
+#!/bin/bash
+# Program
+#       This program is used to test the use of shell script shift.
+# History
+#       2018/05/04 Sharon scripttest06
+
+PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
+export PATH
+
+echo "scriptname: $0"
+echo "the parameter number: $#"
+echo "all parameters: $@"
+echo "1st=$1, 2nd=$2, 3rd=$3, 4th=$4, 5th=$5, 6th=$6"
+
+shift
+echo "the first shift"
+echo "the parameter number: $#"
+echo "all parameters: $@"
+echo "1st=$1, 2nd=$2, 3rd=$3, 4th=$4, 5th=$5, 6th=$6"
+
+read -p "Place input the shift number:" n
+shift $(echo $n)
+echo "the second shift"
+echo "the parameter number: $#"
+echo "all parameters: $@"
+echo "1st=$1, 2nd=$2, 3rd=$3, 4th=$4, 5th=$5, 6th=$6"
+
+exit 0
+```
+```
+$ sh test_shift.sh a b c d e f
+scriptname: test_shift.sh
+the parameter number: 6
+all parameters: a b c d e f
+1st=a, 2nd=b, 3rd=c, 4th=d, 5th=e, 6th=f
+the first shift
+the parameter number: 5
+all parameters: b c d e f
+1st=b, 2nd=c, 3rd=d, 4th=e, 5th=f, 6th=
+Place input the shift number:3 
+the second shift
+the parameter number: 2
+all parameters: e f
+1st=e, 2nd=f, 3rd=, 4th=, 5th=, 6th=
 ```
 
 ## function
