@@ -1,4 +1,40 @@
 # shell function、循环、script 追踪调试
+## shell script 中的默认变量
+在执行脚本的同时输入变量
+```
+sh scriptname opt1 opt2 opt3
+   $0         $1   $2 	$3
+$#   变量个数
+$@  各个独立变量
+$*   $1c$2c$3c$4, c为分隔符，默认为空格
+$0   scriptname
+```
+实例
+```
+#!/bin/bash
+# Program
+#       This program is used to test the default option of shell script.
+# History
+#       2018/05/04 Sharon scripttest05
+PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
+export PATH
+echo "scriptname: $0"
+echo "the parameter number: $#"
+echo "all parameters: $@"
+echo "1st=$1, 2nd=$2, 3rd=$3"
+exit 0
+~         
+```
+执行脚本并输入变量值
+```
+$ sh test_option.sh 3 4 6
+scriptname: test_option.sh
+the parameter number: 3
+all parameters: 3 4 6
+1st=3, 2nd=4, 3rd=6
+
+```
+
 ## function
 shell script 中建立函数
 ```
