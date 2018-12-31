@@ -262,7 +262,7 @@ tcp        0      0 127.0.0.1:25            0.0.0.0:*               LISTEN      
 tcp6       0      0 :::22                   :::*                    LISTEN      1183/sshd           
 tcp6       0      0 ::1:631                 :::*                    LISTEN      1178/cupsd          
 tcp6       0      0 ::1:25                  :::*                    LISTEN      1676/master         
-
+#daemon后面有个d说明进程是启动的
 ```
 查看路由表
 ```
