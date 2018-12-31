@@ -47,11 +47,82 @@ python3 3639 sunnylinux  mem    REG  253,0    136312 17225343 /usr/lib/libtinfo.
 ## CPU
 CPU相关的命令
 ```
-lscpu
+lscpu    #输出CPU信息
 top
 htop
-vmstat
+vmstat   #检测系统资源变化，系统繁忙的时候用
 mpstat
+```
+```
+$ lscpu
+Architecture:          i686
+CPU op-mode(s):        32-bit, 64-bit
+Byte Order:            Little Endian
+CPU(s):                1
+On-line CPU(s) list:   0
+Thread(s) per core:    1
+Core(s) per socket:    1
+座：                 1
+厂商 ID：           AuthenticAMD
+CPU 系列：          16
+型号：              6
+型号名称：        AMD Turion(tm) II Dual-Core Mobile M520
+步进：              2
+CPU MHz：             2294.279
+BogoMIPS：            4588.55
+L1d 缓存：          64K
+L1i 缓存：          64K
+L2 缓存：           512K
+Flags:                 fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm 3dnowext 3dnow constant_tsc art tsc_reliable nonstop_tsc pni cx16 x2apic popcnt hypervisor lahf_lm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw retpoline_amd ibp_disable vmmcall
+
+```
+vmstat 可动态地检测系统资源变化，包括CPU/内存/磁盘输入输出状态
+```
+vmstat 参数
+-a：显示活跃和非活跃内存
+-m：显示slabinfo
+-n：只在开始时显示一次各字段名称。
+-s：显示内存相关统计信息及多种系统活动数量。
+delay：刷新时间间隔。如果不指定，只显示一条结果。
+count：刷新次数。如果不指定刷新次数，但指定了刷新时间间隔，这时刷新次数为无穷。
+-d：显示各个磁盘相关统计信息。
+-S：使用指定单位显示。参数有 k 、K 、m 、M ，分别代表1000、1024、1000000、1048576字节（byte）。默认单位为K（1024 bytes）
+-V：显示vmstat版本信息。
+-p：显示指定磁盘分区统计信息
+-D：显示磁盘总体信息
+
+#查看CPU内存等信息，可设延迟时间以及检测次数
+$ vmstat -a
+procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
+ r  b   swpd   free  inact active   si   so    bi    bo   in   cs us sy id wa st
+ 3  0  44992  75376 447736 402724    1    5   327    10  131  133  2  2 94  1  0
+#延迟1秒查3次
+$ vmstat 1 3
+procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
+ 4  0  45248  84040      0 314508    0    5   320    10  131  134  2  3 94  1  0
+ 0  0  45248  84780      0 314508    0    0     0     0  577  280 38 18 44  0  0
+ 0  0  45248  84740      0 314508    0    0     0     0  608  342 32 15 54  0  0
+```
+若si/so很大则表示磁盘和内存进程交互，系统性能差</br>
+磁盘读写bi和bo，数值很高则磁盘读写繁忙</br>
+system in 每秒被中断的进程次数，cs 每秒进行事件切换的次数，数值大代表系统和接口通信频繁</br>
+```
+#系统从启动初期开始到现在的forks数量
+$ vmstat -fs
+         4043 forks
+
+#系统上所有磁盘的读写状态
+$ vmstat -d
+disk- ------------reads------------ ------------writes----------- -----IO------
+       total merged sectors      ms  total merged sectors      ms    cur    sec
+fd0        0      0       0       0      0      0       0       0      0      0
+sda    47768   1054 5704387 1450438   4758  11644  173909   40541      0    373
+sr0        0      0       0       0      0      0       0       0      0      0
+dm-0   45681      0 5508057 1378010   4577      0   69385   22299      0    356
+dm-1    1198      0   13288   35328  11332      0   90656  682753      0     19
+dm-2    1523      0  160816   72081    490      0    9772    3045      0     29
+
 ```
 
 ## 内存
