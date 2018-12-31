@@ -15,13 +15,17 @@ ps -l   #列出所有与当前bash相关的进程信息
 ps aux  #列出系统中所有的进程信息
 ps -lA  #同上
 pstree  #进程树
+pidof   #找出某个正在执行的进程的pid
 top     #在运行的进程信息
 kill    #杀死进程
 nice    #调进程优先级且触发进程
 renice  #调现有进程的优先级
 ```
 更多与进程相关的细节 [linux 进程](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E5%86%85%E6%A0%B8%E3%80%81%E8%BF%9B%E7%A8%8B%E3%80%81%E7%BA%BF%E7%A8%8B.MD#%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86)
-
+```
+$ pidof python3
+4226
+```
 
 ### 查和进程相关的文件的命令
 ```
