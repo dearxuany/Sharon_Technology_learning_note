@@ -97,6 +97,14 @@ $ uptime
 ```
 
 ## 网络跟踪
+和网络相关的命令
+```
+netstat   #用于监控进出网络的包和网络接口统计的命令行工具
+tcpdump   #用于捕捉或过滤网络上指定接口上接收或者传输的TCP/IP包，作用和 wireshark 相似，需要额外安装
+
+```
+
+### netstat
 ```
 netstat [选项]
 -a (all)：显示一个所有的有效连接信息列表，包括已建立的连接（ESTABLISHED），也包括监听连接请求（LISTENING）的那些连接，断开连接（CLOSE_WAIT）或者处于联机等待状态的（TIME_WAIT）等
@@ -169,4 +177,21 @@ tcp6       0      0 :::22                   :::*                    LISTEN      
 tcp6       0      0 ::1:631                 :::*                    LISTEN      1178/cupsd          
 tcp6       0      0 ::1:25                  :::*                    LISTEN      1676/master         
 
+```
+查看路由表
+```
+$ netstat -r
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags   MSS Window  irtt Iface
+default         Tommy-PC.mshome 0.0.0.0         UG        0 0          0 ens33
+192.168.137.0   0.0.0.0         255.255.255.0   U         0 0          0 ens33
+
+```
+查看网络接口
+```
+$ netstat -i
+Kernel Interface table
+Iface      MTU    RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR Flg
+ens33     1500     2034      0      0 0           728      0      0      0 BMRU
+lo       65536       94      0      0 0            94      0      0      0 LRU
 ```
