@@ -114,7 +114,27 @@ netstat [选项]
 -e ：显示关于以太网的统计数据。它列出的项目包括传送的数据报的总字节数、错误数、删除数、数据报的数量和广播的数量。这些统计数据既有发送的数据报数量，有接收的数据报数量。这个选项可以用来统计一些基本的网络流量。
 提示：LISTEN和LISTENING的状态只有用-a或者-l才能看到
 ```
-查看目前主机所提供的服务（开启的接口service ports）
+```
+$ netstat
+
+Active Internet connections (w/o servers)  #网络相关
+# Proto 协议(tcp/udp)、Recv-Q 非用户进程连接到此socket的字节数、Send-Q 非远程主机发送过来的aknowledged字节数、State 连接状态（established/listen）
+Proto Recv-Q Send-Q Local Address           Foreign Address         State    
+
+Active UNIX domain sockets (w/o servers)  #与本机进程相关
+# RefCnt 连接到此socket的进程数、Flags 连接标式、 Type 访问类型（确认STEAM/不需确认DGRAM)、State connected则为多个进程已连接
+Proto RefCnt Flags       Type       State         I-Node   Path
+unix  5      [ ]         DGRAM                    7432     /run/systemd/journal/socket
+unix  22     [ ]         DGRAM                    7434     /dev/log
+unix  2      [ ]         DGRAM                    12127    /run/systemd/shutdownd
+unix  3      [ ]         DGRAM                    7409     /run/systemd/notify
+unix  2      [ ]         DGRAM                    7411     /run/systemd/cgroups-agent
+unix  3      [ ]         STREAM     CONNECTED     16597    
+unix  3      [ ]         STREAM     CONNECTED     37993    @/tmp/.X11-unix/X0
+
+```
+查看目前主机所提供的服务和对应的pid（开启的接口service ports）</br>
+查到pid后可用kill关闭该网络服务</br>
 ```
 端口号
 80: WWW
@@ -123,6 +143,30 @@ netstat [选项]
 25: mail
 111: RPC(远端程序呼叫)
 631: CUPS(打印服务功能)
+
+$ netstat -tlnp  
+(Not all processes could be identified, non-owned process info
+ will not be shown, you would have to be root to see it all.)
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    
+tcp        0      0 0.0.0.0:3306            0.0.0.0:*               LISTEN      -                   
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      -                   
+tcp        0      0 127.0.0.1:631           0.0.0.0:*               LISTEN      -                   
+tcp        0      0 127.0.0.1:25            0.0.0.0:*               LISTEN      -                   
+tcp6       0      0 :::22                   :::*                    LISTEN      -                   
+tcp6       0      0 ::1:631                 :::*                    LISTEN      -                   
+tcp6       0      0 ::1:25                  :::*                    LISTEN      -                   
+
+$ sudo netstat -tlnp
+[sudo] sunnylinux 的密码：
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    
+tcp        0      0 0.0.0.0:3306            0.0.0.0:*               LISTEN      1672/mysqld         
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      1183/sshd           
+tcp        0      0 127.0.0.1:631           0.0.0.0:*               LISTEN      1178/cupsd          
+tcp        0      0 127.0.0.1:25            0.0.0.0:*               LISTEN      1676/master         
+tcp6       0      0 :::22                   :::*                    LISTEN      1183/sshd           
+tcp6       0      0 ::1:631                 :::*                    LISTEN      1178/cupsd          
+tcp6       0      0 ::1:25                  :::*                    LISTEN      1676/master         
+
 ```
-
-
