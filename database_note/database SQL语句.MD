@@ -7,6 +7,7 @@ SQL特性：
 * 不同数据库中的SQL语法会有略微不同（此处主要记录mySQL）。</br>
 
 SQL语句的分类：</br>
+
 * DDL data definition language 数据定义语言</br>
 用于定义或改变表（TABLE）的结构、数据类型、视图和索引的创建和撤消操作，他们大多在建立表时使用，DDL不需要commit
 ```
@@ -18,9 +19,6 @@ DROP TABLE - 删除表
 TRUNCATE TABLE - 清空表中数据（不能用于参与了索引视图的表）
 CREATE INDEX - 创建索引（搜索键）
 DROP INDEX - 删除索引
-CALL
-EXPLAIN PLAN
-LOCK TABLE - 锁
 COMMENT - 注释
 RENAME
 ```
@@ -31,6 +29,10 @@ SELECT - 从数据库中提取数据
 UPDATE - 更新数据库中的数据
 DELETE - 从数据库中删除数据
 INSERT INTO - 向数据库中插入新数据
+MERGE
+CALL
+EXPLAIN PLAN
+LOCK TABLE - 锁
 ```
 * DCL data control language 数据控制语言</br>
 用于授权，角色控制等
