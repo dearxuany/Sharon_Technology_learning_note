@@ -4,23 +4,49 @@ SQL特性：
 * 对空格不敏感，可以换行，增加可读性；
 * 多条SQL语句必须用分号；分隔，单条语句部分RDBMS不需要用分号分隔;
 * 复合语句，用括号（）括起内部优先执行的语句；
-* 不同数据库中的SQL语法会有略微不同（此处主要记录mySQL）。
+* 不同数据库中的SQL语法会有略微不同（此处主要记录mySQL）。</br>
+
+SQL语句的分类：</br>
+* DDL data definition language 数据定义语言</br>
+用于定义或改变表（TABLE）的结构、数据类型、视图和索引的创建和撤消操作，他们大多在建立表时使用，DDL不需要commit
 ```
-常用语句
-SELECT - 从数据库中提取数据
-UPDATE - 更新数据库中的数据
-DELETE - 从数据库中删除数据
-INSERT INTO - 向数据库中插入新数据
 CREATE DATABASE - 创建新数据库
 ALTER DATABASE - 修改数据库
 CREATE TABLE - 创建新表
 ALTER TABLE - 变更（改变）数据库表
 DROP TABLE - 删除表
+TRUNCATE TABLE - 清空表中数据（不能用于参与了索引视图的表）
 CREATE INDEX - 创建索引（搜索键）
 DROP INDEX - 删除索引
+CALL
+EXPLAIN PLAN
+LOCK TABLE - 锁
+COMMENT - 注释
+RENAME
 ```
+* DML data manipulation language 数据操作语言</br>
+用于对已有表的数据进行增删改查操作，DML需要commit
+```
+SELECT - 从数据库中提取数据
+UPDATE - 更新数据库中的数据
+DELETE - 从数据库中删除数据
+INSERT INTO - 向数据库中插入新数据
+```
+* DCL data control language 数据控制语言</br>
+用于授权，角色控制等
+```
+GRANT - 授权
+REVOKE - 取消授权
+```
+* TCL traction control language 事务控制语言</br>
+```
+COMMIT - 提交
+SAVEPOINT - 设置保存点
+ROLLBACK  - 回滚
+SET TRANSACTION 设置当前事务的特性，它对后面的事务没有影响
 ```
 注释
+```
 # 整行注释
 -- 行内注释
 /* 多行注释 */
