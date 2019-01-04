@@ -48,3 +48,37 @@ MariaDB [(none)]> show processlist;
 2 rows in set (0.07 sec)
 
 ```
+### 查看慢查询次数
+默认为超过10s的慢查询
+```
+MariaDB [(none)]> show status like 'slow_queries';
++---------------+-------+
+| Variable_name | Value |
++---------------+-------+
+| Slow_queries  | 0     |
++---------------+-------+
+1 row in set (0.20 sec)
+```
+查询默认慢查询时间
+```
+MariaDB [(none)]> show variables like 'long_query_time';
++-----------------+-----------+
+| Variable_name   | Value     |
++-----------------+-----------+
+| long_query_time | 10.000000 |
++-----------------+-----------+
+1 row in set (0.19 sec)
+```
+修改默认慢查询时间
+```
+MariaDB [(none)]> set long_query_time= 1;
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [(none)]> show variables like 'long_query_time';
++-----------------+----------+
+| Variable_name   | Value    |
++-----------------+----------+
+| long_query_time | 1.000000 |
++-----------------+----------+
+1 row in set (0.00 sec)
+```
