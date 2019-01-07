@@ -23,6 +23,18 @@ MariaDB [(none)]> show engines;
 10 rows in set (0.00 sec)
 
 ```
+### 转换表的引擎(注意表的结构，如外键)
+#### 方法1：直接改
+```
+MariaDB [personalFinancialDB]> ALTER TABLE persons engine=MyISAM;
+ERROR 1217 (23000): Cannot delete or update a parent row: a foreign key constraint fails
+```
+会耗费大量资源，最好手动进行表复制
+#### 方法2：导出导入
+可用mysqldump导出文件，然后CREATE TABLE来给新表设置引擎，注意改表名
+#### 方法3：创建查询
+不需要导出整个表的文件，可在存储引擎中直接创建一个新表来进行原表的全量复制，表很大时可以只选取部分数据。
+
 ### 查看用户权限
 查看某位用户的权限
 show grants for [username];
@@ -81,4 +93,42 @@ MariaDB [(none)]> show variables like 'long_query_time';
 | long_query_time | 1.000000 |
 +-----------------+----------+
 1 row in set (0.00 sec)
+```
+### 查看表的相关信息
+```
+MariaDB [personalFinancialDB]> show table status like 'persons'\G；
+*************************** 1. row ***************************
+           Name: persons
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 3
+ Avg_row_length: 5461
+    Data_length: 16384
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 9437184
+ Auto_increment: 4
+    Create_time: 2018-08-11 18:08:15
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_unicode_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 
+1 row in set (0.01 sec)
+
+    -> 
+
+```
+查看表的行数
+```
+MariaDB [personalFinancialDB]> select count(*) from persons;
++----------+
+| count(*) |
++----------+
+|        3 |
++----------+
+1 row in set (0.23 sec)
+
 ```
