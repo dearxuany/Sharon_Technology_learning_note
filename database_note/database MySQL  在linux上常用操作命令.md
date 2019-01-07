@@ -137,5 +137,6 @@ MariaDB [personalFinancialDB]> select count(*) from persons;
 ```
 show global status
 ```
+过程：装载数据、系统预热、执行测试、记录结果</br>
 重要指标：CPU使用率/磁盘I/O、网络流量统计、show global status的一些输出</br>
 应保存：每轮测试的测试结果、配置文件、测试指标、测试用脚本、相关说明</br>
