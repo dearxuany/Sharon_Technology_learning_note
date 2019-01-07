@@ -148,5 +148,5 @@ show full processlist;
 ```
 ### 测试工具
 集成：ab http_load jmeter</br>
-单组件：sysbench 多线程压测</br>
+单组件：sysbench 多线程压测(在mysql用户工具包中)</br>
 mysql 内置函数：benchmark（） 测试某些特定操作的执行速度（要清楚原理）</br>
