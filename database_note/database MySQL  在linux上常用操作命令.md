@@ -132,3 +132,7 @@ MariaDB [personalFinancialDB]> select count(*) from persons;
 1 row in set (0.23 sec)
 
 ```
+## mysql 性能测试相关
+```
+show global status
+```
