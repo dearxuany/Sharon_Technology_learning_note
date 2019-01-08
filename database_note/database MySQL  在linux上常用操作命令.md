@@ -139,7 +139,7 @@ MariaDB [personalFinancialDB]> select count(*) from persons;
 show global status
 ```
 过程：装载数据、系统预热、执行测试、记录结果</br>
-重要指标：CPU使用率/磁盘I/O、网络流量统计、show global status的一些输出</br>
+重要指标：CPU使用率、磁盘I/O、网络流量统计、show global status的一些输出</br>
 应保存：每轮测试的测试结果、配置文件、测试指标、测试用脚本、相关说明</br>
 ### 性能差时可查
 ```
@@ -152,6 +152,37 @@ show full processlist;
 mysql 内置函数：benchmark（） 测试某些特定操作的执行速度（要清楚原理）</br>
 ```
 # sysbench cpu基准测试
+$ cat /proc/cpuinfo
+processor	: 0
+vendor_id	: AuthenticAMD
+cpu family	: 16
+model		: 6
+model name	: AMD Turion(tm) II Dual-Core Mobile M520
+stepping	: 2
+microcode	: 0x1000098
+cpu MHz		: 2294.279
+cache size	: 512 KB
+physical id	: 0
+siblings	: 1
+core id		: 0
+cpu cores	: 1
+apicid		: 0
+initial apicid	: 0
+fdiv_bug	: no
+f00f_bug	: no
+coma_bug	: no
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 5
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm 3dnowext 3dnow constant_tsc art tsc_reliable nonstop_tsc pni cx16 x2apic popcnt hypervisor lahf_lm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw retpoline_amd ibp_disable vmmcall
+bogomips	: 4588.55
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 40 bits physical, 48 bits virtual
+power management:
+
+$ sysbench --test=cpu --cpu-max=prime=20000 run
 
 ```
 ### mysqladmin 管理命令
