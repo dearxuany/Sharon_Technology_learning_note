@@ -185,6 +185,7 @@ power management:
 $ sysbench --test=cpu --cpu-max=prime=20000 run
 
 ```
+## MySQL服务器状态
 ### mysqladmin 管理命令
 mysqladmin 工具的使用格式
 ```
