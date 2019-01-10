@@ -1,5 +1,6 @@
 # Python PEP8 代码风格指南
-官网：https://www.python.org/dev/peps/pep-0008/
+官网：https://www.python.org/dev/peps/pep-0008/ </br>
+参考：http://www.cnblogs.com/mrchige/p/6379864.html
 ## 关注点
 * 代码排版
 * 字符串引号
