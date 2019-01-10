@@ -7,7 +7,7 @@ SQL特性：
 * 不同数据库中的SQL语法会有略微不同（此处主要记录mySQL）。</br>
 
 SQL语句的分类：</br>
-
+![](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/note_images/database_note_images/sql-command.png)
 * DDL data definition language 数据定义语言</br>
 用于定义或改变表（TABLE）的结构、数据类型、视图和索引的创建和撤消操作，他们大多在建立表时使用，DDL不需要commit
 ```
