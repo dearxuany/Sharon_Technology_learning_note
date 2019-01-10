@@ -1,6 +1,6 @@
 # Linux 系统性能监控
 Linux 系统监控一般涉及 进程、CPU、内存、硬盘使用率、硬盘IO、系统负载、网络跟踪 等参数。
-
+![](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/note_images/Linux_note_images/2030854783.jpg)
 ## 系统基本信息
 列出系统内核版本、硬件平台、CPU类型
 ```
