@@ -160,6 +160,8 @@ fb17fb793e5e5f7a3e47e20f2ade9f091d12285d add a new line
 
 ```
 查看工作区文件和master里最新版本的区别</br>
+只有commit才会被提交到master，而add只是将修改从工作区添加到暂存区，没有add的修改不能直接被commit</br>
+重复两次add后commit一次，则只提交最新的一次add</br>
 ```
 # git diff HEAD -- sayhello.py
 diff --git a/sayhello.py b/sayhello.py
@@ -174,5 +176,23 @@ index b38f911..fae5a0e 100644
 +print('git test!')
 
 ```
-只有commit才会被提交到master，而add只是将修改从工作区添加到暂存区，没有add的修改不能直接被commit</br>
-重复两次add后commit一次，则只提交最新的一次add</br>
+### 撤销工作区的修改
+add之前，工作区中文件的修改会被记录到status，如果想撤销工作区的所有修改，恢复工作区的文件和当前版本一样，可以使用以下命令
+```
+# git status
+# 位于分支 master
+# 尚未暂存以备提交的变更：
+#   （使用 "git add <file>..." 更新要提交的内容）
+#   （使用 "git checkout -- <file>..." 丢弃工作区的改动）
+#
+#	修改：      sayhello.py
+#
+修改尚未加入提交（使用 "git add" 和/或 "git commit -a"）
+# git checkout -- sayhello.py
+# git diff HEAD -- sayhello.py
+（没有输出，即是没有不同）
+```
+### 撤销暂存区的修改
+
+
+
