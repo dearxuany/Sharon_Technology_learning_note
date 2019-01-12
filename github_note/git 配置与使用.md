@@ -80,3 +80,54 @@ fb17fb793e5e5f7a3e47e20f2ade9f091d12285d add a new line
 
 ```
 
+## 版本回退
+在Git中，用HEAD表示当前版本，上一个版本就是HEAD^，上上一个版本就是HEAD^^，版本过多时会表示为HEAD~100
+```
+# 当前readme版本
+Git is a version control system.
+Git is free software.
+Something change ...
+another one change
+~                                                                                        
+~                         
+```
+回退到上一版本，注意HEAD要大写
+```
+# git reset --hard HEAD^  
+HEAD 现在位于 fb17fb7 add a new line
+
+# 当前readme版本
+Git is a version control system.
+Git is free software.
+Something changes ...
+~  
+```
+注意：回退后log里面会没有了第三版的信息
+```
+# git log --pretty=oneline
+fb17fb793e5e5f7a3e47e20f2ade9f091d12285d add a new line
+9abcf7a95c7dce7e3d2afebc0827ac845cca23a3 wrote a readme file change the user name
+```
+命令行如果没有关闭，可以回找前面的log中显示的commit id </br>
+回退到该版本，可以输入前面几位commit id，git会自动找，如果有多个版本commit id前面几位相同，则要多输几位</br>
+```
+# git reset --hard 54bd
+HEAD 现在位于 54bdbdf add one line again
+```
+如果找不到commit id，可以查git的历史命令，由近到远
+```
+# git reset --hard 54bd
+HEAD 现在位于 54bdbdf add one line again
+[root@centOSlearning learngit]# git reflog
+54bdbdf HEAD@{0}: reset: moving to 54bd
+fb17fb7 HEAD@{1}: reset: moving to HEAD^
+54bdbdf HEAD@{2}: commit: add one line again
+fb17fb7 HEAD@{3}: commit: add a new line
+9abcf7a HEAD@{4}: commit (amend): wrote a readme file
+87bd690 HEAD@{5}: commit (amend): wrote a readme file
+796ce08 HEAD@{6}: commit (initial): wrote a readme file
+
+```
+
+
+
