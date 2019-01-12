@@ -192,7 +192,74 @@ add之前，工作区中文件的修改会被记录到status，如果想撤销�
 # git diff HEAD -- sayhello.py
 （没有输出，即是没有不同）
 ```
+git checkout -- 其实是用版本库的文件替换工作区的文件，包括修改和恢复。
 ### 撤销暂存区的修改
+add 到暂存区可是没有commit的文件修改撤销，将修改放回工作区
+```
+# git diff HEAD -- sayhello.py
+diff --git a/sayhello.py b/sayhello.py
+index b38f911..1535430 100644
+--- a/sayhello.py
++++ b/sayhello.py
+@@ -1,3 +1,4 @@
+ #! /usr/bin/python3
+ 
+ print('Hello world!')
++print('testing the use of unstage')
 
+# git status
+# 位于分支 master
+# 要提交的变更：
+#   （使用 "git reset HEAD <file>..." 撤出暂存区）
+#
+#	修改：      sayhello.py
+#
 
+# git reset HEAD sayhello.py
+重置后撤出暂存区的变更：
+M	sayhello.py
+
+# git status
+# 位于分支 master
+# 尚未暂存以备提交的变更：
+#   （使用 "git add <file>..." 更新要提交的内容）
+#   （使用 "git checkout -- <file>..." 丢弃工作区的改动）
+#
+#	修改：      sayhello.py
+#
+修改尚未加入提交（使用 "git add" 和/或 "git commit -a"）
+
+```
+### 删除文件
+#### 删除工作区文件
+直接在工作区rm删除，git status会记录，然后使用git rm，然后git commit</br>
+恢复用git checkout -- filename </br>
+```
+# ls -l
+总用量 8
+-rw-r--r--. 1 root root 91 1月  12 16:11 readme.txt
+-rw-r--r--. 1 root root 79 1月  12 18:30 sayhello.py
+
+[root@centOSlearning learngit]# rm sayhello.py 
+rm：是否删除普通文件 "sayhello.py"？y
+
+[root@centOSlearning learngit]# git rm sayhello.py
+rm 'sayhello.py'
+# git rm sayhello.py
+rm 'sayhello.py'
+
+[root@centOSlearning learngit]# git  status
+# 位于分支 master
+# 要提交的变更：
+#   （使用 "git reset HEAD <file>..." 撤出暂存区）
+#
+#	删除：      sayhello.py
+#
+
+[root@centOSlearning learngit]# git commit -m 'rm sayhello'
+[master 638ed5e] rm sayhello
+ 1 file changed, 4 deletions(-)
+ delete mode 100644 sayhello.py
+
+```
 
