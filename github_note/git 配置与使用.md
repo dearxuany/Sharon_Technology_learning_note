@@ -128,6 +128,51 @@ fb17fb7 HEAD@{3}: commit: add a new line
 796ce08 HEAD@{6}: commit (initial): wrote a readme file
 
 ```
+## 工作区和暂存区
+工作区：其实就是显示还没有add和commit的修改，add和commit后工作区会变为空
+```
+# git status
+# 位于分支 master
+# 尚未暂存以备提交的变更：
+#   （使用 "git add <file>..." 更新要提交的内容）
+#   （使用 "git checkout -- <file>..." 丢弃工作区的改动）
+#
+#	修改：      readme.txt
+#
+# 未跟踪的文件:
+#   （使用 "git add <file>..." 以包含要提交的内容）
+#
+#	sayhello.py
+修改尚未加入提交（使用 "git add" 和/或 "git commit -a"）
 
+```
+需要git add命令实际上就是把要提交的所有修改放到暂存区（Stage），然后，执行git commit就可以一次性把暂存区的所有修改提交到分支。
+```
+# git log --pretty=oneline
+3f473421bc16c3a275a95a06386f83394c71a557 sayhello_print
+79a57d4ebb679e48b5d30488a663c5283afb79fd readme.txt
+54bdbdf710b4cb3583ac52f4efae0454b3229d61 add one line again
+fb17fb793e5e5f7a3e47e20f2ade9f091d12285d add a new line
+9abcf7a95c7dce7e3d2afebc0827ac845cca23a3 wrote a readme file change the user name
+# git status
+# 位于分支 master
+无文件要提交，干净的工作区
 
+```
+查看工作区文件和master里最新版本的区别</br>
+```
+# git diff HEAD -- sayhello.py
+diff --git a/sayhello.py b/sayhello.py
+index b38f911..fae5a0e 100644
+--- a/sayhello.py
++++ b/sayhello.py
+@@ -1,3 +1,5 @@
+ #! /usr/bin/python3
+ 
++
+ print('Hello world!')
++print('git test!')
 
+```
+只有commit才会被提交到master，而add只是将修改从工作区添加到暂存区，没有add的修改不能直接被commit</br>
+重复两次add后commit一次，则只提交最新的一次add</br>
