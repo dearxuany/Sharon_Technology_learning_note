@@ -3,11 +3,11 @@
 PuTTY是一个Telnet、SSH、rlogin、纯TCP以及串行接口连接软件。随着Linux在服务器端应用的普及，Linux系统管理越来越依赖于远程。在各种远程登录工具中，Putty是出色的工具之一，Putty是免费的。同类型的软件还有 SecureCRT、Xshell、WINSCP，Xshell也是免费的。</br>
 
 ## win 上配置
-* 下载安装putty
+* 下载安装putty</br>
 下载地址 https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html
 * ifconfig 在linux上找到linux主机的ip，输入到putty中
-* 在putty的命令界面输入linux的登录用户和密码，如果linux已开ssh就会登录成功
-注意：如果ssh
+* 在putty的命令界面输入linux的登录用户和密码，如果linux已开ssh就会登录成功</br>
+注意：如果ssh在linux上没有启动或安装则需要安装一下
 
 ## win和linux互传文件
 ### win往linux传文件
