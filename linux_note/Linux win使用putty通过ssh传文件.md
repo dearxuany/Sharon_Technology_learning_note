@@ -8,6 +8,12 @@ PuTTY是一个Telnet、SSH、rlogin、纯TCP以及串行接口连接软件。随
 * ifconfig 在linux上找到linux主机的ip，输入到putty中
 * 在putty的命令界面输入linux的登录用户和密码，如果linux已开ssh就会登录成功</br>
 注意：如果ssh在linux上没有启动或安装则需要安装一下
+```
+# centOS7 下查看ssh是否已开启
+systemctl enable sshd.service
+systemctl start sshd.service
+systemctl status sshd.service
+```
 
 ## win和linux互传文件
 ### win往linux传文件
