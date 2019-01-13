@@ -30,6 +30,9 @@
 * [Linux 例行性工作 crontab](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E4%BE%8B%E8%A1%8C%E6%80%A7%E5%B7%A5%E4%BD%9C.MD)
 * [Linux 时间同步 NTP](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E6%97%B6%E9%97%B4%E5%90%8C%E6%AD%A5.MD)
 
+### Linux 相关工具
+* [Linux win使用putty通过ssh传文件](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20win%E4%BD%BF%E7%94%A8putty%E9%80%9A%E8%BF%87ssh%E4%BC%A0%E6%96%87%E4%BB%B6.md)
+
 ## shell
 * [shell linux 默认shell bash](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/shell_note/shell%20linux%E9%BB%98%E8%AE%A4shell%20bash.MD)
 * [shell 变量功能](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/shell_note/shell%20%E5%8F%98%E9%87%8F%E5%8A%9F%E8%83%BD.MD)
@@ -38,6 +41,8 @@
 * [shell 管道命令](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/shell_note/shell%20%E7%AE%A1%E9%81%93%E5%91%BD%E4%BB%A4.MD)
 * [shell script 逻辑判断](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/shell_note/shell%20%E9%80%BB%E8%BE%91%E5%88%A4%E6%96%AD.MD)
 * [shell script 变量、函数、循环、追踪调试](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/shell_note/shell%20%E5%8F%98%E9%87%8F%E3%80%81%E5%87%BD%E6%95%B0%E3%80%81%E5%BE%AA%E7%8E%AF%E3%80%81%E8%BF%BD%E8%B8%AA%E8%B0%83%E8%AF%95.MD)
+
+
 ## Python
 ### Python3 基础
 * [Python 基础语法](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95.MD)
