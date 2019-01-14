@@ -50,3 +50,64 @@ swap分区
 >>> psutil.swap_memory()
 sswap(total=1073737728, used=15474688, free=1058263040, percent=1.4, sin=319488, sout=15335424)
 ```
+## 硬盘
+disk_partitions 返回所有已 经挂载的磁盘，以命名元组的形式返回。命名元组包含磁盘名称、挂载点、文件系统类型等信息。
+```
+>>> psutil.disk_partitions()
+[sdiskpart(device='/dev/mapper/centos-root', mountpoint='/', fstype='xfs', opts='rw,seclabel,relatime,attr2,inode64,noquota'), sdiskpart(device='/dev/sda2', mountpoint='/boot', fstype='xfs', opts='rw,seclabel,relatime,attr2,inode64,noquota'), sdiskpart(device='/dev/mapper/centos-home', mountpoint='/home', fstype='xfs', opts='rw,seclabel,relatime,attr2,inode64,noquota')]
+```
+disk_ usage 获取磁盘的使用情况，包括磁盘的容量 已经使用的磁盘容量、磁盘的空间利用率等。
+```
+>>> psutil.disk_usage('/')
+sdiskusage(total=25759318016, used=11995742208, free=13763575808, percent=46.6)
+>>> psutil.disk_usage('/').percent
+46.6
+```
+disk io counters 以命名元组的形式返回磁盘 io 统计信息，包括读的次数、写的次数，读字节数、写字节数等，省去了解析 /proc/diskstats 文件。
+```
+>>> psutil.disk_io_counters()
+sdiskio(read_count=48431, write_count=16623, read_bytes=1842754048, write_bytes=199751680, read_time=1977299, write_time=900662, read_merged_count=231, write_merged_count=4561, busy_time=619394)
+# 每个磁盘，返回一个字典
+>>> psutil.disk_io_counters(perdisk=True)
+```
+## 网络
+net_io_counter 函数以命名元组的形式返回了每块网卡的网络 io 统计信息，包括收发字节数、 收发包的数量、出错情况与删包情况，与查/proc/net/dev有相同效果。
+```
+>>> psutil.net_io_counters()
+snetio(bytes_sent=248739, bytes_recv=3720645, packets_sent=2998, packets_recv=3729, errin=1, errout=0, dropin=0, dropout=0)
+>>> psutil.net_io_counters(pernic=True)
+{'lo': snetio(bytes_sent=10128, bytes_recv=10128, packets_sent=96, packets_recv=96, errin=0, errout=0, dropin=0, dropout=0), 
+'ens33': snetio(bytes_sent=238611, bytes_recv=3710793, packets_sent=2902, packets_recv=3636, errin=1, errout=0, dropin=0, dropout=0)}
+
+```
+net_connections 以列形式返回每个网络连接的详细信息，可以使用该函数查看网络连接状态，统计连接个数及处于特定状态的网络连接个数。
+```
+>>> psutil.net_connections()
+```
+net_if_addrs 以字典的形式返回网卡的配置信息，包括 ip 地址或 ma 地址、子网掩码、广播地址
+```
+>>> psutil.net_if_addrs()
+```
+net_if_stats 返回网卡的详细信息，包括是否启动、通信类型、传输速度与mtu
+```
+>>> psutil.net_if_stats()
+{'lo': snicstats(isup=True, duplex=<NicDuplex.NIC_DUPLEX_UNKNOWN: 0>, speed=0, mtu=65536), 
+'ens33': snicstats(isup=True, duplex=<NicDuplex.NIC_DUPLEX_UNKNOWN: 0>, speed=0, mtu=1500)}
+
+```
+## 用户
+返回当前登录用户的信息，包括用户名、登录时间、终端与主机信息
+```
+# 最后一条是ssh远程登录
+>>> psutil.users()
+[suser(name='sunnylinux', terminal=':0', host='localhost', started=1547456910.0, pid=2186), 
+suser(name='sunnylinux', terminal='pts/0', host='localhost', started=1547457023.0, pid=3368), 
+suser(name='sunnylinux', terminal='pts/1', host='tommy-pc.mshome.net', started=1547471118.0, pid=4372)]
+```
+## 系统启动时间
+返回格式是时间戳，需要用 datatime 进行格式转换
+```
+>>> psutil.boot_time()
+1547459601.0
+```
+
