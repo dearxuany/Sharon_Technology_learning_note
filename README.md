@@ -69,6 +69,7 @@
 * [Python 正则表达式 re](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%20re.MD)
 * [Python IO编程：文件 fileinput](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20IO%E7%BC%96%E7%A8%8B%EF%BC%9A%E6%96%87%E4%BB%B6.MD)
 #### 第三方库
+* [Python 通过 psutil 对 linux 进行监控](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E9%80%9A%E8%BF%87%20psutil%20%E5%AF%B9%20linux%20%E8%BF%9B%E8%A1%8C%E7%9B%91%E6%8E%A7.md)
 * [Python 通过 yagmail 发送邮件](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E9%80%9A%E8%BF%87%20yagmail%20%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6.MD)
 
 ### Python3 工具
