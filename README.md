@@ -60,6 +60,7 @@
 * [Python 面向对象：魔法方法 Special method、特性 property、迭代器 iterator](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%EF%BC%9ASpecial%20method%20%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95%E3%80%81property%E7%89%B9%E6%80%A7%E3%80%81iterator%20%E8%BF%AD%E4%BB%A3%E5%99%A8.MD)
 
 ### Python3 模块
+#### 标准库
 * [Python 模块](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E6%A8%A1%E5%9D%97.MD)
 * [Python 集合 set、堆 heapq、双端队列 deque、队列 queue ](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E9%9B%86%E5%90%88%E3%80%81%E5%A0%86%E3%80%81%E5%8F%8C%E7%AB%AF%E9%98%9F%E5%88%97%E3%80%81%E9%98%9F%E5%88%97.MD)
 * [Python 日期与时间 time](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E6%97%A5%E6%9C%9F%E4%B8%8E%E6%97%B6%E9%97%B4.MD)
@@ -67,6 +68,8 @@
 * [Python 原始类与 JSON 对象转换](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E5%8E%9F%E5%A7%8B%E7%B1%BB%E4%B8%8EJSON%E5%AF%B9%E8%B1%A1%E8%BD%AC%E6%8D%A2.MD)
 * [Python 正则表达式 re](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%20re.MD)
 * [Python IO编程：文件 fileinput](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20IO%E7%BC%96%E7%A8%8B%EF%BC%9A%E6%96%87%E4%BB%B6.MD)
+#### 第三方库
+* [Python 通过 yagmail 发送邮件](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E9%80%9A%E8%BF%87%20yagmail%20%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6.MD)
 
 ### Python3 工具
 * [Python 程序打包 Setuptools](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E7%A8%8B%E5%BA%8F%E6%89%93%E5%8C%85%20Setuptools.MD)
