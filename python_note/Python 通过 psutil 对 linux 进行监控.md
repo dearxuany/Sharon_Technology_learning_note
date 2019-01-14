@@ -45,3 +45,8 @@ virtual_memory 以命名元组的形式返回内存使用情况，包括总内�
 >>> psutil.virtual_memory()
 svmem(total=1052327936, available=95428608, percent=90.9, used=785432576, free=86507520, active=359854080, inactive=368095232, buffers=0, cached=180387840, shared=5054464, slab=96137216)
 ```
+swap分区
+```
+>>> psutil.swap_memory()
+sswap(total=1073737728, used=15474688, free=1058263040, percent=1.4, sin=319488, sout=15335424)
+```
