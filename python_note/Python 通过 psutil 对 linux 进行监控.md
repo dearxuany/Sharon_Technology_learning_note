@@ -41,6 +41,7 @@ scpustats(ctx_switches=1253621, interrupts=1367234, soft_interrupts=1056908, sys
 ## 内存
 virtual_memory 以命名元组的形式返回内存使用情况，包括总内存、可用内存、内存利用率、 buffer和cached等。</br>
 除了内存利用 ，其他字段都以字节为单位返回，所以为了可读性可能需要写个函数来改一下输出的单位，改成常见的 G/K/M 等等。</br>
+注意：total（内存总数）、used（已使用的内存数）、free（空闲内存数）、buffers（缓冲使用数）、cache（缓存使用数）、swap（交换分区使用数）
 ```
 >>> psutil.virtual_memory()
 svmem(total=1052327936, available=95428608, percent=90.9, used=785432576, free=86507520, active=359854080, inactive=368095232, buffers=0, cached=180387840, shared=5054464, slab=96137216)
