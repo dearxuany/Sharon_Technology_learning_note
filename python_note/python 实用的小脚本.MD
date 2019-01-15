@@ -21,3 +21,22 @@ M=million，K=kilo，B=byte，b=bit</br>
 注意：</br>
 二进制 >>(左移) <<(右移)</br>
 例如 10 的二进制表示 1000，右移两位 10 << 2 的值就是 40，40二进制表示为 100000</br>
+```
+def change_measure_unit(n):
+    symbols = ('K','M','G','T','P','E','Z','Y')
+    prefix = {}
+    # 给单位赋值如K的值为1024字节存在prefix字典中
+    for i,s in enumerate(symbols):
+        prefix[s]= 1 << (i+1)*10  # 二进值右移
+    # reverse是为了减少循环次数，不需要由小到大一个个判断
+    for s in reversed(symbols):
+        if n >= prefix[s]:
+            value = float(n)/prefix[s]
+            return '{:.2f}{}B'.format(value,s)
+
+
+>>> print(change_measure_unit(1058263040))
+1009.24MB
+
+
+```
