@@ -24,8 +24,11 @@ Jinja2 模板中使用的{{}}语法表示一个变量，它是一种特殊的占
 Jinja2 识别所有的 Python 数据类型，甚至是一些复杂的类型， 如列表、字典和对象等。</br>
 
 ```
+#! /bin/usr/env python3
+
 import jinja2
 import os
+from monitor_data_collect import *
 
 # tpl_path 指的是写有格式的html文件，**kwargs 指的是待渲染的多个输入
 def render(tpl_path,**kwargs):
@@ -33,13 +36,57 @@ def render(tpl_path,**kwargs):
     return jinja2.Environment(loader=jinja2.FileSystemLoader(path or './')
                              ).get_template(filename).render(**kwargs)
 
+
+if __name__ == '__main__':
+    data = collect_monitor_data()
+    print(render('monitor.html',**data))
+~                                         
+
+
 <html>
     <head><title>linux 系统性能监控</title>
     <body>
         <table border='1'>
-            <tr><td>收集时间：</td><td>{{test}}</td><tr>
+            <tr><td>收集时间</td><td>{{collect_time}}</td><tr>
+            <tr><td>主机名</td><td>{{host_name}}</td><tr>
+            <tr><td>开机时间</td><td>{{boot_time}}</td><tr>
+            <tr><td>CPU个数</td><td>{{cpu_count}}</td><tr>
+            <tr><td>CPU利用率</td><td>{{cpu_percent}}</td><tr>
+            <tr><td>内存总量</td><td>{{mem_total}}</td><tr>
+            <tr><td>内存利用率</td><td>{{mem_percent}}</td><tr>
+            <tr><td>内存已用空间</td><td>{{men_used}}</td><tr>
+            <tr><td>内存可用空间</td><td>{{mem_available}}</td><tr>
+            <tr><td>磁盘总量</td><td>{{disk_total}}</td><tr>
+            <tr><td>磁盘利用率</td><td>{{disk_percent}}</td><tr>
+            <tr><td>磁盘已用空间</td><td>{{disk_used}}</td><tr>
+            <tr><td>磁盘可用空间</td><td>{{disk_available}}</td><tr>
         </table>
     </body>
 </html>
+
+$ python3 format.py
+<html>
+    <head><title>linux 系统性能监控</title>
+    <body>
+        <table border='1'>
+            <tr><td>收集时间</td><td>2019-01-17 02:27:01</td><tr>
+            <tr><td>主机名</td><td>centOSlearning.SharonLi</td><tr>
+            <tr><td>开机时间</td><td>2019-01-17 01:17:51</td><tr>
+            <tr><td>CPU个数</td><td>1</td><tr>
+            <tr><td>CPU利用率</td><td>26.2</td><tr>
+            <tr><td>内存总量</td><td>1003.60MB</td><tr>
+            <tr><td>内存利用率</td><td>82.6</td><tr>
+            <tr><td>内存已用空间</td><td>828.97MB</td><tr>
+            <tr><td>内存可用空间</td><td>174.45MB</td><tr>
+            <tr><td>磁盘总量</td><td>23.99GB</td><tr>
+            <tr><td>磁盘利用率</td><td>46.6</td><tr>
+            <tr><td>磁盘已用空间</td><td>11.18GB</td><tr>
+            <tr><td>磁盘可用空间</td><td>12.81GB</td><tr>
+        </table>
+    </body>
+</html>
+
+
+
 
 ```
