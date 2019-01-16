@@ -32,6 +32,7 @@
 
 ### Linux 相关工具
 * [Linux win使用putty通过ssh传文件](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20win%E4%BD%BF%E7%94%A8putty%E9%80%9A%E8%BF%87ssh%E4%BC%A0%E6%96%87%E4%BB%B6.md)
+* [Linux git 配置与使用](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/github_note/git%20%E9%85%8D%E7%BD%AE%E4%B8%8E%E4%BD%BF%E7%94%A8.md)
 
 ## shell
 * [shell linux 默认shell bash](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/shell_note/shell%20linux%E9%BB%98%E8%AE%A4shell%20bash.MD)
