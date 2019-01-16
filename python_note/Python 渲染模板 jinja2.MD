@@ -41,8 +41,9 @@ if __name__ == '__main__':
     data = collect_monitor_data()
     print(render('monitor.html',**data))
 ~                                         
+```
 
-
+```
 <html>
     <head><title>linux 系统性能监控</title>
     <body>
@@ -63,7 +64,8 @@ if __name__ == '__main__':
         </table>
     </body>
 </html>
-
+```
+```
 $ python3 format.py
 <html>
     <head><title>linux 系统性能监控</title>
