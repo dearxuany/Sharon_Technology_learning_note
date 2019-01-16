@@ -42,7 +42,7 @@ if __name__ == '__main__':
     print(render('monitor.html',**data))
 ~                                         
 ```
-
+monitor.html
 ```
 <html>
     <head><title>linux 系统性能监控</title>
@@ -65,6 +65,7 @@ if __name__ == '__main__':
     </body>
 </html>
 ```
+输出结果
 ```
 $ python3 format.py
 <html>
