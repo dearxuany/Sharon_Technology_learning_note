@@ -69,7 +69,42 @@ time.struct_time(tm_year=2013, tm_mon=10, tm_mday=10, tm_hour=23, tm_min=40, tm_
 >>> time.mktime(timeArray)
 1381419600.0
 ```
-### 格式化时间输出
+### 休眠
+time.sleep(secs)：用于推迟调用线程的运行，secs指秒数。
+```
+#! usr/bin/python3
+
+import time
+
+print('now：',time.asctime())
+time.sleep(10)   # 等待10秒
+print('10 seconds later and now :',time.asctime())
+
+# 输出
+now： Wed Aug 29 12:15:11 2018
+10 seconds later and now : Wed Aug 29 12:15:21 2018
+```
+## datetime
+datetime是date与time的结合体，包括date与time的所有信息。
+它的构造函数如下，各参数的含义与date、time的构造函数中的一样，要注意参数值的范围。
+```
+datetime.datetime (year, month, day[ , hour[ , minute[ , second[ , microsecond[ , tzinfo] ] ] ] ] )
+
+datetime.fromtimestamp(timestamp[, tz])：根据时间戮创建一个datetime对象，参数tz指定时区信息；
+```
+```
+>>> from datetime import datetime
+>>> psutil.boot_time()
+1547611367.0
+>>> datetime.fromtimestamp(psutil.boot_time())
+datetime.datetime(2019, 1, 16, 12, 2, 47)
+>>> datetime.fromtimestamp(psutil.boot_time()).strftime('%Y-%m-%d %H:%M:%S')
+'2019-01-16 12:02:47'
+
+```
+
+## 格式化时间输出
+datetime、date、time都提供了strftime()方法
 ```
 # 时间元组格式化为字符串
 >>> time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
@@ -106,21 +141,11 @@ python中时间日期格式化符号：
 %% %号本身
 ```
 
-### 休眠
-time.sleep(secs)：用于推迟调用线程的运行，secs指秒数。
-```
-#! usr/bin/python3
 
-import time
 
-print('now：',time.asctime())
-time.sleep(10)   # 等待10秒
-print('10 seconds later and now :',time.asctime())
 
-# 输出
-now： Wed Aug 29 12:15:11 2018
-10 seconds later and now : Wed Aug 29 12:15:21 2018
-```
+
+
 
 ## 拓展
 ### UTC
