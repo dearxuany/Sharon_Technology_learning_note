@@ -28,6 +28,7 @@ Foo/
 (3) 程序的入口最好命名为main.py</br>
 * docs/: 存放一些文档</br>
 * setup.py: 安装、部署、打包的脚本</br>
-* requirements.txt: 存放软件依赖的外部Python包列表</br>
+业界标准做法是用 Python 流行的打包工具 setuptools 来生成 setup.py </br>
+* requirements.txt: 存放软件依赖的外部 Python 包列表</br>
 可用在项目所在的 virtualenv 中只用命令 pip freeze 自动生成</br>
 * README: 项目说明文件</br>
