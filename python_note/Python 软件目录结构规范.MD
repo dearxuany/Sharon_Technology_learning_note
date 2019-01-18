@@ -88,9 +88,9 @@ requirements.txt 文件，其中包含了当前环境中所有包及各自的版
 [Python 虚拟python环境 virtualenv](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E8%99%9A%E6%8B%9Fpython%E7%8E%AF%E5%A2%83%20virtualenv.MD)</br>
 [自动生成 requirement.txt](https://pythonguidecn.readthedocs.io/zh/latest/dev/virtualenvs.html#id13)
 ```
-# 生成 requirement.txt
-$ pip freeze > requirement.txt
-$ cat requirement.txt
+# 生成 requirements.txt
+$ pip3 freeze > requirement.txt
+$ cat requirements.txt
 DateTime==4.3
 Jinja2==2.10
 MarkupSafe==1.1.0
@@ -115,8 +115,8 @@ wheel          0.32.3
 yagmail        0.11.214
 zope.interface 4.6.0
 
-# 新环境安装 requirement.txt 中的包
-$ pip install -r requirements.txt
+# 新环境安装 requirements.txt 中的包
+$ pip3 install -r requirements.txt
 ```
 注意：</br>
 git 版本控制过程中要注意排除 virtualenv 中产生的一些文件</br>
