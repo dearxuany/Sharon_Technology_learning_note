@@ -71,9 +71,16 @@ Sep  1 04:00:01 centOSlearning CROND[5251]: (root) CMD (ntpdate time.windows.com
 Sep  2 16:20:02 centOSlearning CROND[5289]: (root) CMD (/usr/lib/sa/sa1 1 1)
 Sep  2 16:25:59 centOSlearning crontab[5318]: (root) LIST (root)
 ```
+设置用户的定时任务
+```
+$ crontab -e
+```
+用户只要没有被列入/etc/cron.deny中，则可以执行crontab -e 来编辑自己的定时任务。</br>
+该命令会打开一个空白文件，按照/etc/crontab里的相关编辑格式编辑定时任务即可。</br>
+
 
 #### cron相关的系统配置文件 /etc/crontab
-一般会直接编辑文件 /etc/crontab 来设置工作调度，而不是用crontab -e 来设置，编辑这个文件必须有root权限。</br>
+设置系统的定时任务一般会直接编辑文件 /etc/crontab 来设置工作调度，而不是用crontab -e 来设置，编辑这个文件必须有root权限。</br>
 cron服务最低检测限制是“分钟”，所以cron会每分钟去读一次/etc/crontab和/var/spool/cron/，所以在/etc/crontab编辑完工作调度任务后，cron就会自动执行他们，但最好还是重新启动一下crond服务。
 ```
 # vim /etc/crontab
