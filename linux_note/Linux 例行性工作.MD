@@ -77,6 +77,12 @@ $ crontab -e
 ```
 用户只要没有被列入/etc/cron.deny中，则可以执行crontab -e 来编辑自己的定时任务。</br>
 该命令会打开一个空白文件，按照/etc/crontab里的相关编辑格式编辑定时任务即可。</br>
+```
+$ crontab -e
+crontab: installing new crontab
+$ crontab -l
+0 */2 * * * sunnylinux /usr/bin/python3 /home/sunnylinux/useful_script/python3_script/Linux_monitor_send_email/linux_monitor_send_email/main.py
+```
 
 
 #### cron相关的系统配置文件 /etc/crontab
