@@ -80,5 +80,44 @@ import very.deep.module as mod
 ```
 该语法允许使用 mod 替代冗长的 very.deep.module
 
+### requirements.txt
+requirements.txt 文件，其中包含了当前环境中所有包及各自的版本的简单列表。</br>
+建议在 virtualenv 中，使用 pip 来自动生成。</br>
+
+关于 virtualenv 的使用：</br>
+[Python 虚拟python环境 virtualenv](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E8%99%9A%E6%8B%9Fpython%E7%8E%AF%E5%A2%83%20virtualenv.MD)</br>
+[自动生成 requirement.txt](https://pythonguidecn.readthedocs.io/zh/latest/dev/virtualenvs.html#id13)
+```
+# 生成 requirement.txt
+$ pip freeze > requirement.txt
+$ cat requirement.txt
+DateTime==4.3
+Jinja2==2.10
+MarkupSafe==1.1.0
+psutil==5.4.8
+pytz==2018.9
+yagmail==0.11.214
+zope.interface==4.6.0
 
 
+# 查看当前环境已有包
+$ pip3 list
+Package        Version
+-------------- --------
+DateTime       4.3
+Jinja2         2.10
+MarkupSafe     1.1.0
+pip            18.1
+psutil         5.4.8
+pytz           2018.9
+setuptools     40.6.3
+wheel          0.32.3
+yagmail        0.11.214
+zope.interface 4.6.0
+
+# 新环境安装 requirement.txt 中的包
+$ pip install -r requirements.txt
+```
+注意：</br>
+git 版本控制过程中要注意排除 virtualenv 中产生的一些文件</br>
+https://pythonguidecn.readthedocs.io/zh/latest/writing/gotchas.html#version-control-ignores
