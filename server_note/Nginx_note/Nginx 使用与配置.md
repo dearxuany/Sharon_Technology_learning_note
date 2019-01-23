@@ -40,8 +40,9 @@ LNAMP是一种互补型的架构，前面介绍过，Nginx的负载均衡和反�
 #### Web调度员Nginx
 当web应用发展到一定程度时，单台服务器不足以支撑业务的正常运行，为增大吞吐量往往会使用多台服务器一起提供服务，如何充分利用多台服务器的资源，就需要一个‘调度员’，这个调度员要求能高效的接收并分发请求，知道后端的服务器健康状态，要能方便的扩展和移除。此架构充分利用了Nginx的反向代理和负载均衡的优势，Nginx本身不提供web服务，而是在前端接受web请求并分发到后端服务器处理，后端服务器可以是Apache，tomcat，IIS等。
 
-## Nginx 的安装
-### 在 ubuntu 下的安装
+## LNMP 安装配置
+### Nginx 的安装
+#### 在 ubuntu 下的安装
 * apt-get 直接安装
 安全策略一般禁用root，所以用sudo
 ```
@@ -53,7 +54,7 @@ sudo apt-get install -y nginx
 ubuntu 默认的策略是什么库都不安装，经过上面的库依赖解决，可以从中了解到 nginx 依赖的库有哪些，并且可以定制安装组件或者不安装组件，开机启动或开机不启动等等。切到 /usr/local/src 到 nginx 源下载最新解压编译安装。</br>
 [CentOS下的 nginx 源码安装](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E5%AE%89%E8%A3%85Nginx.MD)
 
-### 配置文件及常用命令
+#### 常用 nginx 命令
 配置文件目录
 ```
 /etc/init.d/nginx
@@ -77,7 +78,7 @@ sudo service nginx stop
 sudo /etc/init.d/nginx restart
 sudo service restart
 ```
-### 简单配置
+#### 简单配置
 此处配置 LNMP 架构，P 为 PHP
 ```
 $ cd /etc/nginx                                          [4:24:08]
@@ -108,7 +109,7 @@ sudo vim /etc/nginx/sites-available/default
 删掉前面的注释，添加 root /usr/share/ngnix/html; 和  fastcgi_param SCRIPT_FILENAME $document_root $fastcgi_script_name; 两行
 ```
    location ~ \.php$ {
-                root /usr/share/ngnix/html;
+                root /usr/share/nginx/html;
                 fastcgi_split_path_info ^(.+\.php)(/.+)$;
                 # NOTE: You should have "cgi.fix_pathinfo = 0;" in php.ini
 
@@ -139,6 +140,7 @@ nginx: configuration file /etc/nginx/nginx.conf test is successful
 sudo apt-get install -y php5-fpm
 ```
 #### 配合 nginx 一起测试
+进入/usr/share/nginx/html，该文件夹就是 nginx 配置文件里location ~ .php$ {} 中第一行所指出那个文件夹
 ```
 $ cd /usr/share/nginx/html                               [5:10:35]
 $ sudo vim phpinfo.php   
@@ -153,16 +155,18 @@ phpinfo.php 内容为
 ```
 $ sudo service php5-fpm start  
 ```
-修改 nginx 的配置文件 /etc/nginx/sites-available/default
+浏览器输入访问以下页面，会看到php的信息页
 ```
-fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-# 上句修改为下句
-fastcgi_param SCRIPT_FILENAME /usr/share/nginx/html/$fastcgi_script_name;
+http://localhost/phpinfo.php 
 ```
-检测配置文件并使其生效
+页面上可以看到，现时没有任何 mysql 的启动信息
+####  让 php5 支持 mysql
+此处省略 mysql 的安装，安装 php5-mysql 模块，然后重启php
 ```
-$ sudo nginx -t
-$ sudo service nginx reload 
+$ sudo apt-get install php5-mysql
+$ sudo service php5-fpm start  
 ```
+之后查看 http://localhost/phpinfo.php 会看到 mysql 的相关信息
 
-浏览器输入 
+
+
