@@ -10,7 +10,6 @@ sudo apt-get install -y nginx
 
 * 源码安装</br>
 ubuntu 默认的策略是什么库都不安装，经过上面的库依赖解决，可以从中了解到 nginx 依赖的库有哪些，并且可以定制安装组件或者不安装组件，开机启动或开机不启动等等。切到 /usr/local/src 到 nginx 源下载最新解压编译安装。</br>
-[CentOS下的 nginx 源码安装](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E5%AE%89%E8%A3%85Nginx.MD)
 
 ### 常用 nginx 命令
 配置文件目录
