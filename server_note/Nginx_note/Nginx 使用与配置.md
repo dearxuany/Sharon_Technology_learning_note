@@ -77,3 +77,59 @@ sudo service nginx stop
 sudo /etc/init.d/nginx restart
 sudo service restart
 ```
+### 简单配置
+此处配置 LNMP 架构，P 为 PHP
+```
+$ cd /etc/nginx                                          [4:24:08]
+$ ls -al                                             [4:33:03]
+\u603b\u7528\u91cf 72
+drwxr-xr-x   5 root root 4096  1\u6708 24 04:05 .
+drwxr-xr-x 106 root root 4096  1\u6708 24 03:59 ..
+drwxr-xr-x   2 root root 4096  6\u6708  2  2016 conf.d
+-rw-r--r--   1 root root  911  3\u6708  5  2014 fastcgi_params
+-rw-r--r--   1 root root 2258  3\u6708  5  2014 koi-utf
+-rw-r--r--   1 root root 1805  3\u6708  5  2014 koi-win
+-rw-r--r--   1 root root 2085  3\u6708  5  2014 mime.types
+-rw-r--r--   1 root root 5287  3\u6708  5  2014 naxsi_core.rules
+-rw-r--r--   1 root root  287  3\u6708  5  2014 naxsi.rules
+-rw-r--r--   1 root root  222  3\u6708  5  2014 naxsi-ui.conf.1.4.1
+-rw-r--r--   1 root root 1601  3\u6708  5  2014 nginx.conf
+-rw-r--r--   1 root root  180  3\u6708  5  2014 proxy_params
+-rw-r--r--   1 root root  465  3\u6708  5  2014 scgi_params
+drwxr-xr-x   2 root root 4096  1\u6708 24 04:05 sites-available
+drwxr-xr-x   2 root root 4096  8\u6708 17  2016 sites-enabled
+-rw-r--r--   1 root root  532  3\u6708  5  2014 uwsgi_params
+-rw-r--r--   1 root root 3071  3\u6708  5  2014 win-utf
+```
+修改文件，释放模块 location ~ .php$ {}
+```
+sudo vim /etc/nginx/sites-available/default
+```
+删掉前面的注释，添加 root /usr/share/ngnix/html; 和  fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name; 两行
+```
+   location ~ \.php$ {
+                root /usr/share/ngnix/html;
+                fastcgi_split_path_info ^(.+\.php)(/.+)$;
+                # NOTE: You should have "cgi.fix_pathinfo = 0;" in php.ini
+
+                # With php5-cgi alone:
+                # fastcgi_pass 127.0.0.1:9000;
+                # With php5-fpm:             
+                fastcgi_pass unix:/var/run/php5-fpm.sock;
+                fastcgi_index index.php;
+                fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+                include fastcgi_params;
+        }
+```
+测试配置文件
+```
+ $ sudo nginx -t                            [4:48:52]
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+```
+使配置文件生效
+```
+ $ sudo service nginx reload                [4:52:38]
+ * Reloading nginx configuration nginx   
+```
+
