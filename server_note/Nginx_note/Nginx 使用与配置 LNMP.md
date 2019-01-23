@@ -1,4 +1,4 @@
-# Nginx 使用与配置
+# Nginx 使用与配置 LNMP
 ## Nginx 简介
 Nginx是一款高性能的HTTP和反向代理服务器软件。</br>
 Nginx为性能而生,从发布以来一直侧重于高性能,高并发,低CPU内存消耗。</br>
@@ -77,6 +77,14 @@ sudo service nginx stop
 ```
 sudo /etc/init.d/nginx restart
 sudo service restart
+```
+查看 nginx 状态
+```
+service nginx status
+```
+查看错误日志
+```
+tail /var/log/nginx/error.log
 ```
 #### 简单配置
 此处配置 LNMP 架构，P 为 PHP
@@ -168,5 +176,33 @@ $ sudo service php5-fpm start
 ```
 之后查看 http://localhost/phpinfo.php 会看到 mysql 的相关信息
 
+### 修改端口
+在某些情况下我们需要改变服务器的端口，因为套接字是通过绑定 ip 端口连接的，那就只需要将刚才的 nginx 的 default（所在目录/etc/nginx/sites-available/）配置中的端口打开，然后改成你想要监听的端口。nginx 的 http 默认端口是 80。
+```
+sudo vim /etc/nginx/sites-available/default
+```
+将端口修改为 9000 ，改完后 reload 配置文件并重启 nginx 和 php
+```
+server {
+        listen 9000 default_server;
+        listen [::]:9000 default_server ipv6only=on;
 
+        root /usr/share/nginx/html;
+        index index.html index.htm;
+
+        # Make site accessible from http://localhost/
+        server_name localhost;
+
+        location / {
+                # First attempt to serve request as file, then
+                # as directory, then fall back to displaying a 404.
+                try_files $uri $uri/ =404;
+                # Uncomment to enable naxsi on this location
+                # include /etc/nginx/naxsi.rules
+        }
+```
+之后，页面的访问地址需要改为
+```
+http://localhost:9000/phpinfo.php 
+```
 
