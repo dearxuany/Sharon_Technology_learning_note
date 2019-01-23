@@ -132,4 +132,24 @@ nginx: configuration file /etc/nginx/nginx.conf test is successful
  $ sudo service nginx reload                [4:52:38]
  * Reloading nginx configuration nginx   
 ```
-
+### php 安装测试
+在 LNMP 中的作用或角色：nginx 本身不能处理 PHP，它只是个 web 服务器，当接收到请求后，如果是 php 请求，则发给 php 解释器处理，并把结果返回给客户端.php-fpm 是一个守护进程（FastCGI 进程管理器）用于替换 PHP FastCGI 的大部分附加功能，对于高负载网站是非常有用的。
+####　安装　php5
+```
+sudo apt-get install -y php5-fpm
+```
+#### 配合 nginx 一起测试
+```
+$ cd /usr/share/nginx/html                               [5:10:35]
+$ sudo vim phpinfo.php   
+```
+phpinfo.php 内容为
+```
+<?php
+    phpinfo();
+```
+启动 php
+```
+$ sudo service php5-fpm start  
+```
+浏览器输入 
