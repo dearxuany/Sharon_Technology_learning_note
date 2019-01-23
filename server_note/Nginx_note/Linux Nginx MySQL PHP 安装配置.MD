@@ -1,5 +1,5 @@
 # LNMP 安装配置
-## Nginx 的安装
+## Nginx 安装配置
 ### 在 ubuntu 下的安装
 * apt-get 直接安装
 安全策略一般禁用root，所以用sudo
@@ -100,7 +100,8 @@ nginx: configuration file /etc/nginx/nginx.conf test is successful
 ```
 ## php 安装测试
 在 LNMP 中的作用或角色：nginx 本身不能处理 PHP，它只是个 web 服务器，当接收到请求后，如果是 php 请求，则发给 php 解释器处理，并把结果返回给客户端.php-fpm 是一个守护进程（FastCGI 进程管理器）用于替换 PHP FastCGI 的大部分附加功能，对于高负载网站是非常有用的。
-###　安装　php5
+
+### 安装 php5
 ```
 sudo apt-get install -y php5-fpm
 ```
