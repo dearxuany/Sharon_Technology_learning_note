@@ -57,6 +57,15 @@ MariaDB [(none)]> show databases;
 4 rows in set (0.18 sec)
 ```
 ### python3连接数据库
+Python 工程师可以通过统 的接口访问不同的数据库，也可以使用不同的 Python 模块访问相同的数据库。不同的数据库或不同的 Python 模块，使用方式一样。Python 官方制定的数据库接口标准中，主要包含了顶层 connect 函数、部分常量、数据库操作异常、用于管理连接 Connection 类以及执行查询的 Cursor 类。</br>
+</br>
+Python 中操作数据库，基本步骤如下：</br>
+* 导入相应的 Python 模块；
+* 使用 connect 函数连接数据库，并返回一个 connnection 对象；
+* 通过 Connection 对象的 cursor 法，返回一个 Cursor 对象；
+* 通过 Cursor 对象的 execute 方法执行 SQL 语句；
+* 如果执行的是查询语句，通过 cursor 对象的 fetchall 语句获取返回结果；
+* 调用 Cursor 对象的 close 方法关闭 Cursor。
 #### 在已存在数据库中新建表
 主要用到</br>
 连接对象方法： db.cursor()、db.close()</br>
