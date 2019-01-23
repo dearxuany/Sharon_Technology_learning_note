@@ -105,7 +105,7 @@ drwxr-xr-x   2 root root 4096  8\u6708 17  2016 sites-enabled
 ```
 sudo vim /etc/nginx/sites-available/default
 ```
-删掉前面的注释，添加 root /usr/share/ngnix/html; 和  fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name; 两行
+删掉前面的注释，添加 root /usr/share/ngnix/html; 和  fastcgi_param SCRIPT_FILENAME $document_root $fastcgi_script_name; 两行
 ```
    location ~ \.php$ {
                 root /usr/share/ngnix/html;
@@ -147,9 +147,22 @@ phpinfo.php 内容为
 ```
 <?php
     phpinfo();
+?>
 ```
 启动 php
 ```
 $ sudo service php5-fpm start  
 ```
+修改 nginx 的配置文件 /etc/nginx/sites-available/default
+```
+fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+# 上句修改为下句
+fastcgi_param SCRIPT_FILENAME /usr/share/nginx/html/$fastcgi_script_name;
+```
+检测配置文件并使其生效
+```
+$ sudo nginx -t
+$ sudo service nginx reload 
+```
+
 浏览器输入 
