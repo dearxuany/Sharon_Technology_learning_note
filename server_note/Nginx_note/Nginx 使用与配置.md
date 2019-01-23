@@ -40,3 +40,39 @@ LNAMP是一种互补型的架构，前面介绍过，Nginx的负载均衡和反�
 #### Web调度员Nginx
 当web应用发展到一定程度时，单台服务器不足以支撑业务的正常运行，为增大吞吐量往往会使用多台服务器一起提供服务，如何充分利用多台服务器的资源，就需要一个‘调度员’，这个调度员要求能高效的接收并分发请求，知道后端的服务器健康状态，要能方便的扩展和移除。此架构充分利用了Nginx的反向代理和负载均衡的优势，Nginx本身不提供web服务，而是在前端接受web请求并分发到后端服务器处理，后端服务器可以是Apache，tomcat，IIS等。
 
+## Nginx 的安装
+### 在 ubuntu 下的安装
+* apt-get 直接安装
+安全策略一般禁用root，所以用sudo
+```
+sudo apt-get update
+sudo apt-get install -y nginx
+```
+
+* 源码安装</br>
+ubuntu 默认的策略是什么库都不安装，经过上面的库依赖解决，可以从中了解到 nginx 依赖的库有哪些，并且可以定制安装组件或者不安装组件，开机启动或开机不启动等等。切到 /usr/local/src 到 nginx 源下载最新解压编译安装。
+
+### 配置文件及常用命令
+配置文件目录
+```
+/etc/init.d/nginx
+```
+启动 nginx (以下二选一)
+```
+sudo /etc/init.d/nginx start
+sudo service nginx start
+```
+启动后，在浏览器进行测试
+```
+http://localhost
+```
+关闭 nginx
+```
+sudo /etc/init.d/nginx stop
+sudo service nginx stop
+```
+重启 nginx
+```
+sudo /etc/init.d/nginx restart
+sudo service restart
+```
