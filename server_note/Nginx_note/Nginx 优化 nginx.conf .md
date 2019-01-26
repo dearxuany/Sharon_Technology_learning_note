@@ -225,7 +225,7 @@ sendfile() 直接从磁盘上读取数据到操作系统缓冲。由于这个操
 配置 nginx 不要缓存数据，应该快速的发送小数据，通常仅用于频繁发送小碎片信息且无需立马响应的实时数据传输中。
 * keepalive_timeout</br>
 指定了与客户端的 keep-alive 链接的超时时间。服务器会在这个时间后关闭链接。按需设置，降低此值可避免worker等待过长时间。
-* types_hash_max_size</br>
+
 ### logging setings
 ```
 access_log off;
