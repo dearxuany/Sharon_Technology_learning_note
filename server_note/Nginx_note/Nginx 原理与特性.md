@@ -75,26 +75,24 @@ Nginx的模块默认编译进nginx中，如果需要增加或删除模块，需�
 Nginx 本身做的工作实际很少，当它接到一个 HTTP 请求时，它仅仅是通过查找配置文件将此次请求映射到一个 locationblock，而此 location 中所配置的各个指令则会启动不同的模块去完成工作。</br>
 通常一个 location 中的指令会涉及一个 handler 模块和多个 filter 模块（当然，多个 location 可以复用同一个模块）。</br>
 handler 模块负责处理请求，完成响应内容的生成，而 filter 模块对响应内容进行处理。</br>
-```
-$ vim /etc/nginx/sites-available/default
-```
+
 * http index 模块</br>
 ngx_http_index_module </br>
 定义将要被作为默认页的文件，文件的名字可以包含变量，文件以配置中指定的顺序被 nginx 检查。 
 列表中的最后一个元素可以是一个带有绝对路径的文件。 
 
-* http log 模</br>
+* http log 模块</br>
 ngx_http_log_module </br>
 
-* access 模</br>
+* access 模块</br>
 ngx_http_access_module </br>
 此模块提供了一个简易的基于主机的访问控制，使有可能对特定 IP 客户端进行控制。规则检查按照第一次匹配的顺序，此模块对网络地址有放行和禁止的权利。
 
-* rewrite 模</br>
+* rewrite 模块</br>
 ngx_http_rewrite_module </br>
 执行 URL 重定向,允许你去掉带有恶意的 URL，包含多个参数（修改）.利用正则的匹配，分组和引用，达到目的。
 
-* proxy 模</br>
+* proxy 模块</br>
 ngx_http_proxy_module </br>
 此模块能代理请求到其它服务器.也就是说允许你把客户端的 HTTP 请求转到后端服务器。
 
