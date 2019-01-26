@@ -1,6 +1,6 @@
 # Nginx 优化 /etc/nginx/nginx.conf
 优化的目的是，通过调整 nginx 中的设置得到更好的性能，来应对大量客户端请求。</br>
-对 nginx 进行优化，主要涉及 nginx.conf 这个文件，它保存有 nginx 不同模块的全部设置。</br>
+对 nginx 进行优化，主要涉及 /etc/nginx/nginx.conf 这个文件，它保存有 nginx 不同模块的全部设置。</br>
 在这个配置文件中，可以配置 nginx 的各种属性，此外还可搭配其它模块的协作优化。</br>
 ```
 $ cd /etc/nginx                                        
@@ -150,7 +150,7 @@ On-line CPU(s) list:   0-3
 \u6bcf\u4e2a\u6838\u7684\u7ebf\u7a0b\u6570\uff1a1
 \u6bcf\u4e2a\u5ea7\u7684\u6838\u6570\uff1a  4
 ```
-* 为何设置 worker_process 为 CPU 内核数？</br>
+* 为何设置 worker_process 为 CPU 核数？</br>
 在一个使用分叉的服务器中，每一个客户端机连接都利用分叉创造一个子进程。父进程继续监听新的连接，同时子进程处理客户端。当客户端的请求结束时，子进程就退出了。因此分叉的进程是并行运行的，客户端之间不必互相等待。</br>
 linux的进程设计能很好地利用CPU的性能，每一个任务(进程)被创建时，系统会为他分配存储空间等必要资源，然后在内核管理区为该进程创建管理节点，以便后来控制和调度该任务的执行。进程真正进入执行阶段，系统会给进程分配必要的CPU资源，这个行为被称为“调度”。除CPU而外，系统会为每个进程分配独有的存储空间，还有其他外设的可使用状态等。即是子进程和父进程一样，有它自己独立的硬件资源。</br>
 由进程和线程逻辑的严谨定义上可知，每个进程都占有各自的CPU内存空间和各自的一套数据，而线程是多个线程共用同一CPU内存空间（即其所在进程中的空间）且公用全局变量。通常，当CPU个数和多线程线程数相等时，效率会比线程数多于核数的情况高，除非其中一个线程没有耗尽CPU的资源。
@@ -175,17 +175,12 @@ multi_accept 的作用是告诉 nginx 在收到新链接的请求通知时，尽
 
 ## http 模块
 调优主要涉及 http 模块中前三个 settings 小模块
+### Basic Settings
 ```
-http {
-
-        ##
-        # Basic Settings
-        ##
-
         sendfile on;
         tcp_nopush on;
         tcp_nodelay on;
-        keepalive_timeout 65;
+        keepalive_timeout 15;
         types_hash_max_size 2048;
         # server_tokens off;
 
@@ -194,29 +189,7 @@ http {
 
         include /etc/nginx/mime.types;
         default_type application/octet-stream;
-
-        ##
-        # Logging Settings
-        ##
-
-        access_log /var/log/nginx/access.log;
-        error_log /var/log/nginx/error.log;
-
-        ##
-        # Gzip Settings
-        ##
-
-        gzip on;
-        gzip_disable "msie6";
-
-        # gzip_vary on;
-        # gzip_proxied any;
-        # gzip_comp_level 6;
-        # gzip_buffers 16 8k;
-        # gzip_http_version 1.1;
-        # gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;
 ```
-### Basic Settings
 * sendfile on</br>
 sendfile() 直接从磁盘上读取数据到操作系统缓冲。由于这个操作是在内核中完成的，sendfile() 比 read() 和 write() 联合使用要更加有效率，所以要打开。
 * tcp_nopush on</br>
