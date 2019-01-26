@@ -1,5 +1,8 @@
 # Nginx 优化
-对 nginx 进行优化，主要涉及 nginx.conf 这个文件，它保存有 nginx 不同模块的全部设置。
+优化的目的是，通过调整 nginx 中的设置得到更好的性能，来应对大量客户端请求。</br>
+对 nginx 进行优化，主要涉及 nginx.conf 这个文件，它保存有 nginx 不同模块的全部设置。</br>
+在这个配置文件中，可以配置 nginx 的各种属性，此外还可搭配其它模块的协作优化。</br>
+
 ```
 $ cd /etc/nginx                                        
 $ ls                                              
@@ -8,6 +11,8 @@ fastcgi_params  naxsi_core.rules     proxy_params     uwsgi_params
 koi-utf         naxsi.rules          scgi_params      win-utf
 koi-win         naxsi-ui.conf.1.4.1  sites-available
 ```
+nginx.conf 主要包括：</br>
+顶层配置、events 模块、http 模块、mail 模块
 ```
 $ vim nginx.conf
 user www-data;
