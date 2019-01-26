@@ -1,6 +1,7 @@
 # Nginx 流量及并发连接数限制
-Nginx 流量及并发连接数限制，流量限制基于 ngx_http_core_module 模块，主要也是修改 nginx.conf 这个文件，要注意 apt-get 安装和源码编译安装路径的区别。</br>
+Nginx 流量及并发连接数限制，主要也是修改 nginx.conf 这个文件，要注意 apt-get 安装和源码编译安装而导致的 nginx.conf 路径的区别。</br>
 ## 流量限制
+流量限制基于 ngx_http_core_module 模块
 ### nginx 配置文件和要下载测试内容的路径
 需要修改的 nginx 配置文件 nginx.conf 路径
 ```
