@@ -1,7 +1,14 @@
 # Nginx 性能优化 /etc/nginx/nginx.conf
 优化的目的是，通过调整 nginx 中的设置得到更好的性能，来应对大量客户端请求。</br>
-对 nginx 进行优化，此处主要修改 /etc/nginx/nginx.conf 这个文件，它保存有 nginx 不同模块的全部设置。</br>
+对 nginx 进行优化，主要修改 nginx.conf 这个文件，它保存有 nginx 不同模块的全部设置。</br>
 在这个配置文件中，可以配置 nginx 的各种属性，此外还可搭配其它模块的协作优化。</br>
+</br>
+关于 nginx.conf 的路径，要看nginx是以何种方式被安装：</br>
+* 一般来说，如ubuntu 用apt-get来装的话 nginx会被装在/etc下面，所以nginx配置文件的路径会在 /etc/nginx/nginx.conf，而且配置文件会被拆开几个模块；</br>
+
+* 如果一般用户用源码安装的话，nginx一般会被安装在 usr/local 下面，所以nginx配置文件有可能在 /usr/local/nginx 下，通常所有配置会被写在一个 nginx.conf 文件中。</br>
+
+此处，使用 /etc/nginx/nginx.conf 作为例子:
 ```
 $ cd /etc/nginx                                        
 $ ls                                              
