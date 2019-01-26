@@ -56,3 +56,36 @@ $ sudo ./sbin/nginx
 ```
 $ wget http://ifconfig可查到的ip地址/seven/seven.mp4    
 ```
+## 并发连接数量限制
+并发连接数量限制基于ngx_http_limit_zone_module 模块
+### 修改配置文件
+定义一个叫“one”的记录区，总容量为 10M，以变量 $binary_remote_addr 作为会话的判断基准（即一个地址一个会话），限制 /seven/ 目录下，一个会话只能进行一个连接。 </br>
+简单点，就是限制 /seven/ 目录下，一个 IP 只能发起一个连接，多过一个，一律 503。</br>
+```
+http {
+    limit_conn_zone   $binary_remote_addr  zone=one:10m;
+    ...
+    server {
+        ...
+        location /seven/ {
+            limit_conn   one  1;
+            .....
+        }
+```
+* limit_conn_zone </br>
+语法： limit_conn_zone zone_name $variable the_size</br>
+默认值： no</br>
+作用域： http</br>
+本指令定义了一个数据区，里面记录会话状态信息。 variable 定义判断会话的变量；the_size 定义记录区的总容量。</br>
+* limit_conn</br>
+语法： limit_conn zone_name the_size</br>
+默认值： no</br>
+作用域： http, server, location</br>
+指定一个会话最大的并发连接数。 当超过指定的最大并发连接数时，服务器将返回 "Service unavailable" (503)。</br>
+</br>
+
+注意：</br>
+在这里使用的是 $binary_remote_addr 而不是 $remote_addr。</br>
+$remote_addr 的长度为 7 至 15 bytes，会话信息的长度为 32 或 64 bytes。 </br>
+而 $binary_remote_addr 的长度为 4 bytes，会话信息的长度为 32 bytes。 </br>
+当 zone 的大小为 1M 的时候，大约可以记录 32000 个会话信息（一个会话占用 32 bytes）。</br>
