@@ -1,6 +1,7 @@
 # Nginx 流量及并发连接数限制
 Nginx 流量及并发连接数限制，流量限制基于 ngx_http_core_module 模块，主要也是修改 nginx.conf 这个文件，要注意 apt-get 安装和源码编译安装路径的区别。</br>
-## nginx 配置文件和要下载测试内容的路径
+## 流量限制
+### nginx 配置文件和要下载测试内容的路径
 需要修改的 nginx 配置文件 nginx.conf 路径
 ```
 $ pwd                                                
@@ -19,7 +20,7 @@ $ pwd
 $ ls                                        
 README.md  seven.mp4
 ```
-## 修改 nginx 配置文件
+### 修改 nginx 配置文件
 在 http 的 server 中加一个 location，设置传输量大于3m时，传输速率开始被限制在20k以内
 ```
  location /seven/ {
@@ -43,14 +44,14 @@ README.md  seven.mp4
 nginx 按连接限速，所以如果某个客户端同时开启了两个连接，那么客户端的整体速率是这条指令设置值的 2 倍。</br>
 更多：http://nginx.org/en/docs/http/ngx_http_core_module.html#limit_rate
 
-## 修改好配置文件后重启 nginx
+### 修改好配置文件后重启 nginx
 源码编译安装，直接重启配置文件就会自动reload了，可以用tree找找当前的 ./nginx 在哪个位置
 ```
 $ pwd                                         
 /usr/local/nginx
 $ sudo ./sbin/nginx        
 ```
-## 测试下载速度
+### 测试下载速度
 ```
 $ wget http://ifconfig可查到的ip地址/seven/seven.mp4    
 ```
