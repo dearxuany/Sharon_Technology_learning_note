@@ -1,4 +1,4 @@
-# Nginx 优化 /etc/nginx/nginx.conf
+# Nginx 性能优化 /etc/nginx/nginx.conf
 优化的目的是，通过调整 nginx 中的设置得到更好的性能，来应对大量客户端请求。</br>
 对 nginx 进行优化，主要涉及 /etc/nginx/nginx.conf 这个文件，它保存有 nginx 不同模块的全部设置。</br>
 在这个配置文件中，可以配置 nginx 的各种属性，此外还可搭配其它模块的协作优化。</br>
