@@ -43,6 +43,7 @@ service nginx status
 ```
 tail /var/log/nginx/error.log
 ```
+注意：apt-get 安装和源码编译安装路径，源码编译安装貌似不能用 service 相关的命令
 ### 简单配置
 此处配置 LNMP 架构，P 为 PHP
 ```
