@@ -1,4 +1,4 @@
-# Nginx 安装配置
+# Linux(CentOS7) Nginx 源码安装及配置
 ## 系统平台
 ```
 uname -r
@@ -115,13 +115,16 @@ user www www;
 worker_processes 1; #设置值和CPU核心数一致
 error_log /usr/local/webserver/nginx/logs/nginx_error.log crit; #日志位置和日志级别
 pid /usr/local/webserver/nginx/nginx.pid;
+
 #Specifies the value for maximum file descriptors that can be opened by this process.
 worker_rlimit_nofile 65535;
+
 events
 {
   use epoll;
   worker_connections 65535;
 }
+
 http
 {
   include mime.types;
@@ -141,6 +144,7 @@ http
   tcp_nopush on;
   keepalive_timeout 60;
   tcp_nodelay on;
+  
   fastcgi_connect_timeout 300;
   fastcgi_send_timeout 300;
   fastcgi_read_timeout 300;
@@ -148,6 +152,7 @@ http
   fastcgi_buffers 4 64k;
   fastcgi_busy_buffers_size 128k;
   fastcgi_temp_file_write_size 128k;
+  
   gzip on; 
   gzip_min_length 1k;
   gzip_buffers 4 16k;
@@ -157,13 +162,15 @@ http
   gzip_vary on;
  
   #limit_zone crawler $binary_remote_addr 10m;
+  
  #下面是server虚拟主机的配置
  server
   {
-    listen 80;#监听端口
-    server_name localhost;#域名
+    listen 80;   #监听端口
+    server_name localhost;   #域名
     index index.html index.htm index.php;
-    root /usr/local/webserver/nginx/html;#站点目录
+    root /usr/local/webserver/nginx/html;   #站点目录
+    
       location ~ .*\.(php|php5)?$
     {
       #fastcgi_pass unix:/tmp/php-cgi.sock;
@@ -171,14 +178,18 @@ http
       fastcgi_index index.php;
       include fastcgi.conf;
     }
+    
     location ~ .*\.(gif|jpg|jpeg|png|bmp|swf|ico)$
     {
       expires 30d;
+      
   # access_log off;
     }
+    
     location ~ .*\.(js|css)?$
     {
       expires 15d;
+      
    # access_log off;
     }
     access_log off;
