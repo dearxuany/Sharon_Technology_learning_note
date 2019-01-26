@@ -70,4 +70,163 @@ Nginx的模块从结构上分为核心模块、基础模块和第三方模块：
 * 基础模块： HTTP Access模块、HTTP FastCGI模块、HTTP Proxy模块和HTTP Rewrite模块
 * 第三方模块： HTTP Upstream Request Hash模块、Notice模块和HTTP Access Key模块及用户自己开发的模块</br>
 Nginx的模块默认编译进nginx中，如果需要增加或删除模块，需要重新编译Nginx，这一点不如Apache的动态加载模块方便。如果有需要动态加载模块，可以使用由淘宝网发起的web服务器Tengine，在nginx的基础上增加了很多高级特性，完全兼容Nginx。</br>
+```
+shiyanlou:nginx/ $ ls -al                                             [8:13:00]
+\u603b\u7528\u91cf 72
+drwxr-xr-x   5 root root 4096  8\u6708 17  2016 .
+drwxr-xr-x 106 root root 4096  1\u6708 26 08:07 ..
+drwxr-xr-x   2 root root 4096  6\u6708  2  2016 conf.d
+-rw-r--r--   1 root root  911  3\u6708  5  2014 fastcgi_params
+-rw-r--r--   1 root root 2258  3\u6708  5  2014 koi-utf
+-rw-r--r--   1 root root 1805  3\u6708  5  2014 koi-win
+-rw-r--r--   1 root root 2085  3\u6708  5  2014 mime.types
+-rw-r--r--   1 root root 5287  3\u6708  5  2014 naxsi_core.rules
+-rw-r--r--   1 root root  287  3\u6708  5  2014 naxsi.rules
+-rw-r--r--   1 root root  222  3\u6708  5  2014 naxsi-ui.conf.1.4.1
+-rw-r--r--   1 root root 1601  3\u6708  5  2014 nginx.conf
+-rw-r--r--   1 root root  180  3\u6708  5  2014 proxy_params
+-rw-r--r--   1 root root  465  3\u6708  5  2014 scgi_params
+drwxr-xr-x   2 root root 4096  8\u6708 17  2016 sites-available
+drwxr-xr-x   2 root root 4096  8\u6708 17  2016 sites-enabled
+-rw-r--r--   1 root root  532  3\u6708  5  2014 uwsgi_params
+-rw-r--r--   1 root root 3071  3\u6708  5  2014 win-utf
+```
+```
+$ vim nginx.conf
+user www-data;
+worker_processes 4;
+pid /run/nginx.pid;
 
+events {
+        worker_connections 768;
+        # multi_accept on;
+}
+
+http {
+
+        ##
+        # Basic Settings
+        ##
+
+        sendfile on;
+        tcp_nopush on;
+        tcp_nodelay on;
+        keepalive_timeout 65;
+        types_hash_max_size 2048;
+        # server_tokens off;
+
+        # server_names_hash_bucket_size 64;
+        # server_name_in_redirect off;
+
+        include /etc/nginx/mime.types;
+        default_type application/octet-stream;
+
+        ##
+        # Logging Settings
+        ##
+
+        access_log /var/log/nginx/access.log;
+        error_log /var/log/nginx/error.log;
+
+        ##
+        # Gzip Settings
+        ##
+
+        gzip on;
+        gzip_disable "msie6";
+
+        # gzip_vary on;
+        # gzip_proxied any;
+        # gzip_comp_level 6;
+        # gzip_buffers 16 8k;
+        # gzip_http_version 1.1;
+        # gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+
+        ##
+        # nginx-naxsi config
+        ##
+        # Uncomment it if you installed nginx-naxsi
+        ##
+
+        #include /etc/nginx/naxsi_core.rules;
+
+        ##
+          ##
+        # nginx-naxsi config
+        ##
+        # Uncomment it if you installed nginx-naxsi
+        ##
+
+        #include /etc/nginx/naxsi_core.rules;
+
+        ##
+        # nginx-passenger config
+        ##
+        # Uncomment it if you installed nginx-passenger
+        ##
+
+        #passenger_root /usr;
+        #passenger_ruby /usr/bin/ruby;
+
+        ##
+        # Virtual Host Configs
+        ##
+
+        include /etc/nginx/conf.d/*.conf;
+    include /etc/nginx/sites-enabled/*;
+}
+
+
+#mail {
+#       # See sample authentication script at:
+#       # http://wiki.nginx.org/ImapAuthenticateWithApachePhpScript
+#
+#       # auth_http localhost/auth.php;
+#       # pop3_capabilities "TOP" "USER";
+#       # imap_capabilities "IMAP4rev1" "UIDPLUS";
+#
+#       server {
+#               listen     localhost:110;
+#               protocol   pop3;
+#               proxy      on;
+#       }
+#
+#       server {
+#               listen     localhost:143;
+#               protocol   imap;
+#               proxy      on;
+#       }
+                                                              91,1          98%
+        
+```
+
+### HTTP 模块
+Nginx 本身做的工作实际很少，当它接到一个 HTTP 请求时，它仅仅是通过查找配置文件将此次请求映射到一个 locationblock，而此 location 中所配置的各个指令则会启动不同的模块去完成工作。</br>
+通常一个 location 中的指令会涉及一个 handler 模块和多个 filter 模块（当然，多个 location 可以复用同一个模块）。</br>
+handler 模块负责处理请求，完成响应内容的生成，而 filter 模块对响应内容进行处理。</br>
+```
+$ vim /etc/nginx/sites-available/default
+```
+### http index 模块
+ngx_http_index_module </br>
+定义将要被作为默认页的文件，文件的名字可以包含变量，文件以配置中指定的顺序被 nginx 检查。 
+列表中的最后一个元素可以是一个带有绝对路径的文件。 
+
+### http log 模块
+ngx_http_log_module </br>
+
+### access 模块
+ngx_http_access_module </br>
+此模块提供了一个简易的基于主机的访问控制，使有可能对特定 IP 客户端进行控制。规则检查按照第一次匹配的顺序，此模块对网络地址有放行和禁止的权利。
+
+### rewrite 模块
+ngx_http_rewrite_module </br>
+执行 URL 重定向,允许你去掉带有恶意的 URL，包含多个参数（修改）.利用正则的匹配，分组和引用，达到目的。
+
+### proxy 模块
+ngx_http_proxy_module </br>
+此模块能代理请求到其它服务器.也就是说允许你把客户端的 HTTP 请求转到后端服务器。
+
+### upstream 模块
+ngx_http_upstream_module </br>
+该指令使请求被上行信道之间的基于客户端的 IP 地址分布。
