@@ -120,3 +120,43 @@ http {
 #       }
                                                               91,1          98%        
 ```
+## 顶层配置
+user和pid基本没影响不用改，主要是 worker_process
+```
+user www-data; 
+worker_processes 4;
+pid /run/nginx.pid;
+```
+worker_process 定义了nginx在提供服务时，worker 支持的进程数量。</br>
+这个优化值受到包括 CPU 内核数、存储数据的磁盘数、负载值在内的许多因素的影响。</br>
+设置为 auto 将自动检测，一般可设置为系统的CPU内核数。</br>
+```
+# 查看cpu核心数
+$ cat /proc/cpuinfo|grep processor                      [11:35:45]
+processor	: 0
+processor	: 1
+processor	: 2
+processor	: 3
+
+$ lscpu                                                 [11:37:19]
+Architecture:          x86_64
+CPU \u8fd0\u884c\u6a21\u5f0f\uff1a    32-bit, 64-bit
+Byte Order:            Little Endian
+CPU(s):                4
+On-line CPU(s) list:   0-3
+\u6bcf\u4e2a\u6838\u7684\u7ebf\u7a0b\u6570\uff1a1
+\u6bcf\u4e2a\u5ea7\u7684\u6838\u6570\uff1a  4
+```
+* 为何设置 worker_process 为 CPU 内核数？</br>
+在一个使用分叉的服务器中，每一个客户端机连接都利用分叉创造一个子进程。父进程继续监听新的连接，同时子进程处理客户端。当客户端的请求结束时，子进程就退出了。因此分叉的进程是并行运行的，客户端之间不必互相等待。</br>
+linux的进程设计能很好地利用CPU的性能，每一个任务(进程)被创建时，系统会为他分配存储空间等必要资源，然后在内核管理区为该进程创建管理节点，以便后来控制和调度该任务的执行。进程真正进入执行阶段，系统会给进程分配必要的CPU资源，这个行为被称为“调度”。除CPU而外，系统会为每个进程分配独有的存储空间，还有其他外设的可使用状态等。即是子进程和父进程一样，有它自己独立的硬件资源。</br>
+由进程和线程逻辑的严谨定义上可知，每个进程都占有各自的CPU内存空间和各自的一套数据，而线程是多个线程共用同一CPU内存空间（即其所在进程中的空间）且公用全局变量。通常，当CPU个数和多线程线程数相等时，效率会比线程数多于核数的情况高，除非其中一个线程没有耗尽CPU的资源。
+线程是CPU的调度单位，也即是CPU实际看到的是线程而不是进程，进程是OS上的概念而且一个进程默认启动一个进程，所以CPU还是会把单个进程当做是一个线程看待的。
+单核CPU使用多线程，其实本质是时分复用，即不同时间段，不同的线程获得CPU的使用权，只是CPU切换得很快让外界看起来多个线程在单个CPU里好像是实现了并发而已，实则上因为需要频繁在线程间切换，单核CPU上使用多线程效率是不高的。</br>
+当系统有一个以上CPU时，则线程的操作有可能非并发。当一个CPU执行一个线程时，另一个CPU可以执行另一个线程，两个线程互不抢占CPU资源，可以同时进行，这种方式我们称之为并行(Parallel)，通常出现在线程数等于或小于CPU核数的情况。当每个 CPU 核心运行一个进程的时，由于每个进程的资源都独立， CPU 核心之间切换的时候无需考虑上下文。当每个 CPU 核心运行一个线程的时，由于每个线程需要共享资源，所以这些资源必须从 CPU 的一个核心被复制到另外一个核心，才能继续运算，这占用了额外的开销。因此，在 CPU 为多核的情况下，多线程在性能上不如多进程，所以当前面向多核的服务器端编程中多为多进程而非多线程。在多核CPU上，可以运行多个进程（数量与CPU核心数相同），充分利用多核CPU。</br>
+
+详情：</br>
+[Linux 内核、进程、线程](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E5%86%85%E6%A0%B8%E3%80%81%E8%BF%9B%E7%A8%8B%E3%80%81%E7%BA%BF%E7%A8%8B.MD#linux%E5%A4%9A%E7%94%A8%E6%88%B7%E5%A4%9A%E4%BB%BB%E5%8A%A1%E7%8E%AF%E5%A2%83)</br>
+[Python 多任务/多连接：
+线程 Thread、进程 Process、协程 Coroutine](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E5%A4%9A%E4%BB%BB%E5%8A%A1%E3%80%81%E5%A4%9A%E8%BF%9E%E6%8E%A5%EF%BC%9A%E7%BA%BF%E7%A8%8B%20Thread%E3%80%81%E8%BF%9B%E7%A8%8B%20Process%E3%80%81%E5%8D%8F%E7%A8%8B%20Coroutine.MD)
+
