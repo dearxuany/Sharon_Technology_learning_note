@@ -229,3 +229,40 @@ root     28237 22073  0 23:02 pts/1    00:00:00 grep --color=auto nginx
 对应 inet后面的ip，输入到浏览器中，看见welcome to nginx！表示配置成功
 
 ![](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/note_images/Linux_note_images/Nginx%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE.png)
+
+## nginx 目录结构
+```
+[sunnylinux@centOSlearning webserver]$ tree
+.
+└── nginx
+    ├── client_body_temp [error opening dir]
+    ├── conf
+    │   ├── fastcgi.conf
+    │   ├── fastcgi.conf.default
+    │   ├── fastcgi_params
+    │   ├── fastcgi_params.default
+    │   ├── koi-utf
+    │   ├── koi-win
+    │   ├── mime.types
+    │   ├── mime.types.default
+    │   ├── nginx.conf
+    │   ├── nginx.conf.default
+    │   ├── scgi_params
+    │   ├── scgi_params.default
+    │   ├── uwsgi_params
+    │   ├── uwsgi_params.default
+    │   └── win-utf
+    ├── fastcgi_temp [error opening dir]
+    ├── html
+    │   ├── 50x.html
+    │   └── index.html
+    ├── logs
+    │   ├── error.log
+    │   └── nginx_error.log
+    ├── proxy_temp [error opening dir]
+    ├── sbin
+    │   └── nginx
+    ├── scgi_temp [error opening dir]
+    └── uwsgi_temp [error opening dir]
+
+```
