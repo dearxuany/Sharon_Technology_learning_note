@@ -166,4 +166,22 @@ $ sudo tail /var/log/nginx/error.log
 2019/01/28 01:45:05 [error] 5951#0: *2 limiting requests, excess: 6.000 by zone "one", client: 127.0.0.1, server: localhost, request: "GET /phpinfo.php HTTP/1.0", host: "localhost"
 ```
 
+### 白名单设置
+http_limit_conn 和 http_limit_req 模块限制了单 IP 单位时间内的连接和请求数，但是如果 Nginx 前面有 lvs 或者 haproxy 之类的负载均衡或者反向代理，nginx 获取的都是来自负载均衡的连接或请求，这时不应该限制负载均衡的连接和请求，就需要 geo 和 map 模块设置白名单。
+```
+geo $whiteiplist  {
+        default 1;
+        10.11.15.161 0;
+    }
+map $whiteiplist  $limit {
+        1 $binary_remote_addr;
+        0 "";
+    }
+limit_req_zone $limit zone=one:10m rate=10r/s;
+limit_conn_zone $limit zone=addr:10m;
+```
+geo 模块定义了一个默认值是 1 的变量 whiteiplist，当在 ip 在白名单中，变量 whiteiplist 的值为 0，反之为 1。</br>
+如果在白名单中--> whiteiplist=0 --> $limit="" --> 不会存储到 10m 的会话状态（one 或者 addr）中 --> 不受限制；</br>
+反之，不在白名单中 --> whiteiplist=1 --> $limit=二进制远程地址 -->存储进 10m 的会话状态中 --> 受到限制。</br>
+
 
