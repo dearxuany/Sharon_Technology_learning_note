@@ -17,6 +17,21 @@ ngx_http_access_module 只是很简单的访问控制，而在规则很多的情
 使用 nginx 的 http_limit_conn 和 http_limit_req 模块通过限制连接数和请求数能相对有效的防御。</br>
 * ngx_http_limit_conn_module 可以限制单个 IP 的连接数</br>
 * ngx_http_limit_req_module 可以限制单个 IP 每秒请求数</br>
+### 限制单个IP的连接数
+详情：[并发连接数量限制](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/server_note/Nginx_note/Nginx%20%E6%B5%81%E9%87%8F%E5%8F%8A%E5%B9%B6%E5%8F%91%E8%BF%9E%E6%8E%A5%E6%95%B0%E9%99%90%E5%88%B6%20.md#%E5%B9%B6%E5%8F%91%E8%BF%9E%E6%8E%A5%E6%95%B0%E9%87%8F%E9%99%90%E5%88%B6)
+```
+http {
+    limit_conn_zone $binary_remote_addr zone=addr:10m; //触发条件
+    ...
+    server {
+        ...
+        location /download/ {
+            limit_conn addr 1;    // 限制同一时间内1个连接，超出的连接返回503
+                }
+           }
+     }
+
+```
 ### 限制单个IP每秒请求数量
 通过 ngx_http_limit_req_module 模块来限制单个IP每秒的请求数量，一旦单位时间内请求数超过限制，就会返回503错误。</br>
 配置需要在两个地方设置：</br>
