@@ -10,8 +10,38 @@ DDOS 的特点是分布式，针对带宽和服务攻击，也就是四层流量
 访问控制基于 ngx_http_access_module 模块，允许限制某些 IP 地址的客户端访问。</br>
 ngx_http_access_module 只是很简单的访问控制，而在规则很多的情况下，使用 ngx_http_geo_module 模块变量更合适。</br>
 详情： http://nginx.org/en/docs/http/ngx_http_geo_module.html
-### 修改配置文件
+### 修改配置文件 /etc/nginx/sites-available/default
+和防火墙的配置有点相似，允许访问 allow，拒绝访问 deny</br>
+后面可以接单个主机IP、CIRD写法的子网地址、all、unix:，如果用unix: 指禁止 socket 的访问</br>
+支持 ipv4 和 ipv6 两种写法 </br>
+规则由上到下顺序匹配，直到匹配到第一条符合的规则为止</br>
+```
+location / {
+    deny  192.168.1.1;
+    allow 192.168.1.0/24;
+    allow 10.1.1.0/16;
+    allow 2001:0db8::/32;
+    deny  all;
+}
+```
+准许192.168.3.29/24的机器访问</br>
+准许10.1.20.6/16这个网段的所有机器访问</br>
+准许34.26.157.0/24这个网段访问</br>
+除此之外的机器不准许访问</br>
+```
+location / {
+                allow 192.168.3.29;
+                allow 10.1.0.0/16;
+                allow 34.26.157.0/24;
+                deny all;
+                # First attempt to serve request as file, then
+                # as directory, then fall back to displaying a 404.
+                try_files $uri $uri/ =404;
+                # Uncomment to enable naxsi on this location
+                # include /etc/nginx/naxsi.rules
+        }
 
+```
 ## DDOS 防范
 对于七层的应用攻击，我们还是可以做一些配置来防御的。</br>
 使用 nginx 的 http_limit_conn 和 http_limit_req 模块通过限制连接数和请求数能相对有效的防御。</br>
