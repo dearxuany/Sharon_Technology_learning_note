@@ -73,14 +73,51 @@ cd nginx-1.6.2
 [root@centOSlearning nginx-1.6.2]# make && make install
 ```
 
+## nginx 配置
+nginx 目录结构
+```
+[sunnylinux@centOSlearning webserver]$ tree
+.
+└── nginx
+    ├── client_body_temp [error opening dir]
+    ├── conf
+    │   ├── fastcgi.conf
+    │   ├── fastcgi.conf.default
+    │   ├── fastcgi_params
+    │   ├── fastcgi_params.default
+    │   ├── koi-utf
+    │   ├── koi-win
+    │   ├── mime.types
+    │   ├── mime.types.default
+    │   ├── nginx.conf
+    │   ├── nginx.conf.default
+    │   ├── scgi_params
+    │   ├── scgi_params.default
+    │   ├── uwsgi_params
+    │   ├── uwsgi_params.default
+    │   └── win-utf
+    ├── fastcgi_temp [error opening dir]
+    ├── html
+    │   ├── 50x.html
+    │   └── index.html
+    ├── logs
+    │   ├── error.log
+    │   └── nginx_error.log
+    ├── proxy_temp [error opening dir]
+    ├── sbin
+    │   └── nginx
+    ├── scgi_temp [error opening dir]
+    └── uwsgi_temp [error opening dir]
+
+```
+
+
 ### 查看nginx版本
 ```
-[root@centOSlearning nginx-1.6.2]# /usr/local/webserver/nginx/sbin/nginx -v
+# /usr/local/webserver/nginx/sbin/nginx -v
 nginx version: nginx/1.6.2
 ```
 
-
-## nginx配置
 ### 进入 nginx-1.6.2内目录conf
 ```
 [root@centOSlearning nginx-1.6.2]# cd ./conf
@@ -255,14 +292,6 @@ nginx: configuration file /usr/local/webserver/nginx/conf/nginx.conf test is suc
 如果出现80端口被占用，可能是之前nginx已经被启动，ps aux|grep nginx 查进程，然后杀掉nginx再重启
 
 ## 访问站点
-```
-[root@centOSlearning conf]# ps -ef|grep nginx
-root     21947 15607  0 21:39 pts/1    00:00:00 wget http://nginx.org/download/nginx-1.6.2.tar.gz
-root     27869     1  0 22:35 ?        00:00:00 nginx: master process /usr/local/webserver/nginx/sbin/nginx
-www      27871 27869  0 22:35 ?        00:00:00 nginx: worker process
-www      27872 27869  0 22:35 ?        00:00:00 nginx: worker process
-root     28237 22073  0 23:02 pts/1    00:00:00 grep --color=auto nginx
-```
 查看服务器ip地址
 ```
 [root@centOSlearning conf]# ifconfig -a
@@ -283,39 +312,3 @@ systemctl stop firewalld  # 防火墙关闭
 ```
 如果出现 403 forbidden ，则是文件及其所在目录的权限问题，文件和所在所有父目录的权限都应被设为755
 
-## nginx 目录结构
-```
-[sunnylinux@centOSlearning webserver]$ tree
-.
-└── nginx
-    ├── client_body_temp [error opening dir]
-    ├── conf
-    │   ├── fastcgi.conf
-    │   ├── fastcgi.conf.default
-    │   ├── fastcgi_params
-    │   ├── fastcgi_params.default
-    │   ├── koi-utf
-    │   ├── koi-win
-    │   ├── mime.types
-    │   ├── mime.types.default
-    │   ├── nginx.conf
-    │   ├── nginx.conf.default
-    │   ├── scgi_params
-    │   ├── scgi_params.default
-    │   ├── uwsgi_params
-    │   ├── uwsgi_params.default
-    │   └── win-utf
-    ├── fastcgi_temp [error opening dir]
-    ├── html
-    │   ├── 50x.html
-    │   └── index.html
-    ├── logs
-    │   ├── error.log
-    │   └── nginx_error.log
-    ├── proxy_temp [error opening dir]
-    ├── sbin
-    │   └── nginx
-    ├── scgi_temp [error opening dir]
-    └── uwsgi_temp [error opening dir]
-
-```
