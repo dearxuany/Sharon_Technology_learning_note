@@ -7,10 +7,6 @@
 
 ## Linux
 ### Linux上的环境搭建
-* [Linux(ubuntu) Nginx MySQL PHP 安装配置](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/server_note/Nginx_note/Linux%20Nginx%20MySQL%20PHP%20%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE.MD)
-#### 服务器
-* [Linux(CentOS7) Nginx 源码安装及基础配置过程](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux(CentOS7)%20Nginx%20%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85%E5%8F%8A%E9%85%8D%E7%BD%AE.MD)</br>
-
 #### 数据库
 * [Linux 安装配置 MySQL（MariaDB）](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEMySQL%EF%BC%88MariaDB%EF%BC%89.MD)
 * [Linux 安装 MongoDB](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E5%AE%89%E8%A3%85MongoDB.MD)
@@ -38,6 +34,8 @@
 
 ## Server
 ### NginX
+* [Linux(ubuntu) Nginx MySQL PHP 安装配置](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/server_note/Nginx_note/Linux%20Nginx%20MySQL%20PHP%20%E5%AE%89)
+* [Linux(CentOS7) Nginx 源码安装及基础配置过程](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux(CentOS7)%20Nginx%20%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85%E5%8F%8A%E9%85%8D%E7%BD%AE.MD)</br>
 * [Nginx 原理与特性](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/server_note/Nginx_note/Nginx%20%E5%8E%9F%E7%90%86%E4%B8%8E%E7%89%B9%E6%80%A7.md)
 * [Nginx 性能优化](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/server_note/Nginx_note/Nginx%20%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96.md)
 * [Nginx 流量及并发连接数限制](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/server_note/Nginx_note/Nginx%20%E6%B5%81%E9%87%8F%E5%8F%8A%E5%B9%B6%E5%8F%91%E8%BF%9E%E6%8E%A5%E6%95%B0%E9%99%90%E5%88%B6%20.md)
