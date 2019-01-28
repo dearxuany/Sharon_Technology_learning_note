@@ -36,7 +36,7 @@ access.log  error.log  host.access.log  monitor.access.log  nginx_error.log  ngi
 ```
 
 ### 查看 access.log
-log 如果不被删除，会一直使用同一个文件
+log 如果不被删除，会一直使用同一个文件记录
 ```
 $ tail access.log
 192.168.137.1 - - [29/Jan/2019:01:08:14 +0800] "GET / HTTP/1.1" 403 570 "-" "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36"
@@ -62,9 +62,13 @@ $ tail -n 5 -f  monitor.access.log
 注意浏览器的缓存问题，有缓存不会生成新的请求
 
 ## 日志拆分备份
-请求访问太大的时候要把日志进行切分备份，一般一天一备份。<br>
-script配合 linux 定时任务，备份并记录时间，生成新的log文件。<br>
-过程：找日志文件-设日期和目的路径-关掉nginx-移动并改名日志文件到目的路径-重启nginx并自动生成新的日志文件
+请求访问太大的时候，为避免产生的log文件过大或丢失，要把日志进行切分备份，一般一天一备份。<br>
+script 配合 linux 定时任务，备份并记录时间，生成新的log文件。<br>
+过程：找日志文件-设日期和目的路径-关掉nginx-移动并改名日志文件到目的路径-重启nginx并自动生成新的日志文件<br>
 
 
+## 日志分析相关工具
+ ELKR ( = Elasticsearch + Logstash + Kibana + Redis ) 一套完整的 Nginx 日志分析技术栈 https://www.elastic.co/ 
+ 
+ 
 
