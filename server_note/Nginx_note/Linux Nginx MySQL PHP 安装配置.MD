@@ -84,7 +84,7 @@ sudo vim /etc/nginx/sites-available/default
                 # With php5-fpm:             
                 fastcgi_pass unix:/var/run/php5-fpm.sock;
                 fastcgi_index index.php;
-                fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+                fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;  # 设置格式，此处为 http://localhost/nginx/phpinfo
                 include fastcgi_params;
         }
 ```
@@ -143,14 +143,14 @@ sudo vim /etc/nginx/sites-available/default
 将端口修改为 9000 ，改完后 reload 配置文件并重启 nginx 和 php
 ```
 server {
-        listen 9000 default_server;
+        listen 9000 default_server;  # 监听端口号
         listen [::]:9000 default_server ipv6only=on;
 
-        root /usr/share/nginx/html;
-        index index.html index.htm;
+        root /usr/share/nginx/html;   # 到哪个目录去找文件
+        index index.html index.htm;   # 默认首页，优先顺序有前到后
 
         # Make site accessible from http://localhost/
-        server_name localhost;
+        server_name localhost; # 可改为ip地址或url
 
         location / {
                 # First attempt to serve request as file, then
