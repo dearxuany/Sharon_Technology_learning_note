@@ -44,6 +44,10 @@ location / {
 
 ```
 ## DDOS 防范
+DDOS 攻击</br>
+典型的 DDoS 攻击，全称是 Distributed Denial of Service，翻译成中文就是分布式拒绝服务。</br>
+一般来说是指攻击者利用“肉鸡”对目标网站在较短的时间内发起大量请求，大规模消耗目标网站的主机资源，让它无法正常服务。DDOS只不过是一个概称，其下有各种攻击方式，比如CC攻击、SYN攻击、NTP攻击、TCP攻击、DNS攻击等等，现在DDOS发展变得越来越可怕，NTP攻击渐渐成为主流。</br>
+</br>
 对于七层的应用攻击，我们还是可以做一些配置来防御的。</br>
 使用 nginx 的 http_limit_conn 和 http_limit_req 模块通过限制连接数和请求数能相对有效的防御。</br>
 * ngx_http_limit_conn_module 可以限制单个 IP 的连接数</br>
