@@ -1,4 +1,4 @@
-# Nginx 日志文件
+# Nginx 日志文件与切分备份
 ```
 [sunnylinux@centOSlearning logs]$ pwd
 /usr/local/webserver/nginx/logs
@@ -65,7 +65,7 @@ $ tail -n 5 -f  monitor.access.log
 请求访问太大的时候，为避免产生的log文件过大或丢失，要把日志进行切分备份，一般一天一备份。<br>
 script 配合 linux 定时任务，备份并记录时间，生成新的log文件。<br>
 过程：找日志文件-设日期和目的路径-关掉nginx-移动并改名日志文件到目的路径-重启nginx并自动生成新的日志文件<br>
-
+[Python3 实现 nginx 日志定时切分与备份](https://github.com/dearxuany/python_program/tree/master/Nginx_log_backup)
 
 ## 日志分析相关工具
  ELKR ( = Elasticsearch + Logstash + Kibana + Redis ) 一套完整的 Nginx 日志分析技术栈 https://www.elastic.co/ 
