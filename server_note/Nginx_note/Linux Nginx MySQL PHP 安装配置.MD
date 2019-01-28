@@ -75,7 +75,7 @@ sudo vim /etc/nginx/sites-available/default
 删掉前面的注释，添加 root /usr/share/ngnix/html; 和  fastcgi_param SCRIPT_FILENAME $document_root $fastcgi_script_name; 两行
 ```
    location ~ \.php$ {
-                root /usr/share/nginx/html;
+                root /usr/share/nginx/html;   # php文件所在目录
                 fastcgi_split_path_info ^(.+\.php)(/.+)$;
                 # NOTE: You should have "cgi.fix_pathinfo = 0;" in php.ini
 
