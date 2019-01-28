@@ -241,6 +241,12 @@ root     28237 22073  0 23:02 pts/1    00:00:00 grep --color=auto nginx
 
 ![](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/note_images/Linux_note_images/Nginx%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE.png)
 
+注意：非本机访问要注意防火墙的设置
+```
+systemctl start firewalld  # 启用防火墙
+systemctl status firewalld  # 查看防火墙状态
+systemctl stop firewalld  # 防火墙关闭
+```
 ## nginx 目录结构
 ```
 [sunnylinux@centOSlearning webserver]$ tree
