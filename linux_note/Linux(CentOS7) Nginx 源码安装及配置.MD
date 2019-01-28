@@ -229,6 +229,14 @@ http {
 ```
 在 http 中加一个 server
 ```
+ server {
+        listen  1234;
+        server_name  localhost;
+
+        location / {
+            root  html;
+            index  nginx_first.html; }
+    }
 
 ```
 
@@ -244,6 +252,7 @@ nginx: configuration file /usr/local/webserver/nginx/conf/nginx.conf test is suc
 ```
 [root@centOSlearning conf]# /usr/local/webserver/nginx/sbin/nginx
 ```
+如果出现80端口被占用，可能是之前nginx已经被启动，ps aux|grep nginx 查进程，然后杀掉nginx再重启
 
 ## 访问站点
 ```
@@ -259,6 +268,10 @@ root     28237 22073  0 23:02 pts/1    00:00:00 grep --color=auto nginx
 [root@centOSlearning conf]# ifconfig -a
 ```
 对应 inet后面的ip，输入到浏览器中，看见welcome to nginx！表示配置成功
+```
+http://主机ip
+http://主机ip:1234
+```
 
 ![](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/note_images/Linux_note_images/Nginx%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE.png)
 
@@ -268,6 +281,7 @@ systemctl start firewalld  # 启用防火墙
 systemctl status firewalld  # 查看防火墙状态
 systemctl stop firewalld  # 防火墙关闭
 ```
+如果出现 403 forbidden ，则是文件及其所在目录的权限问题，文件和所在所有父目录的权限都应被设为755
 
 ## nginx 目录结构
 ```
