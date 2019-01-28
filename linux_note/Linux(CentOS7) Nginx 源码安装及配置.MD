@@ -118,12 +118,6 @@ nginx 目录结构
 nginx version: nginx/1.6.2
 ```
 
-### 进入 nginx-1.6.2内目录conf
-```
-[root@centOSlearning nginx-1.6.2]# cd ./conf
-[root@centOSlearning conf]# 
-```
-
 ### 创建 Nginx 运行使用的用户 www
 ```
 [root@centOSlearning conf]# /usr/sbin/groupadd www 
