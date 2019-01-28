@@ -158,6 +158,7 @@ http {
     include       mime.types;
     default_type  application/octet-stream;
 
+    # 修改log格式
     log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
                       '$status $body_bytes_sent "$http_referer" '
                       '"$http_user_agent" "$http_x_forwarded_for"';
@@ -168,7 +169,7 @@ http {
     tcp_nopush     on;
 
     #keepalive_timeout  0;
-    keepalive_timeout  65;   
+    keepalive_timeout  65;   # 优化选项，调小限制每个请求占用worker进程的时间
 
     gzip  on;
     
@@ -178,7 +179,7 @@ http {
 
         #charset koi8-r;
 
-        #access_log  logs/host.access.log  main;
+        access_log  logs/host.access.log  main;
 
         location / {
             root   html;  # 到哪个目录下找文件，此处没有写绝对路径表示/html 是 nginx.conf 所在目录的平级目录
