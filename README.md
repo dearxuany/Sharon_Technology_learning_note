@@ -80,12 +80,13 @@
 * [Python 通过 psutil 对 linux 进行监控](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E9%80%9A%E8%BF%87%20psutil%20%E5%AF%B9%20linux%20%E8%BF%9B%E8%A1%8C%E7%9B%91%E6%8E%A7.md)
 * [Python 通过 yagmail 发送邮件](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E9%80%9A%E8%BF%87%20yagmail%20%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6.MD)
 
+### Python3 web
+[Python 使用CGI创建动态网页 cgi、cgitb](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E4%BD%BF%E7%94%A8CGI%E5%88%9B%E5%BB%BA%E5%8A%A8%E6%80%81%E7%BD%91%E9%A1%B5%20cgi%E3%80%81cgitb.MD)
+
 ### Python3 工具
 * [Python 程序打包 Setuptools](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E7%A8%8B%E5%BA%8F%E6%89%93%E5%8C%85%20Setuptools.MD)
-* [Python 使用CGI创建动态网页 cgi、cgitb](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E4%BD%BF%E7%94%A8CGI%E5%88%9B%E5%BB%BA%E5%8A%A8%E6%80%81%E7%BD%91%E9%A1%B5%20cgi%E3%80%81cgitb.MD)
 * [Python 虚拟python环境 virtualenv](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E8%99%9A%E6%8B%9Fpython%E7%8E%AF%E5%A2%83%20virtualenv.MD)
 * [Python linux交互式监控工具 glances](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20linux%E4%BA%A4%E4%BA%92%E5%BC%8F%E7%9B%91%E6%8E%A7%E5%B7%A5%E5%85%B7%20glances.MD)
-
 
 ### Python3 算法
 * [Python 算法：二分法查找、选择排序、快速排序](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E7%AE%97%E6%B3%95%EF%BC%9A%E4%BA%8C%E5%88%86%E6%B3%95%E6%9F%A5%E6%89%BE%E3%80%81%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F%E3%80%81%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F.MD)
