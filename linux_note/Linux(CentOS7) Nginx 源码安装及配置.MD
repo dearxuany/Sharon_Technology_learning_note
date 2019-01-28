@@ -141,10 +141,10 @@ cd /usr/local/webserver/nginx/conf
 vim nginx.conf
 ```
 ```
-#user  nobody;  # 用户名
+user  nobody;  # 用户名
 worker_processes  1;  # 配置为CPU核数
 
-#error_log  logs/error.log;
+#error_log  logs/error.log;  # 打开错误日志
 #error_log  logs/error.log  notice;
 #error_log  logs/error.log  info;
 
@@ -158,19 +158,19 @@ http {
     include       mime.types;
     default_type  application/octet-stream;
 
-    #log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
-    #                  '$status $body_bytes_sent "$http_referer" '
-    #                  '"$http_user_agent" "$http_x_forwarded_for"';
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
 
-    #access_log  logs/access.log  main;
+    access_log  logs/access.log  main;  # 打开access.logs，格式为 main
 
     sendfile        on;
-    #tcp_nopush     on;
+    tcp_nopush     on;
 
     #keepalive_timeout  0;
     keepalive_timeout  65;   
 
-    #gzip  on;
+    gzip  on;
     
  server {
         listen       80;  # 监听端口号
@@ -261,8 +261,10 @@ http {
 在 http 中加一个 server
 ```
  server {
-        listen  1234;
+        listen  1234;  
         server_name  localhost;
+        access_log  logs/monitor.access.log  main;   # 自定义log
+
 
         location / {
             root  html;
