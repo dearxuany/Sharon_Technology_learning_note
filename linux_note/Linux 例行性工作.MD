@@ -81,9 +81,9 @@ $ crontab -e
 $ crontab -e
 crontab: installing new crontab
 $ crontab -l
-0 */2 * * * sunnylinux /usr/bin/python3 /home/sunnylinux/useful_script/python3_script/Linux_monitor_send_email/linux_monitor_send_email/main.py
+0 */2 * * * /usr/bin/python3 /home/sunnylinux/useful_script/python3_script/Linux_monitor_send_email/linux_monitor_send_email/main.py
 ```
-
+如果在以上命令前加上sudo，crontab定时任务会被设置在root名下，各种任务会以root的权限执行
 
 #### cron相关的系统配置文件 /etc/crontab
 设置系统的定时任务一般会直接编辑文件 /etc/crontab 来设置工作调度，而不是用crontab -e 来设置，编辑这个文件必须有root权限。</br>
