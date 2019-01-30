@@ -287,7 +287,14 @@ nginx: configuration file /usr/local/webserver/nginx/conf/nginx.conf test is suc
 ```
 [root@centOSlearning conf]# /usr/local/webserver/nginx/sbin/nginx
 ```
-注意：如果出现各种端口被占用，可能是之前nginx已经被启动，ps aux|grep nginx 查进程，然后杀掉nginx再重启
+可以看到开启主进程的是root，开启worker进程的是配置文件最开头user设置的www用户
+```
+$ ps -aux|grep nginx
+root      7042  0.0  0.0   8128   796 ?        Ss   00:31   0:00 nginx: master process ./sbin/nginx
+www       7043  0.0  0.1   8320  1348 ?        S    00:31   0:00 nginx: worker process
+sunnyli+  7065  0.0  0.0   6704   880 pts/1    S+   00:41   0:00 grep --color=auto nginx
+```
+注意：如果出现各种端口被占用，可能是之前nginx已经被启动，ps aux|grep nginx 查进程，然后杀掉nginx再重启使用新的配置
 ```
 # 快速关闭 nginx，在nginx.pid查当前nginx主进程的pid，然后用kill杀了它
 $ cat ./logs/nginx.pid
