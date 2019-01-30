@@ -76,9 +76,7 @@ cd nginx-1.6.2
 ## nginx 配置
 nginx 目录结构
 ```
-[sunnylinux@centOSlearning webserver]$ tree
-.
-└── nginx
+nginx
     ├── client_body_temp [error opening dir]
     ├── conf
     │   ├── fastcgi.conf
@@ -89,23 +87,25 @@ nginx 目录结构
     │   ├── koi-win
     │   ├── mime.types
     │   ├── mime.types.default
-    │   ├── nginx.conf
-    │   ├── nginx.conf.default
-    │   ├── scgi_params
+    │   ├── nginx.conf   # nginx 配置文件
+    │   ├── scgi_params
     │   ├── scgi_params.default
     │   ├── uwsgi_params
     │   ├── uwsgi_params.default
     │   └── win-utf
     ├── fastcgi_temp [error opening dir]
     ├── html
-    │   ├── 50x.html
-    │   └── index.html
-    ├── logs
+    │   ├── 50x.html     # 一个error页面
+    │   └── index.html   # welcome to nginx 那个页面
+    │  
+    ├── logs  # 存放各种日志
+    │   ├── access.log
     │   ├── error.log
-    │   └── nginx_error.log
+    │   ├── host.access.log
+    │   └── nginx.pid  # 记录nginx当前主进程pid的文件
     ├── proxy_temp [error opening dir]
-    ├── sbin
-    │   └── nginx
+    ├── sbin  
+    │   └── nginx  # nginx 启动脚本
     ├── scgi_temp [error opening dir]
     └── uwsgi_temp [error opening dir]
 
@@ -135,20 +135,20 @@ cat /usr/local/webserver/nginx/conf/nginx.conf
 cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c
       1  AMD Turion(tm) II Dual-Core Mobile M520
 ```
-nginx.conf 文件默认配置
+nginx.conf 基础配置
 ```
 cd /usr/local/webserver/nginx/conf
 vim nginx.conf
 ```
 ```
-user  nobody;  # 用户名
+user  www;  # 用户名
 worker_processes  1;  # 配置为CPU核数
 
-#error_log  logs/error.log;  # 打开错误日志
-#error_log  logs/error.log  notice;
-#error_log  logs/error.log  info;
+error_log  logs/error.log;  # 设置 error.log 错误日志路径
+error_log  logs/error.log  notice;
+error_log  logs/error.log  info;
 
-#pid        logs/nginx.pid;
+pid        logs/nginx.pid;  # 设置nginx.pid文件路径，该文件记录当前运行的 nginx主进程的pid
 
 events {
     worker_connections  1024;
@@ -163,7 +163,7 @@ http {
                       '$status $body_bytes_sent "$http_referer" '
                       '"$http_user_agent" "$http_x_forwarded_for"';
 
-    access_log  logs/access.log  main;  # 打开access.logs，格式为 main
+    access_log  logs/access.log  main;  # 设置 access.logs 路径，格式为 main，可在上方  log_format 设置
 
     sendfile        on;
     tcp_nopush     on;
@@ -179,11 +179,11 @@ http {
 
         #charset koi8-r;
 
-        access_log  logs/host.access.log  main;
+        access_log  logs/host.access.log  main;  # 虚拟主机即当前server的 access.log
 
         location / {
             root   html;  # 到哪个目录下找文件，此处没有写绝对路径表示/html 是 nginx.conf 所在目录的平级目录
-            index  index.html index.htm;  # 默认首页，优先级由签到后
+            index  index.html index.htm;  # 默认首页，优先级由前到后
         }
 
         #error_page  404              /404.html;
@@ -203,11 +203,11 @@ http {
         #    proxy_pass   http://127.0.0.1;
         #}
 
-        # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000 
-        # 让 nginx 支持 php
+        # 让 nginx 支持 php，此处没有设置php所以没有打开
+        # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
         #location ~ \.php$ {
         #    root           html;
-        #    fastcgi_pass   127.0.0.1:9000;
+        #    fastcgi_pass   127.0.0.1:9000;  # 将端口设置为9000
         #    fastcgi_index  index.php;
         #    fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;
         #    include        fastcgi_params;
@@ -262,14 +262,15 @@ http {
 在 http 中加一个 server
 ```
  server {
-        listen  1234;  
+        listen  1234;  # 设置当前server的监听端口为1234，页面访问时的格式为 https://服务器的ip:1234
         server_name  localhost;
-        access_log  logs/monitor.access.log  main;   # 自定义log
+        access_log  logs/monitor.access.log  main;   # 本server的自定义access.log
 
 
         location / {
-            root  html;
-            index  nginx_first.html; }
+            root  html;  # 到和/conf平级的/html目录下找文件，写绝对路径会比较好理解
+            index  nginx_first.html;  # 首页设置
+            }
     }
 
 ```
@@ -286,7 +287,13 @@ nginx: configuration file /usr/local/webserver/nginx/conf/nginx.conf test is suc
 ```
 [root@centOSlearning conf]# /usr/local/webserver/nginx/sbin/nginx
 ```
-如果出现80端口被占用，可能是之前nginx已经被启动，ps aux|grep nginx 查进程，然后杀掉nginx再重启
+注意：如果出现各种端口被占用，可能是之前nginx已经被启动，ps aux|grep nginx 查进程，然后杀掉nginx再重启
+```
+# 快速关闭 nginx，在nginx.pid查当前nginx主进程的pid，然后用kill杀了它
+$ cat ./logs/nginx.pid
+5913
+$ sudo kill -TERM 5913
+```
 
 ## 访问站点
 查看服务器ip地址
