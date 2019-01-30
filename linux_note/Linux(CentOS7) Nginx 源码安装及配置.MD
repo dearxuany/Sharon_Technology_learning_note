@@ -280,11 +280,17 @@ http {
         
         # http://192.168.137.100:1234/locationTest00.html
         location ~ location {
+            # 当用户IP在remote_addr中时，显示401错误，拒绝访问
+            # if ($remote_addr = 192.168.137.1){
+            #    return 401;
+            # }
+            
             # 当用户的浏览器为chrome时，所有请求都会被重写到 locationRewrite.html 页面，~* 忽略大小写
             if ($http_user_agent ~* windows) {
                 rewrite ^.*$ /locationRewrite.html;  # 这个html也在本location指定的root目录下
-                break;
+                break;  # break必须要加！不加逻辑上同一个用户会在这个页面内一直出不去，服务器会报错
             }
+            
             root /usr/local/webserver/nginx/html/nginx_location_test;
             index locationTest00.html;
             }
