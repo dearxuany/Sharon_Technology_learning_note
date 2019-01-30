@@ -145,7 +145,7 @@ user  www;  # 用户名
 worker_processes  1;  # 配置为CPU核数
 
 error_log  logs/error.log;  # 设置 error.log 错误日志路径
-error_log  logs/error.log  notice;
+error_log  logs/error.log  notice;  # 错误日志级别
 error_log  logs/error.log  info;
 
 pid        logs/nginx.pid;  # 设置nginx.pid文件路径，该文件记录当前运行的 nginx主进程的pid
