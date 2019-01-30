@@ -44,7 +44,7 @@ cd pcre-8.35
 ```
 
 ## Nginx 安装配置
-### 下载 Nginx 源码及安装编译
+### 下载 Nginx 源码
 （安装pcre之后记住返回上一层目录）
 ```
 wget http://nginx.org/download/nginx-1.6.2.tar.gz
@@ -56,6 +56,7 @@ wget http://nginx.org/download/nginx-1.6.2.tar.gz
 ```
 tar zxvf nginx-1.6.2.tar.gz
 ```
+### nginx 源码编译安装
 进入安装包目录
 ```
 cd nginx-1.6.2
@@ -67,8 +68,11 @@ cd nginx-1.6.2
 [root@centOSlearning nginx-1.6.2]# make && make install
 ```
 nginx 会被安装到 /usr/local/webserver 目录当中
+```
+$ pwd
+/usr/local/webserver/nginx
 
-## nginx 配置
+```
 nginx 目录结构
 ```
 nginx
@@ -105,14 +109,13 @@ nginx
     └── uwsgi_temp [error opening dir]
 
 ```
-
-
-### 查看nginx版本
+查看nginx版本
 ```
-# /usr/local/webserver/nginx/sbin/nginx -v
+$ sudo /usr/local/webserver/nginx/sbin/nginx -v
 nginx version: nginx/1.6.2
 ```
 
+## nginx 配置
 ### 创建 Nginx 运行使用的用户 www
 ```
 [root@centOSlearning conf]# /usr/sbin/groupadd www 
