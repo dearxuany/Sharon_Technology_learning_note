@@ -45,12 +45,9 @@ cd pcre-8.35
 
 ## Nginx 安装
 ### 下载 Nginx 源码
-（安装pcre之后记住返回上一层目录）
+到官网上下载合适的nginx版本
 ```
 wget http://nginx.org/download/nginx-1.6.2.tar.gz
-
-# 下载完成
-2018-07-18 19:35:52 (24.3 KB/s) - 已保存 “nginx-1.6.2.tar.gz” [804164/804164])
 ```
 解压
 ```
