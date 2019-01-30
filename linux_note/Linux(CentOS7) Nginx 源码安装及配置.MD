@@ -151,9 +151,10 @@ error_log  logs/error.log  info;
 pid        logs/nginx.pid;  # 设置nginx.pid文件路径，该文件记录当前运行的 nginx主进程的pid
 
 events {
-    worker_connections  1024;
+    worker_connections  1024;  # 单核CPU默认的并发数（一般默认是1024）
 }
 
+# http{}内的内容指的是所有server的全局配置
 http {
     include       mime.types;
     default_type  application/octet-stream;
@@ -173,6 +174,7 @@ http {
 
     gzip  on;
     
+ # 虚拟主机的配置
  server {
         listen       80;  # 监听端口号
         server_name  localhost;   # 可设为ip或url
@@ -180,7 +182,10 @@ http {
         #charset koi8-r;
 
         access_log  logs/host.access.log  main;  # 虚拟主机即当前server的 access.log
-
+        
+        # location 用于指定在找文件的路径
+        # 浏览器地址栏输入会和 location 后面的 pattern 作匹配，配上了可以进入location下的目录找文件 
+        # location pattern {} 一般匹配
         location / {
             root   html;  # 到哪个目录下找文件，此处没有写绝对路径表示/html 是 nginx.conf 所在目录的平级目录
             index  index.html index.htm;  # 默认首页，优先级由前到后
@@ -192,7 +197,7 @@ http {
         #
         error_page   500 502 503 504  /50x.html;   # 错误返回
         
-        # 等号为精确匹配
+        # location = pattern {} 为精确匹配
         location = /50x.html {
             root   html;
         }
@@ -204,6 +209,7 @@ http {
         #}
 
         # 让 nginx 支持 php，此处没有设置php所以没有打开
+        # location ~ pattern {} 正则匹配
         # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
         #location ~ \.php$ {
         #    root           html;
@@ -266,14 +272,21 @@ http {
         server_name  localhost;
         access_log  logs/monitor.access.log  main;   # 本server的自定义access.log
 
-
+        # http://192.168.137.100:1234
         location / {
             root  html;  # 到和/conf平级的/html目录下找文件，写绝对路径会比较好理解
             index  nginx_first.html;  # 首页设置
             }
+        
+        # http://192.168.137.100:1234/locationTest00.html
+        location ~ location {
+            root /usr/local/webserver/nginx/html/nginx_location_test;
+            index locationTest00.html;
+            }
     }
 
 ```
+
 
 
 ### 检验配置文件正确性
