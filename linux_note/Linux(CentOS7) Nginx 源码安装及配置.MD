@@ -1,55 +1,50 @@
 # Linux(CentOS7) Nginx 源码安装及配置
-## 系统平台
+## 环境配置
+### 系统平台
 ```
 uname -r
 
 # 输出结果
 3.10.0-862.2.3.el7.centos.plus.i686
 ```
-
-## 安装编译工具及库文件
+### 安装编译工具及库文件
 ```
 yum -y install make zlib zlib-devel gcc-c++ libtool  openssl openssl-devel
 ```
 
-## 安装 PCRE
-PCRE 可让 Nginx 支持 Rewrite 功能。
-### 进入目录/src
+### 安装 PCRE
+PCRE 可让 Nginx 支持 Rewrite 功能。</br>
+进入目录/src
 ```
 [root@centOSlearning ~]# cd /usr/local/src
 ```
-
-### 下载PCRE 安装包 
+下载PCRE 安装包 
 ```
 wget http://downloads.sourceforge.net/project/pcre/pcre/8.35/pcre-8.35.tar.gz
 
 2018-07-18 19:25:44 (169 KB/s) - 已保存 “pcre-8.35.tar.gz” [1996552/1996552])
 ```
-
-### 解压安装包
+解压安装包
 ```
 tar zxvf pcre-8.35.tar.gz
 ```
-
-### 进入安装包目录
+进入安装包目录
 ```
 cd pcre-8.35
 ```
-
-### 编译安装
+编译安装
 ```
 [root@centOSlearning pcre-8.35]# ./configure --prefix=/usr/local/pcre/
 [root@centOSlearning pcre-8.35]# make && make install
 ```
-
-### 查看pcre版本
+查看pcre版本
 ```
 [root@centOSlearning pcre-8.35]# pcre-config --version
 8.35
 ```
 
-## Nginx 安装
-### 下载Nginx
+## Nginx 安装配置
+### 下载 Nginx 源码及安装编译
 （安装pcre之后记住返回上一层目录）
 ```
 wget http://nginx.org/download/nginx-1.6.2.tar.gz
@@ -57,21 +52,21 @@ wget http://nginx.org/download/nginx-1.6.2.tar.gz
 # 下载完成
 2018-07-18 19:35:52 (24.3 KB/s) - 已保存 “nginx-1.6.2.tar.gz” [804164/804164])
 ```
-### 解压
+解压
 ```
 tar zxvf nginx-1.6.2.tar.gz
 ```
-### 进入安装包目录
+进入安装包目录
 ```
 cd nginx-1.6.2
 ```
-
-### 编译安装
+编译安装</br>
 --with-pcre=pcre的源码目录
 ```
 [root@centOSlearning nginx-1.6.2]# ./configure --prefix=/usr/local/webserver/nginx --with-http_stub_status_module --with-http_ssl_module --with-pcre=/usr/local/pcre-8.35
 [root@centOSlearning nginx-1.6.2]# make && make install
 ```
+nginx 会被安装到 /usr/local/webserver 目录当中
 
 ## nginx 配置
 nginx 目录结构
