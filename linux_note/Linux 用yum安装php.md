@@ -26,3 +26,12 @@ php-fpm.conf  # FPM配置文件
 php-fpm.d
 php.ini # php配置文件
 ```
+常用命令</br>
+The service command supports only basic LSB actions (start, stop, restart, try-restart, reload, force-reload, status). For other actions, please try to use systemctl.
+```
+service php-fpm start
+service php-fpm status
+service php-fpm restart
+service php-fpm stop
+service php-fpm reload
+```
