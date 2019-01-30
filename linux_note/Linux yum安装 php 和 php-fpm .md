@@ -1,4 +1,4 @@
-# Linux 用 yum 安装 php 和 FPM 
+# Linux yum安装 php 和 php-fpm 
 FastCGI 进程管理器（FPM） http://php.net/manual/zh/install.fpm.php
 ```
 # 安装php
@@ -35,3 +35,4 @@ service php-fpm restart
 service php-fpm stop
 service php-fpm reload
 ```
+
