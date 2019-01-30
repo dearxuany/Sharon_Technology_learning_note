@@ -208,16 +208,18 @@ http {
         #    proxy_pass   http://127.0.0.1;
         #}
 
-        # 让 nginx 支持 php，此处没有设置php所以没有打开
-        # location ~ pattern {} 正则匹配
+        # 让 nginx 支持 php
+        # location ~ pattern {} 正则匹配，匹配所有以.php结尾的请求
+        # 进去此分支后，如果没找到文件会显示 file not found，而不是404
         # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
-        #location ~ \.php$ {
-        #    root           html;
-        #    fastcgi_pass   127.0.0.1:9000;  # 将端口设置为9000
-        #    fastcgi_index  index.php;
-        #    fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;
-        #    include        fastcgi_params;
-        #}
+        location ~ \.php$ {
+             root           html;  # 网站所在根目录
+             fastcgi_pass   127.0.0.1:9000;  # 指定了fastcgi进程侦听的端口,nginx就是通过这里与php交互
+             fastcgi_index  index.php; 
+             fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
+             include        fastcgi_params;
+         }
+
 
         # deny access to .htaccess files, if Apache's document root
         # concurs with nginx's one
@@ -353,12 +355,8 @@ $ sudo kill -TERM 5913
 [root@centOSlearning conf]# ifconfig -a
 ```
 对应 inet后面的ip，输入到浏览器中，看见welcome to nginx！表示配置成功
-```
-http://主机ip
-http://主机ip:1234
-```
-
 ![](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/note_images/Linux_note_images/Nginx%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE.png)
+![](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/note_images/Linux_note_images/lnmp.png)
 
 注意：非本机访问要注意防火墙的设置
 ```
