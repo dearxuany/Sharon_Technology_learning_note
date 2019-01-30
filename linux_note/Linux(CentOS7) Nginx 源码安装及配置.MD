@@ -296,8 +296,9 @@ http {
             index locationTest00.html;
             }
         
-        # http://192.168.137.100:1234/get_things/ 
+        # http://192.168.137.100:1234/get_things/ 显示首页
         # 在/usr/local/webserver/nginx/html/nginx_location_test 下，找 /get_things 目录，首页为 /get_things 下的 get_things.html
+        # 如果 get_things/下有其他文件，http://192.168.137.100:1234/get_things/文件名 会下载该文件
         location /get_things/ {
             root /usr/local/webserver/nginx/html/nginx_location_test;
             index get_things.html;
