@@ -21,8 +21,6 @@ PCRE 可让 Nginx 支持 Rewrite 功能。</br>
 下载PCRE 安装包 
 ```
 wget http://downloads.sourceforge.net/project/pcre/pcre/8.35/pcre-8.35.tar.gz
-
-2018-07-18 19:25:44 (169 KB/s) - 已保存 “pcre-8.35.tar.gz” [1996552/1996552])
 ```
 解压安装包
 ```
@@ -32,9 +30,12 @@ tar zxvf pcre-8.35.tar.gz
 ```
 cd pcre-8.35
 ```
-编译安装
+生成 makefile 文件，设置安装目录 --prefix=/usr/local/pcre/
 ```
 [root@centOSlearning pcre-8.35]# ./configure --prefix=/usr/local/pcre/
+```
+编译与安装
+```
 [root@centOSlearning pcre-8.35]# make && make install
 ```
 查看pcre版本
@@ -58,10 +59,12 @@ tar zxvf nginx-1.6.2.tar.gz
 ```
 cd nginx-1.6.2
 ```
-编译安装</br>
---with-pcre=pcre的源码目录
+配置生成 makefile 文件，指定 nginx 安装路径 --prefix=/usr/local/webserver/nginx
 ```
 [root@centOSlearning nginx-1.6.2]# ./configure --prefix=/usr/local/webserver/nginx --with-http_stub_status_module --with-http_ssl_module --with-pcre=/usr/local/pcre-8.35
+```
+编译安装 nginx 到指定目录
+```
 [root@centOSlearning nginx-1.6.2]# make && make install
 ```
 nginx 会被安装到 /usr/local/webserver 目录当中
