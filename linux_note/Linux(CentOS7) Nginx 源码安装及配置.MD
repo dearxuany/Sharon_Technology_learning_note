@@ -280,6 +280,11 @@ http {
         
         # http://192.168.137.100:1234/locationTest00.html
         location ~ location {
+            # 当用户的浏览器为chrome时，所有请求都会被重写到 locationRewrite.html 页面，~* 忽略大小写
+            if ($http_user_agent ~* windows) {
+                rewrite ^.*$ /locationRewrite.html;  # 这个html也在本location指定的root目录下
+                break;
+            }
             root /usr/local/webserver/nginx/html/nginx_location_test;
             index locationTest00.html;
             }
@@ -334,5 +339,5 @@ systemctl start firewalld  # 启用防火墙
 systemctl status firewalld  # 查看防火墙状态
 systemctl stop firewalld  # 防火墙关闭
 ```
-如果出现 403 forbidden ，则是文件及其所在目录的权限问题，文件和所在所有父目录的权限都应被设为755
+注意：如果出现 403 forbidden ，则是文件及其所在目录的权限问题，文件和所在所有父目录的权限都应被设为755
 
