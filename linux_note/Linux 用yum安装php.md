@@ -1,0 +1,28 @@
+# Linux 用 yum 安装 php 和 FPM 
+FastCGI 进程管理器（FPM） http://php.net/manual/zh/install.fpm.php
+```
+# 安装php
+sudo yum install php
+# 安装php-fpm
+sudo yum install php-fpm
+```
+查看版本
+```
+$ php -v
+PHP 5.4.16 (cli) (built: Oct 30 2018 19:42:25)
+Copyright (c) 1997-2013 The PHP Group
+Zend Engine v2.4.0, Copyright (c) 1998-2013 Zend Technologies
+
+$ php-fpm -v
+PHP 5.4.16 (fpm-fcgi) (built: Oct 30 2018 19:44:03)
+Copyright (c) 1997-2013 The PHP Group
+Zend Engine v2.4.0, Copyright (c) 1998-2013 Zend Technologies
+```
+因为是用yum安装，所以它们的配置文件会在/etc下面
+```
+[sunnylinux@centOSlearning etc]$ ls|grep php
+php.d
+php-fpm.conf  # FPM配置文件
+php-fpm.d
+php.ini # php配置文件
+```
