@@ -303,6 +303,14 @@ http {
             root /usr/local/webserver/nginx/html/nginx_location_test;
             index get_things.html;
             }
+            
+        # 这个写法其实和上面的写法是一样的，因为浏览器会自动补全最后的/
+        # 两者的区别是有这个，访问 http://192.168.137.100:1234/get_things 是会显示 get_things.html，而不是 get_another_thing.html
+        # 如果不写这个 location /get_things，访问 http://192.168.137.100:1234/get_things 是会显示404
+        location /get_things {
+            root /usr/local/webserver/nginx/html/nginx_location_test;
+            index get_another_thing.html;
+            }
     }
 
 ```
@@ -334,7 +342,7 @@ $ cat ./logs/nginx.pid
 5913
 $ sudo kill -TERM 5913
 ```
-注意：其实如果只是修改了配置文件貌似是不用关闭重启 nginx 的，可以直接 reload 一下让配置生效
+注意：其实如果只是修改了配置文件貌似是不用关闭重启 nginx 的，可以直接 reload 一下让配置生效，但是加模块的话还是要重启
 ```
 /usr/local/webserver/nginx/sbin/nginx -s reload
 ```
