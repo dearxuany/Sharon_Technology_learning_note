@@ -279,6 +279,7 @@ http {
             }
         
         # http://192.168.137.100:1234/locationTest00.html
+        # location 使用正则匹配，即是检测到 http://192.168.137.100:1234/location 这个部分就进入到这个分支了
         location ~ location {
             # 当用户IP在remote_addr中时，显示401错误，拒绝访问
             # if ($remote_addr = 192.168.137.1){
@@ -293,6 +294,13 @@ http {
             
             root /usr/local/webserver/nginx/html/nginx_location_test;
             index locationTest00.html;
+            }
+        
+        # http://192.168.137.100:1234/get_things/ 
+        # 在/usr/local/webserver/nginx/html/nginx_location_test 下，找 /get_things 目录，首页为 /get_things 下的 get_things.html
+        location /get_things/ {
+            root /usr/local/webserver/nginx/html/nginx_location_test;
+            index get_things.html;
             }
     }
 
