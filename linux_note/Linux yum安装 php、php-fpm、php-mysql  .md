@@ -1,10 +1,12 @@
-# Linux yum安装 php 和 php-fpm 
+# Linux yum安装 php、php-fpm、php-mysql 
 FastCGI 进程管理器（FPM） http://php.net/manual/zh/install.fpm.php
 ```
 # 安装php
 sudo yum install php
 # 安装php-fpm
 sudo yum install php-fpm
+# 安装php-mysql
+sudo yum install php-mysql
 ```
 查看版本
 ```
