@@ -1,4 +1,4 @@
-# LNMP 安装配置
+# Linux(ubuntu)-Nginx-MySQL-PHP 架构 apt-get 安装配置
 ## Nginx 安装配置
 ### 在 ubuntu 下的安装
 * apt-get 直接安装
