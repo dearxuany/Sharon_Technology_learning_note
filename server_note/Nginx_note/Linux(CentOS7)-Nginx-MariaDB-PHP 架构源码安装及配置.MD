@@ -205,7 +205,7 @@ http {
             root   html;
         }
 
-        # 反向代理，将请求转给其他服务器，可实现动静分离
+        # 反向代理，将请求转给其他服务器，配合location的过滤实现动静分离
         # 要注意remote_addr的问题，可用 proxy_set_header 来解决
         # proxy the PHP scripts to Apache listening on 127.0.0.1:80
         #  
@@ -368,6 +368,56 @@ systemctl stop firewalld  # 防火墙关闭
             index get_another_thing.html;
             }
     }
+
+```
+一个负载均衡的简单配置
+```
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+
+    access_log  logs/access.log  main;  
+
+    sendfile        on;
+    tcp_nopush     on;
+
+    #keepalive_timeout  0;
+    keepalive_timeout  65;  
+
+    gzip  on;
+    
+    # 设置负载均衡后端服务器节点，设权重为1:2，请求2次失败、超时时间大于30s，认为节点出问题
+    upstream linuxidc {
+        server 10.0.6.108:7080 weight=1 max_fail=2 fail_timeout=30s; 
+        server 10.0.0.85:8980 weight=2 max_fail=2 fail_timeout=30s;
+    }
+
+
+    server {
+        listen       70;  # 监听端口号
+        server_name  localhost;   # 可设为ip或url
+
+        #charset koi8-r;
+
+        access_log  logs/host.access.log  main;  
+        
+        # 利用反向代理实现负载均衡
+        location / {
+            proxy_set_header X-real-ip $remote_addr; 
+            proxy_pass  http://linuxidc;
+            root   html; 
+            index  index.html index.htm; 
+        }
+
+        # 利用反向代理实现负载均衡和动静分离，比上面的写法多个location的过滤
+        #location ~ \.php$ {
+        #    proxy_set_header X-real-ip $remote_addr; 
+        #    proxy_pass  http://linuxidc; 
+        #}
 
 ```
 
