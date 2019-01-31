@@ -35,7 +35,7 @@
 ## Server
 ### NginX
 * [Linux(ubuntu)-Nginx-MySQL-PHP 架构 apt-get 安装配置](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/server_note/Nginx_note/Linux%20Nginx%20MySQL%20PHP%20%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE.MD)
-* [Linux(CentOS7) Nginx 源码安装及基础配置](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux(CentOS7)%20Nginx%20%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85%E5%8F%8A%E9%85%8D%E7%BD%AE.MD)</br>
+* [Linux(CentOS7)-Nginx-MariaDB-PHP 架构 源码安装及配置](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/server_note/Nginx_note/Linux(CentOS7)-Nginx-MariaDB-PHP%20%E6%9E%B6%E6%9E%84%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85%E5%8F%8A%E9%85%8D%E7%BD%AE.MD)</br>
 * [Nginx 原理与特性](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/server_note/Nginx_note/Nginx%20%E5%8E%9F%E7%90%86%E4%B8%8E%E7%89%B9%E6%80%A7.md)
 * [Nginx 日志文件与切分备份](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/server_note/Nginx_note/Nginx%20%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6%E4%B8%8E%E5%88%87%E5%88%86%E5%A4%87%E4%BB%BD.md)
 * [Nginx 性能优化](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/server_note/Nginx_note/Nginx%20%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96.md)
