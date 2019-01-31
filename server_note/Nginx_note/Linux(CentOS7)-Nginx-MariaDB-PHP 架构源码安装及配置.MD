@@ -418,6 +418,8 @@ http {
         #    proxy_set_header X-real-ip $remote_addr; 
         #    proxy_pass  http://linuxidc; 
         #}
+    }
+}
 
 ```
 
