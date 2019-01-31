@@ -308,7 +308,7 @@ $ sudo kill -TERM 5913
 对应 inet后面的ip，输入到浏览器中，看见welcome to nginx！表示配置成功
 ![](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/note_images/Linux_note_images/Nginx%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE.png)
 ![](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/note_images/Linux_note_images/lnmp.png)
-
+![](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/note_images/Linux_note_images/centos7-nginx-mariadb-php.png)
 注意：非本机访问要注意防火墙的设置
 ```
 systemctl start firewalld  # 启用防火墙
