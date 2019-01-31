@@ -205,13 +205,16 @@ http {
             root   html;
         }
 
+        # 反向代理，将请求转给其他服务器，可实现动静分离
+        # 要注意remote_addr的问题，可用 proxy_set_header 来解决
         # proxy the PHP scripts to Apache listening on 127.0.0.1:80
         #  
         #location ~ \.php$ {
-        #    proxy_pass   http://127.0.0.1;
+        #    proxy_set_header X-real-ip $remote_addr; # 让下一跳的服务器不要get到这个nginx的remote_addr，而通过get header获得真实的用户IP
+        #    proxy_pass   http://127.0.0.1;  # http://代理服务器ip:端口号
         #}
 
-        # 让 nginx 支持 php
+        # 使用 FastCG 让 nginx 支持 php
         # location ~ pattern {} 正则匹配，匹配所有以.php结尾的请求
         # 进去此分支后，如果没找到文件会显示 file not found，而不是404
         # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
