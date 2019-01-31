@@ -1,4 +1,4 @@
-# Linux(CentOS7) Nginx 源码安装及配置
+# Linux(CentOS7)-Nginx-MariaDB-PHP 架构 源码安装及配置
 ## 环境配置
 ### 系统平台
 ```
