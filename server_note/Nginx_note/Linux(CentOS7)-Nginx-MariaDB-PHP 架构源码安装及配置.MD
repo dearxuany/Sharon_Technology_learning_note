@@ -43,6 +43,9 @@ cd pcre-8.35
 [root@centOSlearning pcre-8.35]# pcre-config --version
 8.35
 ```
+### php 和 mariaDB 安装
+[Linux yum安装 php 和 php-fpm](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20yum%E5%AE%89%E8%A3%85%20php%20%E5%92%8C%20php-fpm%20.md)</br>
+[Linux 安装配置MySQL（MariaDB)](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEMySQL%EF%BC%88MariaDB%EF%BC%89.MD)
 
 ## Nginx 源码编译安装
 到官网上下载合适的nginx版本源码
