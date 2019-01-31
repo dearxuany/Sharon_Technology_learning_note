@@ -44,7 +44,7 @@ cd pcre-8.35
 8.35
 ```
 ### php 和 mariaDB 安装
-[Linux yum安装 php 和 php-fpm](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20yum%E5%AE%89%E8%A3%85%20php%20%E5%92%8C%20php-fpm%20.md)</br>
+[Linux yum安装 php、php-fpm、php-mysql](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20yum%E5%AE%89%E8%A3%85%20php%E3%80%81php-fpm%E3%80%81php-mysql%20%20.md)</br>
 [Linux 安装配置MySQL（MariaDB)](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEMySQL%EF%BC%88MariaDB%EF%BC%89.MD)
 
 ## Nginx 源码编译安装
