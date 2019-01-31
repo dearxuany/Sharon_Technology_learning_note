@@ -267,6 +267,54 @@ http {
 
 }
 ```
+### 检验配置文件正确性
+```
+[root@centOSlearning conf]# /usr/local/webserver/nginx/sbin/nginx -t
+nginx: the configuration file /usr/local/webserver/nginx/conf/nginx.conf syntax is ok
+nginx: configuration file /usr/local/webserver/nginx/conf/nginx.conf test is successful
+```
+
+### 启动Nginx
+```
+[root@centOSlearning conf]# /usr/local/webserver/nginx/sbin/nginx
+```
+可以看到开启主进程的是root，开启worker进程的是配置文件最开头user设置的www用户
+```
+$ ps -aux|grep nginx
+root      7042  0.0  0.0   8128   796 ?        Ss   00:31   0:00 nginx: master process ./sbin/nginx
+www       7043  0.0  0.1   8320  1348 ?        S    00:31   0:00 nginx: worker process
+sunnyli+  7065  0.0  0.0   6704   880 pts/1    S+   00:41   0:00 grep --color=auto nginx
+```
+注意：如果出现各种端口被占用，可能是之前nginx已经被启动，ps aux|grep nginx 查进程，然后杀掉nginx再重启
+```
+# 快速关闭 nginx，在nginx.pid查当前nginx主进程的pid，然后用kill杀了它
+$ cat ./logs/nginx.pid
+5913
+$ sudo kill -TERM 5913
+```
+注意：其实如果只是修改了配置文件貌似是不用关闭重启 nginx 的，可以直接 reload 一下让配置生效，但是加模块的话还是要重启
+```
+/usr/local/webserver/nginx/sbin/nginx -s reload
+```
+
+## 访问站点
+查看服务器ip地址
+```
+[root@centOSlearning conf]# ifconfig -a
+```
+对应 inet后面的ip，输入到浏览器中，看见welcome to nginx！表示配置成功
+![](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/note_images/Linux_note_images/Nginx%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE.png)
+![](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/note_images/Linux_note_images/lnmp.png)
+
+注意：非本机访问要注意防火墙的设置
+```
+systemctl start firewalld  # 启用防火墙
+systemctl status firewalld  # 查看防火墙状态
+systemctl stop firewalld  # 防火墙关闭
+```
+注意：如果出现 403 forbidden ，则是文件及其所在目录的权限问题，文件和所在所有父目录的权限都应被设为755
+
+## 其他配置测试
 在 http 中加一个 server
 ```
  server {
@@ -316,53 +364,4 @@ http {
     }
 
 ```
-
-
-
-### 检验配置文件正确性
-```
-[root@centOSlearning conf]# /usr/local/webserver/nginx/sbin/nginx -t
-nginx: the configuration file /usr/local/webserver/nginx/conf/nginx.conf syntax is ok
-nginx: configuration file /usr/local/webserver/nginx/conf/nginx.conf test is successful
-```
-
-### 启动Nginx
-```
-[root@centOSlearning conf]# /usr/local/webserver/nginx/sbin/nginx
-```
-可以看到开启主进程的是root，开启worker进程的是配置文件最开头user设置的www用户
-```
-$ ps -aux|grep nginx
-root      7042  0.0  0.0   8128   796 ?        Ss   00:31   0:00 nginx: master process ./sbin/nginx
-www       7043  0.0  0.1   8320  1348 ?        S    00:31   0:00 nginx: worker process
-sunnyli+  7065  0.0  0.0   6704   880 pts/1    S+   00:41   0:00 grep --color=auto nginx
-```
-注意：如果出现各种端口被占用，可能是之前nginx已经被启动，ps aux|grep nginx 查进程，然后杀掉nginx再重启
-```
-# 快速关闭 nginx，在nginx.pid查当前nginx主进程的pid，然后用kill杀了它
-$ cat ./logs/nginx.pid
-5913
-$ sudo kill -TERM 5913
-```
-注意：其实如果只是修改了配置文件貌似是不用关闭重启 nginx 的，可以直接 reload 一下让配置生效，但是加模块的话还是要重启
-```
-/usr/local/webserver/nginx/sbin/nginx -s reload
-```
-
-## 访问站点
-查看服务器ip地址
-```
-[root@centOSlearning conf]# ifconfig -a
-```
-对应 inet后面的ip，输入到浏览器中，看见welcome to nginx！表示配置成功
-![](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/note_images/Linux_note_images/Nginx%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE.png)
-![](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/note_images/Linux_note_images/lnmp.png)
-
-注意：非本机访问要注意防火墙的设置
-```
-systemctl start firewalld  # 启用防火墙
-systemctl status firewalld  # 查看防火墙状态
-systemctl stop firewalld  # 防火墙关闭
-```
-注意：如果出现 403 forbidden ，则是文件及其所在目录的权限问题，文件和所在所有父目录的权限都应被设为755
 
