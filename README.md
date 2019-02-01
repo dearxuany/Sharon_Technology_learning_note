@@ -67,6 +67,7 @@
 * [Python 面向对象：类、实例、属性、方法](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%EF%BC%9A%E7%B1%BB%E3%80%81%E5%AE%9E%E4%BE%8B%E3%80%81%E5%B1%9E%E6%80%A7%E3%80%81%E6%96%B9%E6%B3%95.MD)
 * [Python 错误和异常](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E9%94%99%E8%AF%AF%E3%80%81%E5%BC%82%E5%B8%B8%E5%8F%8A%E5%85%B6%E5%A4%84%E7%90%86.MD)
 * [Python 面向对象：魔法方法 Special method、特性 property、迭代器 iterator](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%EF%BC%9ASpecial%20method%20%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95%E3%80%81property%E7%89%B9%E6%80%A7%E3%80%81iterator%20%E8%BF%AD%E4%BB%A3%E5%99%A8.MD)
+* [Python \*.py直接执行和导入解释器执行的传参问题](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20*.py%E7%9B%B4%E6%8E%A5%E6%89%A7%E8%A1%8C%E5%92%8C%E5%AF%BC%E5%85%A5%E8%A7%A3%E9%87%8A%E5%99%A8%E6%89%A7%E8%A1%8C%E7%9A%84%E4%BC%A0%E5%8F%82%E9%97%AE%E9%A2%98.md)
 
 ### Python3 模块
 #### 标准库
