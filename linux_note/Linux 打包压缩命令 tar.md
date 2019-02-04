@@ -107,3 +107,55 @@ tar -jxv -f ./test3.tar.bz2 test/mvtest
 ```
 ## 批量压缩脚本
 [Python3 实现文件或目录的批量压缩](https://github.com/dearxuany/python_program/tree/master/Nginx_log_backup#%E6%89%B9%E9%87%8F%E6%89%93%E5%8C%85%E6%A8%A1%E5%9D%97-tar_gzippy-%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95)
+```
+#! /usr/bin/env python3
+
+import os
+
+# 打包当前目录中的内容
+def tar_first_dir(dir_list):
+    for n in range(len(dir_list)):
+        tar_filename = tar_path+'/'+ dir_list[n]
+        os.system('tar -czf {}.tar.gz -C{} {}'.format(tar_filename,start_path,dir_list[n]))
+
+# 打包当前目录中的目录的下一层目录
+def tar_second_dir(dir_list):
+    second_dirlist_dict = {}
+    for n in range(len(dir_list)):
+        second_dirlist_dict.setdefault(dir_list[n],[])
+        second_dir_path = start_path+'/'+ dir_list[n]
+        second_dir_list = os.listdir(second_dir_path)
+        second_dirlist_dict[dir_list[n]].extend(second_dir_list)
+    
+
+    for key,value in second_dirlist_dict.items():
+        if os.path.exists(tar_path+'/'+key) == False :
+            os.system('mkdir '+tar_path+'/'+key)
+        for n in range(len(value)):
+            tar_filename = tar_path + '/' + key + '/'+ value[n]
+            os.system('tar -czf {}.tar.gz -C{} {}'.format(tar_filename,start_path+'/'+key,value[n]))
+
+
+
+def tar_gzip(startpath,tarpath):
+    global start_path
+    global tar_path
+
+    start_path = startpath
+    tar_path = tarpath
+
+    dir_list = os.listdir(start_path)
+
+    # 打包压缩指定目录中的内容
+    # tar_first_dir(dir_list)
+    
+    # 分别打包压缩指定目录中所有子目录中的内容
+    tar_second_dir(dir_list)
+    
+
+if __name__ == '__main__':
+    start_path = '/home/sunnylinux/pythontest/python3_script/backuplog_classfly_mounth'  # 要打包压缩目录所在的目录路径
+    tar_path = '/home/sunnylinux/pythontest/python3_script/tar_logs_mounth'  # 打包压缩文件要存放的目录路径
+    
+    tar_gzip(start_path,tar_path)
+```
