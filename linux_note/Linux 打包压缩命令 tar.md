@@ -26,7 +26,7 @@ tar [-z|-j|-J] [xv] [-f 已被打包压缩的文件名] [-C 目录] 解压
 --exclude=FILE：在压缩的过程中，不要将 FILE 打包！
 ```
 
-## 常见的打包压缩方法
+## 打包压缩
 常用：打包压缩文件到指定目录（指定目录直接写在 *.tar.gz 文件名前面）
 ```
 $ pwd
@@ -71,13 +71,30 @@ tar -jvc -f testexcludetar2.tar.bz2 test --exclude=cptest # 压缩test目录并�
 ```
 tar -jvc -f testnewertar.tar.bz2 --newer-mtime="2018/03/06" test # 压缩mtime比2018/03/06新的文件，not dumped表示没有被备份的文件
 ```
-## 常见的打包压缩方法
+## 解压
+常见：解压到目标目录
+```
+tar -xvz -f ./test.tar.gz -C 目标目录 
+tar -xvj -f ./test.tar.bz2 -C 目标目录 
+tar -xvJ -f ./test.tar.xz -C 目标目录 
+
+[sunnylinux@centOSlearning tartest]$ tar -xvzf ./tar_file/python_script.tar.gz -C ./tar_test_file
+```
 解压到本目录
 ```
-# 不推荐，解压到指定目录(解压后原压缩文件不会被删除)
-tar -xvz -f ./test.tar.gz -C目标目录 
-tar -xvj -f ./test.tar.bz2 -C目标目录 
-tar -xvJ -f ./test.tar.xz -C目标目录 
+# 不推荐，解压到指定目录(解压后原压缩文件不会被删除)，要注意路径问题
+
+[sunnylinux@centOSlearning tartest]$ ls
+tar_file  tar_test_file  tar_test_file.tar.gz
+[sunnylinux@centOSlearning tartest]$ tar -xvzf ./tar_test_file.tar.gz
+./tar_test_file/
+./tar_test_file/tar_test.txt
+[sunnylinux@centOSlearning tartest]$ ls
+tar_file  tar_test_file  tar_test_file.tar.gz
+
+[sunnylinux@centOSlearning tartest]$ tar -xvzf ./tar_file/python_script.tar.gz
+[sunnylinux@centOSlearning tartest]$ ls
+python3_script  tar_file  tar_test_file  tar_test_file.tar.gz
 ```
 仅解压其中一个文件
 ```
