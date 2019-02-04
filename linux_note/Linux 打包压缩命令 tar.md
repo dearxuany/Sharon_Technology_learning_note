@@ -105,3 +105,5 @@ tar -jtv -f ./test3.tar.bz2 | grep 'mvtest'  # 'mvtest' 为要单一打开的文
 tar -jxv -f 打包档.tar.bz2 待解开档名
 tar -jxv -f ./test3.tar.bz2 test/mvtest
 ```
+## 批量压缩脚本
+[Python3 实现文件或目录的批量压缩](https://github.com/dearxuany/python_program/tree/master/Nginx_log_backup#%E6%89%B9%E9%87%8F%E6%89%93%E5%8C%85%E6%A8%A1%E5%9D%97-tar_gzippy-%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95)
