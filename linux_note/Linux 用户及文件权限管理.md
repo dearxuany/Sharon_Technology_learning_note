@@ -194,3 +194,47 @@ sunnyli+  4885  0.0  0.0   6704   880 pts/1    R+   00:02   0:00 grep --color=au
 groups: sharonli: no such user
 
 ```
+## 文件权限
+### 查看文件权限
+```
+[sunnylinux@centOSlearning test]$ ls -al
+总用量 8
+drwxrwxr-x.  8 sunnylinux sunnylinux  185 2月   4 12:28 .
+drwx------. 34 sunnylinux sunnylinux 4096 2月   5 15:15 ..
+drwxrwxr-x.  2 sunnylinux sunnylinux   21 3月  16 2018 looptest
+drwxrwxr-x.  2 sunnylinux sunnylinux   88 3月   6 2018 mvtest
+drwxrwxr-x.  5 sunnylinux sunnylinux 4096 5月  28 2018 scripttest
+drwxrwxr-x.  5 sunnylinux sunnylinux   93 2月   4 12:56 tartest
+drwxrwxr-x.  3 sunnylinux sunnylinux   18 5月  28 2018 testing
+-rw-rw-r--.  1 root       root          0 3月   6 2018 umasktest2.txt
+-rw-r--r--.  1 root       root          0 3月   6 2018 umasktest3.txt
+-rw-rw-r--.  1 root       root          0 3月   6 2018 umasktest4.txt
+-rw-r--r--.  1 root       root          0 3月   6 2018 umasktest.txt
+drwxrwxr-x.  2 sunnylinux sunnylinux   56 9月  18 09:30 vitest
+```
+drwxrwxr-x 文件属性、拥有者权限、用户组权限、其他用户权限 755 rwxr-xr-x </br>
+rwx 对应 431 即 2^2+2^1+2^0=7 </br>
+目录可进入、内部文件可查看必须有r和x权限，可在目录新建文件必须有w权限</br>
+### 改变文件拥有者和用户组 chown
+chown   修改每个由第一个非选项参数声明的给定file(文件)的用户和/或组的所有权.如下:</br>
+如果只给出了用户名(或者数字用户标识),那么该用户即成为每个指定文件的所有者,而该文件的组别并不改变.如果用户名后面紧跟着冒号和组名(或者是数字组标识),并且它们之间没有空格,那么文件的组所有权也随之改变.
+```
+[sunnylinux@centOSlearning test]$ sudo touch owner.txt
+[sudo] sunnylinux 的密码：
+[sunnylinux@centOSlearning test]$ ls -al|grep owner
+-rw-r--r--.  1 root       root          0 2月   6 00:50 owner.txt
+
+[sunnylinux@centOSlearning test]$ sudo chown sunnylinux ./owner.txt
+[sunnylinux@centOSlearning test]$ ls -l ./owner.txt
+-rw-r--r--. 1 sunnylinux root 0 2月   6 00:50 ./owner.txt
+
+[sunnylinux@centOSlearning test]$ chown sunnylinux:sunnylinux ./owner.txt
+[sunnylinux@centOSlearning test]$ ls -l ./owner.txt
+-rw-r--r--. 1 sunnylinux sunnylinux 0 2月   6 00:50 ./owner.txt
+```
+### 改变文件权限 chmod
+```
+[sunnylinux@centOSlearning test]$ chmod 755 ./owner.txt
+[sunnylinux@centOSlearning test]$ ls -l ./owner.txt
+-rwxr-xr-x. 1 sunnylinux sunnylinux 0 2月   6 00:50 ./owner.txt
+```
