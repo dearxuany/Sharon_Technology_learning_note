@@ -183,6 +183,7 @@ userdel 删除用户，userdel只能删除用户，并不会删除相关的目�
 [sunnylinux@centOSlearning ~]$ sudo userdel -r sharonli
 [sudo] sunnylinux 的密码：
 userdel: user sharonli is currently used by process 4480
+# 需要强制退出
 [sunnylinux@centOSlearning ~]$ ps -aux|grep 4480
 sharonli  4480  0.0  0.2   7932  2496 pts/1    S    2月05   0:00 bash
 sunnyli+  4885  0.0  0.0   6704   880 pts/1    R+   00:02   0:00 grep --color=auto 4480
