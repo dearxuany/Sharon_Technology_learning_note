@@ -41,7 +41,7 @@ useradd与adduser都是创建新的用户</br>
 而在Ubuntu下useradd与adduser有所不同</br>
 1、useradd在使用该命令创建用户是不会在/home下自动创建与用户名同名的用户目录，而且不会自动选择shell版本，也没有设置密码，那么这个用户是不能登录的，需要使用passwd命令修改密码。</br>
 2、adduser在使用该命令创建用户是会在/home下自动创建与用户名同名的用户目录，系统shell版本，会在创建时会提示输入密码，更加友好。</br>
-userdel 删除用户，userdel只能删除用户，并不会删除相关的目录文件。userdel -r 可以删除用户及相关目录。</br>
+
 ```
 # adduser默认为新用户创建 home 目录
 [sunnylinux@centOSlearning ~]$ ls /home
@@ -55,15 +55,142 @@ ls: 无法打开目录.: 权限不够
 ```
 ## 用户组
 ### 查看用户所属用户组
+#### 使用 groups 命令 
 每次新建用户如果不指定用户组的话，默认会自动创建一个与用户名相同的用户组
 ```
+#  查看用户所属用户组方法1
 [sunnylinux@centOSlearning ~]$ groups sunnylinux
 sunnylinux : sunnylinux wheel
 [sunnylinux@centOSlearning ~]$ groups sharonli
 sharonli : sharonli
 ```
-默认情况下在 sudo 用户组里的可以使用 sudo 命令获得 root 权限。</br>
-CentOS 
+#### 查看 /etc/group 文件
+/etc/group 的内容包括用户组（Group）、用户组口令、GID 及该用户组所包含的用户（User），每个用户组一条记录。
+```
+group_name:password:GID:user_list
+```
+注意：如果用户主用户组，即用户的 GID 等于用户组的 GID，那么最后一个字段 user_list 就是空的，因为这个用户组是默认创建的
+```
+#  查看用户所属用户组方法2
+[sunnylinux@centOSlearning ~]$ cat /etc/group  # 省略部分输出
+root:x:0:
+bin:x:1:
+daemon:x:2:
+sys:x:3:
+adm:x:4:
+tty:x:5:
+disk:x:6:
+lp:x:7:
+mem:x:8:
+kmem:x:9:
+wheel:x:10:sunnylinux
+
+[sunnylinux@centOSlearning ~]$ cat /etc/group|grep sunnylinux
+wheel:x:10:sunnylinux
+sunnylinux:x:1000:sunnylinux
+sunnylinux2:x:1001:sunnylinux2
+
+[sunnylinux@centOSlearning ~]$ cat /etc/group|grep sharonli
+sharonli:x:1004:
+
+```
+### 加入 sudo 用户组
+默认情况下在 sudo 用户组里的用户可以使用 sudo 命令获得 root 权限。</br>
+#### /etc/sudoers 文件
+CentOS 默认普通用户是无法使用sudo命令的，需要将登陆的用户加入/etc/sudoers 文件中。</br>
 ubuntu 可在 /etc/sudoers.d 目录下，查看用户的对应文件 /etc/sudoers.d/用户名，如果存在则该用户有sudo权限。</br>
+注意：一般情况下不会通过修改 /etc/sudoers 文件 来让一般用户拥有 sudo 权限，而是使用 usermod 命令为用户添加用户组
+```
+[sunnylinux@centOSlearning ~]$ sudo vim /etc/sudoers
+
+#
+# Adding HOME to env_keep may enable a user to run unrestricted
+# commands via sudo.
+#
+# Defaults   env_keep += "HOME"
+
+Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin
+
+## Next comes the main part: which users can run what software on
+## which machines (the sudoers file can be shared between multiple
+## systems).
+## Syntax:
+##
+##      user    MACHINE=COMMANDS
+##
+## The COMMANDS section may have other options added to it.
+##
+## Allow root to run any commands anywhere
+root    ALL=(ALL)       ALL
+
+## Allows members of the 'sys' group to run networking, software,
+## service management apps and more.
+# %sys ALL = NETWORKING, SOFTWARE, SERVICES, STORAGE, DELEGATING, PROCESSES, LOCATE, DRIVERS
+
+## Allows people in group wheel to run all commands
+%wheel  ALL=(ALL)       ALL
+
+## Same thing without a password
+# %wheel        ALL=(ALL)       NOPASSWD: ALL
+
+```
+让一般用户获得sudo权限的修改方法
+```
+# 在这行下面添加一行
+root    ALL=(ALL)       ALL
+用户名   ALL=(ALL)      ALL
+
+# vim 只读模式强制保存
+x! 
+```
+注意：sunnylinux 在 wheel 里，可设置不用输密码
+```
+[sunnylinux@centOSlearning ~]$ su sharonli
+密码：
+[sharonli@centOSlearning sunnylinux]$ sudo ls
+
+我们信任您已经从系统管理员那里了解了日常注意事项。
+总结起来无外乎这三点：
+
+    #1) 尊重别人的隐私。
+    #2) 输入前要先考虑(后果和风险)。
+    #3) 权力越大，责任越大。
+
+[sudo] sharonli 的密码：
+sharonli 不在 sudoers 文件中。此事将被报告。
+
+```
+#### usrmod 命令
+使用 usermod 命令可以为用户添加用户组
+```
+# 添加用户到 wheel 用户组，让该用户获得 sudo 权限
+[sunnylinux@centOSlearning ~]$ groups sharonli
+sharonli : sharonli
+[sunnylinux@centOSlearning ~]$ sudo usermod -G wheel sharonli
+[sudo] sunnylinux 的密码：
+[sunnylinux@centOSlearning ~]$ groups sharonli
+sharonli : sharonli wheel
+
+[sunnylinux@centOSlearning ~]$ su sharonli
+密码：
+[sharonli@centOSlearning sunnylinux]$ sudo ls /home
+[sudo] sharonli 的密码：
+mysql  sharonli  sunnylinux  sunnylinux2  www
+```
+### 删除用户
+userdel 删除用户，userdel只能删除用户，并不会删除相关的目录文件。userdel -r 可以删除用户及相关目录。</br>
+```
+[sunnylinux@centOSlearning ~]$ sudo userdel -r sharonli
+[sudo] sunnylinux 的密码：
+userdel: user sharonli is currently used by process 4480
+[sunnylinux@centOSlearning ~]$ ps -aux|grep 4480
+sharonli  4480  0.0  0.2   7932  2496 pts/1    S    2月05   0:00 bash
+sunnyli+  4885  0.0  0.0   6704   880 pts/1    R+   00:02   0:00 grep --color=auto 4480
+[sunnylinux@centOSlearning ~]$ sudo kill -9 4480
+[sunnylinux@centOSlearning ~]$ 已杀死
+[sunnylinux@centOSlearning ~]$ sudo userdel sharonli -r
+[sudo] sunnylinux 的密码：
+[sunnylinux@centOSlearning ~]$ groups sharonli
+groups: sharonli: no such user
 
 ```
