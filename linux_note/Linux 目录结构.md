@@ -123,7 +123,8 @@ php-fpm.d
 php.ini
 ```
 #### daemon 配置文件目录
-super daemon 管理的各项服务的配置文件目录
+super daemon 管理的各项服务的配置文件目录</br>
+super daemon 是网络请求过来了才启动的daemon，请求结束了会自动关闭释放资源，比如 telnet</br>
 ```
 [sunnylinux@centOSlearning etc]$ ls |grep xinetd.d
 xinetd.d
@@ -156,6 +157,39 @@ grep: rc5.d: 是一个目录
 grep: rc6.d: 是一个目录
 grep: rc.d: 是一个目录
 ```
+#### /etc/sysconfig/* 初始化环境配置文件
+```
+[sunnylinux@centOSlearning etc]$ ls ./sysconfig
+anaconda         htcacheclean      network-scripts  run-parts
+atd              httpd             ntpd             samba
+authconfig       init              ntpdate          selinux
+cbq              ip6tables-config  php-fpm          smartmontools
+chronyd          iptables-config   qemu-ga          sshd
+console          irqbalance        raid-check       svnserve
+cpupower         kdump             rdisc            sysstat
+crond            kernel            readonly-root    sysstat.ioconf
+ebtables-config  man-db            rpcbind          wpa_supplicant
+fcoe             modules           rpc-rquotad
+firewalld        netconsole        rsyncd
+grub             network           rsyslog
+```
+日志文件初始化设置
+```
+[sunnylinux@centOSlearning etc]$ ls ./sysconfig/rsyslog
+./sysconfig/rsyslog
+[sunnylinux@centOSlearning etc]$ cat ./sysconfig/rsyslog
+# Options for rsyslogd
+# Syslogd options are deprecated since rsyslog v3.
+# If you want to use them, switch to compatibility mode 2 by "-c 2"
+# See rsyslogd(8) for more details
+SYSLOGD_OPTIONS=""
+```
+网络设置
+```
+[sunnylinux@centOSlearning etc]$ cat ./sysconfig/network
+# Created by anaconda
+```
+
 ### /home
 ```
 [sunnylinux@centOSlearning /]$ ls /home
