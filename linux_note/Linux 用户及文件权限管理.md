@@ -214,7 +214,7 @@ drwxrwxr-x.  3 sunnylinux sunnylinux   18 5月  28 2018 testing
 drwxrwxr-x.  2 sunnylinux sunnylinux   56 9月  18 09:30 vitest
 ```
 drwxrwxr-x 文件属性、拥有者权限、用户组权限、其他用户权限 755 rwxr-xr-x </br>
-rwx 对应 431 即 2^2+2^1+2^0=7 </br>
+rwx 对应 421 即 2^2+2^1+2^0=7 </br>
 目录可进入、内部文件可查看必须有r和x权限，可在目录新建文件必须有w权限</br>
 ### 改变文件拥有者和用户组 chown
 chown   修改每个由第一个非选项参数声明的给定file(文件)的用户和/或组的所有权.如下:</br>
