@@ -20,6 +20,7 @@
 * [Linux 目录结构](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84.md)
 * [Linux 用户及文件权限管理](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E7%94%A8%E6%88%B7%E5%8F%8A%E6%96%87%E4%BB%B6%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86.md)
 * [Linux 文件目录命名规则](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E6%96%87%E4%BB%B6%E5%90%8D%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99.MD)
+* [Linux 文件搜索 whereis、locate、which、find](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E6%96%87%E4%BB%B6%E6%90%9C%E7%B4%A2%20whereis%E3%80%81locate%E3%80%81which%E3%80%81find.md)
 * [Linux 打包压缩和解压 tar](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E6%89%93%E5%8C%85%E5%8E%8B%E7%BC%A9%E5%91%BD%E4%BB%A4%20tar.md)
 * [Linux 内核、进程、线程 （命令 ps top kill）](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E5%86%85%E6%A0%B8%E3%80%81%E8%BF%9B%E7%A8%8B%E3%80%81%E7%BA%BF%E7%A8%8B.MD)
 * [Linux IO模型：同步、异步、阻塞、非阻塞](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20IO%E6%A8%A1%E5%9E%8B%EF%BC%9A%E5%90%8C%E6%AD%A5%E3%80%81%E5%BC%82%E6%AD%A5%E3%80%81%E9%98%BB%E5%A1%9E%E3%80%81%E9%9D%9E%E9%98%BB%E5%A1%9E.MD)
