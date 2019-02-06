@@ -12,7 +12,7 @@ FHS 定义了两层规范:</br>
 # 根目录的子目录
 [sunnylinux@centOSlearning /]$ tree -L 1
 .
-├── bin -> usr/bin   # 放置可执行文件的目录，一般用户可用，即是放系统内置日常常用命令的地方
+├── bin -> usr/bin   # 放置可执行文件的目录，一般用户可用，即是放系统内置日常常用命令的地方，挂载前即可用
 ├── boot   # 放置开机会使用的文件
 ├── data
 ├── db
@@ -26,15 +26,24 @@ FHS 定义了两层规范:</br>
 ├── proc   # 虚拟文件系统，记录系统的内核、进程、外部设备、网络状态，置于内存不占硬盘位置
 ├── root   # root 的/home
 ├── run
-├── sbin -> usr/sbin  # root 才能执行的命令，如还原、开机、关机等
+├── sbin -> usr/sbin  # root 和 sudo用户 才能执行的命令，如还原、开机、关机等
 ├── srv   # service所写，放置系统服务启动后的数据
 ├── sys   # 和/proc相似，记录以加载的系统内核模块和内核检测到的硬件设备信息，置于内存不占硬盘位置
 ├── tmp   # 暂存目录
 ├── usr   # 可分享的不可变动数据，包含大多数用户的数据和应用程序，即是软件装这里
-└── var   # 动态变动文件目录，记录系统的缓存cache状态、log等数据
+└── var   # 动态变动文件目录，记录系统的缓存cache状态、log等数据，最好独立安装在一个分区里
 
 21 directories, 1 file
 ```
+### /bin
+放系统自带的系统运行必要命令，单用户模式下还能被使用
+```
+[sunnylinux@centOSlearning bin]$ ls|grep chmod
+chmod
+[sunnylinux@centOSlearning bin]$ ls|grep chown
+chown
+```
+此处和 /usr/bin 做了链接
 ### /boot
 grub 放置引导装置程序</br>
 vmlinuz 开头为内核常用文件</br>
@@ -338,50 +347,265 @@ $ cat /proc/dma
 /proc/self 链接到当前正在运行的进程
 ```
 ### /usr
+unix software resource 与软件安装/执行有关
 ```
 [sunnylinux@centOSlearning usr]$ tree -L 1
 .
-├── bin
-├── etc
-├── games
-├── include
-├── lib
-├── libexec
-├── local
-├── sbin
-├── share
-├── src
+├── bin  # 放置用户自己安装的命令
+├── include  # 源码安装时，C/C++ 放置头文件和包含文件的地方
+├── lib  # 放置自安装软件的函数库、目标文件、不常被使用的script
+├── libexec  
+├── local  # 源码安装软件常用目录
+├── sbin   # 非系统正常运行需要的命令
+├── share  # 放置共享文件的地方
+├── src    # 一般源码建议放这里，内核源码放/usr/src/linux下
 └── tmp -> ../var/tmp
 
 11 directories, 0 files
 
 ```
+#### /usr/bin
+可以看做自己安装的命令放这里
+```
+[sunnylinux@centOSlearning bin]$ ls| grep python
+abrt-action-analyze-python
+python
+python2
+python2.7
+python3
+
+[sunnylinux@centOSlearning bin]$ ls| grep tree
+gconf-merge-tree
+gvfs-tree
+nl-tctree-list
+pstree
+pstree.x11
+tree
+verifytree
+
+[sunnylinux@centOSlearning bin]$ ls| grep virtualenv
+virtualenv
+
+[sunnylinux@centOSlearning bin]$ ls| grep glances
+glances
+```
+#### /usr/local
+```
+[sunnylinux@centOSlearning local]$ tree -L 2
+.
+├── bin
+│   ├── pcre-config
+│   ├── pcregrep
+│   └── pcretest
+├── etc
+├── games
+├── include
+│   ├── pcrecpparg.h
+│   ├── pcrecpp.h
+│   ├── pcre.h
+│   ├── pcreposix.h
+│   ├── pcre_scanner.h
+│   └── pcre_stringpiece.h
+├── lib
+│   ├── libpcre.a
+│   ├── libpcrecpp.a
+│   ├── libpcrecpp.la
+│   ├── libpcrecpp.so -> libpcrecpp.so.0.0.0
+│   ├── libpcrecpp.so.0 -> libpcrecpp.so.0.0.0
+│   ├── libpcrecpp.so.0.0.0
+│   ├── libpcre.la
+│   ├── libpcreposix.a
+│   ├── libpcreposix.la
+│   ├── libpcreposix.so -> libpcreposix.so.0.0.2
+│   ├── libpcreposix.so.0 -> libpcreposix.so.0.0.2
+│   ├── libpcreposix.so.0.0.2
+│   ├── libpcre.so -> libpcre.so.1.2.3
+│   ├── libpcre.so.1 -> libpcre.so.1.2.3
+│   ├── libpcre.so.1.2.3
+│   └── pkgconfig
+├── libexec
+├── mongodb-linux-i686-3.2.20
+│   ├── bin
+│   ├── data
+│   ├── GNU-AGPL-3.0
+│   ├── MPL-2
+│   ├── README
+│   └── THIRD-PARTY-NOTICES
+├── mysql
+│   ├── data
+│   └── mysql-8.0.12-linux-glibc2.12-i686
+├── mysql-8.0.12-linux-glibc2.12-i686
+│   ├── bin
+│   ├── docs
+│   ├── include
+│   ├── lib
+│   ├── LICENSE
+│   ├── man
+│   ├── README
+│   ├── share
+│   └── support-files
+├── pcre
+│   ├── bin
+│   ├── include
+│   ├── lib
+│   └── share
+├── python3
+│   ├── bin
+│   ├── ez_setup.py
+│   ├── get-pip.py
+│   ├── include
+│   ├── lib
+│   ├── pip-18.0
+│   ├── pip-18.0.tar.gz
+│   ├── Python-3.7.0a1
+│   ├── setuptools-19.6.tar.gz
+│   ├── setuptools-40.0.0
+│   ├── setuptools-40.0.0.zip
+│   └── share
+├── sbin
+├── share
+│   ├── applications
+│   ├── doc
+│   ├── info
+│   └── man
+├── src
+│   ├── nginx-1.6.2
+│   ├── node_modules
+│   ├── node-v8.11.3-linux-x86
+│   └── pcre-8.35
+└── webserver
+    └── nginx
+
+47 directories, 35 files
+
+```
 ### /var
+与系统运行过程相关
 ```
 [sunnylinux@centOSlearning var]$ tree -L 1
 .
-├── account
+├── account  
 ├── adm
-├── cache
+├── cache  # 应用程序运行时产生的暂存文件
 ├── crash
 ├── db
 ├── empty
-├── games
 ├── gopher
 ├── kerberos
-├── lib
+├── lib   # 程序执行过程中需要的数据放置地点
 ├── local
-├── lock -> ../run/lock
-├── log
+├── lock -> ../run/lock  # 确保某设备或文件资源仅被单个程序使用
+├── log  # 各种日志、登录文件放置目录
 ├── mail -> spool/mail
 ├── nis
 ├── opt
 ├── preserve
-├── run -> ../run
-├── spool
+├── run -> ../run  # 放置进程PID的地方
+├── spool  # 放置队列数据，即等待被其他程序使用的数据
 ├── tmp
 ├── www
 └── yp
 
 22 directories, 0 files
+```
+#### /var/log
+```
+[sunnylinux@centOSlearning lib]$ cd /var/log
+[sunnylinux@centOSlearning log]$ ls
+anaconda           cups                messages-20190127  spooler-20190120
+audit              dmesg               messages-20190204  spooler-20190127
+boot.log           dmesg.old           ntpstats           spooler-20190204
+boot.log-20190122  firewalld           php-fpm            tallylog
+boot.log-20190127  gdm                 pluto              tuned
+boot.log-20190129  grubby              ppp                wpa_supplicant.log
+boot.log-20190130  grubby_prune_debug  qemu-ga            wtmp
+boot.log-20190202  httpd               rhsm               wtmp1
+boot.log-20190204  lastlog             sa                 wtmp2
+boot.log-20190205  maillog             samba              Xorg.0.log
+btmp               maillog-20190113    secure             Xorg.0.log.old
+btmp-20190201      maillog-20190120    secure-20190113    Xorg.1.log
+chrony             maillog-20190127    secure-20190120    Xorg.1.log.old
+cron               maillog-20190204    secure-20190127    Xorg.2.log
+cron-20190113      mariadb             secure-20190204    Xorg.2.log.old
+cron-20190120      messages            speech-dispatcher  Xorg.9.log
+cron-20190127      messages-20190113   spooler            yum.log
+cron-20190204      messages-20190120   spooler-20190113   yum.log-20190105
+```
+查看cron的运行日志
+```
+[sunnylinux@centOSlearning log]$ sudo tail -f -n 5 /var/log/cron
+Feb  6 13:10:01 centOSlearning CROND[12996]: (root) CMD (/usr/lib/sa/sa1 1 1)
+Feb  6 19:10:01 centOSlearning CROND[13444]: (root) CMD (/usr/lib/sa/sa1 1 1)
+Feb  6 19:20:02 centOSlearning CROND[14023]: (root) CMD (/usr/lib/sa/sa1 1 1)
+Feb  6 19:30:02 centOSlearning CROND[14644]: (root) CMD (/usr/lib/sa/sa1 1 1)
+Feb  6 19:40:02 centOSlearning CROND[15144]: (root) CMD (/usr/lib/sa/sa1 1 1)
+```
+#### /var/run
+script可在这里读取某些程序当前运行的进程pid
+```
+[sunnylinux@centOSlearning log]$ cd /run
+[sunnylinux@centOSlearning run]$ ls
+abrt             dmeventd-server  lvmetad.pid     samba           tuned
+alsactl.pid      ebtables.lock    mariadb         sepermit        udev
+atd.pid          faillock         mdadm           setrans         udisks2
+auditd.pid       firewalld        mount           setroubleshoot  user
+avahi-daemon     gdm              netreport       spice-vdagentd  utmp
+console          httpd            NetworkManager  sshd.pid        vmblock-fuse
+crond.pid        initramfs        php-fpm         sudo            vmtoolsd.pid
+cron.reboot      lock             plymouth        svnserve        xtables.lock
+cups             log              ppp             syslogd.pid
+dbus             lsm              rpcbind         systemd
+dmeventd-client  lvm              rpcbind.sock    tmpfiles.d
+[sunnylinux@centOSlearning run]$ cat crond.pid
+1240
+[sunnylinux@centOSlearning run]$ ps aux|grep crond
+root      1240  0.0  0.0   7980   568 ?        Ss   10:04   0:02 /usr/sbin/cron  -n
+sunnyli+ 15453  0.0  0.0   6708   884 pts/2    S+   19:45   0:00 grep --color=auto crond
+```
+# /var/spool
+```
+[sunnylinux@centOSlearning spool]$ ls
+abrt  abrt-upload  anacron  at  cron  cups  lpd  mail  plymouth  postfix
+[sunnylinux@centOSlearning spool]$ tree -L 2
+.
+├── abrt [error opening dir]
+├── abrt-upload [error opening dir]
+├── anacron
+│   ├── cron.daily
+│   ├── cron.monthly
+│   └── cron.weekly
+├── at [error opening dir]
+├── cron [error opening dir]
+├── cups [error opening dir]
+├── lpd
+├── mail  # 用户的邮箱
+│   ├── mysql
+│   ├── root
+│   ├── rpc
+│   ├── sunnylinux
+│   ├── sunnylinux2
+│   └── www
+├── plymouth
+└── postfix
+    ├── active
+    ├── bounce
+    ├── corrupt
+    ├── defer
+    ├── deferred
+    ├── flush
+    ├── hold
+    ├── incoming
+    ├── maildrop
+    ├── pid
+    ├── private
+    ├── public
+    ├── saved
+    └── trace
+
+24 directories, 9 files
+
+```
+查看邮箱
+```
+[sunnylinux@centOSlearning spool]$ cat /var/spool/mail/sunnylinux  # 可能会有大堆报错信息 
 ```
