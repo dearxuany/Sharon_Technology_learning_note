@@ -31,7 +31,7 @@ FHS 定义了两层规范:</br>
 ├── sys   # 和/proc相似，记录以加载的系统内核模块和内核检测到的硬件设备信息，置于内存不占硬盘位置
 ├── tmp   # 暂存目录
 ├── usr   # 可分享的不可变动数据，包含大多数用户的数据和应用程序，即是软件装这里
-└── var
+└── var   # 动态变动文件目录，记录系统的缓存cache状态、log等数据
 
 21 directories, 1 file
 ```
@@ -355,4 +355,33 @@ $ cat /proc/dma
 
 11 directories, 0 files
 
+```
+### /var
+```
+[sunnylinux@centOSlearning var]$ tree -L 1
+.
+├── account
+├── adm
+├── cache
+├── crash
+├── db
+├── empty
+├── games
+├── gopher
+├── kerberos
+├── lib
+├── local
+├── lock -> ../run/lock
+├── log
+├── mail -> spool/mail
+├── nis
+├── opt
+├── preserve
+├── run -> ../run
+├── spool
+├── tmp
+├── www
+└── yp
+
+22 directories, 0 files
 ```
