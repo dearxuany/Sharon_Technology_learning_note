@@ -81,7 +81,8 @@ L2 缓存：           512K
 Flags:                 fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm 3dnowext 3dnow constant_tsc art tsc_reliable nonstop_tsc pni cx16 x2apic popcnt hypervisor lahf_lm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw retpoline_amd ibp_disable vmmcall
 
 ```
-### 查进程和CPU top
+### top
+top 可用于动态查询cpu和进程相关信息
 [top的使用](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E5%86%85%E6%A0%B8%E3%80%81%E8%BF%9B%E7%A8%8B%E3%80%81%E7%BA%BF%E7%A8%8B.MD#%E5%8A%A8%E6%80%81%E6%9F%A5%E8%AF%A2%E8%BF%9B%E7%A8%8B%E7%8A%B6%E6%80%81)</br>
 ```
 top - 09:57:39 up 15 min,  1 user,  load average: 0.04, 0.14, 0.25
@@ -113,7 +114,7 @@ KiB Swap:  1048572 total,  1048572 free,        0 used.   509800 avail Mem
    18 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 bioset
    19 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kblockd
 ```
-###　vmstat
+### vmstat
 vmstat 可动态地检测系统资源变化，包括CPU/内存/磁盘输入输出状态
 ```
 vmstat 参数
