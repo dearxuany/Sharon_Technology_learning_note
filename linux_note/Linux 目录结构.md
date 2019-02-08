@@ -122,41 +122,6 @@ php-fpm.conf
 php-fpm.d
 php.ini
 ```
-#### daemon 配置文件目录
-super daemon 管理的各项服务的配置文件目录</br>
-super daemon 是网络请求过来了才启动的daemon，请求结束了会自动关闭释放资源，比如 telnet</br>
-```
-[sunnylinux@centOSlearning etc]$ ls |grep xinetd.d
-xinetd.d
-```
-X window 的配置文件
-```
-[sunnylinux@centOSlearning etc]$ ls |grep X11
-X11
-```
-crontab 相关的配置文件
-```
-[sunnylinux@centOSlearning etc]$ ls |grep cron
-anacrontab
-cron.d
-cron.daily
-cron.deny
-cron.hourly
-cron.monthly
-crontab
-cron.weekly
-```
-#### 运行级别目录
-```
-[sunnylinux@centOSlearning etc]$ ls | grep rc*
-grep: rc1.d: 是一个目录
-grep: rc2.d: 是一个目录
-grep: rc3.d: 是一个目录
-grep: rc4.d: 是一个目录
-grep: rc5.d: 是一个目录
-grep: rc6.d: 是一个目录
-grep: rc.d: 是一个目录
-```
 #### /etc/sysconfig/* 初始化环境配置文件
 ```
 [sunnylinux@centOSlearning etc]$ ls ./sysconfig
@@ -189,6 +154,43 @@ SYSLOGD_OPTIONS=""
 [sunnylinux@centOSlearning etc]$ cat ./sysconfig/network
 # Created by anaconda
 ```
+#### daemon 配置文件目录
+X window 的配置文件
+```
+[sunnylinux@centOSlearning etc]$ ls |grep X11
+X11
+```
+crontab 相关的配置文件
+```
+[sunnylinux@centOSlearning etc]$ ls |grep cron
+anacrontab
+cron.d
+cron.daily
+cron.deny
+cron.hourly
+cron.monthly
+crontab
+cron.weekly
+```
+super daemon 管理的各项服务的配置文件目录</br>
+super daemon 是网络请求过来了才启动的daemon，请求结束了会自动关闭释放资源，比如 telnet。super daemon 通过一个统一的daemon来管理，这个daemon是xinetd，xinetd 自己的配置文件是/etc/xinetd.conf，xinetd 所管理的各个daemon 的配置文件是 /etc/xinetd.d/\*</br>
+```
+[sunnylinux@centOSlearning etc]$ ls |grep xinetd.d
+xinetd.d
+```
+注意和/etc其他各个配置文件的区别， /etc/xinetd.d/* 主要是管理机制。</br>
+#### 运行级别目录
+```
+[sunnylinux@centOSlearning etc]$ ls | grep rc*
+grep: rc1.d: 是一个目录
+grep: rc2.d: 是一个目录
+grep: rc3.d: 是一个目录
+grep: rc4.d: 是一个目录
+grep: rc5.d: 是一个目录
+grep: rc6.d: 是一个目录
+grep: rc.d: 是一个目录
+```
+
 
 ### /home
 ```
