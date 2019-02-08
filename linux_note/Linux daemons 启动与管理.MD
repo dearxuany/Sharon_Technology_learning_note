@@ -1,5 +1,18 @@
 # Linux daemons 启动与管理
-## daemons 分类
+
+## daemons 命名规则
+service 名后面加 d
+
+
+## daemons 启动脚本和启动方式
+Daemon的启动需要执行文件、配置文件、执行环境。</br>
+</br>
+启动脚本:</br>
+进行环境的检测、加载提供的函数功能、配置文件的分析、PID文件的放置，以及重要交换文件的锁住 lock 操作。</br>
+过去，系统服务的进程大多依靠一个init的启动机制来启动，CentOS7以后使用的是 systemd。</br>
+
+## init
+### init daemons 分类
 按照 daemons 的启动和管理方式分类：</br>
 * stand_alone</br>
 常驻于内存当中，可自启，不需要额外的管理，响应速度快。</br>
@@ -16,17 +29,7 @@
 每隔一段时间去主动执行某项工作</br>
 例子：crond
 
-## daemons 命名规则
-service 名后面加 d
-
-
-## daemons 启动脚本和启动方式
-Daemon的启动需要执行文件、配置文件、执行环境。</br>
-</br>
-启动脚本:</br>
-进行环境的检测、加载提供的函数功能、配置文件的分析、PID文件的放置，以及重要交换文件的锁住 lock 操作。</br>
-过去，系统服务的进程大多依靠一个init的启动机制来启动，CentOS7以后使用的是 systemd。</br>
-### init
+### init 相关目录
 init方式启动，主要涉及到/etc 和 /var 下的一些文件，[linux 目录结构](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84.md#etc)。</br>
 ```
 /etc/init.d/*    启动脚本放置处，管理一个或多个daemon的启动（以前使用）
@@ -37,25 +40,19 @@ init方式启动，主要涉及到/etc 和 /var 下的一些文件，[linux 目�
 /var/run/  启动的daemon进程PID记录处
 /var/lib/* 各服务产生的数据库
 ```
-### systemd
-systemd 特点：</br>
-* 速度比 init 快，systemd 本身常驻于内存
-* systemd 服务仅需使用 systemctl 命令来处理，即是不用 init, chkconfig, service 来支撑，但减少了自定义的开放性
-* systemd 将服务分为一个服务单位 unit，再将unit按功能分为type，type 有 service, socket, target, path, snapshot, timer
-* init 有 runlevel，而systemd 对应的是 target ，但没有全部对应，runlevel依然无可取代
-* systemd 向下兼容 init
 
-
-## stand_alone daemons
-### stand_alone daemons 启动
-#### init 启动
+### init 启动
+#### stand_alone daemons 启动
+* /etc/init.d/* 方式
 CentOS7 后不用了，ubuntu 貌似还可以用
 ```
 # 一般格式为
 /etc/init.d/crond start
 ```
 参考 [Linux(ubuntu)-Nginx-MySQL-PHP 架构 apt-get 安装配置](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/server_note/Nginx_note/Linux%20Nginx%20MySQL%20PHP%20%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE.MD#%E5%B8%B8%E7%94%A8-nginx-%E5%91%BD%E4%BB%A4)
-#### service 方式
+</br>
+
+* service 方式
 ```
 [sunnylinux@centOSlearning init.d]$ service crond
 The service command supports only basic LSB actions (start, stop, restart, try-restart, reload, force-reload, status). For other actions, please try to use systemctl.
@@ -76,11 +73,153 @@ Redirecting to /bin/systemctl status crond.service
 2月 08 09:44:37 centOSlearning.SharonLi crond[1221]: (CRON) INFO (RANDOM_DELAY will be scaled with factor 45% if used.)
 2月 08 09:44:45 centOSlearning.SharonLi crond[1221]: (CRON) INFO (running with inotify support)
 ```
-#### systemctl 方式
-CentOS7 可用
+
+#### super daemons 
+super daemons 分类（根据处理方式分）
+* 单线程
+* 多线程
+
+## systemd 
+systemd 特点
+* 速度比 init 快，systemd 本身常驻于内存
+* systemd 服务仅需使用 systemctl 命令来处理，即是不用 init, chkconfig, service 来支撑，但减少了自定义的开放性
+* systemd 将服务分为一个服务单位 unit，再将unit按功能分为type，type 有 service, socket, target, path, snapshot, timer
+* init 有 runlevel，而systemd 对应的是 target ，但没有全部对应，runlevel依然无可取代
+* systemd 向下兼容 init
+</br>
+
+### systemd 相关目录
 ```
-systemctl (start|stop|restart|try-restart|reload|force-reload|status) [service name]
+/etc/systemd/system/  可依据主机需求建立启动脚本，优先级比/run/systemd/system/ 高，功能类似于/etc/rc.d/rc5.d/Sxx，决定脚本是否开机执行
+/run/systemd/system/  系统运行过程中产生的脚本，优先级比/usr/lib/systemd/system/ 高
+/usr/lib/systemd/system/  启动脚本目录，类似于/etc/init.d，实际执行的启动脚本位置
 ```
+/usr/lib/systemd/system/
+```
+[sunnylinux@centOSlearning system]$ pwd
+/usr/lib/systemd/system
+[sunnylinux@centOSlearning system]$ ls |grep cron
+crond.service
+
+# 还有很多其他脚本
+tcsd.service
+teamd@.service
+timers.target
+timers.target.wants
+time-sync.target
+tmp.mount
+tuned.service
+udisks2.service
+umount.target
+unbound-anchor.service
+unbound-anchor.timer
+upower.service
+usb_modeswitch@.service
+usbmuxd.service
+user.slice
+wacom-inputattach@.service
+wpa_supplicant.service
+zram.service
+```
+/run/systemd/system/
+```
+[sunnylinux@centOSlearning system]$ cd /run/systemd/system/
+[sunnylinux@centOSlearning system]$ ls
+session-2.scope    session-39.scope.d  user-1000.slice    user-42.slice.d
+session-2.scope.d  session-c1.scope    user-1000.slice.d
+session-39.scope   session-c1.scope.d  user-42.slice
+```
+/etc/systemd/system/
+```
+[sunnylinux@centOSlearning system]$ cd /etc/systemd/system/
+[sunnylinux@centOSlearning system]$ ls
+basic.target.wants
+bluetooth.target.wants
+dbus-org.bluez.service
+dbus-org.fedoraproject.FirewallD1.service
+dbus-org.freedesktop.Avahi.service
+dbus-org.freedesktop.ModemManager1.service
+dbus-org.freedesktop.NetworkManager.service
+dbus-org.freedesktop.nm-dispatcher.service
+default.target
+default.target.wants
+dev-virtio\x2dports-org.qemu.guest_agent.0.device.wants
+display-manager.service
+getty.target.wants
+graphical.target.wants
+local-fs.target.wants
+multi-user.target.wants
+network-online.target.wants
+printer.target.wants
+sockets.target.wants
+spice-vdagentd.target.wants
+sysinit.target.wants
+system-update.target.wants
+timers.target.wants
+```
+#### systemd 服务类型
+* .service   </br>
+service unit  </br>
+一般系统服务，包括本机服务和网络服务 </br>
+* .socket    </br>
+socket unit   </br>
+很多软件通过socket来进行本机的数据交互，类似于 xinetd </br>
+* .target	 </br>
+target unit </br>
+多种 unit 的集合，执行这种unit相当于执行一些列的unit</br>
+* .mount .automount  
+automount unit / mount unit</br>
+档案系统挂载相关服务</br>
+* .path    </br>
+path unit</br>
+某些服务需要侦测某些特定的目录来提供服务，需要 .path 来支持</br>
+* .timer   </br>
+timer unit</br>
+类似 anacrontb 但这个是 systemd 提供的，更有弹性</br>
+```
+# 区分 unit的 type 类型看文件名
+
+[sunnylinux@centOSlearning system]$ ls /usr/lib/systemd/system|grep -E '(crond|vsftp|multi)'
+crond.service
+multipathd.service
+multi-user.target
+multi-user.target.wants
+
+
+[sunnylinux@centOSlearning system]$ ls /usr/lib/systemd/system|grep .socket
+avahi-daemon.socket
+cups.socket
+dbus.socket
+dm-event.socket
+iscsid.socket
+iscsiuio.socket
+lldpad.socket
+lvm2-lvmetad.socket
+lvm2-lvmpolld.socket
+rpcbind.socket
+rsyncd.socket
+spice-vdagentd.socket
+sshd.socket
+syslog.socket
+systemd-initctl.socket
+systemd-journald.socket
+systemd-shutdownd.socket
+systemd-udevd-control.socket
+systemd-udevd-kernel.socket
+```
+
+### systemctl 启动
+CentOS7 可用，systemctl 也是yum安装才能用，源码安装的用不到
+```
+systemctl (start|stop|restart|try-restart|reload|force-reload|status) [unit]
+```
+Loaded 为 enabled 则为开机自启， disabled 则不为开机自启</br>
+Active 常见状态
+* active (running) 正在执行
+* active (exited) 现时没有正在执行的程序，多见于只执行一次就结束的服务
+* active (waiting) 正在执行中，但是要等待其他服务响应
+* inactive (dead) 没有在运作
+* 
 ```
 [sunnylinux@centOSlearning init.d]$ systemctl status crond
 ● crond.service - Command Scheduler
@@ -101,11 +240,39 @@ Authentication is required to manage system services or units.
 Authenticating as: sunnylinux
 Password:
 ```
+```
+[sunnylinux@centOSlearning system]$ systemctl status firewalld
+● firewalld.service - firewalld - dynamic firewall daemon
+   Loaded: loaded (/usr/lib/systemd/system/firewalld.service; enabled; vendor preset: enabled)
+   Active: active (running) since 五 2019-02-08 09:44:28 CST; 5h 55min ago
+     Docs: man:firewalld(1)
+ Main PID: 713 (firewalld)
+   CGroup: /system.slice/firewalld.service
+           └─713 /usr/bin/python -Es /usr/sbin/firewalld --nofork --nopid
 
-## super daemons 
-### super daemons 分类
-根据处理方式分：
-* 单线程
-* 多线程
+2月 08 09:42:11 centOSlearning.SharonLi systemd[1]: Starting firewalld - dynamic firewall daemon...
+2月 08 09:44:28 centOSlearning.SharonLi systemd[1]: Started firewalld - dynamic firewall daemon.
+
+[sunnylinux@centOSlearning system]$ systemctl stop firewalld
+==== AUTHENTICATING FOR org.freedesktop.systemd1.manage-units ===
+Authentication is required to manage system services or units.
+Authenticating as: sunnylinux
+Password:
+==== AUTHENTICATION COMPLETE ===
+
+[sunnylinux@centOSlearning system]$ systemctl status firewalld
+● firewalld.service - firewalld - dynamic firewall daemon
+   Loaded: loaded (/usr/lib/systemd/system/firewalld.service; enabled; vendor preset: enabled)
+   Active: inactive (dead) since 五 2019-02-08 15:40:32 CST; 3s ago
+     Docs: man:firewalld(1)
+  Process: 713 ExecStart=/usr/sbin/firewalld --nofork --nopid $FIREWALLD_ARGS (code=exited, status=0/SUCCESS)
+ Main PID: 713 (code=exited, status=0/SUCCESS)
+
+2月 08 09:42:11 centOSlearning.SharonLi systemd[1]: Starting firewalld - dynamic firewall daemon...
+2月 08 09:44:28 centOSlearning.SharonLi systemd[1]: Started firewalld - dynamic firewall daemon.
+2月 08 15:40:26 centOSlearning.SharonLi systemd[1]: Stopping firewalld - dynamic firewall daemon...
+2月 08 15:40:32 centOSlearning.SharonLi systemd[1]: Stopped firewalld - dynamic firewall daemon.
+```
+注意：不应该用kill方法来关掉一些正常的服务，应该用stop
 
 
