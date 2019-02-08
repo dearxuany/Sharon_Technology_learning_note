@@ -362,7 +362,7 @@ systemctl unmask cups.service  # 取消注销，恢复服务
 ```
 
 ### 查看已启动的服务
-查看当前已启动的拂去
+查看当前已启动的服务
 ```
 [sunnylinux@centOSlearning system]$ systemctl
  UNIT                                             LOAD   ACTIVE SUB       DESCRIPTION
