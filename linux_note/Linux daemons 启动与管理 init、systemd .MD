@@ -387,7 +387,7 @@ systemctl mask cups.service  # 注销
 systemctl unmask cups.service  # 取消注销，恢复服务
 ```
 
-### systemctl 查看服务
+### systemctl 查询及管理服务
 查看当前已启动的服务
 ```
 [sunnylinux@centOSlearning system]$ systemctl
