@@ -21,7 +21,7 @@ service 名后面加 d
 ## daemons 启动脚本和启动方式
 Daemon的启动需要执行文件、配置文件、执行环境。</br>
 启动脚本可以进行环境的检测、加载提供的函数功能、配置文件的分析、PID文件的放置，以及相关重要交换文件的锁住 lock 操作。</br>
-主要涉及到/etc 和 /var 下的一些文件，[linux 目录结构](ttps://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84.md#etc）</br>
+主要涉及到/etc 和 /var 下的一些文件，[linux 目录结构](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84.md#etc)</br>
 ```
 /etc/init.d/*    启动脚本放置处，管理一个或多个daemon的启动
 /etc/sysconfig/*  各服务的初始化环境配置文件
