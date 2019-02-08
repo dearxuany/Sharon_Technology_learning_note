@@ -108,7 +108,7 @@ sudo /etc/init.d/nginx restart
 
 sudo service nginx start
 sudo service nginx stop
-sudo service restart
+sudo service nginx restart
 sudo service nginx status
 
 # 防火墙相关
