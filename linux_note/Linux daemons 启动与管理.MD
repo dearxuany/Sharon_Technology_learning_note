@@ -43,7 +43,7 @@ init方式启动，主要涉及到/etc 和 /var 下的一些文件，[linux 目�
 
 ### init 启动
 #### stand_alone daemons 启动
-* /etc/init.d/* 方式
+* /etc/init.d/* 方式</br>
 CentOS7 后不用了，ubuntu 貌似还可以用
 ```
 # 一般格式为
@@ -157,7 +157,7 @@ sysinit.target.wants
 system-update.target.wants
 timers.target.wants
 ```
-#### systemd 服务类型
+### systemd 服务类型
 * .service   </br>
 service unit  </br>
 一般系统服务，包括本机服务和网络服务 </br>
@@ -219,7 +219,6 @@ Active 常见状态
 * active (exited) 现时没有正在执行的程序，多见于只执行一次就结束的服务
 * active (waiting) 正在执行中，但是要等待其他服务响应
 * inactive (dead) 没有在运作
-* 
 ```
 [sunnylinux@centOSlearning init.d]$ systemctl status crond
 ● crond.service - Command Scheduler
@@ -240,6 +239,7 @@ Authentication is required to manage system services or units.
 Authenticating as: sunnylinux
 Password:
 ```
+注意：不应该用kill方法来关掉一些正常的服务，应该用stop
 ```
 [sunnylinux@centOSlearning system]$ systemctl status firewalld
 ● firewalld.service - firewalld - dynamic firewall daemon
@@ -273,6 +273,91 @@ Password:
 2月 08 15:40:26 centOSlearning.SharonLi systemd[1]: Stopping firewalld - dynamic firewall daemon...
 2月 08 15:40:32 centOSlearning.SharonLi systemd[1]: Stopped firewalld - dynamic firewall daemon.
 ```
-注意：不应该用kill方法来关掉一些正常的服务，应该用stop
+设置开机自启
+```
+[sunnylinux@centOSlearning system]$ systemctl status chronyd.service
+● chronyd.service - NTP client/server
+   Loaded: loaded (/usr/lib/systemd/system/chronyd.service; disabled; vendor preset: enabled)
+   Active: inactive (dead)
+     Docs: man:chronyd(8)
+           man:chrony.conf(5)
+           
+[sunnylinux@centOSlearning system]$ systemctl enable chronyd.service
+==== AUTHENTICATING FOR org.freedesktop.systemd1.manage-unit-files ===
+Authentication is required to manage system service or unit files.
+Authenticating as: sunnylinux
+Password:
+==== AUTHENTICATION COMPLETE ===
+Created symlink from /etc/systemd/system/multi-user.target.wants/chronyd.service to /usr/lib/systemd/system/chronyd.service.
+==== AUTHENTICATING FOR org.freedesktop.systemd1.reload-daemon ===
+Authentication is required to reload the systemd state.
+Authenticating as: sunnylinux
+Password:
+==== AUTHENTICATION COMPLETE ===
 
+[sunnylinux@centOSlearning system]$ systemctl status chronyd.service
+● chronyd.service - NTP client/server
+   Loaded: loaded (/usr/lib/systemd/system/chronyd.service; enabled; vendor preset: enabled)
+   Active: inactive (dead)
+     Docs: man:chronyd(8)
+           man:chrony.conf(5)
+```
+完整关闭一些服务（暂停运行+关闭开机自启）</br>
+实际上有很多服务是相互依赖的，一个服务会启动另一个服务，所以有时关了也没有用，有请求来了会自启</br>
+```
+[sunnylinux@centOSlearning system]$ systemctl status cups
+● cups.service - CUPS Printing Service
+   Loaded: loaded (/usr/lib/systemd/system/cups.service; enabled; vendor preset: enabled)
+   Active: active (running) since 五 2019-02-08 09:44:36 CST; 6h ago
+ Main PID: 1194 (cupsd)
+   CGroup: /system.slice/cups.service
+           └─1194 /usr/sbin/cupsd -f
 
+2月 08 09:44:36 centOSlearning.SharonLi systemd[1]: Started CUPS Printing Service.
+2月 08 09:44:36 centOSlearning.SharonLi systemd[1]: Starting CUPS Printing Service...
+
+[sunnylinux@centOSlearning system]$ systemctl stop cups
+==== AUTHENTICATING FOR org.freedesktop.systemd1.manage-units ===
+Authentication is required to manage system services or units.
+Authenticating as: sunnylinux
+Password:
+==== AUTHENTICATION COMPLETE ===
+Warning: Stopping cups.service, but it can still be activated by:
+  cups.socket
+  cups.path
+  
+[sunnylinux@centOSlearning system]$ systemctl disable cups
+==== AUTHENTICATING FOR org.freedesktop.systemd1.manage-unit-files ===
+Authentication is required to manage system service or unit files.
+Authenticating as: sunnylinux
+Password:
+==== AUTHENTICATION COMPLETE ===
+Removed symlink /etc/systemd/system/multi-user.target.wants/cups.path.
+Removed symlink /etc/systemd/system/multi-user.target.wants/cups.service.
+Removed symlink /etc/systemd/system/sockets.target.wants/cups.socket.
+Removed symlink /etc/systemd/system/printer.target.wants/cups.service.
+==== AUTHENTICATING FOR org.freedesktop.systemd1.reload-daemon ===
+Authentication is required to reload the systemd state.
+Authenticating as: sunnylinux
+Password:
+==== AUTHENTICATION COMPLETE ===
+
+[sunnylinux@centOSlearning system]$ systemctl status cups
+● cups.service - CUPS Printing Service
+   Loaded: loaded (/usr/lib/systemd/system/cups.service; disabled; vendor preset: enabled)
+   Active: inactive (dead) since 五 2019-02-08 15:58:50 CST; 39s ago
+ Main PID: 1194 (code=exited, status=0/SUCCESS)
+
+2月 08 09:44:36 centOSlearning.SharonLi systemd[1]: Started CUPS Printing Service.
+2月 08 09:44:36 centOSlearning.SharonLi systemd[1]: Starting CUPS Printing Service...
+2月 08 15:58:49 centOSlearning.SharonLi systemd[1]: Stopping CUPS Printing Service...
+2月 08 15:58:50 centOSlearning.SharonLi systemd[1]: Stopped CUPS Printing Service.
+```
+cups.socket和cups.path启动后，会自动启动 CUPS.service，所以如果真的要关闭 CUPS.service 就需要把 cups.socket和cups.path 也关了。</br>
+另一种方法是直接把  CUPS.service 注销掉，这样就不用关闭 cups.socket和cups.path 了，非正规但有效。
+```
+systemctl mask cups.service  # 注销
+systemctl unmask cups.service  # 取消注销，恢复服务
+```
+
+### 查看已启动的服务
