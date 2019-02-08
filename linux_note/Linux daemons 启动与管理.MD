@@ -76,7 +76,31 @@ Redirecting to /bin/systemctl status crond.service
 2月 08 09:44:37 centOSlearning.SharonLi crond[1221]: (CRON) INFO (RANDOM_DELAY will be scaled with factor 45% if used.)
 2月 08 09:44:45 centOSlearning.SharonLi crond[1221]: (CRON) INFO (running with inotify support)
 ```
-systemctl 方式
+#### systemctl 方式
+CentOS7 可用
+```
+systemctl (start|stop|restart|try-restart|reload|force-reload|status) [service name]
+```
+```
+[sunnylinux@centOSlearning init.d]$ systemctl status crond
+● crond.service - Command Scheduler
+   Loaded: loaded (/usr/lib/systemd/system/crond.service; enabled; vendor preset: enabled)
+   Active: active (running) since 五 2019-02-08 09:44:37 CST; 3h 22min ago
+ Main PID: 1221 (crond)
+   CGroup: /system.slice/crond.service
+           └─1221 /usr/sbin/crond -n
+
+2月 08 09:44:37 centOSlearning.SharonLi systemd[1]: Started Command Scheduler.
+2月 08 09:44:37 centOSlearning.SharonLi systemd[1]: Starting Command Scheduler...
+2月 08 09:44:37 centOSlearning.SharonLi crond[1221]: (CRON) INFO (RANDOM_DELAY will be scaled with factor 45% if used.)
+2月 08 09:44:45 centOSlearning.SharonLi crond[1221]: (CRON) INFO (running with inotify support)
+
+[sunnylinux@centOSlearning init.d]$ systemctl restart crond
+==== AUTHENTICATING FOR org.freedesktop.systemd1.manage-units ===
+Authentication is required to manage system services or units.
+Authenticating as: sunnylinux
+Password:
+```
 
 ## super daemons 
 ### super daemons 分类
