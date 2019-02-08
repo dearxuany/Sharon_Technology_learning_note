@@ -1,4 +1,5 @@
 # Linux 端口与网络服务管理
+所谓的“关闭端口”，其实是关闭使用该端口的服务
 ## 查看网络服务接口
 查看网络服务开启的端口
 注意：需要root权限才能看到 -p 的内容
@@ -77,4 +78,4 @@ Hint: Some lines were ellipsized, use -l to show in full.
   avahi-daemon.socket                                                                 loaded active running   Avahi mDNS/DNS-SD Stack Activation Socket
 
 ```
-可按需将其关闭（stop和disabled）
+可按需将其关闭（stop和disabled），注意要关闭该服务本身和其关联的服务
