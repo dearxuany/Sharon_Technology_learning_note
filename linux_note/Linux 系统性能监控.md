@@ -52,11 +52,12 @@ python3 3639 sunnylinux  mem    REG  253,0    136312 17225343 /usr/lib/libtinfo.
 CPU相关的命令
 ```
 lscpu    #输出CPU信息
-top
+top      #动态输出各种和CPU相关的信息
 htop     #高级的交互式实时linux进程监控工具，和top相似，但更友好, 还支持鼠标
 vmstat   #检测系统资源变化，系统繁忙的时候用
 mpstat   #监控到cpu的一些统计信息，在多核cpu的系统里不但能够查看所有cpu的平均状况信息，而且能够查看特定的cpu的信息
 ```
+### lscpu
 ```
 $ lscpu
 Architecture:          i686
@@ -80,6 +81,39 @@ L2 缓存：           512K
 Flags:                 fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm 3dnowext 3dnow constant_tsc art tsc_reliable nonstop_tsc pni cx16 x2apic popcnt hypervisor lahf_lm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw retpoline_amd ibp_disable vmmcall
 
 ```
+### 查进程和CPU top
+[top的使用](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E5%86%85%E6%A0%B8%E3%80%81%E8%BF%9B%E7%A8%8B%E3%80%81%E7%BA%BF%E7%A8%8B.MD#%E5%8A%A8%E6%80%81%E6%9F%A5%E8%AF%A2%E8%BF%9B%E7%A8%8B%E7%8A%B6%E6%80%81)</br>
+```
+top - 09:57:39 up 15 min,  1 user,  load average: 0.04, 0.14, 0.25
+Tasks: 159 total,   2 running, 157 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  0.0 us,  0.7 sy,  0.0 ni, 99.3 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+KiB Mem :  1027752 total,   336128 free,   342700 used,   348924 buff/cache
+KiB Swap:  1048572 total,  1048572 free,        0 used.   509800 avail Mem
+
+  PID USER      PR  NI    VIRT    RES    SHR S %CPU %MEM     TIME+ COMMAND
+ 2111 sunnyli+  20   0   10260   1900   1340 R  0.7  0.2   0:00.27 top
+  385 root      20   0       0      0      0 S  0.3  0.0   0:00.55 xfsaild/dm-0
+  846 root      20   0   31224   4264   3516 S  0.3  0.4   0:03.20 vmtoolsd
+ 1671 mysql     20   0  589928  72624   6032 S  0.3  7.1   0:02.18 mysqld
+ 2054 root      20   0       0      0      0 S  0.3  0.0   0:00.07 kworker/0:0
+    1 root      20   0   27052   5748   3956 S  0.0  0.6   0:05.20 systemd
+    2 root      20   0       0      0      0 S  0.0  0.0   0:00.00 kthreadd
+    3 root      20   0       0      0      0 S  0.0  0.0   0:00.19 ksoftirqd/0
+    5 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kworker/0:0H
+    7 root      rt   0       0      0      0 S  0.0  0.0   0:00.00 migration/0
+    8 root      20   0       0      0      0 S  0.0  0.0   0:00.00 rcu_bh
+    9 root      20   0       0      0      0 R  0.0  0.0   0:01.97 rcu_sched
+   10 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 lru-add-drain
+   11 root      rt   0       0      0      0 S  0.0  0.0   0:00.72 watchdog/0
+   13 root      20   0       0      0      0 S  0.0  0.0   0:00.01 kdevtmpfs
+   14 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 netns
+   15 root      20   0       0      0      0 S  0.0  0.0   0:00.00 khungtaskd
+   16 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 writeback
+   17 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kintegrityd
+   18 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 bioset
+   19 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kblockd
+```
+###　vmstat
 vmstat 可动态地检测系统资源变化，包括CPU/内存/磁盘输入输出状态
 ```
 vmstat 参数
