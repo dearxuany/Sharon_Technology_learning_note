@@ -90,14 +90,15 @@ crash            hpet     mem           random              sr0       tty17   tt
 ```
 ### /etc
 /etc 放置各种系统配置文件，不可分享，仅和自身系统有关，比如用户账号密码文件、各种服务起始文件等。</br>
+
 #### 启动脚本目录 /etc/init.d
-用 yum 安装的软件的配置文件会被放置在 /etc 当中，可使用各种启动脚本
+用 yum 安装的软件的配置文件会被放置在 /etc 当中，可使用各种启动脚本，启动脚本会放在/etc/init.d中
 ```
-# 系统所有服务默认启动脚本
+# 系统服务默认启动脚本
 [sunnylinux@centOSlearning etc]$ ls /etc/init.d
 functions  netconsole  network  README  vmware-tools  vmware-tools-thinprint
 ```
-启动命令:</br>
+其他服务启动脚本:</br>
 源码编译安装貌似不能用 service 相关的命令
 ```
 # nginx 相关
@@ -114,7 +115,9 @@ sudo service nginx status
 sudo /etc/init.d/iptable start
 sudo /etc/init.d/iptable stop
 sudo /etc/init.d/iptable restart
-
+```
+有一些可能不会放置在/etc/init.d中，但一般会在/etc中，具体查软件的manual
+```
 # php 相关启动目录和配置文件
 [sunnylinux@centOSlearning etc]$ ls |grep php
 php.d
