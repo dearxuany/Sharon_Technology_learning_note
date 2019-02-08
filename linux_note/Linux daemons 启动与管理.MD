@@ -9,6 +9,7 @@
 例子：telnet</br>
 </br>
 根据工作形态分：</br>
+
 * singal-control</br>
 通过信号来管理，请求来立刻去处理。</br>
 * interval-control</br>
