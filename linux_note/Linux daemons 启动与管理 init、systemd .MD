@@ -1,4 +1,4 @@
-# Linux daemons 启动与管理
+# Linux daemons 启动与管理 init、systemd
 
 ## daemons 命名规则
 service 名后面加 d
