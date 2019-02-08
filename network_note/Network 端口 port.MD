@@ -35,3 +35,89 @@ mongodb 2719
 ```
 ## 端口重定向
 实现重定向是为了隐藏公认的默认端口，降低受破坏率，提高安全性。
+
+## Linux 端口查询
+查询服务对应端口
+```
+sunnylinux@centOSlearning system]$ cat /etc/services|grep https
+https           443/tcp                         # http protocol over TLS/SSL
+https           443/udp                         # http protocol over TLS/SSL
+https           443/sctp                        # http protocol over TLS/SSL
+oob-ws-https    664/tcp                 # DMTF out-of-band secure web services management protocol
+llsurfup-https  1184/tcp                # LL Surfup HTTPS
+llsurfup-https  1184/udp                # LL Surfup HTTPS
+compaq-https    2381/tcp                # Compaq HTTPS
+compaq-https    2381/udp                # Compaq HTTPS
+wap-push-https  4036/tcp                # WAP Push OTA-HTTP secure
+wap-push-https  4036/udp                # WAP Push OTA-HTTP secure
+appserv-https   4849/tcp                # App Server - Admin HTTPS
+appserv-https   4849/udp                # App Server - Admin HTTPS
+wbem-https      5989/tcp                # WBEM CIM-XML (HTTPS)
+wbem-https      5989/udp                # WBEM CIM-XML (HTTPS)
+wbem-exp-https  5990/tcp                # WBEM Export HTTPS
+wbem-exp-https  5990/udp                # WBEM Export HTTPS
+sun-sr-https    6443/tcp                # Service Registry Default HTTPS Domain
+sun-sr-https    6443/udp                # Service Registry Default HTTPS Domain
+plysrv-https    6771/tcp                # PolyServe https
+plysrv-https    6771/udp                # PolyServe https
+smc-https       6789/tcp                # SMC-HTTPS
+smc-https       6789/udp                # SMC-HTTPS
+oracleas-https  7443/tcp                # Oracle Application Server HTTPS
+oracleas-https  7443/udp                # Oracle Application Server HTTPS
+sun-user-https  7677/tcp                # Sun App Server - HTTPS
+sun-user-https  7677/udp                # Sun App Server - HTTPS
+synapse-nhttps  8243/tcp                # Synapse Non Blocking HTTPS
+synapse-nhttps  8243/udp                # Synapse Non Blocking HTTPS
+pcsync-https    8443/tcp                # PCsync HTTPS
+pcsync-https    8443/udp                # PCsync HTTPS
+https-wmap      8991/tcp                # webmail HTTPS service
+https-wmap      8991/udp                # webmail HTTPS service
+armcenterhttps  9295/tcp                # ARMCenter https Service
+armcenterhttps  9295/udp                # ARMCenter https Service
+tungsten-https  9443/tcp                # WSO2 Tungsten HTTPS
+tungsten-https  9443/udp                # WSO2 Tungsten HTTPS
+amt-soap-https  16993/tcp               # Intel(R) AMT SOAP/HTTPS
+amt-soap-https  16993/udp               # Intel(R) AMT SOAP/HTTPS
+commtact-https  20003/tcp               # Commtact HTTPS
+commtact-https  20003/udp               # Commtact HTTPS
+
+[sunnylinux@centOSlearning system]$ cat /etc/services|grep http
+#       http://www.iana.org/assignments/port-numbers
+http            80/tcp          www www-http    # WorldWideWeb HTTP
+http            80/udp          www www-http    # HyperText Transfer Protocol
+http            80/sctp                         # HyperText Transfer Protocol
+https           443/tcp                         # http protocol over TLS/SSL
+https           443/udp                         # http protocol over TLS/SSL
+https           443/sctp                        # http protocol over TLS/SSL
+
+[sunnylinux@centOSlearning system]$ cat /etc/services|grep ssh
+ssh             22/tcp                          # The Secure Shell (SSH) Protocol
+ssh             22/udp                          # The Secure Shell (SSH) Protocol
+x11-ssh-offset  6010/tcp                        # SSH X11 forwarding offset
+ssh             22/sctp                 # SSH
+sshell          614/tcp                 # SSLshell
+sshell          614/udp                 #       SSLshell
+netconf-ssh     830/tcp                 # NETCONF over SSH
+netconf-ssh     830/udp                 # NETCONF over SSH
+sdo-ssh         3897/tcp                # Simple Distributed Objects over SSH
+sdo-ssh         3897/udp                # Simple Distributed Objects over SSH
+snmpssh         5161/tcp                # SNMP over SSH Transport Model
+snmpssh-trap    5162/tcp                # SNMP Notification over SSH Transport Model
+tl1-ssh         6252/tcp                # TL1 over SSH
+tl1-ssh         6252/udp                # TL1 over SSH
+ssh-mgmt        17235/tcp               # SSH Tectia Manager
+ssh-mgmt        17235/udp               # SSH Tectia Manager
+
+[sunnylinux@centOSlearning system]$ cat /etc/services|grep mysql
+mysql           3306/tcp                        # MySQL
+mysql           3306/udp                        # MySQL
+mysql-cluster   1186/tcp                # MySQL Cluster Manager
+mysql-cluster   1186/udp                # MySQL Cluster Manager
+mysql-cm-agent  1862/tcp                # MySQL Cluster Manager Agent
+mysql-cm-agent  1862/udp                # MySQL Cluster Manager Agent
+mysql-im        2273/tcp                # MySQL Instance Manager
+mysql-im        2273/udp                # MySQL Instance Manager
+mysql-proxy     6446/tcp                # MySQL Proxy
+mysql-proxy     6446/udp                # MySQL Proxy
+```
+
