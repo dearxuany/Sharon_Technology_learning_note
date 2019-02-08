@@ -90,9 +90,17 @@ systemd 特点
 
 ### systemd 相关目录
 ```
+# 启动脚本相关目录
 /etc/systemd/system/  可依据主机需求建立启动脚本，优先级比/run/systemd/system/ 高，功能类似于/etc/rc.d/rc5.d/Sxx，决定脚本是否开机执行
 /run/systemd/system/  系统运行过程中产生的脚本，优先级比/usr/lib/systemd/system/ 高
 /usr/lib/systemd/system/  启动脚本目录，类似于/etc/init.d，实际执行的启动脚本位置
+
+# 环境相关
+/etc/sysconfig/*  所有服务的初始化选项在此目录下
+
+# 服务运行相关
+/var/lib/  服务运行过程中产生的某些数据放这里
+/run/   daemons的暂存档，如 lock file 以及 PID file
 ```
 /usr/lib/systemd/system/
 ```
@@ -470,4 +478,84 @@ cups.socket                                   disabled
 ```
 [sunnylinux@centOSlearning system]$ systemctl --type=service --all|grep cpu
   cpupower.service                                      loaded    inactive dead    Configure CPU power related settings
+```
+找服务间的相互依赖关系</br>
+要注意现时是哪种操作环境 target unit 环境:</br>
+*  multi-user.target 纯文本模式
+*  graphical.target 文字加上图形化界面
+*  rescue.target  救援模式
+*  emergency.target  紧急模式
+```
+[sunnylinux@centOSlearning system]$ systemctl get-default
+graphical.target
+
+# 是个很长的tree
+[sunnylinux@centOSlearning system]$ systemctl list-dependencies
+default.target
+● ├─accounts-daemon.service
+● ├─gdm.service
+● ├─network.service
+● ├─rtkit-daemon.service
+● ├─systemd-readahead-collect.service
+● ├─systemd-readahead-replay.service
+● ├─systemd-update-utmp-runlevel.service
+● ├─vmware-tools-thinprint.service
+● ├─vmware-tools.service
+● └─multi-user.target
+●   ├─abrt-ccpp.service
+●   ├─abrt-oops.service
+●   ├─abrt-vmcore.service
+●   ├─abrt-xorg.service
+●   ├─abrtd.service
+●   ├─atd.service
+●   ├─auditd.service
+●   ├─avahi-daemon.service
+
+# 反向查询：谁在使用本服务
+[sunnylinux@centOSlearning system]$ systemctl list-dependencies --reverse
+default.target
+
+# 查询指定服务
+[sunnylinux@centOSlearning system]$ systemctl list-dependencies cups.service
+cups.service
+● ├─-.mount
+● ├─system.slice
+● └─basic.target
+●   ├─alsa-restore.service
+●   ├─alsa-state.service
+●   ├─microcode.service
+●   ├─rhel-dmesg.service
+●   ├─selinux-policy-migrate-local-changes@targeted.service
+●   ├─paths.target
+●   ├─slices.target
+●   │ ├─-.slice
+●   │ └─system.slice
+●   ├─sockets.target
+# 省略大量输出
+```
+查找 socket file 位置
+```
+
+[sunnylinux@centOSlearning system]$ systemctl list-sockets
+LISTEN                         UNIT                         ACTIVATES
+/dev/log                       systemd-journald.socket      systemd-journald.service
+/run/dbus/system_bus_socket    dbus.socket                  dbus.service
+/run/dmeventd-client           dm-event.socket              dm-event.service
+/run/dmeventd-server           dm-event.socket              dm-event.service
+/run/lvm/lvmetad.socket        lvm2-lvmetad.socket          lvm2-lvmetad.service
+/run/lvm/lvmpolld.socket       lvm2-lvmpolld.socket         lvm2-lvmpolld.service
+/run/systemd/initctl/fifo      systemd-initctl.socket       systemd-initctl.service
+/run/systemd/journal/socket    systemd-journald.socket      systemd-journald.service
+/run/systemd/journal/stdout    systemd-journald.socket      systemd-journald.service
+/run/systemd/shutdownd         systemd-shutdownd.socket     systemd-shutdownd.service
+/run/udev/control              systemd-udevd-control.socket systemd-udevd.service
+/var/run/avahi-daemon/socket   avahi-daemon.socket          avahi-daemon.service
+/var/run/cups/cups.sock        cups.socket                  cups.service
+/var/run/rpcbind.sock          rpcbind.socket               rpcbind.service
+@ISCSIADM_ABSTRACT_NAMESPACE   iscsid.socket                iscsid.service
+@ISCSID_UIP_ABSTRACT_NAMESPACE iscsiuio.socket              iscsiuio.service
+kobject-uevent 1               systemd-udevd-kernel.socket  systemd-udevd.service
+
+17 sockets listed.
+Pass --all to see loaded but inactive sockets, too.
 ```
