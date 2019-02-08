@@ -303,6 +303,7 @@ Password:
            man:chrony.conf(5)
 ```
 完整关闭一些服务（暂停运行+关闭开机自启）</br>
+注意：要看清楚 Removed symlink 是否只有一条，如果有多条则为有相关联的服务</br>
 实际上有很多服务是相互依赖的，一个服务会启动另一个服务，所以有时关了也没有用，有请求来了会自启</br>
 ```
 [sunnylinux@centOSlearning system]$ systemctl status cups
@@ -361,3 +362,112 @@ systemctl unmask cups.service  # 取消注销，恢复服务
 ```
 
 ### 查看已启动的服务
+查看当前已启动的拂去
+```
+[sunnylinux@centOSlearning system]$ systemctl
+ UNIT                                             LOAD   ACTIVE SUB       DESCRIPTION
+  proc-sys-fs-binfmt_misc.automount                loaded active waiting   Arbitrary Executable File Formats File System Au
+  sys-devices-pci0000:00-0000:00:07.1-ata2-host2-target2:0:0-2:0:0:0-block-sr0.device loaded active plugged   VMware_Virtual_IDE_CDROM_Drive
+  sys-devices-pci0000:00-0000:00:10.0-host0-target0:0:0-0:0:0:0-block-sda-sda1.device loaded active plugged   VMware_Virtual_S 1
+  sys-devices-pci0000:00-0000:00:10.0-host0-target0:0:0-0:0:0:0-block-sda-sda2.device loaded active plugged   VMware_Virtual_S 2
+  sys-devices-pci0000:00-0000:00:10.0-host0-target0:0:0-0:0:0:0-block-sda-sda3.device loaded active plugged   LVM PV NIl8Mq-jOzd-IiSN-1giH-7
+  sys-devices-pci0000:00-0000:00:10.0-host0-target0:0:0-0:0:0:0-block-sda-sda4.device loaded active plugged   VMware_Virtual_S 4
+  sys-devices-pci0000:00-0000:00:10.0-host0-target0:0:0-0:0:0:0-block-sda.device loaded active plugged   VMware_Virtual_S
+  sys-devices-pci0000:00-0000:00:11.0-0000:02:01.0-net-ens33.device loaded active plugged   79c970 [PCnet32 LANCE] (PCnet - Fast 79C971)
+  sys-devices-pci0000:00-0000:00:11.0-0000:02:02.0-sound-card0.device loaded active plugged   ES1371/ES1373 / Creative Labs CT2518 (Audio PC
+  sys-devices-platform-floppy.0-block-fd0.device   loaded active plugged   /sys/devices/platform/floppy.0/block/fd0
+  sys-devices-platform-serial8250-tty-ttyS2.device loaded active plugged   /sys/devices/platform/serial8250/tty/ttyS2
+  sys-devices-platform-serial8250-tty-ttyS3.device loaded active plugged   /sys/devices/platform/serial8250/tty/ttyS3
+  sys-devices-pnp0-00:06-tty-ttyS0.device          loaded active plugged   /sys/devices/pnp0/00:06/tty/ttyS0
+  sys-devices-pnp0-00:07-tty-ttyS1.device          loaded active plugged   /sys/devices/pnp0/00:07/tty/ttyS1
+  sys-devices-virtual-block-dm\x2d0.device         loaded active plugged   /sys/devices/virtual/block/dm-0
+  sys-devices-virtual-block-dm\x2d1.device         loaded active plugged   /sys/devices/virtual/block/dm-1
+  sys-devices-virtual-block-dm\x2d2.device         loaded active plugged   /sys/devices/virtual/block/dm-2
+  sys-module-configfs.device                       loaded active plugged   /sys/module/configfs
+  sys-module-fuse.device                           loaded active plugged   /sys/module/fuse
+  sys-subsystem-net-devices-ens33.device           loaded active plugged   79c970 [PCnet32 LANCE] (PCnet - Fast 79C971)
+  -.mount                                          loaded active mounted   /
+  boot.mount                                       loaded active mounted   /boot
+  dev-hugepages.mount                              loaded active mounted   Huge Pages File System
+  dev-mqueue.mount                                 loaded active mounted   POSIX Message Queue File System
+
+# 省略很多输出
+
+LOAD   = Reflects whether the unit definition was properly loaded.  # 开机时是否被载入
+ACTIVE = The high-level unit activation state, i.e. generalization of SUB.
+SUB    = The low-level unit activation state, values depend on unit type.
+
+142 loaded units listed. Pass --all to see loaded but inactive units, too.
+To show all installed unit files use 'systemctl list-unit-files'.
+```
+查看已被安装的服务</br>
+static 指的是这个daemons不能开机自启，但可以被其他daemons唤醒
+```
+[sunnylinux@centOSlearning system]$ systemctl list-unit-files
+UNIT FILE                                     STATE
+proc-sys-fs-binfmt_misc.automount             static
+dev-hugepages.mount                           static
+dev-mqueue.mount                              static
+proc-sys-fs-binfmt_misc.mount                 static
+sys-fs-fuse-connections.mount                 static
+sys-kernel-config.mount                       static
+sys-kernel-debug.mount                        static
+tmp.mount                                     disabled
+brandbot.path                                 enabled
+cups.path                                     disabled
+systemd-ask-password-console.path             static
+systemd-ask-password-plymouth.path            static
+systemd-ask-password-wall.path                static
+session-2.scope                               static
+session-39.scope                              static
+```
+mask 状态表示被强制注销（非删除），无论如何都无法启动
+```
+[sunnylinux@centOSlearning system]$ systemctl list-unit-files |grep cups
+cups.path                                     disabled
+cups-browsed.service                          disabled
+cups.service                                  disabled
+cups.socket                                   disabled
+
+[sunnylinux@centOSlearning system]$ systemctl mask cups.service
+==== AUTHENTICATING FOR org.freedesktop.systemd1.manage-unit-files ===
+Authentication is required to manage system service or unit files.
+Authenticating as: sunnylinux
+Password:
+==== AUTHENTICATION COMPLETE ===
+Created symlink from /etc/systemd/system/cups.service to /dev/null.
+==== AUTHENTICATING FOR org.freedesktop.systemd1.reload-daemon ===
+Authentication is required to reload the systemd state.
+Authenticating as: sunnylinux
+Password:
+==== AUTHENTICATION COMPLETE ===
+
+[sunnylinux@centOSlearning system]$ systemctl list-unit-files |grep cups
+cups.path                                     disabled
+cups-browsed.service                          disabled
+cups.service                                  masked
+cups.socket                                   disabled
+
+[sunnylinux@centOSlearning system]$ systemctl unmask cups.service
+==== AUTHENTICATING FOR org.freedesktop.systemd1.manage-unit-files ===
+Authentication is required to manage system service or unit files.
+Authenticating as: sunnylinux
+Password:
+==== AUTHENTICATION COMPLETE ===
+Removed symlink /etc/systemd/system/cups.service.
+==== AUTHENTICATING FOR org.freedesktop.systemd1.reload-daemon ===
+Authentication is required to reload the systemd state.
+Authenticating as: sunnylinux
+Password:
+==== AUTHENTICATION COMPLETE ===
+[sunnylinux@centOSlearning system]$ systemctl list-unit-files |grep cups
+cups.path                                     disabled
+cups-browsed.service                          disabled
+cups.service                                  disabled
+cups.socket                                   disabled
+```
+列出类型为.service 的cpu相关服务
+```
+[sunnylinux@centOSlearning system]$ systemctl --type=service --all|grep cpu
+  cpupower.service                                      loaded    inactive dead    Configure CPU power related settings
+```
