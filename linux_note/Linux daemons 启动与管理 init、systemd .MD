@@ -369,7 +369,7 @@ systemctl mask cups.service  # 注销
 systemctl unmask cups.service  # 取消注销，恢复服务
 ```
 
-### 查看已启动的服务
+### systemctl 查看服务
 查看当前已启动的服务
 ```
 [sunnylinux@centOSlearning system]$ systemctl
@@ -558,4 +558,81 @@ kobject-uevent 1               systemd-udevd-kernel.socket  systemd-udevd.servic
 
 17 sockets listed.
 Pass --all to see loaded but inactive sockets, too.
+```
+查看开机启动的服务
+```
+[sunnylinux@centOSlearning system]$ systemctl list-unit-files --all|grep enable
+brandbot.path                                 enabled
+abrt-ccpp.service                             enabled
+abrt-oops.service                             enabled
+abrt-vmcore.service                           enabled
+abrt-xorg.service                             enabled
+abrtd.service                                 enabled
+accounts-daemon.service                       enabled
+atd.service                                   enabled
+auditd.service                                enabled
+autovt@.service                               enabled
+avahi-daemon.service                          enabled
+bluetooth.service                             enabled
+chronyd.service                               enabled
+crond.service                                 enabled
+dbus-org.bluez.service                        enabled
+dbus-org.fedoraproject.FirewallD1.service     enabled
+dbus-org.freedesktop.Avahi.service            enabled
+dbus-org.freedesktop.ModemManager1.service    enabled
+dbus-org.freedesktop.NetworkManager.service   enabled
+dbus-org.freedesktop.nm-dispatcher.service    enabled
+display-manager.service                       enabled
+dmraid-activation.service                     enabled
+firewalld.service                             enabled
+gdm.service                                   enabled
+getty@.service                                enabled
+irqbalance.service                            enabled
+iscsi.service                                 enabled
+kdump.service                                 enabled
+libstoragemgmt.service                        enabled
+lvm2-monitor.service                          enabled
+mariadb.service                               enabled
+mcelog.service                                enabled
+mdmonitor.service                             enabled
+microcode.service                             enabled
+ModemManager.service                          enabled
+multipathd.service                            enabled
+NetworkManager-dispatcher.service             enabled
+NetworkManager-wait-online.service            enabled
+NetworkManager.service                        enabled
+ntpd.service                                  enabled
+postfix.service                               enabled
+qemu-guest-agent.service                      enabled
+rhel-autorelabel-mark.service                 enabled
+rhel-autorelabel.service                      enabled
+rhel-configure.service                        enabled
+rhel-dmesg.service                            enabled
+rhel-domainname.service                       enabled
+rhel-import-state.service                     enabled
+rhel-loadmodules.service                      enabled
+rhel-readonly.service                         enabled
+rngd.service                                  enabled
+rsyslog.service                               enabled
+rtkit-daemon.service                          enabled
+smartd.service                                enabled
+spice-vdagentd.service                        enabled
+sshd.service                                  enabled
+sysstat.service                               enabled
+systemd-readahead-collect.service             enabled
+systemd-readahead-drop.service                enabled
+systemd-readahead-replay.service              enabled
+tuned.service                                 enabled
+avahi-daemon.socket                           enabled
+dm-event.socket                               enabled
+iscsid.socket                                 enabled
+iscsiuio.socket                               enabled
+lvm2-lvmetad.socket                           enabled
+lvm2-lvmpolld.socket                          enabled
+rpcbind.socket                                enabled
+default.target                                enabled
+graphical.target                              enabled
+remote-fs.target                              enabled
+runlevel5.target                              enabled
+unbound-anchor.timer                          enabled
 ```
