@@ -42,7 +42,7 @@ init方式启动，主要涉及到/etc 和 /var 下的一些文件，[linux 目�
 ```
 
 ### init 启动
-#### stand_alone daemons 启动
+#### stand_alone daemons 
 * /etc/init.d/* 方式</br>
 CentOS7 后不用了，ubuntu 貌似还可以用
 ```
@@ -75,9 +75,27 @@ Redirecting to /bin/systemctl status crond.service
 ```
 
 #### super daemons 
-super daemons 分类（根据处理方式分）
+##### super daemons 分类
+根据处理方式分</br>
 * 单线程
 * 多线程
+##### super daemons 启动
+super daemons的总管进程 xinetd 本身是个 stand_alone daemons，它的启动方式和其他 stand_alone 一样</br>
+注意：CentOS7 不用init了，所以没有xinetd，需要自行安装，启动方式也是用 systemctl start xinetd，不过作用已被systemd接管，所以安了也没有什么用</br>
+```
+[sunnylinux@centOSlearning etc]$ ls|grep xinetd
+xinetd.conf
+xinetd.d
+
+# 启动 xinetd
+/etc/init.d/xinetd
+
+# 启动 xinetd 管理的服务
+grep -i 'disable=no' /etc/xinetd.d/*
+# 关闭 xinetd 管理的服务
+grep -i 'disable' /etc/xinetd.d/*
+```
+
 
 ## systemd 
 systemd 特点
