@@ -9,7 +9,7 @@
 * Linux 提供的日志服务程序，而我们这里系统日志是通过 rsyslog 来实现，提供日志管理服务，如 /var/log 中的 log
 
 ## 常见日志
-ubuntu的一些常见log
+ubuntu 常见log
 ```
 日志名称	记录信息
 alternatives.log	系统的一些更新替代信息记录
@@ -89,7 +89,8 @@ Feb 10 16:50:01 centOSlearning CROND[9202]: (root) CMD (/usr/lib/sa/sa1 1 1)
 [   22.157416] XFS (dm-2): Ending recovery (logdev: internal)
 ```
 /var/log/lastlog 最近登录日志</br>
-lastlog 并不是 ASCII 文件而是被编码成了二进制文件，所以我们并不能直接使用 less、cat、more 这样的工具来查看</br>
+/var/log/wtmp 记录登录行为，常用于追踪一般用户的登录行为</br>
+lastlog 和 wtmp  并不是 ASCII 文件而是被编码成了二进制文件，所以我们并不能直接使用 less、cat、more 这样的工具来查看</br>
 使用 last 与 lastlog 工具来提取其中的信息</br>
 ```
 [sunnylinux@centOSlearning log]$ last |grep Feb
@@ -171,5 +172,27 @@ Feb 10 17:11:24 centOSlearning journal: D-Bus service launched with name: net.re
 Feb 10 17:11:24 centOSlearning fprintd: Launching FprintObject
 Feb 10 17:11:24 centOSlearning journal: entering main loop
 ```
+/var/log/secure 记录需要输密码的行为，不管是否失败，仅记录开机之后的数据
+```
+[sunnylinux@centOSlearning log]$ sudo tail -n 5 /var/log/secure
+Feb 10 17:11:28 centOSlearning sudo: sunnylinux : TTY=pts/0 ; PWD=/home/sunnylinux ; USER=root ; COMMAND=/bin/tail -n 20 /var/log/messages
+Feb 10 17:21:53 centOSlearning sudo: sunnylinux : TTY=pts/0 ; PWD=/var/log ; USER=root ; COMMAND=/bin/cat /var/log/secure
+Feb 10 17:22:18 centOSlearning sudo: sunnylinux : TTY=pts/0 ; PWD=/var/log ; USER=root ; COMMAND=/bin/cat /var/log/secure
+Feb 10 17:22:22 centOSlearning sudo: sunnylinux : TTY=pts/0 ; PWD=/var/log ; USER=root ; COMMAND=/bin/cat /var/log/secure
+Feb 10 17:22:40 centOSlearning sudo: sunnylinux : TTY=pts/0 ; PWD=/var/log ; USER=root ; COMMAND=/bin/tail -n 5 /var/log/secure
 
+[sunnylinux@centOSlearning log]$ sudo cat /var/log/secure-20190204|grep php
+Jan 28 00:27:52 centOSlearning sudo: sunnylinux : TTY=pts/0 ; PWD=/home/sunnylinux ; USER=root ; COMMAND=/bin/yum install php5-fpm
+Jan 31 06:29:14 centOSlearning sudo: sunnylinux : TTY=pts/2 ; PWD=/home/sunnylinux ; USER=root ; COMMAND=/bin/yum intall php
+Jan 31 06:29:22 centOSlearning sudo: sunnylinux : TTY=pts/2 ; PWD=/home/sunnylinux ; USER=root ; COMMAND=/bin/yum install php
+Jan 31 06:35:49 centOSlearning sudo: sunnylinux : TTY=pts/2 ; PWD=/home/sunnylinux ; USER=root ; COMMAND=/sbin/service php start
+Jan 31 06:36:36 centOSlearning polkitd[635]: Operator of unix-process:9028:5251384 successfully authenticated as unix-user:sunnylinux to gain ONE-SHOT authorization for action org.freedesktop.systemd1.manage-units for system-bus-name::1.510 [systemctl start php] (owned by unix-user:sunnylinux)
+Jan 31 06:41:35 centOSlearning polkitd[635]: Operator of unix-process:9079:5281356 successfully authenticated as unix-user:sunnylinux to gain ONE-SHOT authorization for action org.freedesktop.systemd1.manage-units for system-bus-name::1.518 [/bin/systemctl start php.service] (owned by unix-user:sunnylinux)
+Jan 31 06:42:25 centOSlearning sudo: sunnylinux : TTY=pts/2 ; PWD=/home/sunnylinux ; USER=root ; COMMAND=/bin/yum install php-fpm
+Jan 31 06:56:46 centOSlearning polkitd[635]: Operator of unix-process:9201:5372514 successfully authenticated as unix-user:sunnylinux to gain ONE-SHOT authorization for action org.freedesktop.systemd1.manage-units for system-bus-name::1.532 [/bin/systemctl start php-fpm.service] (owned by unix-user:sunnylinux)
+Jan 31 07:12:24 centOSlearning polkitd[635]: Operator of unix-process:9473:5466425 successfully authenticated as unix-user:sunnylinux to gain ONE-SHOT authorization for action org.freedesktop.systemd1.manage-units for system-bus-name::1.559 [/bin/systemctl start php-fpm.service] (owned by unix-user:sunnylinux)
+Jan 31 07:16:45 centOSlearning sudo: sunnylinux : TTY=pts/1 ; PWD=/usr/local/webserver/nginx/html ; USER=root ; COMMAND=/bin/vim phpinfo.php
+Jan 31 08:09:43 centOSlearning sudo: sunnylinux : TTY=pts/1 ; PWD=/home/sunnylinux ; USER=root ; COMMAND=/bin/yum install php-mysql
+Jan 31 08:16:49 centOSlearning sudo: sunnylinux : TTY=pts/1 ; PWD=/home/sunnylinux ; USER=root ; COMMAND=/sbin/service php-fpm restart
+```
 
