@@ -11,6 +11,9 @@ Daemon的启动需要执行文件、配置文件、执行环境。</br>
 进行环境的检测、加载提供的函数功能、配置文件的分析、PID文件的放置，以及重要交换文件的锁住 lock 操作。</br>
 过去，系统服务的进程大多依靠一个init的启动机制来启动，CentOS7以后使用的是 systemd。</br>
 
+关于 linux 的初始化系统 sysvinit、upstart、systemd：</br>
+https://www.ibm.com/developerworks/cn/linux/1407_liuming_init3/index.html
+
 ## init
 ### init daemons 分类
 按照 daemons 的启动和管理方式分类：</br>
@@ -105,6 +108,26 @@ systemd 特点
 * init 有 runlevel，而systemd 对应的是 target ，但没有全部对应，runlevel依然无可取代
 * systemd 向下兼容 init
 </br>
+可见，现在 CentOS7 的初始进程是 systemd ：
+```
+$ pstree
+systemd─┬─ModemManager───2*[{ModemManager}]
+        ├─NetworkManager───2*[{NetworkManager}]
+        ├─2*[abrt-watch-log]
+        ├─abrtd
+        ├─accounts-daemon───2*[{accounts-daemon}]
+        ├─alsactl
+        ├─at-spi-bus-laun─┬─dbus-daemon───{dbus-daemon}
+        │                 └─3*[{at-spi-bus-laun}]
+        ├─at-spi2-registr───2*[{at-spi2-registr}]
+        ├─atd
+        ├─auditd─┬─audispd─┬─sedispatch
+        │        │         └─{audispd}
+        │        └─{auditd}
+        ├─avahi-daemon───avahi-daemon
+        ├─colord───2*[{colord}]
+        ├─crond
+```
 
 ### systemd 相关目录
 ```
@@ -590,67 +613,6 @@ accounts-daemon.service                       enabled
 atd.service                                   enabled
 auditd.service                                enabled
 autovt@.service                               enabled
-avahi-daemon.service                          enabled
-bluetooth.service                             enabled
-chronyd.service                               enabled
-crond.service                                 enabled
-dbus-org.bluez.service                        enabled
-dbus-org.fedoraproject.FirewallD1.service     enabled
-dbus-org.freedesktop.Avahi.service            enabled
-dbus-org.freedesktop.ModemManager1.service    enabled
-dbus-org.freedesktop.NetworkManager.service   enabled
-dbus-org.freedesktop.nm-dispatcher.service    enabled
-display-manager.service                       enabled
-dmraid-activation.service                     enabled
-firewalld.service                             enabled
-gdm.service                                   enabled
-getty@.service                                enabled
-irqbalance.service                            enabled
-iscsi.service                                 enabled
-kdump.service                                 enabled
-libstoragemgmt.service                        enabled
-lvm2-monitor.service                          enabled
-mariadb.service                               enabled
-mcelog.service                                enabled
-mdmonitor.service                             enabled
-microcode.service                             enabled
-ModemManager.service                          enabled
-multipathd.service                            enabled
-NetworkManager-dispatcher.service             enabled
-NetworkManager-wait-online.service            enabled
-NetworkManager.service                        enabled
-ntpd.service                                  enabled
-postfix.service                               enabled
-qemu-guest-agent.service                      enabled
-rhel-autorelabel-mark.service                 enabled
-rhel-autorelabel.service                      enabled
-rhel-configure.service                        enabled
-rhel-dmesg.service                            enabled
-rhel-domainname.service                       enabled
-rhel-import-state.service                     enabled
-rhel-loadmodules.service                      enabled
-rhel-readonly.service                         enabled
-rngd.service                                  enabled
-rsyslog.service                               enabled
-rtkit-daemon.service                          enabled
-smartd.service                                enabled
-spice-vdagentd.service                        enabled
-sshd.service                                  enabled
-sysstat.service                               enabled
-systemd-readahead-collect.service             enabled
-systemd-readahead-drop.service                enabled
-systemd-readahead-replay.service              enabled
-tuned.service                                 enabled
-avahi-daemon.socket                           enabled
-dm-event.socket                               enabled
-iscsid.socket                                 enabled
-iscsiuio.socket                               enabled
-lvm2-lvmetad.socket                           enabled
-lvm2-lvmpolld.socket                          enabled
-rpcbind.socket                                enabled
-default.target                                enabled
-graphical.target                              enabled
-remote-fs.target                              enabled
-runlevel5.target                              enabled
-unbound-anchor.timer                          enabled
+# 省略部分输出
 ```
+
