@@ -38,10 +38,12 @@ init方式启动，主要涉及到/etc 和 /var 下的一些文件，[linux 目�
 /etc/init.d/*    启动脚本放置处，管理一个或多个daemon的启动（以前使用）
 /etc/sysconfig/*  各服务的初始化环境配置文件
 /etc/xinetd.conf  super daemon 默认配置文件
-/etc/xinetd.d/*   super daemon 更细致的配置文件
+/etc/xinetd.d/*   super daemon 更细致的管理配置文件
 
 /var/run/  启动的daemon进程PID记录处
 /var/lib/* 各服务产生的数据库
+
+/etc/ 软件的配置文件放置处
 ```
 
 ### init 启动
@@ -143,6 +145,9 @@ systemd─┬─ModemManager───2*[{ModemManager}]
 # 服务运行相关
 /var/lib/  服务运行过程中产生的某些数据放这里
 /run/   daemons的暂存档，如 lock file 以及 PID file
+
+# 各种daemon的配置文件
+/etc/
 ```
 /usr/lib/systemd/system/ </br>
 优先级最低，是软件的默认设定，建议不要随便修改
@@ -650,9 +655,9 @@ auditd.service                                enabled
 autovt@.service                               enabled
 # 省略部分输出
 ```
-### systemd 服务配置
-systemd 的服务配置脚本大多放在 /usr/lib/systemd/system，主要保存软件的默认设定。</br>
-如果要自定义系统服务，Red Hat 建议将改动的脚本放在  /etc/systemd/system/ 里面。</br>
+### systemd 服务管理配置
+systemd 的服务管理配置脚本大多放在 /usr/lib/systemd/system，主要保存软件的默认管理设定。</br>
+如果要自定义系统服务管理，Red Hat 建议将改动的脚本放在  /etc/systemd/system/ 里面。</br>
 ```
 # 启动脚本相关目录
 /etc/systemd/system/  可依据主机需求建立启动脚本，优先级比/run/systemd/system/ 高，功能类似于/etc/rc.d/rc5.d/Sxx，决定脚本是否开机执行
@@ -661,7 +666,7 @@ systemd 的服务配置脚本大多放在 /usr/lib/systemd/system，主要保存
 ```
 更多的细节可查：http://linux.vbird.org/linux_basic/0560daemons.php#systemd_cfg
 #### 服务配置项目介绍
-ssh 服务的默认配置
+ssh 服务的默认启动配置
 ```
 [sunnylinux@centOSlearning getty.target.wants]$ cat /usr/lib/systemd/system/sshd.service
 [Unit]  # 此unit相关解释，列出相关联的服务
@@ -673,7 +678,7 @@ Wants=sshd-keygen.service  # 最好打开哪些服务
 [Service]  # 不同的 unit type 显示不同，此处是service
 Type=notify  # daemons 启动方式
 EnvironmentFile=/etc/sysconfig/sshd   # 环境配置
-ExecStart=/usr/sbin/sshd -D $OPTIONS  # 实际使用的启动脚本，和 systemctl start 有关
+ExecStart=/usr/sbin/sshd -D $OPTIONS  # 实际使用的启动脚本，和 systemctl start 有关，即是源码安装时直接用的启动脚本
 ExecReload=/bin/kill -HUP $MAINPID
 KillMode=process
 Restart=on-failure
@@ -683,6 +688,145 @@ RestartSec=42s  # 重启时，关闭到开启大概需要sleep多久
 WantedBy=multi-user.target  # 大多数都会在 multi-user.target
 ```
 #### 多个重复服务配置
+实例：已有sshd服务，但现在要开启第二个sshd服务，原有服务用原端口，新服务用222
+```
+# ssh 默认端口22
+[sunnylinux@centOSlearning systemd]$ sudo cat /etc/services|grep ssh
+ssh             22/tcp                          # The Secure Shell (SSH) Protocol
+ssh             22/udp                          # The Secure Shell (SSH) Protocol
+x11-ssh-offset  6010/tcp                        # SSH X11 forwarding offset
+ssh             22/sctp                 # SSH
+```
+sshd 的配置文件位于 /etc/ssh 下，可查 man ssh
+```
+[sunnylinux@centOSlearning ssh]$ ls
+moduli       ssh_host_ecdsa_key      ssh_host_ed25519_key.pub
+ssh_config   ssh_host_ecdsa_key.pub  ssh_host_rsa_key
+sshd_config  ssh_host_ed25519_key    ssh_host_rsa_key.pub
+
+# 原来的 sshd 配置文件
+[sunnylinux@centOSlearning ssh]$ sudo cat sshd_config |grep Port
+#Port 22
+#GatewayPorts no
+```
+copy一下这个文件，作为第二个ssh服务的配置文件并修改端口为222
+```
+[sunnylinux@centOSlearning ssh]$ sudo cp sshd_config sshd2_config
+
+[sunnylinux@centOSlearning ssh]$ sudo vim sshd2_config
+[sunnylinux@centOSlearning ssh]$ sudo cat sshd2_config|grep Port
+#Port 22
+Port 222
+#GatewayPorts no
+```
+修改 systemd 中 sshd 的启动脚本配置，修改前要先从/usr/lib/systemd/system中cp一份默认启动脚本过来先
+```
+$ cp /usr/lib/systemd/system/sshd.service sshd2.service
+
+$ sudo vim sshd2.service
+
+[Unit]
+Description=OpenSSH server daemon 2
+Documentation=man:sshd(8) man:sshd_config(5)
+After=network.target sshd-keygen.service
+Wants=sshd-keygen.service
+
+[Service]
+Type=notify
+EnvironmentFile=/etc/sysconfig/sshd
+ExecStart=/usr/sbin/sshd -f /etc/ssh/sshd2_config -D $OPTIONS   # 主要改这行
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+Restart=on-failure
+RestartSec=42s
+
+[Install]
+WantedBy=multi-user.target
+
+```
+reload 一下 systemd 自己
+```
+[sunnylinux@centOSlearning system]$ systemctl daemon-reload
+```
+查看并启动 sshd2
+```
+[sunnylinux@centOSlearning system]$ systemctl status sshd2.service
+● sshd2.service - OpenSSH server daemon 2
+   Loaded: loaded (/etc/systemd/system/sshd2.service; disabled; vendor preset: disabled)
+   Active: inactive (dead)
+     Docs: man:sshd(8)
+           man:sshd_config(5)
+[sunnylinux@centOSlearning system]$ systemctl start sshd2.service
+[sunnylinux@centOSlearning system]$ systemctl status sshd2.service
+● sshd2.service - OpenSSH server daemon 2
+   Loaded: loaded (/etc/systemd/system/sshd2.service; disabled; vendor preset: disabled)
+   Active: activating (auto-restart) (Result: exit-code) since 日 2019-02-10 15:38:48 CST; 21s ago
+     Docs: man:sshd(8)
+           man:sshd_config(5)
+  Process: 8690 ExecStart=/usr/sbin/sshd -f /etc/ssh/sshd2_config -D $OPTIONS (code=exited, status=255)
+ Main PID: 8690 (code=exited, status=255)
+
+2月 10 15:38:48 centOSlearning.SharonLi systemd[1]: sshd2.service: main process exited, co.../a
+2月 10 15:38:48 centOSlearning.SharonLi systemd[1]: Failed to start OpenSSH server daemon 2.
+2月 10 15:38:48 centOSlearning.SharonLi systemd[1]: Unit sshd2.service entered failed state.
+2月 10 15:38:48 centOSlearning.SharonLi systemd[1]: sshd2.service failed.
+Hint: Some lines were ellipsized, use -l to show in full.
+```
+出现问题，查一下log
+```
+[sunnylinux@centOSlearning system]$ sudo tail -n 20 /var/log/messages
+Feb 10 15:40:01 centOSlearning systemd: Starting Session 139 of user root.
+Feb 10 15:40:12 centOSlearning systemd: sshd2.service holdoff time over, scheduling restart.
+Feb 10 15:40:12 centOSlearning systemd: Starting OpenSSH server daemon 2...
+Feb 10 15:40:12 centOSlearning systemd: sshd2.service: main process exited, code=exited, status=         255/n/a
+Feb 10 15:40:12 centOSlearning dbus[638]: [system] Activating service name='org.fedoraproject.Se         troubleshootd' (using servicehelper)
+Feb 10 15:40:12 centOSlearning systemd: Failed to start OpenSSH server daemon 2.
+Feb 10 15:40:12 centOSlearning systemd: Unit sshd2.service entered failed state.
+Feb 10 15:40:12 centOSlearning systemd: sshd2.service failed.
+Feb 10 15:40:14 centOSlearning dbus[638]: [system] Successfully activated service 'org.fedoraproject.Setroubleshootd'
+Feb 10 15:40:15 centOSlearning setroubleshoot: SELinux is preventing /usr/sbin/sshd from name_bind access on the tcp_socket port 222. For complete SELinux messages run: sealert -l 9c12c5d4-8415-4b7f-86ba-55929f3661ac
+Feb 10 15:40:15 centOSlearning python: SELinux is preventing /usr/sbin/sshd from name_bind access on the tcp_socket port 222.
+*****  Plugin bind_ports (99.5 confidence) suggests   ************************
+If you want to allow /usr/sbin/sshd to bind to network port 
+Then you need to modify the port type.
+Do semanage port -a -t PORT_TYPE -p tcp where PORT_TYPE is one of the following: ssh_port_t, vnc_port_t, xserver_port_t.
+*****  Plugin catchall (1.49 confidence) suggests   **************************
+If you believe that sshd should be allowed name_bind access on the port 222 tcp_socket by default.#012Then you should report this as a bug.
+You can generate a local policy module to allow this access.
+Do allow this access for now by executing:#012# ausearch -c 'sshd' --raw | audit2allow -M my-sshd semodule -i my-sshd.pp
+```
+大概就是SELinux不让绑定端口222
+```
+[sunnylinux@centOSlearning system]$ sudo semanage port -a -t ssh_port_t -p tcp 222
+```
+重启一下 ssh2
+```
+[sunnylinux@centOSlearning system]$ systemctl start sshd2.service
+[sunnylinux@centOSlearning system]$ systemctl status sshd2.service
+● sshd2.service - OpenSSH server daemon 2
+   Loaded: loaded (/etc/systemd/system/sshd2.service; disabled; vendor preset: disabled)
+   Active: active (running) since 日 2019-02-10 15:50:46 CST; 1min 10s ago
+     Docs: man:sshd(8)
+           man:sshd_config(5)
+ Main PID: 9009 (sshd)
+   CGroup: /system.slice/sshd2.service
+           └─9009 /usr/sbin/sshd -f /etc/ssh/sshd2_config -D
+
+2月 10 15:50:46 centOSlearning.SharonLi systemd[1]: sshd2.service holdoff time over, scheduling restart.
+2月 10 15:50:46 centOSlearning.SharonLi systemd[1]: Starting OpenSSH server daemon 2...
+2月 10 15:50:46 centOSlearning.SharonLi sshd[9009]: Server listening on 0.0.0.0 port 222.
+2月 10 15:50:46 centOSlearning.SharonLi sshd[9009]: Server listening on :: port 222.
+2月 10 15:50:46 centOSlearning.SharonLi systemd[1]: Started OpenSSH server daemon 2.
+Hint: Some lines were ellipsized, use -l to show in full.
+```
+查看网络状态
+```
+[sunnylinux@centOSlearning system]$ sudo netstat -tunlp|grep ssh
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      1189/sshd
+tcp        0      0 0.0.0.0:222             0.0.0.0:*               LISTEN      9009/sshd
+tcp6       0      0 :::22                   :::*                    LISTEN      1189/sshd
+tcp6       0      0 :::222                  :::*                    LISTEN      9009/sshd
+```
 
 #### 单个服务下多个重复功能配置  
 实例：将6个tty降为4个</br>
