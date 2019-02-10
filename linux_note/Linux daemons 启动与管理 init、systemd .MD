@@ -673,7 +673,7 @@ Wants=sshd-keygen.service  # 最好打开哪些服务
 [Service]  # 不同的 unit type 显示不同，此处是service
 Type=notify  # daemons 启动方式
 EnvironmentFile=/etc/sysconfig/sshd   # 环境配置
-ExecStart=/usr/sbin/sshd -D $OPTIONS  # 启动脚本，和 systemctl start 有关
+ExecStart=/usr/sbin/sshd -D $OPTIONS  # 实际使用的启动脚本，和 systemctl start 有关
 ExecReload=/bin/kill -HUP $MAINPID
 KillMode=process
 Restart=on-failure
