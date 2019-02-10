@@ -102,7 +102,7 @@ grep -i 'disable' /etc/xinetd.d/*
 
 ## systemd 
 systemd 特点
-* 速度比 init 快，systemd 本身常驻于内存
+* 速度比 init 快，systemd 本身常驻于内存，systemd 可以并发启动多个不相关的进程，缩短了开机启动时间
 * systemd 服务仅需使用 systemctl 命令来处理，即是不用 init, chkconfig, service 来支撑，但减少了自定义的开放性
 * systemd 将服务分为一个服务单位 unit，再将unit按功能分为type，type 有 service, socket, target, path, snapshot, timer
 * init 有 runlevel，而systemd 对应的是 target ，但没有全部对应，runlevel依然无可取代
