@@ -9,7 +9,8 @@
 * Linux 提供的日志服务程序，而我们这里系统日志是通过 rsyslog 来实现，提供日志管理服务，如 /var/log 中的 log
 
 ## 常见日志
-ubuntu 常见log
+不同分发版日志名不一样
+### ubuntu 常见log
 ```
 日志名称	记录信息
 alternatives.log	系统的一些更新替代信息记录
@@ -30,7 +31,7 @@ lastlog	用户的最近信息记录
 wtmp	登录信息的记录。wtmp可以找出谁正在进入系统，谁使用命令显示这个文件或信息等
 syslog	系统信息记录
 ```
-CentOS7 常见log
+### CentOS7 常见log
 ```
 [sunnylinux@centOSlearning log]$ pwd
 /var/log
