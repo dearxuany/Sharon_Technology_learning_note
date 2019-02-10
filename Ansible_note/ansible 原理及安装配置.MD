@@ -41,8 +41,8 @@ pip3 安装 ansible 是源码安装，所以不能直接使用 ansible 命令
 ./local/python3/bin/ansible
 ./local/python3/lib/python3.7/site-packages/ansible
 
-[sunnylinux@centOSlearning usr]$ sudo find ./ -name playbook
-./local/python3/lib/python3.7/site-packages/ansible/playbook
+[sunnylinux@centOSlearning usr]$ sudo find ./ -name ansible-playbook
+./local/python3/bin/ansible-playbook
 ```
 查看版本号
 ```
@@ -54,7 +54,7 @@ ansible 2.7.7
   executable location = /usr/local/python3/bin/ansible
   python version = 3.7.0a1 (default, May 18 2018, 14:10:18) [GCC 4.8.5 20150623 (Red Hat 4.8.5-28)]
 ```
-为直接使用 ansible 命令，需要创建一下链接到/usr/bin下
+为直接使用 ansible 和 ansible-playbook 命令，需要创建一下链接到/usr/bin下
 ```
 [sunnylinux@centOSlearning usr]$ sudo ln -s /usr/local/python3/bin/ansible /usr/bin/ansible
 [sunnylinux@centOSlearning usr]$ ansible --version
@@ -64,6 +64,15 @@ ansible 2.7.7
   ansible python module location = /usr/local/python3/lib/python3.7/site-packages/ansible
   executable location = /usr/bin/ansible
   python version = 3.7.0a1 (default, May 18 2018, 14:10:18) [GCC 4.8.5 20150623 (Red Hat 4.8.5-28)]
+  
+[sunnylinux@centOSlearning usr]$ sudo ln -s /usr/local/python3/bin/ansible-playbook /usr/bin/ansible-playbook
+[sunnylinux@centOSlearning usr]$ ansible-playbook --version
+ansible-playbook 2.7.7
+  config file = None
+  configured module search path = ['/home/sunnylinux/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
+  ansible python module location = /usr/local/python3/lib/python3.7/site-packages/ansible
+  executable location = /usr/bin/ansible-playbook
+  python version = 3.7.0a1 (default, May 18 2018, 14:10:18) [GCC 4.8.5 20150623 (Red Hat 4.8.5-28)]
 ```
 测试一下
 ```
@@ -72,5 +81,4 @@ localhost | SUCCESS => {
     "changed": false,
     "ping": "pong"
 }
-
 ```
