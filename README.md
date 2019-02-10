@@ -6,15 +6,6 @@
 
 
 ## Linux
-### Linux上的环境搭建
-#### 数据库
-* [Linux yum安装配置 MySQL（MariaDB）](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEMySQL%EF%BC%88MariaDB%EF%BC%89.MD)
-* [Linux 源码安装 MongoDB](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E5%AE%89%E8%A3%85MongoDB.MD)
-#### 编程语言
-* [Linux 源码安装 python3](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E5%AE%89%E8%A3%85Python%203.MD)
-* [Linux CentOS7 在 python2、python3 共存状态下安装 pip2 和 pip3](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20CentOS7%20%E5%9C%A8python2%E3%80%81python3%E5%85%B1%E5%AD%98%E4%B8%8B%E5%AE%89%E8%A3%85pip2%E5%92%8Cpip3.MD)
-* [Linux 源码安装 Node.js](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AENode.js%20.MD)
-
 ### Linux 相关知识
 * [Linux 常用命令(无格式)](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20command%20%26%20SHELL%20collection)
 * [Linux 目录结构](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84.md)
@@ -37,6 +28,15 @@
 * [Linux 端口与网络服务管理](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E7%AB%AF%E5%8F%A3%E4%B8%8E%E7%BD%91%E7%BB%9C%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86.md)
 * [Linux 时间同步 NTP](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E6%97%B6%E9%97%B4%E5%90%8C%E6%AD%A5.MD)
 * [Linux 例行性工作 crontab](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E4%BE%8B%E8%A1%8C%E6%80%A7%E5%B7%A5%E4%BD%9C.MD)
+
+### Linux 软件安装
+#### 数据库
+* [Linux yum安装配置 MySQL（MariaDB）](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEMySQL%EF%BC%88MariaDB%EF%BC%89.MD)
+* [Linux 源码安装 MongoDB](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E5%AE%89%E8%A3%85MongoDB.MD)
+#### 编程语言
+* [Linux 源码安装 python3](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E5%AE%89%E8%A3%85Python%203.MD)
+* [Linux CentOS7 在 python2、python3 共存状态下安装 pip2 和 pip3](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20CentOS7%20%E5%9C%A8python2%E3%80%81python3%E5%85%B1%E5%AD%98%E4%B8%8B%E5%AE%89%E8%A3%85pip2%E5%92%8Cpip3.MD)
+* [Linux 源码安装 Node.js](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AENode.js%20.MD)
 
 ### Linux 相关工具
 * [Linux win使用putty通过ssh传文件](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20win%E4%BD%BF%E7%94%A8putty%E9%80%9A%E8%BF%87ssh%E4%BC%A0%E6%96%87%E4%BB%B6.md)
