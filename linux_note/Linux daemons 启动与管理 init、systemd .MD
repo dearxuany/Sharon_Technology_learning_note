@@ -528,12 +528,38 @@ cups.socket                                   disabled
 [sunnylinux@centOSlearning system]$ systemctl --type=service --all|grep cpu
   cpupower.service                                      loaded    inactive dead    Configure CPU power related settings
 ```
-找服务间的相互依赖关系</br>
 要注意现时是哪种操作环境 target unit 环境:</br>
 *  multi-user.target 纯文本模式
 *  graphical.target 文字加上图形化界面
 *  rescue.target  救援模式
 *  emergency.target  紧急模式
+```
+# 查询当前模式
+[sunnylinux@centOSlearning system]$ systemctl get-default
+graphical.target
+
+# 改变开机默认操作环境
+[sunnylinux@centOSlearning system]$ sudo systemctl set-default multi-user.target
+[sudo] sunnylinux 的密码：
+Removed symlink /etc/systemd/system/default.target.
+Created symlink from /etc/systemd/system/default.target to /usr/lib/systemd/system/multi-user.target.
+[sunnylinux@centOSlearning system]$ systemctl get-default
+multi-user.target
+
+# 改变当前操作环境（会很慢）
+[sunnylinux@centOSlearning system]$ systemctl isolate multi-user.target  # 图形化界面会马上被关掉转为进入tty
+==== AUTHENTICATING FOR org.freedesktop.systemd1.manage-units ===
+Authentication is required to manage system services or units.
+Authenticating as: sunnylinux
+Password:
+
+[sunnylinux@centOSlearning system]$ systemctl isolate graphical.target  # 恢复图形化界面，从tty转回Xwindows
+==== AUTHENTICATING FOR org.freedesktop.systemd1.manage-units ===
+Authentication is required to manage system services or units.
+Authenticating as: sunnylinux
+Password:
+```
+找服务间的相互依赖关系</br>
 ```
 [sunnylinux@centOSlearning system]$ systemctl get-default
 graphical.target
@@ -581,6 +607,7 @@ cups.service
 ●   │ └─system.slice
 ●   ├─sockets.target
 # 省略大量输出
+
 ```
 查找 socket file 位置
 ```
@@ -624,8 +651,8 @@ autovt@.service                               enabled
 # 省略部分输出
 ```
 ### systemd 服务配置
-systemd 的服务配置脚本大多放在 /usr/lib/systemd/system，主要保存软件的默认设定。
-如果要自定义，Red Hat 建议将改动的脚本放在  /etc/systemd/system/ 里面。
+systemd 的服务配置脚本大多放在 /usr/lib/systemd/system，主要保存软件的默认设定。</br>
+如果要自定义系统服务，Red Hat 建议将改动的脚本放在  /etc/systemd/system/ 里面。</br>
 ```
 # 启动脚本相关目录
 /etc/systemd/system/  可依据主机需求建立启动脚本，优先级比/run/systemd/system/ 高，功能类似于/etc/rc.d/rc5.d/Sxx，决定脚本是否开机执行
@@ -654,4 +681,158 @@ RestartSec=42s  # 重启时，关闭到开启大概需要sleep多久
 
 [Install]  # 将本unit安装到哪个target
 WantedBy=multi-user.target  # 大多数都会在 multi-user.target
+```
+#### 多个重复服务配置
+
+#### 单个服务下多个重复功能配置  
+实例：将6个tty降为4个</br>
+getty@.service ：一个getty.service只能管理一个tty，但又不能开6个getty.service，所以有了 \*.@service 这种东西。
+```
+[sunnylinux@centOSlearning system]$ ls /usr/lib/systemd/system|grep tty
+brltty.service
+console-getty.service
+container-getty@.service
+getty-pre.target
+getty@.service
+getty.target
+serial-getty@.service
+```
+查看 getty@.service 
+```
+[sunnylinux@centOSlearning system]$ cat /usr/lib/systemd/system/getty@.service
+
+[Unit]
+Description=Getty on %I
+Documentation=man:agetty(8) man:systemd-getty-generator(8)
+Documentation=http://0pointer.de/blog/projects/serial-console.html
+After=systemd-user-sessions.service plymouth-quit-wait.service getty-pre.target
+After=rc-local.service
+
+Before=getty.target  # 要在 getty.target 之前启动
+IgnoreOnIsolate=yes
+
+ConditionPathExists=/dev/tty0
+
+[Service]
+ExecStart=-/sbin/agetty --noclear %I $TERM   # 启动脚本
+Type=idle
+Restart=always
+RestartSec=0
+UtmpIdentifier=%I
+TTYPath=/dev/%I
+TTYReset=yes
+TTYVHangup=yes
+TTYVTDisallocate=yes
+KillMode=process
+IgnoreSIGPIPE=no
+SendSIGHUP=yes
+
+Environment=LANG= LANGUAGE= LC_CTYPE= LC_NUMERIC= LC_TIME= LC_COLLATE= LC_MONETARY= LC_MESSAGES= LC_PAPER= LC_NAME= LC_ADDRESS= LC_TELEPHONE= LC_MEASUREMENT= LC_IDENTIFICATION=
+
+[Install]
+WantedBy=getty.target
+DefaultInstance=tty1
+```
+查看 getty.target
+```
+[sunnylinux@centOSlearning system]$ systemctl show getty.target
+Id=getty.target
+Names=getty.target
+Wants=getty@tty1.service
+WantedBy=multi-user.target
+Conflicts=shutdown.target
+Before=multi-user.target
+After=getty@tty1.service  # 此时没有开tty2-6 所以只有tty1
+
+# 开启了tty2-6之后
+[sunnylinux@centOSlearning systemd]$ systemctl show getty.target|grep After
+After=getty@tty5.service getty@tty1.service getty@tty2.service getty@tty3.service getty@tty4.service getty@tty6.service
+
+```
+systen tty 启动过程：</br>
+先看 /usr/lib/systemd/system/, /etc/systemd/system/ 有没有 getty@tty1.service 的设定，若有就执行，若没有则执行下一步；</br>
+找 getty@.service 的设定，若有则将 @ 后面的资料带入成 %I 的变量，进入 getty@.service 执行。</br>
+```
+# getty@.service 中的 ExecStart
+ExecStart=-/sbin/agetty --noclear %I $TERM
+
+# 根据getty.target 所示 getty@tty1.service 的 %I 就是 tty1 
+/sbin/agetty --noclear tty1
+```
+添加一个tty7
+```
+[sunnylinux@centOSlearning systemd]$ systemctl start getty@tty7.service
+==== AUTHENTICATING FOR org.freedesktop.systemd1.manage-units ===
+Authentication is required to manage system services or units.
+Authenticating as: sunnylinux
+Password:
+==== AUTHENTICATION COMPLETE ===
+
+# 可见多了一个tty7且现在tty7可登陆，[ctrl]+[alt]+[F7]可启用
+[sunnylinux@centOSlearning systemd]$ systemctl show getty.target|grep After
+After=getty@tty2.service getty@tty3.service getty@tty1.service getty@tty7.service getty@tty4.service getty@tty5.service getty@tty6.service
+```
+关闭多余的tty，关1-6是没有用的，[ctrl]+[alt]+[F1-6]后它们会自己重新打开，除非修改默认设定
+```
+[sunnylinux@centOSlearning systemd]$ systemctl stop getty@tty7.service
+[sunnylinux@centOSlearning systemd]$ systemctl show getty.target|grep After
+After=getty@tty2.service getty@tty3.service getty@tty1.service getty@tty5.service getty@tty4.service getty@tty6.service
+```
+默认可开6个的设定写在 /etc/systemd/logind.conf 中
+```
+[sunnylinux@centOSlearning system]$ cd /etc/systemd
+[sunnylinux@centOSlearning systemd]$ ls
+bootchart.conf  coredump.conf  journald.conf  logind.conf  system  system.conf  user  user.conf
+
+[sunnylinux@centOSlearning systemd]$ cat logind.conf
+#  This file is part of systemd.
+#
+#  systemd is free software; you can redistribute it and/or modify it
+#  under the terms of the GNU Lesser General Public License as published by
+#  the Free Software Foundation; either version 2.1 of the License, or
+#  (at your option) any later version.
+#
+# Entries in this file show the compile time defaults.
+# You can change settings by editing this file.
+# Defaults can be restored by simply deleting this file.
+#
+# See logind.conf(5) for details.
+
+[Login]
+#NAutoVTs=6  # 默认的tty数量，改为需要设定的即可
+#ReserveVT=6  # 关掉后可以重新使用[ctrl]+[alt]+[Fn]来自动启动的tty数量
+#KillUserProcesses=no
+#KillOnlyUsers=
+#KillExcludeUsers=root
+#InhibitDelayMaxSec=5
+#HandlePowerKey=poweroff
+#HandleSuspendKey=suspend
+#HandleHibernateKey=hibernate
+#HandleLidSwitch=suspend
+#HandleLidSwitchDocked=ignore
+#PowerKeyIgnoreInhibited=no
+#SuspendKeyIgnoreInhibited=no
+#HibernateKeyIgnoreInhibited=no
+#LidSwitchIgnoreInhibited=yes
+#IdleAction=ignore
+#IdleActionSec=30min
+#RuntimeDirectorySize=10%
+#RemoveIPC=no
+#UserTasksMax=
+
+```
+现在将其限制为4个，即尽管[ctrl]+[alt]+[F1-6]也不能重启它们
+```
+$ sudo vim logind.conf
+[Login]
+NAutoVTs=4
+ReserveVT=4
+
+$ systemctl stop getty@tty5.service
+$ systemctl stop getty@tty6.service
+$ systemctl restart systemd-logind.service
+
+# 只关掉了tty6，大概是因为tty1被图形化界面占用了，不算在4里面，要改 NAutoVTs=3 ReserveVT=3
+$ systemctl show getty.target|grep After
+After=getty@tty2.service getty@tty3.service getty@tty1.service getty@tty4.service getty@tty5.service
 ```
