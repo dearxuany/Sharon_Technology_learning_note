@@ -109,6 +109,7 @@ systemd 特点
 * systemd 向下兼容 init
 </br>
 可见，现在 CentOS7 的初始进程是 systemd ：
+
 ```
 $ pstree
 systemd─┬─ModemManager───2*[{ModemManager}]
@@ -143,7 +144,8 @@ systemd─┬─ModemManager───2*[{ModemManager}]
 /var/lib/  服务运行过程中产生的某些数据放这里
 /run/   daemons的暂存档，如 lock file 以及 PID file
 ```
-/usr/lib/systemd/system/
+/usr/lib/systemd/system/ </br>
+优先级最低，是软件的默认设定，建议不要随便修改
 ```
 [sunnylinux@centOSlearning system]$ pwd
 /usr/lib/systemd/system
@@ -178,7 +180,13 @@ session-2.scope    session-39.scope.d  user-1000.slice    user-42.slice.d
 session-2.scope.d  session-c1.scope    user-1000.slice.d
 session-39.scope   session-c1.scope.d  user-42.slice
 ```
-/etc/systemd/system/
+/etc/systemd/system/ </br>
+优先级最高，自定义的脚本可以放这里</br>
+```
+*.service 软体官方默认设定
+*.target.wants/*  设定服务的相关联服务，一个服务设定好之后最好加上该目录底下的服务
+*.service.requires/*  在启动本服务之前，需要事先启动哪些服务
+```
 ```
 [sunnylinux@centOSlearning system]$ cd /etc/systemd/system/
 [sunnylinux@centOSlearning system]$ ls
@@ -615,4 +623,35 @@ auditd.service                                enabled
 autovt@.service                               enabled
 # 省略部分输出
 ```
+### systemd 服务配置
+systemd 的服务配置脚本大多放在 /usr/lib/systemd/system，主要保存软件的默认设定。
+如果要自定义，Red Hat 建议将改动的脚本放在  /etc/systemd/system/ 里面。
+```
+# 启动脚本相关目录
+/etc/systemd/system/  可依据主机需求建立启动脚本，优先级比/run/systemd/system/ 高，功能类似于/etc/rc.d/rc5.d/Sxx，决定脚本是否开机执行
+/run/systemd/system/  系统运行过程中产生的脚本，优先级比/usr/lib/systemd/system/ 高
+/usr/lib/systemd/system/  启动脚本目录，类似于/etc/init.d，实际执行的启动脚本位置
+```
+更多的细节可查：http://linux.vbird.org/linux_basic/0560daemons.php#systemd_cfg
+#### 服务配置项目介绍
+ssh 服务的默认配置
+```
+[sunnylinux@centOSlearning getty.target.wants]$ cat /usr/lib/systemd/system/sshd.service
+[Unit]  # 此unit相关解释，列出相关联的服务
+Description=OpenSSH server daemon
+Documentation=man:sshd(8) man:sshd_config(5)
+After=network.target sshd-keygen.service  # 在哪些服务启动后启动，但不是强制的，和 requires 区分
+Wants=sshd-keygen.service  # 最好打开哪些服务
 
+[Service]  # 不同的 unit type 显示不同，此处是service
+Type=notify  # daemons 启动方式
+EnvironmentFile=/etc/sysconfig/sshd   # 环境配置
+ExecStart=/usr/sbin/sshd -D $OPTIONS  # 启动脚本，和 systemctl start 有关
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+Restart=on-failure
+RestartSec=42s  # 重启时，关闭到开启大概需要sleep多久
+
+[Install]  # 将本unit安装到哪个target
+WantedBy=multi-user.target  # 大多数都会在 multi-user.target
+```
