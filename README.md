@@ -23,8 +23,9 @@
 ### Linux 进程与服务
 * [Linux 内核、进程、线程 （命令 ps top kill）](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E5%86%85%E6%A0%B8%E3%80%81%E8%BF%9B%E7%A8%8B%E3%80%81%E7%BA%BF%E7%A8%8B.MD)
 * [Linux IO模型：同步、异步、阻塞、非阻塞](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20IO%E6%A8%A1%E5%9E%8B%EF%BC%9A%E5%90%8C%E6%AD%A5%E3%80%81%E5%BC%82%E6%AD%A5%E3%80%81%E9%98%BB%E5%A1%9E%E3%80%81%E9%9D%9E%E9%98%BB%E5%A1%9E.MD)
-* [Linux daemons 启动与管理 init、systemd](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20daemons%20%E5%90%AF%E5%8A%A8%E4%B8%8E%E7%AE%A1%E7%90%86%20init%E3%80%81systemd%20.MD#systemctl-%E5%90%AF%E5%8A%A8)
+* [Linux daemons 启动与管理 init、systemd](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20daemons%20%E5%90%AF%E5%8A%A8%E4%B8%8E%E7%AE%A1%E7%90%86%20init%E3%80%81systemd%20.MD)
 * [Linux 端口与网络服务管理](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E7%AB%AF%E5%8F%A3%E4%B8%8E%E7%BD%91%E7%BB%9C%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86.md)
+* [Linux 日志系统 rsyslog logrotate systemd-journal logwatch](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F%20rsyslog%20logrotate%20systemd-journal%20logwatch.md)
 * [Linux 时间同步 NTP](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E6%97%B6%E9%97%B4%E5%90%8C%E6%AD%A5.MD)
 * [Linux 例行性工作 crontab](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E4%BE%8B%E8%A1%8C%E6%80%A7%E5%B7%A5%E4%BD%9C.MD)
 
