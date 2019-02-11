@@ -621,3 +621,5 @@ logger -p service_name.lv 'massage'
 2月 11 18:30:01 centOSlearning.SharonLi CROND[4997]: (root) CMD (/usr/lib/sa/sa1 1 1)
 2月 11 18:38:36 centOSlearning.SharonLi sunnylinux[5435]: Hello, testing the use of logger.
 ```
+## 日志分析
+可使用 logwatch 工具 https://sourceforge.net/projects/logwatch/files/
