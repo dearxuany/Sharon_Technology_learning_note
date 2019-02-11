@@ -1,4 +1,4 @@
-# Linux 日志系统
+# Linux 日志系统 rsyslog logrotate systemd-journal logwatch
 ## 关于日志
 日志类型
 * 系统日志
@@ -623,3 +623,160 @@ logger -p service_name.lv 'massage'
 ```
 ## 日志分析
 可使用 logwatch 工具 https://sourceforge.net/projects/logwatch/files/
+```
+[sunnylinux@centOSlearning ~]$ sudo yum install logwatch
+
+[sunnylinux@centOSlearning ~]$ sudo logwatch
+
+ ################### Logwatch 7.4.0 (03/01/11) ####################
+        Processing Initiated: Mon Feb 11 18:52:25 2019
+        Date Range Processed: yesterday
+                              ( 2019-Feb-10 )
+                              Period is day.
+        Detail Level of Output: 0
+        Type of Output/Format: stdout / text
+        Logfiles for Host: centOSlearning.SharonLi
+ ##################################################################
+
+ --------------------- Cron Begin ------------------------
+
+ **Unmatched Entries**
+ INFO (RANDOM_DELAY will be scaled with factor 87% if used.)
+
+ ---------------------- Cron End -------------------------
+
+
+ --------------------- Kernel Begin ------------------------
+
+
+ WARNING:  Kernel Errors Present
+    INFO: NMI handler (perf_event_nmi_handler) to ...:  1 Time(s)
+    WARNING: CPU: 0 PID: 0 at ./arch/x86/include/asm ...:  1 Time(s)
+
+ ---------------------- Kernel End -------------------------
+
+
+ --------------------- pam_unix Begin ------------------------
+
+ gdm-launch-environment:
+    Unknown Entries:
+       session opened for user gdm by (uid=0): 3 Time(s)
+       session closed for user gdm: 1 Time(s)
+
+ gdm-password:
+    Authentication Failures:
+       sunnylinux: 1 Time(s)
+
+ polkit-1:
+    Unknown Entries:
+       authentication failure; logname= uid=1000 euid=0 tty= ruser=sunnylinux rhost=  user=sunnylinux: 2 Time(s)
+
+
+ ---------------------- pam_unix End -------------------------
+
+
+ --------------------- Postfix Begin ------------------------
+
+    9.385K  Bytes accepted                               9,610
+    9.385K  Bytes delivered                              9,610
+ ========   ==================================================
+
+        6   Accepted                                   100.00%
+ --------   --------------------------------------------------
+        6   Total                                      100.00%
+ ========   ==================================================
+
+        6   Removed from queue
+        6   Delivered
+
+        1   Postfix start
+
+
+ ---------------------- Postfix End -------------------------
+
+
+ --------------------- Connections (secure-log) Begin ------------------------
+
+
+ User Logins:
+    sunnylinux : 2 Time(s)
+
+ **Unmatched Entries**
+    polkitd: Acquired the name org.freedesktop.PolicyKit1 on the system bus: 1 Time(s)
+    polkitd: Finished loading, compiling and executing 7 rules: 1 Time(s)
+    polkitd: Loading rules from directory /etc/polkit-1/rules.d: 1 Time(s)
+    polkitd: Loading rules from directory /usr/share/polkit-1/rules.d: 1 Time(s)
+    polkitd: Operator of unix-process:5750:4588750 successfully authenticated as unix-user:sunnylinux to gain ONE-SHOT authorization for action org.freedesktop.systemd1.manage-units for system-bus-name::1.437 [systemctl stop ntpd.service] (owned by unix-user:sunnylinux): 1 Time(s)
+    polkitd: Operator of unix-process:5773:4591557 successfully authenticated as unix-user:sunnylinux to gain ONE-SHOT authorization for action org.freedesktop.systemd1.manage-unit-files for system-bus-name::1.444 [systemctl disable ntpd.service] (owned by unix-user:sunnylinux): 1 Time(s)
+    polkitd: Operator of unix-process:5773:4591557 successfully authenticated as unix-user:sunnylinux to gain ONE-SHOT authorization for action org.freedesktop.systemd1.reload-daemon for system-bus-name::1.444 [systemctl disable ntpd.service] (owned by unix-user:sunnylinux): 1 Time(s)
+    polkitd: Operator of unix-process:6282:5287664 FAILED to authenticate to gain authorization for action 
+    
+
+ ---------------------- Connections (secure-log) End -------------------------
+
+
+ --------------------- Smartd Begin ------------------------
+
+
+ **Unmatched Entries**
+ Device: /dev/sda, [VMware,  VMware Virtual S 1.0 ], 64.4 GB
+ Device: /dev/sda, IE (SMART) not enabled, skip device
+ Try 'smartctl -s on /dev/sda' to turn on SMART features
+
+ ---------------------- Smartd End -------------------------
+
+
+ --------------------- SSHD Begin ------------------------
+
+
+ SSHD Started: 4 Time(s)
+
+ Failed to bind:
+    :: port 222 (Permission denied) : 19 Time(s)
+
+ Users logging in through sshd:
+    sunnylinux:
+       192.168.137.1 (Tommy-PC.mshome.net): 2 times
+
+ **Unmatched Entries**
+ fatal: Cannot bind any address. : 19 time(s)
+
+ ---------------------- SSHD End -------------------------
+
+
+ --------------------- Sudo (secure-log) Begin ------------------------
+
+
+ sunnylinux => root
+ ------------------
+ /bin/cat                       -  32 Time(s).
+ /bin/cd                        -   2 Time(s).
+ /bin/cp                        -   2 Time(s).
+ /bin/last                      -   1 Time(s).
+ /bin/ls                        -   3 Time(s).
+ /bin/netstat                   -   1 Time(s).
+ /bin/pip3                      -   1 Time(s).
+ /bin/systemctl                 -   3 Time(s).
+ /bin/tail                      -   4 Time(s).
+ /bin/vim                       -   9 Time(s).
+ /bin/yum                       -   3 Time(s).
+ /sbin/semanage                 -   1 Time(s).
+
+ ---------------------- Sudo (secure-log) End -------------------------
+
+
+ --------------------- Disk Space Begin ------------------------
+
+ Filesystem               Size  Used Avail Use% Mounted on
+ /dev/mapper/centos-root   24G   12G   13G  49% /
+ devtmpfs                 487M     0  487M   0% /dev
+ /dev/sda2               1014M  204M  811M  21% /boot
+ /dev/mapper/centos-home  5.0G  1.3G  3.8G  25% /home
+
+
+ ---------------------- Disk Space End -------------------------
+
+
+ ###################### Logwatch End #########################
+
+```
