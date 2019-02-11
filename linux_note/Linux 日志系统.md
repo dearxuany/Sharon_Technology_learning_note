@@ -366,7 +366,8 @@ sudo chattr -a /var/log/admin.log
 ```
 ### rsyslog 服务器
 用一台linux来管理多台linux的log，rsyslog 提供的端口为 UDP 或 TCP 的 port 514
-#### 服务端设定
+* 服务端设定</br>
+192.168.137.100
 ```
 # 修改 /etc/rsyslog.conf
 
@@ -386,3 +387,15 @@ $InputTCPServerRun 514
 tcp        0      0 0.0.0.0:514             0.0.0.0:*               LISTEN      3504/rsyslogd
 tcp6       0      0 :::514                  :::*                    LISTEN      3504/rsyslogd
 ```
+* 客户端设定</br>
+192.168.137.101
+```
+# 修改 /etc/rsyslog.conf
+[sunnylinux@centOSlearning ~]$ sudo vim /etc/rsyslog.conf
+# Send log to 192.168.137.100
+*.*                                                     @@192.168.137.100
+
+# 重启 rsyslog
+[sunnylinux@centOSlearning etc]$ sudo systemctl restart rsyslog.service
+```
+注意：客户端的log信息会直接被记载在对应服务端的log文件中，可额外另起文件，要注意服务端防火墙配置，不然服务端可能收不到客户端的数据。
