@@ -8,6 +8,14 @@
 * 由软件开发商自己来自定义日志格式然后指定输出日志位置，如 /usr/local/nginx/log 中的 log
 * Linux 提供的日志服务程序，而我们这里系统日志是通过 rsyslog 来实现，提供日志管理服务，如 /var/log 中的 log
 
+日志相关daemons</br>
+* rsyslog 用于统一管理log</br>
+* logrotate 用于自动化处理 log，例如分片、备份等操作（轮替）</br>
+* systemd-journald systemd自己的日志管理服务，类似于rsyslog</br>
+一般情况下，是systemd-journald负责收集信息，以二进制方式记录下来，然后发给rsyslog进行进一步日志管理。</br>
+通过 journalctl 和 systemctl status unit.service 可查看不同服务的log，不用在 /var/log/messages 里面慢慢找。</br>
+
+
 ## 常见日志
 不同分发版日志名不一样
 ### ubuntu 常见log
@@ -197,3 +205,150 @@ Jan 31 08:09:43 centOSlearning sudo: sunnylinux : TTY=pts/1 ; PWD=/home/sunnylin
 Jan 31 08:16:49 centOSlearning sudo: sunnylinux : TTY=pts/1 ; PWD=/home/sunnylinux ; USER=root ; COMMAND=/sbin/service php-fpm restart
 ```
 
+## rsyslog
+启动 rsyslog
+```
+[sunnylinux@centOSlearning ~]$ systemctl status rsyslog.service
+● rsyslog.service - System Logging Service
+   Loaded: loaded (/usr/lib/systemd/system/rsyslog.service; enabled; vendor preset: enabled)
+   Active: active (running) since 日 2019-02-10 23:33:08 CST; 11h ago
+     Docs: man:rsyslogd(8)
+           http://www.rsyslog.com/doc/
+ Main PID: 1210 (rsyslogd)
+   CGroup: /system.slice/rsyslog.service
+           └─1210 /usr/sbin/rsyslogd -n
+
+2月 10 23:33:06 centOSlearning.SharonLi systemd[1]: Starting System Logging ...
+2月 10 23:33:08 centOSlearning.SharonLi rsyslogd[1210]:  [origin software="r...
+2月 10 23:33:08 centOSlearning.SharonLi systemd[1]: Started System Logging S...
+Hint: Some lines were ellipsized, use -l to show in full.
+```
+### rsyslog 配置
+rsyslog 配置文件 /etc/rsyslog.conf
+```
+[sunnylinux@centOSlearning etc]$ ls|grep 'rsyslog'
+rsyslog.conf  
+rsyslog.d  # 更加细致的配置  /etc/rsyslog.d/*.conf
+```
+配置项：
+* service name
+* 等级信息
+* log的位置
+```
+[sunnylinux@centOSlearning etc]$ sudo cat rsyslog.conf
+
+#### RULES ####
+
+# Log all kernel messages to the console.
+# Logging much else clutters up the screen.
+#kern.*                                                 /dev/console
+
+# Log anything (except mail) of level info or higher.
+# Don't log private authentication messages!
+*.info;mail.none;authpriv.none;cron.none                /var/log/messages
+
+# The authpriv file has restricted access.
+authpriv.*                                              /var/log/secure
+
+# Log all the mail messages in one place.
+mail.*                                                  -/var/log/maillog
+
+
+# Log cron stuff
+cron.*                                                  /var/log/cron
+
+# Everybody gets emergency messages
+*.emerg                                                 :omusrmsg:*
+
+# Save news errors of level crit and higher in a special file.
+uucp,news.crit                                          /var/log/spooler
+
+# Save boot messages also to boot.log
+local7.*                                                /var/log/boot.log
+```
+上面的内容对应了/var/log 中产生的log，语法结构：
+```
+# Log anything (except mail) of level info or higher.
+# Don't log private authentication messages!
+
+服务名称.信息等级                                        log 存放位置
+*.info;mail.none;authpriv.none;cron.none                /var/log/messages
+```
+可用 man 来查看各种选项细节
+```
+[sunnylinux@centOSlearning etc]$ man 3 syslog
+
+# Linux 对于服务名称有一套 syslog 的统一标准，其他软件可以通过调用这些服务名称来记录自己的log
+
+  facility
+       The facility argument is used to specify what type of program  is  log‐
+       ging  the  message.  This lets the configuration file specify that mes‐
+       sages from different facilities will be handled differently.
+
+       LOG_AUTH       security/authorization messages
+
+       LOG_AUTHPRIV   security/authorization messages (private)
+
+       LOG_CRON       clock daemon (cron and at)
+
+       LOG_DAEMON     system daemons without separate facility value
+
+       LOG_FTP        ftp daemon
+
+       LOG_KERN       kernel messages (these can't be generated from user pro‐
+                      cesses)
+
+       LOG_LOCAL0 through LOG_LOCAL7
+                      reserved for local use
+
+       LOG_LPR        line printer subsystem
+
+       LOG_MAIL       mail subsystem
+
+       LOG_NEWS       USENET news subsystem
+
+       LOG_SYSLOG     messages generated internally by syslogd(8)
+
+       LOG_USER (default)
+                      generic user-level messages
+
+       LOG_UUCP       UUCP subsystem
+
+# 信息等级
+
+   level
+       This  determines  the  importance  of  the message.  The levels are, in
+       order of decreasing importance:
+
+       LOG_EMERG      system is unusable  # 最高等级错误，大概硬件出问题 0
+
+       LOG_ALERT      action must be taken immediately  # 比 crit 严重的错误 1
+
+       LOG_CRIT       critical conditions  # 比 error 严重的错误 2
+
+       LOG_ERR        error conditions  # 一些错误 3 
+
+       LOG_WARNING    warning conditions  # 不至于影响正常运转 4
+
+       LOG_NOTICE     normal, but significant, condition # 5
+
+       LOG_INFO       informational message # 6
+
+       LOG_DEBUG      debug-level message # 7
+
+       The function setlogmask(3) can be used to restrict logging to specified
+       levels only.
+       
+       # 注意： nome 没有优先级，不使用信息等级
+```
+连接符：服务名和信息等级间的符号
+```
+.  只要出现比指定信息等级高的信息就记录，最常用
+.=  只记录指定信息等级信息
+.！ 仅不记录指定等级信息
+```
+log 目标地址可为：
+* /var/log
+* 用户名（显示给使用者）或 \* (显示给目前线上所有人)
+* 打印设备 /dev/lp0 
+* 远程主机
