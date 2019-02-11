@@ -494,3 +494,83 @@ include /etc/logrotate.d
 * prerotate 轮替前执行脚本
 * postrotate 轮替后执行脚本</br>
 可配合前面提到的 chattr +a 使用，rotate前取消a参数，rotate后再加上，提高安全性</br>
+
+## 日志生成配置及轮替实例
+将所有信息记录到 /var/log/admin.log 中，要求 +a 参数隐藏标签，每月轮替一次，大于10M时才轮替，保留5个backlog，压缩备份档。
+```
+# 配置 /etc/rsyslog.conf 生成日志
+[sunnylinux@centOSlearning log]$ sudo cat /etc/rsyslog.conf
+# Save info added by sharon 20190211
+*.info                                                  /var/log/admin.log
+[sunnylinux@centOSlearning log]$ sudo systemctl restart rsyslog.service
+[sunnylinux@centOSlearning log]$ ls|grep admin
+admin.log
+
+# 配置/etc/logrotate.d/admin.conf 设置rotate
+[sunnylinux@centOSlearning log]$ sudo vim /etc/logrotate.d/admin.conf
+/var/log/admin.log{
+    monthly
+    rotate 5
+    compress
+    minsize 10M
+    sharedscripts
+    prerotate
+        /usr/bin/chattr -a /var/log/admin.log  # 去掉 a 隐藏选项
+    endscript
+    sharedscripts
+    postrotate
+       /bin/kill -HUP `cat /var/run/syslogd.pid 2> /dev/null` 2> /dev/null || true # reload一下rsyslog
+       /usr/bin/chattr +a /var/log/admin.log
+    endscript
+}
+
+# 给 /var/log/admin.log 上a参数，禁止减少数据、删除、移动 log
+[sunnylinux@centOSlearning log]$ ll /var/log/admin.log
+-rw-------. 1 root root 6147 2月  11 17:52 /var/log/admin.log
+[sunnylinux@centOSlearning log]$ sudo chattr +a /var/log/admin.log
+[sunnylinux@centOSlearning log]$ ll /var/log/admin.log
+-rw-------. 1 root root 6278 2月  11 17:54 /var/log/admin.log
+[sunnylinux@centOSlearning log]$ sudo lsattr /var/log/admin.log
+-----a---------- /var/log/admin.log
+[sunnylinux@centOSlearning log]$ sudo mv /var/log/admin.log ./test
+mv: 无法将"/var/log/admin.log" 移动至"./test": 不允许的操作
+
+# 测试一下 logrotate 功能
+[sunnylinux@centOSlearning log]$ sudo logrotate -v /etc/logrotate.conf
+reading config file /etc/logrotate.conf
+including /etc/logrotate.d
+reading config file admin.conf
+# 省略部分输出
+rotating pattern: /var/log/admin.log 10485760 bytes (5 rotations)
+empty log files are rotated, old logs are removed
+considering log /var/log/admin.log
+  log does not need rotating (log size is below the 'size' threshold)
+not running prerotate script, since no logs will be rotated
+not running postrotate script, since no logs were rotated
+
+# 上面显示不满足rotate条件，所以没有rotate也没有执行script，使用 -f 强制rotate一下
+[sunnylinux@centOSlearning log]$ sudo logrotate -vf /etc/logrotate.conf
+reading config file /etc/logrotate.conf
+including /etc/logrotate.d
+reading config file admin.conf
+
+rotating pattern: /var/log/admin.log forced from command line (5 rotations)
+empty log files are rotated, old logs are removed
+considering log /var/log/admin.log
+  log needs rotating
+rotating log /var/log/admin.log, log->rotateCount is 5
+dateext suffix '-20190211'
+glob pattern '-[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'
+glob finding old rotated logs failed
+running prerotate script
+fscreate context set to system_u:object_r:var_log_t:s0
+renaming /var/log/admin.log to /var/log/admin.log-20190211
+creating new /var/log/admin.log mode = 0600 uid = 0 gid = 0
+running postrotate script
+compressing log with: /bin/gzip
+set default create context to system_u:object_r:var_log_t:s0
+
+[sunnylinux@centOSlearning log]$ ls |grep admin
+admin.log
+admin.log-20190211.gz
+```
