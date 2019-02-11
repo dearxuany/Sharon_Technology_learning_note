@@ -575,5 +575,49 @@ admin.log
 admin.log-20190211.gz
 ```
 ## systemd-journal 收集开关机过程数据日志
-rsyslog 开机之后才能开始记录日志信息，开关机过程可用systemd附带的systemd-journal来收集后交给rsyslog处理。
+rsyslog 开机之后才能开始记录日志信息，开关机过程可用systemd附带的systemd-journal来收集后交给rsyslog处理。</br>
+数据会以二进制形式被写入/run/log中，重启会被清空并加入新的数据，即数据时间跨度为本次开机到关机。</br>
+systemd-journal 会保存本次开机以来所有类型的日志讯息，关机时会从内存中调出给rsystem。</br>
+```
+[sunnylinux@centOSlearning /]$ ls /run/log/journal
+c186467137644f039846081199c8b99d
 
+[sunnylinux@centOSlearning /]$ journalctl --system
+-- Logs begin at 日 2019-02-10 23:29:22 CST, end at 一 2019-02-11 18:24:24 CST. --
+2月 10 23:29:22 centOSlearning.SharonLi systemd-journal[78]: Runtime journal is using 6.2M (
+2月 10 23:29:22 centOSlearning.SharonLi kernel: Initializing cgroup subsys cpuset
+2月 10 23:29:22 centOSlearning.SharonLi kernel: Initializing cgroup subsys cpu
+2月 10 23:29:22 centOSlearning.SharonLi kernel: Initializing cgroup subsys cpuacct
+2月 10 23:29:22 centOSlearning.SharonLi kernel: Linux version 3.10.0-862.2.3.el7.centos.plus
+2月 10 23:29:22 centOSlearning.SharonLi kernel: ------------[ cut here ]------------
+2月 10 23:29:22 centOSlearning.SharonLi kernel: WARNING: CPU: 0 PID: 0 at ./arch/x86/include
+2月 10 23:29:22 centOSlearning.SharonLi kernel: Modules linked in:
+2月 10 23:29:22 centOSlearning.SharonLi kernel: CPU: 0 PID: 0 Comm: swapper Not tainted 3.10
+2月 10 23:29:22 centOSlearning.SharonLi kernel: Call Trace:
+2月 10 23:29:22 centOSlearning.SharonLi kernel:  [<d3fd3d83>] dump_stack+0x16/0x18
+2月 10 23:29:22 centOSlearning.SharonLi kernel:  [<d3a54d3a>] __warn+0xea/0x110
+2月 10 23:29:22 centOSlearning.SharonLi kernel:  [<d3a45a6a>] ? native_flush_tlb_global+0x9a
+2月 10 23:29:22 centOSlearning.SharonLi kernel:  [<d3a54e4a>] warn_slowpath_null+0x2a/0x30
+2月 10 23:29:22 centOSlearning.SharonLi kernel:  [<d3a45a6a>] native_flush_tlb_global+0x9a/0
+2月 10 23:29:22 centOSlearning.SharonLi kernel:  [<d42f9359>] setup_arch+0xc3/0xf5a
+2月 10 23:29:22 centOSlearning.SharonLi kernel:  [<d3a57af7>] ? vprintk_emit+0x337/0x550
+2月 10 23:29:22 centOSlearning.SharonLi kernel:  [<d42f3885>] start_kernel+0xbe/0x3ea
+2月 10 23:29:22 centOSlearning.SharonLi kernel:  [<d42f3380>] i386_start_kernel+0x12e/0x131
+2月 10 23:29:22 centOSlearning.SharonLi kernel: ---[ end trace f68728a0d3053b52 ]---
+2月 10 23:29:22 centOSlearning.SharonLi kernel: e820: BIOS-provided physical RAM map:
+2月 10 23:29:22 centOSlearning.SharonLi kernel: BIOS-e820: [mem 0x0000000000000000-0x0000000
+2月 10 23:29:22 centOSlearning.SharonLi kernel: BIOS-e820: [mem 0x000000000009f800-0x0000000
+2月 10 23:29:22 centOSlearning.SharonLi kernel: BIOS-e820: [mem 0x00000000000ca000-0x0000000
+2月 10 23:29:22 centOSlearning.SharonLi kernel: BIOS-e820: [mem 0x00000000000dc000-0x0000000
+```
+使用logger发送数据到log中
+```
+logger -p service_name.lv 'massage'
+
+[sunnylinux@centOSlearning /]$ logger -p user.info 'Hello, testing the use of logger.'
+# 输出最新两条log
+[sunnylinux@centOSlearning /]$ journalctl -n 2
+-- Logs begin at 日 2019-02-10 23:29:22 CST, end at 一 2019-02-11 18:38:36 CST. --
+2月 11 18:30:01 centOSlearning.SharonLi CROND[4997]: (root) CMD (/usr/lib/sa/sa1 1 1)
+2月 11 18:38:36 centOSlearning.SharonLi sunnylinux[5435]: Hello, testing the use of logger.
+```
