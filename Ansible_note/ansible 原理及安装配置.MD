@@ -81,4 +81,10 @@ localhost | SUCCESS => {
     "changed": false,
     "ping": "pong"
 }
+
+[sunnylinux@centOSlearning ~]$ ansible localhost -m ping
+localhost | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
 ```
