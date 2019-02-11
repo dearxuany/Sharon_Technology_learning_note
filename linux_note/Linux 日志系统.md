@@ -205,7 +205,7 @@ Jan 31 08:09:43 centOSlearning sudo: sunnylinux : TTY=pts/1 ; PWD=/home/sunnylin
 Jan 31 08:16:49 centOSlearning sudo: sunnylinux : TTY=pts/1 ; PWD=/home/sunnylinux ; USER=root ; COMMAND=/sbin/service php-fpm restart
 ```
 
-## rsyslog
+## rsyslog 日志管理
 启动 rsyslog
 ```
 [sunnylinux@centOSlearning ~]$ systemctl status rsyslog.service
@@ -399,3 +399,98 @@ tcp6       0      0 :::514                  :::*                    LISTEN      
 [sunnylinux@centOSlearning etc]$ sudo systemctl restart rsyslog.service
 ```
 注意：客户端的log信息会直接被记载在对应服务端的log文件中，可额外另起文件，要注意服务端防火墙配置，不然服务端可能收不到客户端的数据。
+
+## logrotate 日志轮替
+logrotate 功能：定时将当前log转为旧log，建立新log，可指定rotate的log个数，达到指定个数后将久log删除。</br>
+```
+[sunnylinux@centOSlearning etc]$ cd /var/log
+[sunnylinux@centOSlearning log]$ ls
+anaconda           cups                messages-20190204  spooler-20190127
+audit              dmesg               messages-20190210  spooler-20190204
+boot.log           dmesg.old           ntpstats           spooler-20190210
+boot.log-20190129  firewalld           php-fpm            tallylog
+boot.log-20190130  gdm                 pluto              tuned
+boot.log-20190202  grubby              ppp                wpa_supplicant.log
+boot.log-20190204  grubby_prune_debug  qemu-ga            wtmp
+boot.log-20190205  httpd               rhsm               wtmp1
+boot.log-20190208  lastlog             sa                 wtmp2
+boot.log-20190211  maillog             samba              Xorg.0.log
+btmp               maillog-20190120    secure             Xorg.0.log.old
+btmp-20190201      maillog-20190127    secure-20190120    Xorg.1.log
+chrony             maillog-20190204    secure-20190127    Xorg.1.log.old
+cron               maillog-20190210    secure-20190204    Xorg.2.log
+cron-20190120      mariadb             secure-20190210    Xorg.2.log.old
+cron-20190127      messages            speech-dispatcher  Xorg.9.log
+cron-20190204      messages-20190120   spooler            yum.log
+cron-20190210      messages-20190127   spooler-20190120   yum.log-20190105
+
+# 当前配置是一周轮替一次，保留4个backlog
+```
+rsyslog 是系统服务，而 logrotate 更像是个普通脚本，它依靠 crontab 来运行。</br>
+```
+Feb 11 13:07:02 centOSlearning run-parts(/etc/cron.daily)[2905]: starting logrotate
+```
+### logrotate 配置
+logrotate 相关配置文件
+```
+[sunnylinux@centOSlearning etc]$ ls|grep logrotate
+logrotate.conf  # 总体的配置文件
+logrotate.d  # 更细致的配置文件
+```
+/etc/logrotate.d/\*.conf 中的细致配置会被读到 /etc/logrotate.conf 中执行
+```
+[sunnylinux@centOSlearning etc]$ cat /etc/logrotate.conf
+# see "man logrotate" for details
+# rotate log files weekly 
+weekly
+
+# keep 4 weeks worth of backlogs  
+rotate 4
+
+# create new (empty) log files after rotating old ones
+create
+
+# use date as a suffix of the rotated file  设置被轮替档名加日期
+dateext
+
+# uncomment this if you want your log files compressed  是否压缩，log太大可考虑这个，除了httpd外大部分log不需要压缩
+#compress
+
+# RPM packages drop log rotation information into this directory 读取/etc/logrotate.d中的配置
+include /etc/logrotate.d
+
+# no packages own wtmp and btmp -- we'll rotate them here 针对某个log设定参数
+/var/log/wtmp {
+    monthly
+    create 0664 root utmp  # 指定新档案的权限、所有者、分组
+        minsize 1M  # 超过1M才rotate，即是如果到达月rotate时间，但还未到1M依然不rotate
+    rotate 1  # backlog 的数量
+}
+
+/var/log/btmp {
+    missingok
+    monthly
+    create 0600 root utmp
+    rotate 1
+}
+
+# system-specific logs may be also be configured here.
+```
+更细致的log rotate 设置可以在/etc/logrotate.d/* 中完成
+```
+[sunnylinux@centOSlearning log]$ ls /etc/logrotate.d/bootlog
+/etc/logrotate.d/bootlog
+[sunnylinux@centOSlearning log]$ cat /etc/logrotate.d/bootlog
+/var/log/boot.log  # 要处理档名，可同时设多个，一行写一档名
+{
+    missingok  
+    daily
+    copytruncate
+    rotate 7
+    notifempty
+}
+```
+可在大括号内添加 sharedscripts .... endscript 以执行外部脚本命令
+* prerotate 轮替前执行脚本
+* postrotate 轮替后执行脚本</br>
+可配合前面提到的 chattr +a 使用，rotate前取消a参数，rotate后再加上，提高安全性</br>
