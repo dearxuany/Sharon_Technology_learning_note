@@ -339,7 +339,8 @@ local7.*                                                /var/log/boot.log
        The function setlogmask(3) can be used to restrict logging to specified
        levels only.
        
-       # 注意： nome 没有优先级，不使用信息等级
+# 注意： nome 表示不使用信息等级，即不记录这些信息
+# *.*;mail.none 表示记录所有服务的所有信息，但不记录mail的信息
 ```
 连接符：服务名和信息等级间的符号
 ```
@@ -352,3 +353,36 @@ log 目标地址可为：
 * 用户名（显示给使用者）或 \* (显示给目前线上所有人)
 * 打印设备 /dev/lp0 
 * 远程主机
+```
+# 地址前面如果有 - 则表示先存在buffer中，数据量足够大再写入磁盘
+mail.*                                                  -/var/log/maillog
+```
+### rsyslog 安全性
+rsyslog 的 log 只要被编辑过就无法再记录新的数据，要让log可以重新被写入需要重启 rsyslog.service </br>
+为提高安全性，可尝试设置让log 只能被增加数据，但不能被删除、移动</br>
+注意：这么做会阻碍日志的分割备份
+```
+sudo chattr -a /var/log/admin.log
+```
+### rsyslog 服务器
+用一台linux来管理多台linux的log，rsyslog 提供的端口为 UDP 或 TCP 的 port 514
+#### 服务端设定
+```
+# 修改 /etc/rsyslog.conf
+
+[sunnylinux@centOSlearning etc]$ sudo vim ./rsyslog.conf
+# Provides UDP syslog reception
+#$ModLoad imudp
+#$UDPServerRun 514
+
+# Provides TCP syslog reception
+$ModLoad imtcp
+$InputTCPServerRun 514
+
+# 重启 rsyslog
+[sunnylinux@centOSlearning etc]$ sudo systemctl restart rsyslog.service
+
+[sunnylinux@centOSlearning etc]$ sudo netstat -tnlup|grep 514
+tcp        0      0 0.0.0.0:514             0.0.0.0:*               LISTEN      3504/rsyslogd
+tcp6       0      0 :::514                  :::*                    LISTEN      3504/rsyslogd
+```
