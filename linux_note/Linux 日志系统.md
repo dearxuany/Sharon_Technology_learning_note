@@ -576,7 +576,4 @@ admin.log-20190211.gz
 ```
 ## systemd-journal 收集开关机过程数据日志
 rsyslog 开机之后才能开始记录日志信息，开关机过程可用systemd附带的systemd-journal来收集后交给rsyslog处理。
-```
-# 安装 systemd-journal
 
-```
