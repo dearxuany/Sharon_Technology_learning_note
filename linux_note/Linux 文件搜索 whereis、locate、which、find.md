@@ -40,10 +40,32 @@ locate 快而全，通过“ /var/lib/mlocate/mlocate.db ”数据库查找，�
 which 也比较常用，为系统内建命令，常用于找某个命令的完整路径。
 which 查的是环境变量 PATH 中的内容。
 ```
+[sunnylinux@centOSlearning ~]$ echo $PATH
+/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/usr/local/src/node-v8.11.3-linux-x86/bin:/home/sunnylinux/.local/bin:/home/sunnylinux/bin
+
 [sunnylinux@centOSlearning ~]$ which python3
 /usr/bin/python3
 [sunnylinux@centOSlearning ~]$ which sh
 /usr/bin/sh
+[sunnylinux@centOSlearning ~]$ which ls
+alias ls='ls --color=auto'
+        /usr/bin/ls
+```
+有些 bash 的内建指令无法用which找到
+```
+[sunnylinux@centOSlearning /]$ type cd
+cd 是 shell 内嵌
+[sunnylinux@centOSlearning /]$ type systemctl
+systemctl 是 /usr/bin/systemctl
+[sunnylinux@centOSlearning /]$ type history
+history 是 shell 内嵌
+[sunnylinux@centOSlearning /]$ type ls
+ls 是 `ls --color=auto' 的别名
+
+[sunnylinux@centOSlearning /]$ which cd
+/usr/bin/cd
+[sunnylinux@centOSlearning /]$ which history
+/usr/bin/which: no history in (/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/usr/local/src/node-v8.11.3-linux-x86/bin:/home/sunnylinux/.local/bin:/home/sunnylinux/bin)
 ```
 
 ## find
