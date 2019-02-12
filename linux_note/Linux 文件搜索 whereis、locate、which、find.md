@@ -37,7 +37,7 @@ locate 快而全，通过“ /var/lib/mlocate/mlocate.db ”数据库查找，�
 /usr/share/vim/vim74/autoload/python3complete.vim
 ```
 ## which
-which 也比较常用，为系统内建命令，常用于找某个软件被安装在什么地方。
+which 也比较常用，为系统内建命令，常用于找某个命令的完整路径。
 which 查的是环境变量 PATH 中的内容。
 ```
 [sunnylinux@centOSlearning ~]$ which python3
@@ -45,7 +45,6 @@ which 查的是环境变量 PATH 中的内容。
 [sunnylinux@centOSlearning ~]$ which sh
 /usr/bin/sh
 ```
-由于这里只显示了 /usr/bin/python3，所以在crontab 中用/usr/local/python3 是不行的。
 
 ## find
 find 的用途很多，也很重要，常见格式：
