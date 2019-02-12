@@ -61,7 +61,7 @@ cron               maillog-20190120    rhsm               tuned
 cron-20190120      maillog-20190127    sa                 wpa_supplicant.log
 ```
 /var/log/boot.log 存储本次开机资讯</br>
-可以按日期细分，细分了之后 boot.log 是空的
+可以按日期细分，在开机时间内有rotate的话，最新的日志就会是空
 ```
 [sunnylinux@centOSlearning log]$ sudo cat /var/log/boot.log
 [sunnylinux@centOSlearning log]$ sudo cat /var/log/boot.log-20190208
