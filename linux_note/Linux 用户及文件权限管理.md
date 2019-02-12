@@ -139,9 +139,6 @@ root    ALL=(ALL)       ALL
 # 在这行下面添加一行
 root    ALL=(ALL)       ALL
 用户名   ALL=(ALL)      ALL
-
-# vim 只读模式强制保存
-x! 
 ```
 注意：sunnylinux 在 wheel 里，可设置不用输密码
 ```
