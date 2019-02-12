@@ -101,7 +101,7 @@ CentOS 默认普通用户是无法使用sudo命令的，需要将登陆的用户
 ubuntu 可在 /etc/sudoers.d 目录下，查看用户的对应文件 /etc/sudoers.d/用户名，如果存在则该用户有sudo权限。</br>
 注意：一般情况下不会通过修改 /etc/sudoers 文件 来让一般用户拥有 sudo 权限，而是使用 usermod 命令为用户添加用户组
 ```
-[sunnylinux@centOSlearning ~]$ sudo vim /etc/sudoers
+[sunnylinux@centOSlearning ~]$ sudo vim /etc/sudoers  # 也可用 sudo visudo
 
 #
 # Adding HOME to env_keep may enable a user to run unrestricted
@@ -137,14 +137,74 @@ root    ALL=(ALL)       ALL
 让一般用户获得sudo权限的修改方法
 ```
 # 在这行下面添加一行
+用户名  可执行命令的主机名或地址=（可使用的身份）  可执行的命令的绝对路径
 root    ALL=(ALL)       ALL
 用户名   ALL=(ALL)      ALL
+
+# 对于组，注意在组名前面添加一个%
+%组名  可执行命令的主机名或地址=（可使用的身份）  可执行的命令的绝对路径
+%wheel  ALL=(ALL)       ALL
 ```
-注意：sunnylinux 在 wheel 里，可设置不用输密码
+可执行的命令写得越详细越安全，普通用户执行该命令也只能严格输入命令的所有字符，即要使用绝对路径
 ```
-[sunnylinux@centOSlearning ~]$ su sharonli
+# 让sharonli 在任何主机可切换到任何用户执行重启命令，shutdown 有很多选项，把命令写得越详细，执行的命令限制越多，例如这样用户就不能关机只能重启
+sharonli ALL=(ALL)    /usr/sbin/shutdown -r now
+# 一般用户执行方法
+sudo /usr/sbin/shutdown -r now
+
+# 让 sharonli 可添加用户，不指定可切换的用户则默认使用root
+sharonli ALL=/usr/sbin/useradd
+```
+```
+[sunnylinux@centOSlearning test]$ su sharonli
 密码：
-[sharonli@centOSlearning sunnylinux]$ sudo ls
+[sharonli@centOSlearning test]$ sudo -l
+[sudo] sharonli 的密码：
+匹配 %2$s 上 %1$s 的默认条目：
+    !visiblepw, always_set_home, match_group_by_gid, env_reset, env_keep="COLORS
+    DISPLAY HOSTNAME HISTSIZE KDEDIR LS_COLORS", env_keep+="MAIL PS1 PS2 QTDIR USERNAME
+    LANG LC_ADDRESS LC_CTYPE", env_keep+="LC_COLLATE LC_IDENTIFICATION LC_MEASUREMENT
+    LC_MESSAGES", env_keep+="LC_MONETARY LC_NAME LC_NUMERIC LC_PAPER LC_TELEPHONE",
+    env_keep+="LC_TIME LC_ALL LANGUAGE LINGUAS _XKB_CHARSET XAUTHORITY",
+    secure_path=/sbin\:/bin\:/usr/sbin\:/usr/bin
+
+用户 sharonli 可以在 centOSlearning 上运行以下命令：
+    (ALL) /usr/sbin/shutdown -r now
+    (root) /usr/sbin/useradd
+[sharonli@centOSlearning test]$ useradd abc
+bash: /usr/sbin/useradd: 权限不够
+[sharonli@centOSlearning test]$ sudo useradd abc
+[sharonli@centOSlearning test]$ ls /home
+abc  mysql  sharonli  sunnylinux  sunnylinux2  tommy  www
+[sharonli@centOSlearning test]$ sudo userdel abc
+对不起，用户 sharonli 无权以 root 的身份在 centOSlearning.SharonLi 上执行 /sbin/userdel abc。
+
+```
+sunnylinux 在 wheel 里，可设置不用输密码（此处没有设），用户可查看自己可以执行的 sudo 命令
+```
+[sunnylinux@centOSlearning test]$ sudo -l
+[sudo] sunnylinux 的密码：
+匹配 %2$s 上 %1$s 的默认条目：
+    !visiblepw, always_set_home, match_group_by_gid, env_reset, env_keep="COLORS
+    DISPLAY HOSTNAME HISTSIZE KDEDIR LS_COLORS", env_keep+="MAIL PS1 PS2 QTDIR USERNAME
+    LANG LC_ADDRESS LC_CTYPE", env_keep+="LC_COLLATE LC_IDENTIFICATION LC_MEASUREMENT
+    LC_MESSAGES", env_keep+="LC_MONETARY LC_NAME LC_NUMERIC LC_PAPER LC_TELEPHONE",
+    env_keep+="LC_TIME LC_ALL LANGUAGE LINGUAS _XKB_CHARSET XAUTHORITY",
+    secure_path=/sbin\:/bin\:/usr/sbin\:/usr/bin
+
+用户 sunnylinux 可以在 centOSlearning 上运行以下命令：
+    (ALL) ALL
+    
+[sunnylinux@centOSlearning test]$ userdel abc
+bash: /usr/sbin/userdel: 权限不够
+[sunnylinux@centOSlearning test]$ sudo userdel abc
+[sudo] sunnylinux 的密码：
+```
+对于其他没有 sudo 权限的一般用户
+```
+[sunnylinux@centOSlearning ~]$ su tommy
+密码：
+[tommy@centOSlearning sunnylinux]$ sudo ls
 
 我们信任您已经从系统管理员那里了解了日常注意事项。
 总结起来无外乎这三点：
@@ -153,11 +213,11 @@ root    ALL=(ALL)       ALL
     #2) 输入前要先考虑(后果和风险)。
     #3) 权力越大，责任越大。
 
-[sudo] sharonli 的密码：
-sharonli 不在 sudoers 文件中。此事将被报告。
-
+[sudo] tommy 的密码：
+tommy 不在 sudoers 文件中。此事将被报告。
 ```
-#### usrmod 命令
+
+#### usermod 命令
 使用 usermod 命令可以为用户添加用户组
 ```
 # 添加用户到 wheel 用户组，让该用户获得 sudo 权限
@@ -213,6 +273,7 @@ drwxrwxr-x.  2 sunnylinux sunnylinux   56 9月  18 09:30 vitest
 drwxrwxr-x 文件属性、拥有者权限、用户组权限、其他用户权限 755 rwxr-xr-x </br>
 rwx 对应 421 即 2^2+2^1+2^0=7 </br>
 目录可进入、内部文件可查看必须有r和x权限，可在目录新建文件必须有w权限</br>
+
 ### 改变文件拥有者和用户组 chown
 chown   修改每个由第一个非选项参数声明的给定file(文件)的用户和/或组的所有权.如下:</br>
 如果只给出了用户名(或者数字用户标识),那么该用户即成为每个指定文件的所有者,而该文件的组别并不改变.如果用户名后面紧跟着冒号和组名(或者是数字组标识),并且它们之间没有空格,那么文件的组所有权也随之改变.
