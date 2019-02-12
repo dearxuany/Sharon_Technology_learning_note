@@ -152,8 +152,10 @@ sharonli ALL=(ALL)    /usr/sbin/shutdown -r now
 # 一般用户执行方法
 sudo /usr/sbin/shutdown -r now
 
-# 让 sharonli 可添加用户，不指定可切换的用户则默认使用root
+# 让 sharonli 可添加用户并设置密码，不指定可切换的用户则默认使用root
 sharonli ALL=/usr/sbin/useradd
+# sharonli ALL=/usr/bin/passwd 不能这么写，因为这样一般用户有了给root设置密码的权利
+sharonli ALL=/usr/bin/passwd [A-Za-z]*, !/usr/bin/passwd "", !/usr/bin/passwd root  # 限制以字母开头的用户名，不能为空（空改当前用户密码即root），不能改root的密码，这三行顺序不能调乱
 ```
 ```
 [sunnylinux@centOSlearning test]$ su sharonli
@@ -171,6 +173,8 @@ sharonli ALL=/usr/sbin/useradd
 用户 sharonli 可以在 centOSlearning 上运行以下命令：
     (ALL) /usr/sbin/shutdown -r now
     (root) /usr/sbin/useradd
+    (root) /usr/bin/passwd [A-Za-z]*, !/usr/bin/passwd \"\", !/usr/bin/passwd root
+
 [sharonli@centOSlearning test]$ useradd abc
 bash: /usr/sbin/useradd: 权限不够
 [sharonli@centOSlearning test]$ sudo useradd abc
@@ -179,6 +183,17 @@ abc  mysql  sharonli  sunnylinux  sunnylinux2  tommy  www
 [sharonli@centOSlearning test]$ sudo userdel abc
 对不起，用户 sharonli 无权以 root 的身份在 centOSlearning.SharonLi 上执行 /sbin/userdel abc。
 
+[sharonli@centOSlearning test]$ sudo passwd
+对不起，用户 sharonli 无权以 root 的身份在 centOSlearning.SharonLi 上执行 /bin/passwd。
+[sharonli@centOSlearning test]$ sudo passwd root
+对不起，用户 sharonli 无权以 root 的身份在 centOSlearning.SharonLi 上执行 /bin/passwd root。
+
+# 注意这个问题，sunnylinux在组里也是有类似root的权限的，即是可以通过改这个账号的密码进而修改root的密码
+[sharonli@centOSlearning test]$ sudo passwd sunnylinux  
+更改用户 sunnylinux 的密码 。
+新的 密码：
+
+# 还要注意，/usr/bin/vim 和 /etc/shadow 这个存密码的文件的关系，绝对一定不能让一般用户在/etc/sudoers 文件中有执行/usr/bin/vim 的权利
 ```
 sunnylinux 在 wheel 里，可设置不用输密码（此处没有设），用户可查看自己可以执行的 sudo 命令
 ```
