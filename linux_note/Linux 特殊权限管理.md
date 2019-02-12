@@ -1,4 +1,4 @@
-# Linux 特殊权限管理
+# Linux 特殊权限管理 ACL、SUID、SGID、Sticky BIT
 
 ## ACL 权限
 一个文件或目录只能有一个 owner 权限和 一个 group 权限以及其他用户权限，这就导致有时权限不够用，于是出现了特殊权限 ACL。
@@ -281,4 +281,83 @@ other::---
 
 ```
 
+## SUID/SGID/Sticky BIT
+SetUID 和 SetGID 一般在一些比较特别的场景下才会使用，用得不好容易出现安全问题，所以使用要尤为谨慎，应尽量不改。</br>
+umask 后三位为普通权限，第一位为特殊权限。日常如果第一位不赋权限，则默认特殊权限为0。</br>
+user为4，group为2，other为1，对应 SUID/SGID/Sticky BIT
+```
+# umask 指出新建文件或目录时默认的权限，实际权限为后三位数字取反，即775 rwxrwxr-x
+[sunnylinux@centOSlearning test]$ umask
+0002
 
+[sunnylinux@centOSlearning test]$ mkdir ./SUIDtest
+[sunnylinux@centOSlearning test]$ ll
+drwxrwxr-x. 2 sunnylinux sunnylinux    6 2月  12 22:14 SUIDtest
+
+# 一般用户umask为002，root为022
+[sunnylinux@centOSlearning SUIDtest]$ sudo umask
+[sudo] sunnylinux 的密码：
+0022
+```
+因为SUID和SGID很危险，所以应该把系统中有SUID和SGID权限的文件记录下来，然后定期扫描以下系统是否有新增的奇怪文件拥有这两个权限。
+```
+# 搜索根目录中，具有4000权限和2000权限的所有文件并保存在文件中
+[sunnylinux@centOSlearning test]$ sudo find / -perm -4000 -o -perm -2000 > suid_and_sgid.log
+```
+### SetUID
+* 只有二进制可执行文件才能设 SUID
+* owner和文件执行者必须对该文件都有x执行权限
+* 文件执行者在执行该文件时会获得文件的owner身份，即暂时获得了owner的权限（包括对其他文件的权限）
+* SUID文件执行者的身份改变只在命令执行过程中有效
+```
+# 设定SUID, user=4
+[sunnylinux@centOSlearning test]$ chmod 4775 ./SUIDtest/
+
+# s代替x 出现在了owner的执行权限上即设定了SUID
+drwsrwxr-x. 2 sunnylinux sunnylinux    6 2月  12 22:14 SUIDtest
+```
+如果一开始owner 对该文件没有执行权限，而对该文件赋予SUID，x位会被变成S，但S并不能正常使用
+```
+drw-r--r--. 2 sunnylinux sunnylinux    6 2月  12 22:53 suidtest
+[sunnylinux@centOSlearning test]$ chmod 4644 ./suidtest/
+[sunnylinux@centOSlearning test]$ ll
+drwSr--r--. 2 sunnylinux sunnylinux    6 2月  12 22:53 suidtest
+```
+SUID 典型应用: 一般用户可改自己的密码</br>
+```
+# 当一般用户执行passwd 命令时，一般用户身份会暂时变成 /usr/bin/passwd 的 owner即 root，而root有改/etc/shadow的权限，所以一般用户可以自己改自己的密码
+[sunnylinux@centOSlearning test]$ ll /etc/shadow
+----------. 1 root root 1557 2月  12 18:48 /etc/shadow
+[sunnylinux@centOSlearning test]$ ll /usr/bin/passwd
+-rwsr-xr-x. 1 root root 27144 6月   1 2014 /usr/bin/passwd
+
+# 一般用户使用passwd不能加用户名，只能直接回车
+[tommy@centOSlearning test]$ passwd sharonli
+passwd：只有根用户才能指定用户名。
+[tommy@centOSlearning test]$ passwd
+更改用户 tommy 的密码 。
+为 tommy 更改 STRESS 密码。
+（当前）UNIX 密码：
+```
+取消 SUID
+```
+[sunnylinux@centOSlearning test]$ chmod u-s ./SUIDtest
+[sunnylinux@centOSlearning test]$ ll
+drwxrwxr-x. 2 sunnylinux sunnylinux    6 2月  12 22:14 SUIDtest
+```
+安全问题：一般用户没有查看/etc/shadow的权限，用vim打开shadow会看见一个空文件，因为vim没有SUID权限
+```
+# 经过以下过程一般用户可以打开/etc/shadow，所以安全性堪忧
+[sunnylinux@centOSlearning test]$ ll /usr/bin/vim
+-rwxr-xr-x. 1 root root 2170688 4月  11 2018 /usr/bin/vim
+[sunnylinux@centOSlearning test]$ sudo chmod 4755 /usr/bin/vim
+[sudo] sunnylinux 的密码：
+[sunnylinux@centOSlearning test]$ ll /usr/bin/vim
+-rwsr-xr-x. 1 root root 2170688 4月  11 2018 /usr/bin/vim
+[sunnylinux@centOSlearning test]$ vim /etc/shadow
+
+# 改回正常权限
+[sunnylinux@centOSlearning test]$ sudo chmod 0755 /usr/bin/vim
+[sunnylinux@centOSlearning test]$ ll /usr/bin/vim
+-rwxr-xr-x. 1 root root 2170688 4月  11 2018 /usr/bin/vim
+```
