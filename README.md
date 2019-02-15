@@ -13,6 +13,7 @@
 * [Linux 文件搜索 whereis、locate、which、find](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E6%96%87%E4%BB%B6%E6%90%9C%E7%B4%A2%20whereis%E3%80%81locate%E3%80%81which%E3%80%81find.md)
 * [Linux 打包压缩和解压 tar](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E6%89%93%E5%8C%85%E5%8E%8B%E7%BC%A9%E5%91%BD%E4%BB%A4%20tar.md)
 * [Linux 用户及文件权限管理](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E7%94%A8%E6%88%B7%E5%8F%8A%E6%96%87%E4%BB%B6%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86.md)
+* [Linux 特殊权限管理 ACL、SUID、SGID、Sticky BIT](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E7%89%B9%E6%AE%8A%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86.md)
 * [Linux 系统性能监控常用命令](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7.md)
 
 
