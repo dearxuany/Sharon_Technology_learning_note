@@ -128,3 +128,5 @@
 [ Cisco Certified Network Associate Routing and Switching](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/note_images/Networking_note_images/ccna_11105536_certificate.png)
 ### 思科网络硬件配置
 * [路由选择：开放最短路径优先 OSPF 原理与配置](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/network_note/Network%20%E5%BC%80%E6%94%BE%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E4%BC%98%E5%85%88%20OSPF.md)
+* [动态主机配置协议 DHCP 原理及配置](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/network_note/Network%20%E5%8A%A8%E6%80%81%E4%B8%BB%E6%9C%BA%E9%85%8D%E7%BD%AE%E5%8D%8F%E8%AE%AE%20DHCP.md)
+* [超文本传输协议 http 与 DNS  原理及配置](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/network_note/Network%20%E8%B6%85%E6%96%87%E6%9C%AC%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE%20http%20.md)
