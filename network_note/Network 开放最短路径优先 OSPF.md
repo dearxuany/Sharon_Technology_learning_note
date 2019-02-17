@@ -1,7 +1,8 @@
 # OSPF 开放最短路径优先
-OSPF 是一种路由选择协议，基于狄克斯特拉算法 Dijkstra's Algorithm 算法创建最短路径树，再得到最佳路径填充路由选择表。</br>
+OSPF 是一种路由选择协议，基于狄克斯特拉算法 Dijkstra's Algorithm 创建最短路径树，再得到最佳路径填充路由选择表。</br>
 OSPF 没有跳数限制，可创建区域和自主系统，开放标准，适用于多个厂商。</br>
 OSPF 区域0必不可少，其他区域都应该连到该区域，将其他区域连接到AS主干区域的路由为“区域边界路由 ABR Area Border Router”，ABR至少有一个接口在区域0内。</br>
+[关于 狄克斯特拉算法 Dijkstra's Algorithm 的 python 实现](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E7%AE%97%E6%B3%95%EF%BC%9A%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E7%AE%97%E6%B3%95%E3%80%81%E7%8B%84%E5%85%8B%E6%96%AF%E7%89%B9%E6%8B%89%E7%AE%97%E6%B3%95%20.MD#%E7%8B%84%E5%85%8B%E6%96%AF%E7%89%B9%E6%8B%89%E7%AE%97%E6%B3%95-dijkstras-algorithm)</br>
 ## OSPF术语
 * RID 路由ID ：所有环回接口loopback中选择最大的一个，如果没有设loopback则使用物理ip最大的一个作RID
 * 邻居关系：OSPF 只接受和它建立了邻居关系的路由的共享路由，并非所有邻居路由都会建立邻居关系
