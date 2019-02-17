@@ -9,6 +9,10 @@ DHCP服务器需要配置的信息：
 * 保留IP
 * DHCP中继让DHCP服务器给其他子网分配ip
 ## DHCP 配置
+承接 [路由选择：开放最短路径优先 OSPF 原理与配置](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/network_note/Network%20%E5%BC%80%E6%94%BE%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E4%BC%98%E5%85%88%20OSPF.md)中的网络配置，并在此基础上添加子网和路由选择策略
+</br>
+网络拓扑更新为下图所示：
+![]()
 ```
 Lab_B>enable
 Lab_B#config t
