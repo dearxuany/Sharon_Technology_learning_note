@@ -38,7 +38,7 @@ subnet mask 255.255.255.0
 default gateway 172.16.50.1
 dns server 172.16.50.2
 
-# 默认地址池
+# DHCP服务器所在子网地址池
 poolname serverpool
 default gateway 172.16.50.1
 dns server 172.16.50.2
