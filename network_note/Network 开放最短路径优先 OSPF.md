@@ -21,7 +21,10 @@ OSPF 区域0必不可少，其他区域都应该连到该区域，将其他区�
 * OSPF路由将 SPF插入到路由表中
 
 ## OSPF 配置
-Router 配置
+网络拓扑图如下</br>
+![](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/note_images/Networking_note_images/network_ospf.png)</br>
+</br>
+Router 配置</br>
 ```
 # Lab_A 配置
 
@@ -44,8 +47,6 @@ Lab_A(config-if)#ip address 172.16.30.1 255.255.255.0
 Lab_A(config-if)#no shut
 
 Lab_A(config-router)#int f1/0
-Lab_A(config-if)#io addr
-Lab_A(config-if)#io address
 Lab_A(config-if)#ip add
 Lab_A(config-if)#ip address 172.16.30.1 255.255.255.0
 Lab_A(config-if)#no shut
@@ -152,3 +153,106 @@ Ping statistics for 172.16.40.2:
 Approximate round trip times in milli-seconds:
     Minimum = 2ms, Maximum = 4ms, Average = 3ms
 ```
+## 查看OSPF运行情况
+```
+# 查邻居
+Lab_A>sh ip ospf neighbor 
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+172.16.10.2       0   FULL/  -        00:00:37    172.16.10.2     Serial2/0
+
+# 查路由表
+Lab_A>sh ip route
+Codes: C - connected, S - static, I - IGRP, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2, E - EGP
+       i - IS-IS, L1 - IS-IS level-1, L2 - IS-IS level-2, ia - IS-IS inter area
+       * - candidate default, U - per-user static route, o - ODR
+       P - periodic downloaded static route
+
+Gateway of last resort is not set
+
+     172.16.0.0/24 is subnetted, 4 subnets
+C       172.16.10.0 is directly connected, Serial2/0
+O       172.16.20.0 [110/128] via 172.16.10.2, 00:16:00, Serial2/0
+C       172.16.30.0 is directly connected, FastEthernet1/0
+O       172.16.40.0 [110/129] via 172.16.10.2, 00:13:31, Serial2/0
+
+# 查OSPF信息
+Lab_A>sh ip protocols 
+
+Routing Protocol is "ospf 1"
+  Outgoing update filter list for all interfaces is not set 
+  Incoming update filter list for all interfaces is not set 
+  Router ID 172.16.10.1
+  Number of areas in this router is 1. 1 normal 0 stub 0 nssa
+  Maximum path: 4
+  Routing for Networks:
+    172.16.10.0 0.0.0.255 area 0
+    172.16.30.0 0.0.0.255 area 0
+  Routing Information Sources:  
+    Gateway         Distance      Last Update 
+    172.16.10.1          110      00:23:07
+    172.16.10.2          110      00:18:16
+    172.16.20.2          110      00:16:47
+  Distance: (default is 110)
+  
+Lab_A>sh ip ospf int f1/0
+FastEthernet1/0 is up, line protocol is up
+  Internet address is 172.16.30.1/24, Area 0
+  Process ID 1, Router ID 172.16.10.1, Network Type BROADCAST, Cost: 1
+  Transmit Delay is 1 sec, State DR, Priority 1
+  Designated Router (ID) 172.16.10.1, Interface address 172.16.30.1
+  No backup designated router on this network
+  Timer intervals configured, Hello 10, Dead 40, Wait 40, Retransmit 5
+    Hello due in 00:00:01
+  Index 1/1, flood queue length 0
+  Next 0x0(0)/0x0(0)
+  Last flood scan length is 1, maximum is 1
+  Last flood scan time is 0 msec, maximum is 0 msec
+  Neighbor Count is 0, Adjacent neighbor count is 0
+  Suppress hello for 0 neighbor(s)
+```
+```
+Lab_B>sh ip ospf neighbor 
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+172.16.10.1       0   FULL/  -        00:00:37    172.16.10.1     Serial2/0
+172.16.20.2       0   FULL/  -        00:00:30    172.16.20.2     Serial3/0
+
+Lab_B>sh ip protocols 
+
+Routing Protocol is "ospf 1"
+  Outgoing update filter list for all interfaces is not set 
+  Incoming update filter list for all interfaces is not set 
+  Router ID 172.16.10.2
+  Number of areas in this router is 1. 1 normal 0 stub 0 nssa
+  Maximum path: 4
+  Routing for Networks:
+    172.16.10.0 0.0.0.255 area 0
+    172.16.20.0 0.0.0.255 area 0
+  Routing Information Sources:  
+    Gateway         Distance      Last Update 
+    172.16.10.1          110      00:01:50
+    172.16.10.2          110      00:27:00
+    172.16.20.2          110      00:25:31
+  Distance: (default is 110)
+
+Lab_B>sh ip ospf int s3/0
+Serial3/0 is up, line protocol is up
+  Internet address is 172.16.20.1/24, Area 0
+  Process ID 1, Router ID 172.16.10.2, Network Type POINT-TO-POINT, Cost: 64
+  Transmit Delay is 1 sec, State POINT-TO-POINT, Priority 0
+  No designated router on this network
+  No backup designated router on this network
+  Timer intervals configured, Hello 10, Dead 40, Wait 40, Retransmit 5
+    Hello due in 00:00:04
+  Index 2/2, flood queue length 0
+  Next 0x0(0)/0x0(0)
+  Last flood scan length is 1, maximum is 1
+  Last flood scan time is 0 msec, maximum is 0 msec
+  Neighbor Count is 1 , Adjacent neighbor count is 1
+    Adjacent with neighbor 172.16.20.2
+  Suppress hello for 0 neighbor(s)
+```
+因为在点到点链路上不会选举DR和BDR，所以状态为 FULL/  -  和 No designated router on this network、No backup designated router on this network
