@@ -126,3 +126,5 @@
 ### Cisco Certified Network Associate
 思科认证 网络工程师 CCNA  Score: 986/1000
 [ Cisco Certified Network Associate Routing and Switching](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/note_images/Networking_note_images/ccna_11105536_certificate.png)
+### 思科网络硬件配置
+* [路由选择：开放最短路径优先 OSPF 原理与配置](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/network_note/Network%20%E5%BC%80%E6%94%BE%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E4%BC%98%E5%85%88%20OSPF.md)
