@@ -11,8 +11,22 @@ DNS 服务器可将域名和IP地址相互映射（url转ip）的一个分布式
 ## HTTP服务器与DNS服务器的配置
 配置承接[动态主机配置协议 DHCP 原理及配置](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/network_note/Network%20%E5%8A%A8%E6%80%81%E4%B8%BB%E6%9C%BA%E9%85%8D%E7%BD%AE%E5%8D%8F%E8%AE%AE%20DHCP.md)中的拓扑和配置，
 路由选择使用 OSPF，部分主机设置静态ip，部分主机与http服务器使用DHCP动态获取ip地址。</br>
-
+</br>
+本次配置的网络拓扑如下图所示：
+</br>
+![](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/note_images/Networking_note_images/http_dns.png)
+</br>
+</br>
 http server 的ip为 172.16.40.4，尝试在本机连接页面</br>
 ![](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/note_images/Networking_note_images/http_server.png)</br>
+</br>
 在和http server 同一网段的pc 172.16.40.2 上尝试连接网页</br>
-![]()
+![](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/note_images/Networking_note_images/http_pc.png)</br>
+</br>
+设置DNS服务器域名
+```
+url 为 cisco.com
+http server ip 为 172.16.40.4
+```
+在 172.16.50.4 的pc上使用url尝试连接网页，可见 DNS的域名转换已成功</br>
+![](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/note_images/Networking_note_images/http_url.png)</br>
