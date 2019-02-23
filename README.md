@@ -94,7 +94,7 @@
 * [Python 通过 yagmail 发送邮件](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E9%80%9A%E8%BF%87%20yagmail%20%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6.MD)
 
 ### Python3 web
-[Python 使用CGI创建动态网页 cgi、cgitb](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E4%BD%BF%E7%94%A8CGI%E5%88%9B%E5%BB%BA%E5%8A%A8%E6%80%81%E7%BD%91%E9%A1%B5%20cgi%E3%80%81cgitb.MD)
+* [Python 使用CGI创建动态网页 cgi、cgitb](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E4%BD%BF%E7%94%A8CGI%E5%88%9B%E5%BB%BA%E5%8A%A8%E6%80%81%E7%BD%91%E9%A1%B5%20cgi%E3%80%81cgitb.MD)
 
 ### Python3 工具
 * [Python 程序打包 Setuptools](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E7%A8%8B%E5%BA%8F%E6%89%93%E5%8C%85%20Setuptools.MD)
