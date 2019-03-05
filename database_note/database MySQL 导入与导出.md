@@ -72,6 +72,8 @@ mysql> select * from employee;
 | 12 | Mary |   21 |   3000 | 100101 | dpt2   |
 +----+------+------+--------+--------+--------+
 12 rows in set (0.00 sec)
-
-
+```
+## 导出
+```
+SELECT 列1，列2 INTO OUTFILE '文件路径和文件名' FROM 表名字;
 ```
