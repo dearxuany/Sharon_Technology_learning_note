@@ -198,3 +198,9 @@ option 选项：
 ```
 ./mysqladmin -uroot -p  -i 2 -c 5 status
 ```
+
+## 载入SQL文件
+```
+# 登录mysql后
+source sql文件绝对路径
+```
