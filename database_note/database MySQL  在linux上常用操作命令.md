@@ -32,6 +32,10 @@ ERROR 1217 (23000): Cannot delete or update a parent row: a foreign key constrai
 会耗费大量资源，最好手动进行表复制
 #### 方法2：导出导入
 可用mysqldump导出文件，然后CREATE TABLE来给新表设置引擎，注意改表名
+```
+# 表名修改
+RENAME TABLE table_a TO table_b
+```
 #### 方法3：创建查询
 不需要导出整个表的文件，可在存储引擎中直接创建一个新表来进行原表的全量复制，表很大时可以只选取部分数据。
 
