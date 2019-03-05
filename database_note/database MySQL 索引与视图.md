@@ -1,6 +1,34 @@
 # database MySQL 索引与视图
 ## 索引
+索引是一种与表有关的结构。</br>
+当表中有大量记录时，若要对表进行查询，没有索引的情况是全表搜索，这样做会消耗大量数据库系统时间，并造成大量磁盘 I/O 操作。</br>
+而如果在表中已建立索引，在索引中找到符合查询条件的索引值，通过索引值就可以快速找到表中的数据，可以大大加快查询速度。</br>
+在使用 SELECT 语句查询的时候，语句中 WHERE 里面的条件，会自动判断有没有可用的索引。</br>
+一些字段不适合创建索引，比如性别，这个字段存在大量的重复记录无法享受索引带来的速度加成，甚至会拖累数据库，导致数据冗余和额外的 CPU 开销。</br>
+### 创建索引
+```
+# 方法1
+ALTER TABLE 表名字 ADD INDEX 索引名 (列名);
+# 方法2
+CREATE INDEX 索引名 ON 表名字 (列名);
+```
+```
+mysql> CREATE INDEX idx_name ON employee (name);
+```
+### 查看表的索引
+```
+mysql> SHOW INDEX FROM employee;
++----------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
+| Table    | Non_unique | Key_name | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment |
++----------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
+| employee |          0 | PRIMARY  |            1 | id          | A         |           5 |     NULL | NULL   |      | BTREE      |         |               |
+| employee |          0 | phone    |            1 | phone       | A         |           5 |     NULL | NULL   |      | BTREE      |         |               |
+| employee |          1 | emp_fk   |            1 | in_dpt      | A         |           3 |     NULL | NULL   |      | BTREE      |         |               |
+| employee |          1 | idx_name |            1 | name        | A         |           5 |     NULL | NULL   | YES  | BTREE      |         |               |
++----------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
+4 rows in set (0.00 sec)
 
+```
 
 
 ## 视图
@@ -16,7 +44,7 @@
 ### 创建与删除视图
 创建视图
 ```
-CREATE VIEW viewname AS
+CREATE VIEW viewname(column1,column2,column3) AS
 具体详细的SQL语句;
 ```
 删除视图
