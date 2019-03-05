@@ -179,7 +179,7 @@ UPDATE database_name.table_name SET column_name1=new_value,column_name2=new_valu
 update university.department set budget=5600 where dept_name='math'
 update university.department set budget=7000,building='luke' where dept_name='math'
 ```
-
+注意：UPDATE 一定要配合 where 用，否则会改变该column的所有值！！
 ## DELETE 删除某行
 删除column_name=value处的那些行（会删除多行）</br>
 WHERE 子句规定哪条记录或者哪些记录需要删除。如果省略 WHERE 子句，所有的记录都将被删除！</br>
@@ -736,7 +736,10 @@ ALTER column_name DROP DEFAULT
 ### 添加、删除、修改列
 #### 修改列
 ##### 改列名
-改列名的同时注意把后面的datatype也填好，不然容易出错。
+改列名的同时注意把后面的datatype也填好，不然会出错。
+```
+ALTER TABLE 表名字 CHANGE 原列名 新列名 数据类型 约束;
+```
 ```
 ALTER TABLE table_name 
 CHANGE COLUMN old_column_name new_column_name datatype
@@ -759,17 +762,24 @@ CHANGE COLUMN column_name column new_datatype
 ALTER TABLE expenditure
 CHANGE COLUMN expenseDate expenseDate DATE
 ```
-
+当原列名和新列名相同的时候，指定新的数据类型或约束，就可以用于修改数据类型或约束。需要注意的是，修改数据类型可能会导致数据丢失，所以要慎重使用。
 #### 添加列
+```
+ALTER TABLE 表名字 ADD COLUMN 列名字 数据类型 约束;
+或：
+ALTER TABLE 表名字 ADD 列名字 数据类型 约束;
+```
+默认添加列在表最后
 ```
 ALTER TABLE table_name
 ADD column_name datatype
 ```
 实例：
 ```
-ALTER TABLE personalfinancialdb.persons
-ADD registrationDate DATETIME
+# 在age后面新增体重信息，在第一列新增一列则将AFTER column_name 改为 FIRST
+mysql> ALTER table employee ADD weight INT(4) DEFAULT 120 AFTER age;
 ```
+
 
 #### 删除列
 ```
