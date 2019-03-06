@@ -2,7 +2,33 @@
 ## MySQL 安装配置
 [MySQL 在 linux 上的配置安装](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEMySQL%EF%BC%88MariaDB%EF%BC%89.MD)
 ## MySQL 在 linux 上一些常用操作命令
-注意：linux上命令行必须以;结束，不然回车会自动换行
+注意：</br>
+linux上命令行必须以;结束，不然回车会自动换行</br>
+命令不分大小写，可是为了方便看最好命令用大写，数据库信息用小写（数据库名称是区分大小写的！）</br>
+
+
+### 查看 mysql 版本及各种函数输出
+版本号
+```
+MariaDB [(none)]> select version();
++----------------+
+| version()      |
++----------------+
+| 5.5.56-MariaDB |
++----------------+
+1 row in set (0.05 sec)
+```
+当前日期
+```
+MariaDB [(none)]> select current_date();
++----------------+
+| current_date() |
++----------------+
+| 2019-03-06     |
++----------------+
+1 row in set (0.04 sec)
+```
+
 ### 查看引擎
 ```
 MariaDB [(none)]> show engines;
@@ -50,8 +76,9 @@ MariaDB [(none)]> show grants for sharonli;
 | GRANT ALL PRIVILEGES ON *.* TO 'sharonli'@'%' IDENTIFIED BY PASSWORD '*9F4094FBC28842418DE5A9DF5413521CD8E4BDE1' |
 +------------------------------------------------------------------------------------------------------------------+
 1 row in set (0.00 sec)
-
 ```
+
+
 ### 查看正在执行的查询语句
 ```
 MariaDB [(none)]> show processlist;
@@ -136,6 +163,19 @@ MariaDB [personalFinancialDB]> select count(*) from persons;
 1 row in set (0.23 sec)
 
 ```
+查看表的数据结构设置
+```
+MariaDB [personalFinancialDB]> describe persons;
++------------+--------------+------+-----+---------+----------------+
+| Field      | Type         | Null | Key | Default | Extra          |
++------------+--------------+------+-----+---------+----------------+
+| ID_persons | int(11)      | NO   | PRI | NULL    | auto_increment |
+| LastName   | varchar(255) | NO   |     | NULL    |                |
+| FirstName  | varchar(255) | YES  |     | NULL    |                |
+| Address    | varchar(255) | YES  |     | NULL    |                |
+| City       | varchar(255) | YES  |     | NULL    |                |
++------------+--------------+------+-----+---------+----------------+
+```
 
 ## mysql 性能测试相关
 ### 输出指标
@@ -198,6 +238,15 @@ option 选项：
      -c  number 自动运行次数统计，必须和 -i 一起使用
      -i   number 间隔多长时间重复执行
 ```
+利用 mysqladmin 修改用户密码
+```
+mysqladmin -u用户名 -p旧密码 password 新密码  #注意参数u和p后面不要带空格，不然系统会识别错误
+```
+```
+$ mysqladmin -u sharonli -p password abc
+Enter password:
+```
+
 每个两秒查看一次服务器的状态，总共重复5次
 ```
 ./mysqladmin -uroot -p  -i 2 -c 5 status
