@@ -107,7 +107,9 @@ SELECT * FROM university.department WHERE building = 'waston';
 ```
 对于NULL值的处理：</br>
 选取表中不为空的数据，使用 IS NOT NULL；</br>
-选取表中为空的数据，使用 IS NULL。</br>
+选取表中为空的数据，使用 IS NULL；</br>
+在GROUP BY中，两个NULL值被视为相同等价的。</br>
+
 ```
 select lastName,FirstName,City FROM personalFinancialDB.persons
 WHERE city IS NOT NULL
@@ -926,6 +928,77 @@ DATE_FORMAT()	用不同的格式显示日期/时间
 select customer_id, SUM(amount), DATE_FORMAT(Now(),'%b %d %Y %h:%i %p')
 from sakila.payment
 GROUP BY customer_id
+```
+### 日期函数计算
+#### 年龄计算
+```
+MariaDB [personalFinancialDB]> select * from persons;                           
++------------+----------+-----------+---------+-----------+------------+
+| ID_persons | LastName | FirstName | Address | City      | Birth      |
++------------+----------+-----------+---------+-----------+------------+
+|          1 | Li       | Sharon    | NULL    | NULL      | 1993-02-26 |
+|          2 | Tang     | Jack      | NULL    | NULL      | NULL       |
+|          3 | Tang     | Ben       | NULL    | NULL      | NULL       |
+|          4 | Li       | Lily      | SCNU    | Guangzhou | NULL       |
+|          5 | Chen     | Rain      | NULL    | Guangzhou | 1969-07-08 |
++------------+----------+-----------+---------+-----------+------------+
+5 rows in set (0.00 sec)
+```
+使用 timestampdiff(YEAR,Birth,curdate())
+```
+MariaDB [personalFinancialDB]> SELECT LastName,FirstName,Birth,curdate(),timestampdiff(YEAR,Birth,curdate()) AS age FROM persons;   
++----------+-----------+------------+------------+------+
+| LastName | FirstName | Birth      | curdate()  | age  |
++----------+-----------+------------+------------+------+
+| Li       | Sharon    | 1993-02-26 | 2019-03-06 |   26 |
+| Tang     | Jack      | NULL       | 2019-03-06 | NULL |
+| Tang     | Ben       | NULL       | 2019-03-06 | NULL |
+| Li       | Lily      | NULL       | 2019-03-06 | NULL |
+| Chen     | Rain      | 1969-07-08 | 2019-03-06 |   49 |
++----------+-----------+------------+------------+------+
+5 rows in set (0.04 sec)
+```
+使用 YEAR() 和 RIGHT()
+```
+# 未过生日 (RIGHT(curdate(),5)<RIGHT(Birth,5)) 为真即是1，所以年份相减结果-1
+
+MariaDB [personalFinancialDB]> SELECT LastName,FirstName,Birth,curdate(), (year(curdate())-year(Birth))-(RIGHT(curdate(),5)<RIGHT(Birth,5)) AS age  from persons;
++----------+-----------+------------+------------+------+
+| LastName | FirstName | Birth      | curdate()  | age  |
++----------+-----------+------------+------------+------+
+| Li       | Sharon    | 1993-02-26 | 2019-03-06 |   26 |
+| Tang     | Jack      | NULL       | 2019-03-06 | NULL |
+| Tang     | Ben       | NULL       | 2019-03-06 | NULL |
+| Li       | Lily      | NULL       | 2019-03-06 | NULL |
+| Chen     | Rain      | 1969-07-08 | 2019-03-06 |   49 |
++----------+-----------+------------+------------+------+
+5 rows in set (0.00 sec)
+```
+#### 找出某月过生日的人
+```
+MariaDB [personalFinancialDB]> select * from persons where month(Birth)='02';
++------------+----------+-----------+---------+------+------------+
+| ID_persons | LastName | FirstName | Address | City | Birth      |
++------------+----------+-----------+---------+------+------------+
+|          1 | Li       | Sharon    | NULL    | NULL | 1993-02-26 |
++------------+----------+-----------+---------+------+------------+
+1 row in set (0.00 sec)
+```
+找下月出生的人可使用DATE_ADD(), DATE_ADD()允许在一个给定的日期上加上时间间隔。
+```
+MariaDB [(none)]> select date_add(curdate(),interval 1 month);
++--------------------------------------+
+| date_add(curdate(),interval 1 month) |
++--------------------------------------+
+| 2019-04-06                           |
++--------------------------------------+
+1 row in set (0.04 sec)
+
+```
+当前月为12月，找下月出生的人，MOD(something,12)返回在0和11之间的一个数字，因此必须在MOD()后加1，否则我们将从11月(11)跳到1月(1)。
+```
+mysql> SELECT * FROM persons
+    -> WHERE MONTH(Birth) = MOD(MONTH(CURDATE()), 12) + 1;
 ```
 
 ## 其他内建函数
