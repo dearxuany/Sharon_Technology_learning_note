@@ -1063,6 +1063,91 @@ from sakila.payment
 GROUP BY customer_id
 HAVING SUM(amount)>100
 ```
+#### 最大最小值
+```
+MariaDB [personalFinancialDB]> select * from shop;
++---------+--------+-------+
+| article | dealer | price |
++---------+--------+-------+
+|    0001 | A      |  3.45 |
+|    0001 | B      |  3.99 |
+|    0002 | A      | 10.99 |
+|    0003 | B      |  1.45 |
+|    0003 | C      |  1.69 |
+|    0003 | D      |  1.25 |
+|    0004 | D      | 19.95 |
++---------+--------+-------+
+7 rows in set (0.00 sec)
+```
+价格最大的物品
+```
+MariaDB [personalFinancialDB]> select * from shop where price=max(price);
+ERROR 1111 (HY000): Invalid use of group function
+MariaDB [personalFinancialDB]> select * from shop where price=(select max(price)from shop);
++---------+--------+-------+
+| article | dealer | price |
++---------+--------+-------+
+|    0004 | D      | 19.95 |
++---------+--------+-------+
+1 row in set (0.06 sec)
+```
+各个物品最大的价格
+```
+MariaDB [personalFinancialDB]> select * from shop where price=(select max(price)from shop group by article);
+ERROR 1242 (21000): Subquery returns more than 1 row
+MariaDB [personalFinancialDB]> select max(price)from shop group by article;     
++------------+
+| max(price) |
++------------+
+|       3.99 |
+|      10.99 |
+|       1.69 |
+|      19.95 |
++------------+
+4 rows in set (0.00 sec)
+
+MariaDB [personalFinancialDB]> select article,max(price)from shop group by article;
++---------+------------+
+| article | max(price) |
++---------+------------+
+|    0001 |       3.99 |
+|    0002 |      10.99 |
+|    0003 |       1.69 |
+|    0004 |      19.95 |
++---------+------------+
+4 rows in set (0.00 sec)
+```
+最大价格和最小价格对应的物品
+```
+MariaDB [personalFinancialDB]> select article,price from shop where price=(select max(price) from shop) or price=(select min(price) from shop);
++---------+-------+
+| article | price |
++---------+-------+
+|    0003 |  1.25 |
+|    0004 | 19.95 |
++---------+-------+
+2 rows in set (0.00 sec)
+```
+使用用户变量</br>
+注意：用户变量只有本次登录有用，退出重登后要重新设置才能用
+```
+MariaDB [personalFinancialDB]> select @price_min:= min(price),@price_max:=max(price) from shop;
++-------------------------+------------------------+
+| @price_min:= min(price) | @price_max:=max(price) |
++-------------------------+------------------------+
+|                    1.25 |                  19.95 |
++-------------------------+------------------------+
+1 row in set (0.00 sec)
+
+MariaDB [personalFinancialDB]> select * from shop where price=@price_min or price=@price_max;
++---------+--------+-------+
+| article | dealer | price |
++---------+--------+-------+
+|    0003 | D      |  1.25 |
+|    0004 | D      | 19.95 |
++---------+--------+-------+
+2 rows in set (0.00 sec)
+```
 
 ### Scalar 函数
 常用Scalar函数：</br>
