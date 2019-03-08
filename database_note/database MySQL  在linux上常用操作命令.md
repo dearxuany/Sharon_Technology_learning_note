@@ -194,6 +194,18 @@ MariaDB [personalFinancialDB]> SHOW CREATE TABLE expenditure;
 
 ```
 
+### 查看插入信息
+查看刚刚插入的数据的ID
+```
+MariaDB [personalFinancialDB]> select Last_INSERT_ID();
++------------------+
+| Last_INSERT_ID() |
++------------------+
+|               10 |
++------------------+
+1 row in set (0.00 sec)
+```
+
 ## mysql 性能测试相关
 ### 输出指标
 ```
