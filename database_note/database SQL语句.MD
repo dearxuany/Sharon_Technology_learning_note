@@ -1224,6 +1224,86 @@ MariaDB [(none)]> select insert('sharon',2,666,'123');
 1 row in set (0.00 sec)
 
 ```
+### 格式转换
+FORMAT(X,D) 数字 X 的格式设置为 '#,###,###.##',以四舍五入的方式保留到小数点后 D 位, 返回结果为一个字符串。
+```
+MariaDB [(none)]> select format('1266666.55555',3);
++---------------------------+
+| format('1266666.55555',3) |
++---------------------------+
+| 1,266,666.556             |
++---------------------------+
+1 row in set (0.00 sec)
+```
+### 大小写转换
+```
+MariaDB [(none)]> select lower('SHARON'),upper('acv');
++-----------------+--------------+
+| lower('SHARON') | upper('acv') |
++-----------------+--------------+
+| sharon          | ACV          |
++-----------------+--------------+
+1 row in set (0.00 sec)
+```
+### 提取字符
+left('str',n) 由左边开始数，前n个字符
+```
+MariaDB [(none)]> select left('sharon',3),right('sharon',2);
++------------------+-------------------+
+| left('sharon',3) | right('sharon',2) |
++------------------+-------------------+
+| sha              | on                |
++------------------+-------------------+
+1 row in set (0.00 sec)
+```
+SUBSTRING(str,pos) , SUBSTRING(str FROM pos) SUBSTRING(str,pos,len) , SUBSTRING(str FROM pos FOR len)</br>
+由字符串的第pos位开始提取后面len位字符，pos为负是由右边开始数
+```
+MariaDB [(none)]> select substring('sharon',-2);
++------------------------+
+| substring('sharon',-2) |
++------------------------+
+| on                     |
++------------------------+
+1 row in set (0.00 sec)
+
+MariaDB [(none)]> select substring('sharon',2);
++-----------------------+
+| substring('sharon',2) |
++-----------------------+
+| haron                 |
++-----------------------+
+1 row in set (0.00 sec)
+
+MariaDB [(none)]> select substring('sharon',-2,1);
++--------------------------+
+| substring('sharon',-2,1) |
++--------------------------+
+| o                        |
++--------------------------+
+1 row in set (0.01 sec)
+
+```
+### 按分隔符分割字符串
+SUBSTRING_INDEX(str,delim,count)
+```
+MariaDB [(none)]> select substring_index('www.baidu.com','.',-2);
++-----------------------------------------+
+| substring_index('www.baidu.com','.',-2) |
++-----------------------------------------+
+| baidu.com                               |
++-----------------------------------------+
+1 row in set (0.00 sec)
+
+MariaDB [(none)]> select substring_index('www.baidu.com','.',2);
++----------------------------------------+
+| substring_index('www.baidu.com','.',2) |
++----------------------------------------+
+| www.baidu                              |
++----------------------------------------+
+1 row in set (0.00 sec)
+```
+
 
 ## 其他内建函数
 内建函数：</br>
