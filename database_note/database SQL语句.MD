@@ -296,6 +296,34 @@ SELECT * FROM sakila.actor WHERE first_name BETWEEN 'A%' AND 'C%';
 ```
 SELECT * FROM sakila.actor WHERE first_name NOT BETWEEN 'A%' AND 'C%';
 ```
+注意：数字和字符串的处理
+```
+MariaDB [(none)]> select 1 between 2 and 3;
++-------------------+
+| 1 between 2 and 3 |
++-------------------+
+|                 0 |
++-------------------+
+1 row in set (0.04 sec)
+
+MariaDB [(none)]> select 2 between 1 and '9';
++---------------------+
+| 2 between 1 and '9' |
++---------------------+
+|                   1 |
++---------------------+
+1 row in set (0.00 sec)
+
+MariaDB [(none)]> select b between a and c;
+ERROR 1054 (42S22): Unknown column 'b' in 'field list'
+MariaDB [(none)]> select 'b' between 'a' and 'c';
++-------------------------+
+| 'b' between 'a' and 'c' |
++-------------------------+
+|                       1 |
++-------------------------+
+1 row in set (0.00 sec)
+```
 ## ALIAS
 为列名称和表名称指定别名Alias，AS的位置紧跟要定别名的表或列名，别名使查询程序更易阅读和书写。</br>
 表
@@ -1012,6 +1040,191 @@ mysql> SELECT * FROM persons
     -> WHERE MONTH(Birth) = MOD(MONTH(CURDATE()), 12) + 1;
 ```
 
+## 字符串函数
+### 字符串长度
+```
+MariaDB [(none)]> select char_length('sharon');
++-----------------------+
+| char_length('sharon') |
++-----------------------+
+|                     6 |
++-----------------------+
+1 row in set (0.00 sec)
+```
+### 连接两个字符串
+无分隔符
+```
+MariaDB [(none)]> select concat('my','s','ql');
++-----------------------+
+| concat('my','s','ql') |
++-----------------------+
+| mysql                 |
++-----------------------+
+1 row in set (0.02 sec)
+
+MariaDB [(none)]> select concat('my',null,'ql');
++------------------------+
+| concat('my',null,'ql') |
++------------------------+
+| NULL                   |
++------------------------+
+1 row in set (0.00 sec)
+
+MariaDB [(none)]> select concat(14.3);
++--------------+
+| concat(14.3) |
++--------------+
+| 14.3         |
++--------------+
+1 row in set (0.01 sec)
+
+MariaDB [(none)]> select concat(14.3,222);
++------------------+
+| concat(14.3,222) |
++------------------+
+| 14.3222          |
++------------------+
+1 row in set (0.00 sec)
+```
+有分隔符
+```
+MariaDB [(none)]> select concat_ws(',','my','s','ql');
++------------------------------+
+| concat_ws(',','my','s','ql') |
++------------------------------+
+| my,s,ql                      |
++------------------------------+
+1 row in set (0.00 sec)
+
+MariaDB [(none)]> select concat_ws(',','my',null,'ql');
++-------------------------------+
+| concat_ws(',','my',null,'ql') |
++-------------------------------+
+| my,ql                         |
++-------------------------------+
+1 row in set (0.00 sec)
+
+MariaDB [(none)]> select concat_ws(',',1,1,1,3);
++------------------------+
+| concat_ws(',',1,1,1,3) |
++------------------------+
+| 1,1,1,3                |
++------------------------+
+1 row in set (0.00 sec)
+```
+### 选值
+```
+MariaDB [(none)]> select elt(2,'a','b','c');
++--------------------+
+| elt(2,'a','b','c') |
++--------------------+
+| b                  |
++--------------------+
+1 row in set (0.03 sec)
+
+MariaDB [(none)]> select elt(3,'a','b','c');
++--------------------+
+| elt(3,'a','b','c') |
++--------------------+
+| c                  |
++--------------------+
+1 row in set (0.00 sec)
+
+MariaDB [(none)]> select elt(9,'a','b','c');
++--------------------+
+| elt(9,'a','b','c') |
++--------------------+
+| NULL               |
++--------------------+
+1 row in set (0.00 sec)
+```
+
+```
+MariaDB [(none)]> select export_set(5,'a','c',',',5);
++-----------------------------+
+| export_set(5,'a','c',',',5) |
++-----------------------------+
+| a,c,a,c,c                   |
++-----------------------------+
+1 row in set (0.00 sec)
+
+```
+### 查找字符第一次出现位置
+```
+MariaDB [(none)]> select instr('dearxuany123123','123');
++--------------------------------+
+| instr('dearxuany123123','123') |
++--------------------------------+
+|                             10 |
++--------------------------------+
+1 row in set (0.00 sec)
+
+MariaDB [(none)]> select instr('dearxuany1','123');
++---------------------------+
+| instr('dearxuany1','123') |
++---------------------------+
+|                         0 |
++---------------------------+
+
+```
+
+### 比较查找
+指定字符串是否存在于集合中
+```
+MariaDB [(none)]> select field('sharon','li','mei','sh');
++---------------------------------+
+| field('sharon','li','mei','sh') |
++---------------------------------+
+|                               0 |
++---------------------------------+
+1 row in set (0.00 sec)
+
+MariaDB [(none)]> select field('sharon','li','mei','sh','sharon');
++------------------------------------------+
+| field('sharon','li','mei','sh','sharon') |
++------------------------------------------+
+|                                        4 |
++------------------------------------------+
+1 row in set (0.00 sec)
+
+MariaDB [(none)]> select field('sh','li','mei','sh','sharon');
++--------------------------------------+
+| field('sh','li','mei','sh','sharon') |
++--------------------------------------+
+|                                    3 |
++--------------------------------------+
+1 row in set (0.01 sec)
+
+MariaDB [(none)]> select find_in_set('sh','li,mei,sh,sharon');
++--------------------------------------+
+| find_in_set('sh','li,mei,sh,sharon') |
++--------------------------------------+
+|                                    3 |
++--------------------------------------+
+1 row in set (0.00 sec)
+```
+### 替换
+INSERT(str,pos,len,newstr) 
+```
+# 由第二位开始，替换4位字符
+MariaDB [(none)]> select insert('sharon',2,4,'123');
++----------------------------+
+| insert('sharon',2,4,'123') |
++----------------------------+
+| s123n                      |
++----------------------------+
+1 row in set (0.00 sec)
+
+MariaDB [(none)]> select insert('sharon',2,666,'123');
++------------------------------+
+| insert('sharon',2,666,'123') |
++------------------------------+
+| s123                         |
++------------------------------+
+1 row in set (0.00 sec)
+
+```
+
 ## 其他内建函数
 内建函数：</br>
 SQL 拥有很多可用于计数和计算的内建函数。</br>
@@ -1074,7 +1287,8 @@ from sakila.payment
 GROUP BY customer_id
 HAVING SUM(amount)>100
 ```
-#### 最大最小值
+#### 最大最小值 MAX(column)、MIN(column)
+注意：max和min的参数是column
 ```
 MariaDB [personalFinancialDB]> select * from shop;
 +---------+--------+-------+
@@ -1158,6 +1372,49 @@ MariaDB [personalFinancialDB]> select * from shop where price=@price_min or pric
 |    0004 | D      | 19.95 |
 +---------+--------+-------+
 2 rows in set (0.00 sec)
+```
+### COALESCE(value,...) 
+COALESCE(value,...) 返回 VALUE 中第一个非NULL值，全为null返回null
+```
+MariaDB [(none)]> select coalesce(null,2,null,6,7);
++---------------------------+
+| coalesce(null,2,null,6,7) |
++---------------------------+
+|                         2 |
++---------------------------+
+1 row in set (0.00 sec)
+
+MariaDB [(none)]> select coalesce(null,null);
++---------------------+
+| coalesce(null,null) |
++---------------------+
+|                NULL |
++---------------------+
+1 row in set (0.01 sec)
+```
+### greatest() 找value的最大值最小值
+注意greatest()的参数是values
+```
+
+MariaDB [(none)]> select max('a','b','c');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ''b','c')' at line 1
+MariaDB [(none)]> select greatest('a','b','c');
++-----------------------+
+| greatest('a','b','c') |
++-----------------------+
+| c                     |
++-----------------------+
+1 row in set (0.03 sec)
+
+MariaDB [(none)]> select max(8,5,7);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '5,7)' at line 1
+MariaDB [(none)]> select greatest(8,5,7);
++-----------------+
+| greatest(8,5,7) |
++-----------------+
+|               8 |
++-----------------+
+1 row in set (0.00 sec)
 ```
 
 ### Scalar 函数
