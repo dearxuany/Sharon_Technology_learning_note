@@ -130,3 +130,14 @@ MariaDB [personalFinancialDB]> SELECT * FROM persons;
 ```
 SELECT 列1，列2 INTO OUTFILE '文件路径和文件名' FROM 表名字;
 ```
+注意权限问题，因为当前mysql账户没有文件夹的写权限
+```
+MariaDB [personalFinancialDB]> select * from persons where Firstname='Sharon' INTO OUTFILE '/home/sunnylinux/mysqltest/persons_sharon.txt';
+ERROR 1 (HY000): Can't create/write to file '/home/sunnylinux/mysqltest/persons_sharon.txt' (Errcode: 13)
+```
+改到输出到/tmp就可以
+```
+MariaDB [personalFinancialDB]> select * from persons where Firstname='Sharon' INTO OUTFILE '/tmp/persons_sharon.txt';
+Query OK, 1 row affected (0.37 sec)
+```
+参考：https://www.linuxidc.com/Linux/2012-02/55533.htm
