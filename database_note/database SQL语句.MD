@@ -92,6 +92,7 @@ value：字符串用单引号括起，数字不用</br>
 逻辑运算符：
 ```
 =	等于
+<=>  空值安全等号
 <>	不等于
 >	大于
 <	小于
@@ -117,6 +118,16 @@ WHERE city IS NOT NULL
 ```
 select lastName,FirstName,City FROM personalFinancialDB.persons
 WHERE city IS NULL
+```
+NULL值比较
+```
+MariaDB [(none)]> select null=null,null<=>null,1=1,1<=>1,1=null,1<=>null,0=null,0<=>null;
++-----------+-------------+-----+-------+--------+----------+--------+----------+
+| null=null | null<=>null | 1=1 | 1<=>1 | 1=null | 1<=>null | 0=null | 0<=>null |
++-----------+-------------+-----+-------+--------+----------+--------+----------+
+|      NULL |           1 |   1 |     1 |   NULL |        0 |   NULL |        0 |
++-----------+-------------+-----+-------+--------+----------+--------+----------+
+1 row in set (0.01 sec)
 ```
 
 
