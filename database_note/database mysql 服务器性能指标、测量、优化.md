@@ -104,5 +104,47 @@ MariaDB [sakila]> SHOW PROFILE FOR QUERY 7;
 可以看到最耗费时间的步骤是 Copying to tmp table | 0.099986 将数据复制到临时表
 
 #### SHOW STATUS
+SHOW STATUS 返回一些计数器，反应某些活动的频繁程度
+```
+# 注意使用前要先刷新一下才能统计单条查询的数据
+MariaDB [sakila]> FLUSH STATUS;
+Query OK, 0 rows affected (0.00 sec)
 
+MariaDB [sakila]> SELECT * FROM nicer_but_slower_film_list;  
+
+MariaDB [sakila]> SHOW STATUS WHERE Variable_name LIKE 'Handler%' OR Variable_name LIKE 'Created%' ;
++----------------------------+-------+
+| Variable_name              | Value |
++----------------------------+-------+
+| Created_tmp_disk_tables    | 2     |
+| Created_tmp_files          | 0     |
+| Created_tmp_tables         | 3     |
+| Handler_commit             | 1     |
+| Handler_delete             | 0     |
+| Handler_discover           | 0     |
+| Handler_icp_attempts       | 0     |
+| Handler_icp_match          | 0     |
+| Handler_mrr_init           | 0     |
+| Handler_mrr_key_refills    | 0     |
+| Handler_mrr_rowid_refills  | 0     |
+| Handler_prepare            | 0     |
+| Handler_read_first         | 0     |
+| Handler_read_key           | 7477  |
+| Handler_read_last          | 0     |
+| Handler_read_next          | 6462  |
+| Handler_read_prev          | 0     |
+| Handler_read_rnd           | 5462  |
+| Handler_read_rnd_deleted   | 0     |
+| Handler_read_rnd_next      | 6478  |
+| Handler_rollback           | 0     |
+| Handler_savepoint          | 0     |
+| Handler_savepoint_rollback | 0     |
+| Handler_tmp_update         | 0     |
+| Handler_tmp_write          | 6459  |
+| Handler_update             | 0     |
+| Handler_write              | 0     |
++----------------------------+-------+
+27 rows in set (0.00 sec)
+
+```
 
