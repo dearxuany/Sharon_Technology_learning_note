@@ -1,6 +1,6 @@
 # mysql 服务器性能指标、测量、优化
 分析 mysql 性能时，一般指分析 mysql 的查询
-## 服务器性能
+## 性能简介
 ### 定义
 服务器性能为“响应时间”，“响应时间”分为“执行时间”和“等待时间”。</br>
 * 执行时间：什么任务执行时间最长
@@ -12,6 +12,7 @@
 
 工具：</br>
 New Relic、xhprof、IFp
+
 ### 性能优化
 优化原则：</br>
 * 优化占总响应时间比重多的查询（>5%）
@@ -104,7 +105,11 @@ MariaDB [sakila]> SHOW PROFILE FOR QUERY 7;
 可以看到最耗费时间的步骤是 Copying to tmp table | 0.099986 将数据复制到临时表
 
 #### SHOW STATUS
-SHOW STATUS 返回一些计数器，反应某些活动的频繁程度
+SHOW STATUS 返回一些计数器，反应某些活动的频繁程度 </br>
+SHOW STATUS 提供服务器状态信息，可以设置记录的时间节点，此信息也可以使用mysqladmin extended-status命令获得。
+```
+SHOW [GLOBAL | SESSION] STATUS [LIKE 'pattern'];
+```
 ```
 # 注意使用前要先刷新一下才能统计单条查询的数据
 MariaDB [sakila]> FLUSH STATUS;
@@ -148,3 +153,61 @@ MariaDB [sakila]> SHOW STATUS WHERE Variable_name LIKE 'Handler%' OR Variable_na
 
 ```
 
+## 服务器性能
+### show global status
+show global status  用于诊断服务器层面的问题，收集全局数据
+```
+MariaDB [(none)]> show global status where Variable_name='Threads_connected' or Variable_name='Threads_running'
+    -> or Variable_name='Queries';
++-------------------+-------+
+| Variable_name     | Value |
++-------------------+-------+
+| Queries           | 1320  |
+| Threads_connected | 3     |
+| Threads_running   | 1     |
++-------------------+-------+
+3 rows in set (0.01 sec)
+```
+使用 mysqladmin 来进行 global status 的动态输出
+```
+$ mysqladmin -usharonli -p ext -i1
+```
+结合 awk 来进行分析：输出每秒查询数、当前打开的连接的数量、当前正在执行查询的线程数
+```
+# 每秒输出一次
+$ mysqladmin -usharonli -p ext -i1 |awk '/Queries/{q=$4-qp;qp=$4}/Threads_connected/{tc=$4}/Threads_running/{printf "%5d %5d %5d \n",q,tc,$4}'
+Enter password:
+ 1419     4     1
+    1     4     1
+    1     4     1
+    1     4     1
+    1     4     1
+    1     4     1
+    1     4     1
+    1     4     1
+    1     4     1
+    1     4     1
+    1     4     1
+    1     4     1
+    1     4     1
+    1     4     1
+
+```
+### show processlist
+SHOW PROCESSLIST显示正在运行的线程。您也可以使用mysqladmin processlist语句得到此信息。如果您有SUPER权限，您可以看到所有线程，否则，您只能看到您自己的线程（也就是，与您正在使用的MySQL账户相关的线程）。
+```
+SHOW [FULL] PROCESSLIST;
+```
+需要关心的是 State 中的内容
+```
+$ mysql -usharonli -p -e 'show processlist'
+Enter password:
++----+----------+-----------+------+---------+------+-------+------------------+----------+
+| Id | User     | Host      | db   | Command | Time | State | Info             | Progress |
++----+----------+-----------+------+---------+------+-------+------------------+----------+
+| 18 | sharonli | localhost | NULL | Sleep   | 1675 |       | NULL             |    0.000 |
+| 21 | sharonli | localhost | NULL | Sleep   | 1568 |       | NULL             |    0.000 |
+| 26 | sharonli | localhost | NULL | Query   |    0 | NULL  | show processlist |    0.000 |
++----+----------+-----------+------+---------+------+-------+------------------+----------+
+```
+### show innodb status
