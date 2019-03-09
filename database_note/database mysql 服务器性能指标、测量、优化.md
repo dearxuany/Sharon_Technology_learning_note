@@ -37,5 +37,72 @@ MariaDB [sakila]> SET profiling=1;
 实例：
 MySQL Sakila样本数据库查询
 ```
+MariaDB [sakila]> select * from nicer_but_slower_film_list
+997 rows in set (0.14 sec)
 
+# 查看所有查询花费的时间
+MariaDB [sakila]> SHOW PROFILES;
++----------+------------+-------------------------------------------+
+| Query_ID | Duration   | Query                                     |
++----------+------------+-------------------------------------------+
+|        1 | 0.00021079 | show tables                               |
+|        2 | 0.00269660 | show databases                            |
+|        3 | 0.00047102 | SELECT DATABASE()                         |
+|        4 | 0.00128614 | show databases                            |
+|        5 | 0.00143950 | show tables                               |
+|        6 | 0.00062660 | show tables                               |
+|        7 | 0.14167750 | select * from  nicer_but_slower_film_list |
++----------+------------+-------------------------------------------+
+7 rows in set (0.00 sec)
+
+# 查看指定查询的每个步骤花费时间（按执行顺序）
+MariaDB [sakila]> SHOW PROFILE FOR QUERY 7;
++----------------------+----------+
+| Status               | Duration |
++----------------------+----------+
+| starting             | 0.000141 |
+| checking permissions | 0.000024 |
+| Opening tables       | 0.000867 |
+| After opening tables | 0.000207 |
+| System lock          | 0.000185 |
+| Table lock           | 0.000021 |
+| After table lock     | 0.000031 |
+| init                 | 0.000028 |
+| checking permissions | 0.000019 |
+| checking permissions | 0.000013 |
+| checking permissions | 0.000013 |
+| checking permissions | 0.000013 |
+| checking permissions | 0.000235 |
+| optimizing           | 0.000020 |
+| optimizing           | 0.000094 |
+| statistics           | 0.000196 |
+| preparing            | 0.000092 |
+| statistics           | 0.000083 |
+| preparing            | 0.000025 |
+| executing            | 0.000017 |
+| Sending data         | 0.002529 |
+| executing            | 0.000049 |
+| Creating tmp table   | 0.001617 |
+| Copying to tmp table | 0.099986 |
+| Sorting result       | 0.008461 |
+| Sending data         | 0.022599 |
+| removing tmp table   | 0.000318 |
+| Sending data         | 0.003294 |
+| end                  | 0.000026 |
+| query end            | 0.000010 |
+| closing tables       | 0.000005 |
+| removing tmp table   | 0.000349 |
+| closing tables       | 0.000033 |
+| freeing items        | 0.000019 |
+| removing tmp table   | 0.000010 |
+| freeing items        | 0.000013 |
+| updating status      | 0.000023 |
+| cleaning up          | 0.000009 |
++----------------------+----------+
+38 rows in set (0.01 sec)
 ```
+可以看到最耗费时间的步骤是 Copying to tmp table | 0.099986 将数据复制到临时表
+
+#### SHOW STATUS
+
+
