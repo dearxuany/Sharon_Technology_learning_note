@@ -29,6 +29,7 @@
 * [Linux 日志系统 rsyslog logrotate systemd-journal logwatch](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F%20rsyslog%20logrotate%20systemd-journal%20logwatch.md)
 * [Linux 时间同步 NTP](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E6%97%B6%E9%97%B4%E5%90%8C%E6%AD%A5.MD)
 * [Linux 例行性工作 crontab](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E4%BE%8B%E8%A1%8C%E6%80%A7%E5%B7%A5%E4%BD%9C.MD)
+* [Linux 进程后台运行 nohup](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E8%BF%9B%E7%A8%8B%E5%90%8E%E5%8F%B0%E8%BF%90%E8%A1%8C%20nohup.md)
 
 ### Linux 软件安装
 #### 数据库
