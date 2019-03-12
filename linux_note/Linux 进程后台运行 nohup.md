@@ -20,5 +20,19 @@ sh test.sh > /dev/null
 /dev/null是一个特殊的设备文件，这个文件接受到任何数据都会被丢系，通常被称为位桶、黑洞。任何被重定向至这里的内容都会被丢弃。
 
 ## nohup命令
+有时候需要在Linux上设置一个后台进程，但是当你关闭terminal之时，它会被系统kill掉，所以出现了nohup。</br>
+nohup命令可以将程序以忽略挂起信号的方式运行起来，被运行的程序的输出信息将不会显示到终端，且关闭执行命令的终端后程序依然在后台运行。</br>
+参考：https://www.ibm.com/developerworks/cn/linux/l-cn-nohup/
+```
+# 语法
+nohup command-with-options &
 
-
+# 执行以上命令后会输出，按回车退出nohup界面进入正常命令行即可
+$ nohup: ignoring input and appending output to `nohup.out’
+```
+可以将输出保存到log中
+```
+# 后台启动 jetty 然后将错误信息存在 logs/lians-dev.log 中
+nohup mvn -Ptest jetty:run 2>&1 >logs/lians-dev.log &   
+nohup mvn  jetty:run 2>&1 >logs/lians-dev.log &  
+```
