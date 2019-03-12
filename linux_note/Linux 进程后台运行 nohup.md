@@ -30,6 +30,14 @@ nohup command-with-options &
 # 执行以上命令后会输出，按回车退出nohup界面进入正常命令行即可
 $ nohup: ignoring input and appending output to 'nohup.out'
 ```
+```
+$ nohup ping www.baidu.com &
+[4] 10920
+$ nohup: ignoring input and appending output to ‘nohup.out’
+$ ps -aux|grep 10920
+sunnylinux    10920  0.0  0.0   6728   680 pts/25   S    17:25   0:00 ping www.baidu.com
+sunnylinux    11001  0.0  0.0  11756   932 pts/25   S+   17:25   0:00 grep --color=auto 10920
+```
 可以将输出保存到log中
 ```
 # 后台启动 jetty 然后将错误信息存在 logs/lians-dev.log 中
