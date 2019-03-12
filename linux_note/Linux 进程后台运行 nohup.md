@@ -28,7 +28,7 @@ nohup命令可以将程序以忽略挂起信号的方式运行起来，被运行
 nohup command-with-options &
 
 # 执行以上命令后会输出，按回车退出nohup界面进入正常命令行即可
-$ nohup: ignoring input and appending output to `nohup.out’
+$ nohup: ignoring input and appending output to 'nohup.out'
 ```
 可以将输出保存到log中
 ```
