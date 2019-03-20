@@ -79,3 +79,12 @@ Hint: Some lines were ellipsized, use -l to show in full.
 
 ```
 可按需将其关闭（stop和disabled），注意要关闭该服务本身和其关联的服务，详细 [daemons 管理 systemctl](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20daemons%20%E5%90%AF%E5%8A%A8%E4%B8%8E%E7%AE%A1%E7%90%86%20init%E3%80%81systemd%20.MD#systemctl-%E5%90%AF%E5%8A%A8)
+
+## 查看内网和外网IP
+```
+# 外网IP
+curl members.3322.org/dyndns/getip
+
+# 内网IP
+ifconfig
+```
