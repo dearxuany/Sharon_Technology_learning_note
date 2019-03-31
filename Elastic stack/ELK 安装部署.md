@@ -58,9 +58,12 @@ https://my.oschina.net/itblog/blog/547250/
 cd /usr/local/elasticsearch-5.6.16/config
 sudo vim elasticsearch.yml
 ```
-加入以下一句
+加入以下内容
 ```
-network.host: localhost
+cluster.name: es_cluster
+
+network.host: 192.168.137.101
+http.port: 9200
 ```
 进入目录启动ES
 ```
@@ -149,4 +152,21 @@ bootstrap.system_call_filter: false
 [2019-03-31T12:26:05,775][INFO ][o.e.h.n.Netty4HttpServerTransport] [mojEo8w] publish_address {192.168.137.101:9200}, bound_addresses {192.168.137.101:9200}
 [2019-03-31T12:26:05,775][INFO ][o.e.n.Node               ] [mojEo8w] started
 
+```
+验证ES
+```
+$ curl '192.168.137.101:9200/'
+{
+  "name" : "mojEo8w",
+  "cluster_name" : "es_cluster",
+  "cluster_uuid" : "XwfaW0PhRh27L8YP1F4pgw",
+  "version" : {
+    "number" : "5.6.16",
+    "build_hash" : "3a740d1",
+    "build_date" : "2019-03-13T15:33:36.565Z",
+    "build_snapshot" : false,
+    "lucene_version" : "6.6.1"
+  },
+  "tagline" : "You Know, for Search"
+}
 ```
