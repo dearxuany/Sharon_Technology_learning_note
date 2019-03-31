@@ -84,6 +84,20 @@ OpenJDK Server VM warning: INFO: os::commit_memory(0x2aa00000, 2080374784, 0) fa
 # An error report file with more information is saved as:
 # /usr/local/elasticsearch-5.6.16/bin/hs_err_pid3717.log
 ```
+由于elasticsearch5.0默认分配jvm空间大小为2g，修改jvm空间分配
+https://blog.csdn.net/qq942477618/article/details/53414983
+```
+# 修改jvm.options
+$ pwd
+/usr/local/elasticsearch-5.6.16/config
 
+# 修改以下数据
+-Xms2g
+-Xmx2g
+
+# 修改为512m
+-Xms512m
+-Xmx512m
+```
 
 
