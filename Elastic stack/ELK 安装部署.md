@@ -99,5 +99,54 @@ $ pwd
 -Xms512m
 -Xmx512m
 ```
+重新启动再次报错
+```
+[2019-03-31T11:41:56,943][INFO ][o.e.t.TransportService   ] [mojEo8w] publish_address {192.168.137.101:9300}, bound_addresses {192.168.137.101:9300}
+[2019-03-31T11:41:57,019][INFO ][o.e.b.BootstrapChecks    ] [mojEo8w] bound or publishing to a non-loopback address, enforcing bootstrap checks
+ERROR: [3] bootstrap checks failed
+[1]: max file descriptors [4096] for elasticsearch process is too low, increase to at least [65536]
+[2]: max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]
+[3]: system call filters failed to install; check the logs and fix your configuration or disable system call filters at your own risk
+[2019-03-31T11:41:57,184][INFO ][o.e.n.Node               ] [mojEo8w] stopping ...
+[2019-03-31T11:41:57,314][INFO ][o.e.n.Node               ] [mojEo8w] stopped
+[2019-03-31T11:41:57,315][INFO ][o.e.n.Node               ] [mojEo8w] closing ...
+[2019-03-31T11:41:57,566][INFO ][o.e.n.Node               ] [mojEo8w] closed
+```
+[1]: max file descriptors [4096] for elasticsearch process is too low, increase to at least [65536]
+```
+sudo vim /etc/security/limits.conf 
+#添加以下内容，***是启动elk的用户
+*** soft nofile 65536 
+*** hard nofile 65536 
+#用户退出重新登录自动生效
+```
+[2]: max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]
+```
+sudo vim /etc/sysctl.conf
+# 添加
+vm.max_map_count=262144
 
+# 执行sysctl -p使配置生效
+$ sysctl -p
+sysctl: permission denied on key 'vm.max_map_count'
+$ sudo sysctl -p
+vm.max_map_count = 262144
+```
+[3]: system call filters failed to install; check the logs and fix your configuration or disable system call filters at your own risk
+问题原因：因为Centos6不支持SecComp，而ES默认bootstrap.system_call_filter为true进行检测，所以导致检测失败，失败后直接导致ES不能启动。详见 ：https://github.com/elastic/elasticsearch/issues/22899
+```
+# 在elasticsearch.yml中配置bootstrap.system_call_filter为false，注意要在Memory下面
+bootstrap.memory_lock: false
+bootstrap.system_call_filter: false
+```
+重新启动 es
+```
+[2019-03-31T12:26:01,384][INFO ][o.e.n.Node               ] [mojEo8w] starting ...
+[2019-03-31T12:26:02,129][INFO ][o.e.t.TransportService   ] [mojEo8w] publish_address {192.168.137.101:9300}, bound_addresses {192.168.137.101:9300}
+[2019-03-31T12:26:02,192][INFO ][o.e.b.BootstrapChecks    ] [mojEo8w] bound or publishing to a non-loopback address, enforcing bootstrap checks
+[2019-03-31T12:26:05,561][INFO ][o.e.c.s.ClusterService   ] [mojEo8w] new_master {mojEo8w}{mojEo8wYQLCs3HJyNkSvwQ}{XjZ0LYRvRo6W1poiGFUxag}{192.168.137.101}{192.168.137.101:9300}, reason: zen-disco-elected-as-master ([0] nodes joined)
+[2019-03-31T12:26:05,742][INFO ][o.e.g.GatewayService     ] [mojEo8w] recovered [0] indices into cluster_state
+[2019-03-31T12:26:05,775][INFO ][o.e.h.n.Netty4HttpServerTransport] [mojEo8w] publish_address {192.168.137.101:9200}, bound_addresses {192.168.137.101:9200}
+[2019-03-31T12:26:05,775][INFO ][o.e.n.Node               ] [mojEo8w] started
 
+```
