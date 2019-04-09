@@ -1,4 +1,4 @@
-# MySQL Schema与数据类型优化
+# MySQL 数据类型优化
 ## 数据类型
 ### 选择原则
 * 选择不会超过范围的最小类型</br>
@@ -12,7 +12,7 @@ NULL列会花更多的存储空间，NULL列被索引时，每个索引记录需
 InnoDB使用单独的为(bit)存储NULL值，可用于存储稀疏数据（很多行为NULL，少数行为非NULL）</br>
 
 ### 选择具体类型
-因素：存储长度和范围、精度、磁盘空间、内存空间、特殊行为和属性
+因素：存储长度和范围、精度、磁盘空间、内存空间、特殊行为和属性</br>
 
-
+![](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/note_images/database_note_images/mysql%2B%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.png)
 
