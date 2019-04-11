@@ -13,6 +13,6 @@ InnoDB使用单独的为(bit)存储NULL值，可用于存储稀疏数据（很�
 
 ### 选择具体类型
 因素：存储长度和范围、精度、磁盘空间、内存空间、特殊行为和属性</br>
-
+http://naotu.baidu.com/file/f2b4c4ff2fe54e9202b34a1beb14fe79</br>
 ![](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/note_images/database_note_images/mysql%2B%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.png)
 
