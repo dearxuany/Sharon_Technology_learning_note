@@ -114,6 +114,7 @@
 ### MySQL
 * [python3 连接并操作 MySQL(MariaDB)](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/database_note/database%20python3%E8%BF%9E%E6%8E%A5%E5%B9%B6%E6%93%8D%E4%BD%9CMySQL(MariaDB).MD)
 * [MySQL 数据类型优化](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/database_note/database%20MySQL%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%BC%98%E5%8C%96.md)
+* [MySQL InnoDB锁机制](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/database_note/database%20MySQL%20InnoDB%E9%94%81%E6%9C%BA%E5%88%B6.md)
 
 
 ## VMware
