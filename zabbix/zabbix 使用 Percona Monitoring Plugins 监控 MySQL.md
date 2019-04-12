@@ -22,7 +22,9 @@ wget https://www.percona.com/downloads/percona-monitoring-plugins/1.1.5/percona-
 ```
 alien percona-zabbix-templates-1.1.5-1.noarch.rpm
 ```
-由于文件会被放置在/var/lib/zabbix/percona/scrpts 和 /var/lib/zabbix/percona/templates 下，所以最好先新建这两个目录
+由于文件会被放置在/var/lib/zabbix/percona/scrpts 和 /var/lib/zabbix/percona/templates 下，所以最好先新建这两个目录。</br>
+/var/lib/zabbix/percona/scripts/这里面的两个文件，sh的脚本是监控获取MySQL状态的，php文件是配置连接数据库用户名密码的。用shell来调用PHP。</br>
+/var/lib/zabbix/percona/templates/这里面的两个文件，conf文件是要放在agent端/etc/zabbix/zabbix_agentd.d/下面的，XML文件是模版文件。</br>
 ```
 /var/lib/zabbix/percona# tree -L 2
 .
@@ -51,6 +53,10 @@ Include=/sdata/software/zabbix/etc/zabbix_agentd.conf.d/*.conf
 Stopping Zabbix agent daemon: zabbix_agentd
 Starting Zabbix agent daemon: zabbix_agentd
 ```
+## 配置 MySQL connectivity 代理
+新建 /var/lib/zabbix/percona/scripts/ss_get_mysql_stats.php.cnf 文件，填入以下内容
+```
 
+```
 
 
