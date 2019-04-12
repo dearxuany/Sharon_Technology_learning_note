@@ -34,3 +34,17 @@ alien percona-zabbix-templates-1.1.5-1.noarch.rpm
 
 2 directories, 4 files
 ```
+查看 zabbix的配置文件，看是否开启下级配置文件，没有则添加
+```
+vim zabbix_agentd.conf
+
+Include=/sdata/software/zabbix/etc/zabbix_agentd.conf.d/*.conf
+```
+复制 userparameter_percona_mysql.conf 到 zabbix agent的配置目录内
+```
+/sdata/software/zabbix/etc/zabbix_agentd.conf.d# cp /var/lib/zabbix/percona/templates/userparameter_percona_mysql.conf ./
+```
+
+
+
+
