@@ -56,7 +56,20 @@ Starting Zabbix agent daemon: zabbix_agentd
 ## 配置 MySQL connectivity 代理
 新建 /var/lib/zabbix/percona/scripts/ss_get_mysql_stats.php.cnf 文件，填入以下内容
 ```
-
+# 要和登mysql的账号密码一样
+<?php
+$mysql_user = 'root';
+$mysql_pass = 's3cret';
 ```
-
-
+测试配置，如果配置正确会返回一串数字
+```
+/var/lib/zabbix/percona/scripts# /var/lib/zabbix/percona/scripts/get_mysql_stats_wrapper.sh gg
+71574819
+```
+配置  ~zabbix/.my.cnf
+```
+# 和上面账号密码一样
+[client]
+user = root
+password = s3cret
+```
