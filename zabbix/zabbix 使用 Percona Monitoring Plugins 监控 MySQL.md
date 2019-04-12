@@ -1,9 +1,9 @@
 # zabbix 使用 Percona Monitoring Plugins 监控 MySQL
 zabbix mysql相关监控:</br>
 https://www.zabbix.com/cn/integrations/mysql </br>
-Percona Monitoring Plugins for Zabbix:</br>
+Percona Monitoring Plugins for Zabbix: </br>
 https://www.percona.com/doc/percona-monitoring-plugins/1.1/zabbix/index.html </br>
-最新版本 Percona Monitoring Plugins 下载
+最新版本 Percona Monitoring Plugins 下载 </br>
 https://www.percona.com/downloads/percona-monitoring-plugins/LATEST/ </br>
 ## 系统版本
 ```
@@ -44,7 +44,12 @@ Include=/sdata/software/zabbix/etc/zabbix_agentd.conf.d/*.conf
 ```
 /sdata/software/zabbix/etc/zabbix_agentd.conf.d# cp /var/lib/zabbix/percona/templates/userparameter_percona_mysql.conf ./
 ```
-
+重启 zabbix agent
+```
+# service zabbix-agentd restart
+Stopping Zabbix agent daemon: zabbix_agentd
+Starting Zabbix agent daemon: zabbix_agentd
+```
 
 
 
