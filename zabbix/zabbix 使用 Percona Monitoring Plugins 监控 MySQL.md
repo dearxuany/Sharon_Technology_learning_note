@@ -11,6 +11,7 @@ Linux version 3.13.0-32-generic (buildd@kissel) (gcc version 4.8.2 (Ubuntu 4.8.2
 zabbix_agentd (daemon) (Zabbix) 4.0.1
 PHP 5.5.9-1ubuntu4.27 (cli)
 php5-mysql
+mysql  Ver 14.14 Distrib 5.6.33, for debian-linux-gnu (x86_64) using  EditLine wrapper
 ```
 ## 配置 zabbix agent
 源码安装，下载 percona-zabbix-templates-1.1.5-1.noarch.rpm
