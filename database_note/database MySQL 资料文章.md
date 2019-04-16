@@ -8,8 +8,10 @@ https://yq.aliyun.com/articles/57963?spm=a2c4e.11155435.0.0.68683a51l5E7Zd </br>
 https://yq.aliyun.com/articles/57981?spm=a2c4e.11153940.blogrightarea57979.6.2c5b7fcdEZOfHS </br>
 MySQL的备份的一些策略和方法的总结(mysqldump)</br>
 https://www.cnblogs.com/shangzekai/p/4466783.html </br>
-mysql备份策略（全量备份+增量备份）</br>
+mysql备份策略（全量备份+增量备份 Mysqldump、mysqlbinlog、crontab）</br>
 https://blog.csdn.net/isyslab/article/details/81207783
+阿里云 RDS备份文件恢复到本地数据库(percona-Xtrabackup)
+https://www.cnblogs.com/Ofsoul/articles/6133493.html </br>
 
 ## 资料工具推荐
 MySQL进阶路：从小工到专家的必读书籍和必备工具</br>
