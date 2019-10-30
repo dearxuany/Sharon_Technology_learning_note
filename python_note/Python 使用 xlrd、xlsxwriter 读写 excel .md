@@ -1,3 +1,4 @@
+读取 excel 第一列的姓名并拼接邮箱后缀，获取邮箱地址并输出到 excel
 ```
 #! /usr/bin/python3
 
@@ -16,7 +17,7 @@ def write_excel(value):
     workbook = xlsxwriter.Workbook('/sdata/scripts/python3-es/files/elk-user-email.xls')
     worksheet = workbook.add_worksheet(u'sheet1')
     for n in range(len(value)):
-        worksheet.write(n,0,value[n]+"@ingbaobei.com")
+        worksheet.write(n,0,value[n]+"@xxx.com")
     workbook.close()
     print("写入完成")
 
