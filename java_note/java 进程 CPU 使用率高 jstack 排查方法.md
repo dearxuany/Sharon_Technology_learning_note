@@ -1,5 +1,9 @@
 # jstack 排查 java 进程 CPU 占用率高
 ## 步骤
+glances 找出服务器中 CPU 占用率高的进程
+```
+glances
+```
 临时修改程序用户 jetty 的 shell 为可登录用户并切换到jetty用户
 注意：使用 jstack 必须在 java 进程启动用户下，否则会报错
 ```
@@ -31,7 +35,7 @@ top -Hp 2416
 ce5
 ```
 
-使用jstack根据进程号查找线程信息，并将信息输出到文件中，使用对应的十六进制代码来找到对应的问题
+使用jstack根据 java 进程号输出堆栈信息保存在文本中
 ```
 jstack 2416
  
@@ -84,8 +88,7 @@ jstack 2416
         at com.aliyun.openservices.shade.io.netty.util.concurrent.SingleThreadEventExecutor$2.run(SingleThreadEventExecutor.java:140)
         at java.lang.Thread.run(Thread.java:748)
 ```
-
-也可直接查看相关信息
+使用上面找到的占用 CPU 使用率高的线程号（转换十六进制）查找线程信息
 ```
 -bash-4.2$ jstack pid|grep tid十六进制 -A 20
 "Thread-32" #209 prio=5 os_prio=0 tid=0x00007f2baa580800 nid=0xa78 runnable [0x00007f2afeae0000]
@@ -109,4 +112,23 @@ jstack 2416
 ```
 usermod -s /sbin/nologin jetty
 chattr +i /etc/passwd /etc/shadow /etc/group /etc/gshadow
+```
+
+# 常见问题
+使用 jstack 排查有时会发现找到的高 CPU 线程为程序的 gc 线程。jvm gc 过程为 STW（stop the world）机制，gc 回收期间，除了垃圾回收线程外，其他线程会全部挂起，处于 block 状态。如果 gc 回收线程无法回收 jvm 内存，导致 gc 长时间处于运行状态，则间接导致 CPU 持续升高。此时，应该使用 javadump 来生成 java 的内存堆栈，排查导致 gc 回收频繁执行失败的原因。
+```
+$ cat jstack20191120 |grep 519a
+"GC task thread#7 (ParallelGC)" os_prio=0 tid=0x00007f928002e000 nid=0x519a runnable
+$ cat jstack20191120 |grep 5197
+"GC task thread#4 (ParallelGC)" os_prio=0 tid=0x00007f9280028800 nid=0x5197 runnable
+$ cat jstack20191120 |grep 5194
+"GC task thread#1 (ParallelGC)" os_prio=0 tid=0x00007f9280023000 nid=0x5194 runnable
+$ cat jstack20191120 |grep 5198
+"GC task thread#5 (ParallelGC)" os_prio=0 tid=0x00007f928002a800 nid=0x5198 runnable
+$ cat jstack20191120 |grep 5195
+"GC task thread#2 (ParallelGC)" os_prio=0 tid=0x00007f9280025000 nid=0x5195 runnable
+$ cat jstack20191120 |grep 5193
+"GC task thread#0 (ParallelGC)" os_prio=0 tid=0x00007f9280021000 nid=0x5193 runnable
+$ cat jstack20191120 |grep 5196
+"GC task thread#3 (ParallelGC)" os_prio=0 tid=0x00007f9280026800 nid=0x5196 runnable
 ```
