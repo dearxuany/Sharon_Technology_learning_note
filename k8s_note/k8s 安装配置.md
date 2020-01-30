@@ -145,3 +145,160 @@ To see the stack trace of this error execute with --v=5 or higher
 ```
 echo "1" >/proc/sys/net/bridge/bridge-nf-call-iptables
 ```
+设置后重试，提示拉取镜像超时
+```
+[preflight] You can also perform this action in beforehand using 'kubeadm config images pull'
+error execution phase preflight: [preflight] Some fatal errors occurred:
+	[ERROR ImagePull]: failed to pull image k8s.gcr.io/kube-apiserver:v1.17.2: output: Trying to pull repository k8s.gcr.io/kube-apiserver ... 
+Get https://k8s.gcr.io/v1/_ping: dial tcp 74.125.203.82:443: connect: connection refused
+, error: exit status 1
+```
+查看需要安装镜像列表
+```
+# kubeadm config images list
+W0130 21:56:47.040526    9267 version.go:101] could not fetch a Kubernetes version from the internet: unable to get URL "https://dl.k8s.io/release/stable-1.txt": Get https://dl.k8s.io/release/stable-1.txt: net/http: request canceled while waiting for connection (Client.Timeout exceeded while awaiting headers)
+W0130 21:56:47.040865    9267 version.go:102] falling back to the local client version: v1.17.2
+W0130 21:56:47.041245    9267 validation.go:28] Cannot validate kubelet config - no validator is available
+W0130 21:56:47.041280    9267 validation.go:28] Cannot validate kube-proxy config - no validator is available
+k8s.gcr.io/kube-apiserver:v1.17.2
+k8s.gcr.io/kube-controller-manager:v1.17.2
+k8s.gcr.io/kube-scheduler:v1.17.2
+k8s.gcr.io/kube-proxy:v1.17.2
+k8s.gcr.io/pause:3.1
+k8s.gcr.io/etcd:3.4.3-0
+k8s.gcr.io/coredns:1.6.5
+```
+输出初始化参数文件
+```
+# kubeadm config print init-defaults > init.default.yaml
+W0130 22:15:23.565860    9896 validation.go:28] Cannot validate kubelet config - no validator is available
+W0130 22:15:23.566048    9896 validation.go:28] Cannot validate kube-proxy config - no validator is available
+
+# cat init.default.yaml 
+apiVersion: kubeadm.k8s.io/v1beta2
+bootstrapTokens:
+- groups:
+  - system:bootstrappers:kubeadm:default-node-token
+  token: abcdef.0123456789abcdef
+  ttl: 24h0m0s
+  usages:
+  - signing
+  - authentication
+kind: InitConfiguration
+localAPIEndpoint:
+  advertiseAddress: 1.2.3.4
+  bindPort: 6443
+nodeRegistration:
+  criSocket: /var/run/dockershim.sock
+  name: vmw-dev-k8s-01
+  taints:
+  - effect: NoSchedule
+    key: node-role.kubernetes.io/master
+---
+apiServer:
+  timeoutForControlPlane: 4m0s
+apiVersion: kubeadm.k8s.io/v1beta2
+certificatesDir: /etc/kubernetes/pki
+clusterName: kubernetes
+controllerManager: {}
+dns:
+  type: CoreDNS
+etcd:
+  local:
+    dataDir: /var/lib/etcd
+imageRepository: k8s.gcr.io
+kind: ClusterConfiguration
+kubernetesVersion: v1.17.0
+networking:
+  dnsDomain: cluster.local
+  serviceSubnet: 10.96.0.0/12
+scheduler: {}
+```
+对 init.default.yaml 进行编辑，对 k8s 默认仓库进行修改，保存为 init-config.yaml 
+```
+[root@vmw-dev-k8s-01 kubernetes]# vim init-config.yaml 
+
+apiVersion: kubeadm.k8s.io/v1beta2
+bootstrapTokens:
+- groups:
+  - system:bootstrappers:kubeadm:default-node-token
+  token: abcdef.0123456789abcdef
+  ttl: 24h0m0s
+  usages:
+  - signing
+  - authentication
+kind: InitConfiguration
+localAPIEndpoint:
+apiVersion: kubeadm.k8s.io/v1beta2
+bootstrapTokens:
+- groups:
+  - system:bootstrappers:kubeadm:default-node-token
+  token: abcdef.0123456789abcdef
+  ttl: 24h0m0s
+  usages:
+  - signing
+  - authentication
+kind: InitConfiguration
+localAPIEndpoint:
+apiVersion: kubeadm.k8s.io/v1beta2
+bootstrapTokens:
+- groups:
+  - system:bootstrappers:kubeadm:default-node-token
+  token: abcdef.0123456789abcdef
+  ttl: 24h0m0s
+  usages:
+  - signing
+  - authentication
+kind: InitConfiguration
+localAPIEndpoint:
+apiVersion: kubeadm.k8s.io/v1beta2
+bootstrapTokens:
+- groups:
+  - system:bootstrappers:kubeadm:default-node-token
+  token: abcdef.0123456789abcdef
+  ttl: 24h0m0s
+  usages:
+  - signing
+  - authentication
+kind: InitConfiguration
+localAPIEndpoint:
+apiVersion: kubeadm.k8s.io/v1beta2
+bootstrapTokens:
+- groups:
+  - system:bootstrappers:kubeadm:default-node-token
+  token: abcdef.0123456789abcdef
+  ttl: 24h0m0s
+  usages:
+  - signing
+  - authentication
+kind: InitConfiguration
+localAPIEndpoint:
+  advertiseAddress: 192.168.45.128  # master 节点 ip
+  bindPort: 6443
+nodeRegistration:
+  criSocket: /var/run/dockershim.sock
+  name: 192.168.45.128  # master 节点 ip，若填主机名需保证解析
+  taints:
+  - effect: NoSchedule
+    key: node-role.kubernetes.io/master
+---
+apiServer:
+  timeoutForControlPlane: 4m0s
+apiVersion: kubeadm.k8s.io/v1beta2
+certificatesDir: /etc/kubernetes/pki
+clusterName: kubernetes
+controllerManager: {}
+dns:
+  type: CoreDNS
+etcd:
+  local:
+    dataDir: /var/lib/etcd   # 把etcd容器的目录挂载到本地的/var/lib/etcd目录下，防止数据丢失
+imageRepository: docker.io/dustise   # 镜像仓库地址
+kind: ClusterConfiguration
+kubernetesVersion: v1.17.0
+networking:
+  dnsDomain: cluster.local
+  serviceSubnet: 10.96.0.0/12
+scheduler: {}
+
+```
