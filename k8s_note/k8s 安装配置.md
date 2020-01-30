@@ -530,122 +530,105 @@ Server: Docker Engine - Community
 1月 31 01:00:54 vmw-dev-k8s-01 kubelet[57148]: E0131 01:00:54.069958   57148 kubelet.go:2183] Container runtime network not ready: NetworkReady=false reason:NetworkPluginNotReady m
 
 ```
+此处问题是由于 kubelet 的 cgroup dirver 与 docker的不一样。docker默认使用cgroupfs，kubelet 默认使用 systemd，此处需要在 kubelet 的启动配置里面修改成和 docker 一样的。
 ```
-# kubectl get nodes
-NAME             STATUS     ROLES    AGE     VERSION
-vmw-dev-k8s-01   NotReady   <none>   9m28s   v1.17.2
+# 找到 kubelet 的启动配置
+# systemctl status kubelet
+● kubelet.service - kubelet: The Kubernetes Node Agent
+   Loaded: loaded (/usr/lib/systemd/system/kubelet.service; enabled; vendor preset: disabled)
+  Drop-In: /usr/lib/systemd/system/kubelet.service.d
+           └─10-kubeadm.conf
+	   
+# cd /usr/lib/systemd/system/kubelet.service.d
+# ls
+10-kubeadm.conf
 
-# kubectl get pods -n kube-system -o wide |grep vmw-dev-k8s-01
-etcd-vmw-dev-k8s-01                      1/1     Running   0          9m27s   192.168.45.128   vmw-dev-k8s-01   <none>           <none>
-kube-apiserver-vmw-dev-k8s-01            1/1     Running   2          11m     192.168.45.128   vmw-dev-k8s-01   <none>           <none>
-kube-controller-manager-vmw-dev-k8s-01   1/1     Running   2          11m     192.168.45.128   vmw-dev-k8s-01   <none>           <none>
-kube-scheduler-vmw-dev-k8s-01            1/1     Running   2          11m     192.168.45.128   vmw-dev-k8s-01   <none>           <none>
+# 10-kubeadm.conf 新增以下配置
+Environment="KUBELET_CGROUP_ARGS=--cgroup-driver=cgroupfs"
 
-# kubectl --namespace kube-system logs kube-apiserver-vmw-dev-k8s-01 
+# 重启 kubelet
+systemctl daemon-reload
+systemctl start kubelet
+```
+kubeadm 安装过程不涉及 CNI 网络插件初始化，故初步安装完成后集群不具网络功能，故出现报错。</br>
+详情参考：https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/#pod-network
+```
+[root@vmw-dev-k8s-01 kubernetes]# kubeadm init --config=init-config.yaml  --ignore-preflight-errors=NumCPU
+W0131 02:03:26.637256    1940 validation.go:28] Cannot validate kube-proxy config - no validator is available
+W0131 02:03:26.637532    1940 validation.go:28] Cannot validate kubelet config - no validator is available
+[init] Using Kubernetes version: v1.17.0
+[preflight] Running pre-flight checks
+	[WARNING NumCPU]: the number of available CPUs 1 is less than the required 2
+	[WARNING IsDockerSystemdCheck]: detected "cgroupfs" as the Docker cgroup driver. The recommended driver is "systemd". Please follow the guide at https://kubernetes.io/docs/setup/cri/
+	[WARNING Hostname]: hostname "vmw-dev-k8s-01" could not be reached
+	[WARNING Hostname]: hostname "vmw-dev-k8s-01": lookup vmw-dev-k8s-01 on 192.168.45.2:53: no such host
+[preflight] Pulling images required for setting up a Kubernetes cluster
+[preflight] This might take a minute or two, depending on the speed of your internet connection
+[preflight] You can also perform this action in beforehand using 'kubeadm config images pull'
+[kubelet-start] Writing kubelet environment file with flags to file "/var/lib/kubelet/kubeadm-flags.env"
+[kubelet-start] Writing kubelet configuration to file "/var/lib/kubelet/config.yaml"
+[kubelet-start] Starting the kubelet
+[certs] Using certificateDir folder "/etc/kubernetes/pki"
+[certs] Generating "ca" certificate and key
+[certs] Generating "apiserver" certificate and key
+[certs] apiserver serving cert is signed for DNS names [vmw-dev-k8s-01 kubernetes kubernetes.default kubernetes.default.svc kubernetes.default.svc.cluster.local] and IPs [10.96.0.1 192.168.45.128]
+[certs] Generating "apiserver-kubelet-client" certificate and key
+[certs] Generating "front-proxy-ca" certificate and key
+[certs] Generating "front-proxy-client" certificate and key
+[certs] Generating "etcd/ca" certificate and key
+[certs] Generating "etcd/server" certificate and key
+[certs] etcd/server serving cert is signed for DNS names [vmw-dev-k8s-01 localhost] and IPs [192.168.45.128 127.0.0.1 ::1]
+[certs] Generating "etcd/peer" certificate and key
+[certs] etcd/peer serving cert is signed for DNS names [vmw-dev-k8s-01 localhost] and IPs [192.168.45.128 127.0.0.1 ::1]
+[certs] Generating "etcd/healthcheck-client" certificate and key
+[certs] Generating "apiserver-etcd-client" certificate and key
+[certs] Generating "sa" key and public key
+[kubeconfig] Using kubeconfig folder "/etc/kubernetes"
+[kubeconfig] Writing "admin.conf" kubeconfig file
+[kubeconfig] Writing "kubelet.conf" kubeconfig file
+[kubeconfig] Writing "controller-manager.conf" kubeconfig file
+[kubeconfig] Writing "scheduler.conf" kubeconfig file
+[control-plane] Using manifest folder "/etc/kubernetes/manifests"
+[control-plane] Creating static Pod manifest for "kube-apiserver"
+[control-plane] Creating static Pod manifest for "kube-controller-manager"
+W0131 02:03:39.528038    1940 manifests.go:214] the default kube-apiserver authorization-mode is "Node,RBAC"; using "Node,RBAC"
+[control-plane] Creating static Pod manifest for "kube-scheduler"
+W0131 02:03:39.536192    1940 manifests.go:214] the default kube-apiserver authorization-mode is "Node,RBAC"; using "Node,RBAC"
+[etcd] Creating static Pod manifest for local etcd in "/etc/kubernetes/manifests"
+[wait-control-plane] Waiting for the kubelet to boot up the control plane as static Pods from directory "/etc/kubernetes/manifests". This can take up to 4m0s
+[kubelet-check] Initial timeout of 40s passed.
+[apiclient] All control plane components are healthy after 176.143739 seconds
+[upload-config] Storing the configuration used in ConfigMap "kubeadm-config" in the "kube-system" Namespace
+[kubelet] Creating a ConfigMap "kubelet-config-1.17" in namespace kube-system with the configuration for the kubelets in the cluster
+[upload-certs] Skipping phase. Please see --upload-certs
+[mark-control-plane] Marking the node vmw-dev-k8s-01 as control-plane by adding the label "node-role.kubernetes.io/master=''"
+[mark-control-plane] Marking the node vmw-dev-k8s-01 as control-plane by adding the taints [node-role.kubernetes.io/master:NoSchedule]
+[bootstrap-token] Using token: abcdef.0123456789abcdef
+[bootstrap-token] Configuring bootstrap tokens, cluster-info ConfigMap, RBAC Roles
+[bootstrap-token] configured RBAC rules to allow Node Bootstrap tokens to post CSRs in order for nodes to get long term certificate credentials
+[bootstrap-token] configured RBAC rules to allow the csrapprover controller automatically approve CSRs from a Node Bootstrap Token
+[bootstrap-token] configured RBAC rules to allow certificate rotation for all node client certificates in the cluster
+[bootstrap-token] Creating the "cluster-info" ConfigMap in the "kube-public" namespace
+[kubelet-finalize] Updating "/etc/kubernetes/kubelet.conf" to point to a rotatable kubelet client certificate and key
+[addons] Applied essential addon: CoreDNS
+[addons] Applied essential addon: kube-proxy
 
-[root@vmw-dev-k8s-01 kubernetes]# kubectl describe pod kube-apiserver-vmw-dev-k8s-01 --namespace=kube-system
-Name:                 kube-apiserver-vmw-dev-k8s-01
-Namespace:            kube-system
-Priority:             2000000000
-Priority Class Name:  system-cluster-critical
-Node:                 vmw-dev-k8s-01/192.168.45.128
-Start Time:           Fri, 31 Jan 2020 00:55:23 +0800
-Labels:               component=kube-apiserver
-                      tier=control-plane
-Annotations:          kubernetes.io/config.hash: 398df73673d361199c6c20a9c254e739
-                      kubernetes.io/config.mirror: 398df73673d361199c6c20a9c254e739
-                      kubernetes.io/config.seen: 2020-01-31T00:55:17.110769358+08:00
-                      kubernetes.io/config.source: file
-Status:               Running
-IP:                   192.168.45.128
-IPs:
-  IP:           192.168.45.128
-Controlled By:  Node/vmw-dev-k8s-01
-Containers:
-  kube-apiserver:
-    Container ID:  docker://935dc6609b5a7b89fe44b819881a780066d5a47573c21e1f7fe6ccdbddada9df
-    Image:         gcr.azk8s.cn/google_containers/kube-apiserver:v1.17.0
-    Image ID:      docker-pullable://gcr.azk8s.cn/google_containers/kube-apiserver@sha256:e3ec33d533257902ad9ebe3d399c17710e62009201a7202aec941e351545d662
-    Port:          <none>
-    Host Port:     <none>
-    Command:
-      kube-apiserver
-      --advertise-address=192.168.45.128
-      --allow-privileged=true
-      --authorization-mode=Node,RBAC
-      --client-ca-file=/etc/kubernetes/pki/ca.crt
-      --enable-admission-plugins=NodeRestriction
-      --enable-bootstrap-token-auth=true
-      --etcd-cafile=/etc/kubernetes/pki/etcd/ca.crt
-      --etcd-certfile=/etc/kubernetes/pki/apiserver-etcd-client.crt
-      --etcd-keyfile=/etc/kubernetes/pki/apiserver-etcd-client.key
-      --etcd-servers=https://127.0.0.1:2379
-      --insecure-port=0
-      --kubelet-client-certificate=/etc/kubernetes/pki/apiserver-kubelet-client.crt
-      --kubelet-client-key=/etc/kubernetes/pki/apiserver-kubelet-client.key
-      --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
-      --proxy-client-cert-file=/etc/kubernetes/pki/front-proxy-client.crt
-      --proxy-client-key-file=/etc/kubernetes/pki/front-proxy-client.key
-      --requestheader-allowed-names=front-proxy-client
-      --requestheader-client-ca-file=/etc/kubernetes/pki/front-proxy-ca.crt
-      --requestheader-extra-headers-prefix=X-Remote-Extra-
-      --requestheader-group-headers=X-Remote-Group
-      --requestheader-username-headers=X-Remote-User
-      --secure-port=6443
-      --service-account-key-file=/etc/kubernetes/pki/sa.pub
-      --service-cluster-ip-range=10.96.0.0/12
-      --tls-cert-file=/etc/kubernetes/pki/apiserver.crt
-      --tls-private-key-file=/etc/kubernetes/pki/apiserver.key
-    State:          Running
-      Started:      Fri, 31 Jan 2020 00:59:21 +0800
-    Last State:     Terminated
-      Reason:       Completed
-      Exit Code:    0
-      Started:      Fri, 31 Jan 2020 00:57:38 +0800
-      Finished:     Fri, 31 Jan 2020 00:59:17 +0800
-    Ready:          True
-    Restart Count:  2
-    Requests:
-      cpu:        250m
-    Liveness:     http-get https://192.168.45.128:6443/healthz delay=15s timeout=15s period=10s #success=1 #failure=8
-    Environment:  <none>
-    Mounts:
-      /etc/kubernetes/pki from k8s-certs (ro)
-      /etc/pki from etc-pki (ro)
-      /etc/ssl/certs from ca-certs (ro)
-Conditions:
-  Type              Status
-  Initialized       True 
-  Ready             True 
-  ContainersReady   True 
-  PodScheduled      True 
-Volumes:
-  ca-certs:
-    Type:          HostPath (bare host directory volume)
-    Path:          /etc/ssl/certs
-    HostPathType:  DirectoryOrCreate
-  etc-pki:
-    Type:          HostPath (bare host directory volume)
-    Path:          /etc/pki
-    HostPathType:  DirectoryOrCreate
-  k8s-certs:
-    Type:          HostPath (bare host directory volume)
-    Path:          /etc/kubernetes/pki
-    HostPathType:  DirectoryOrCreate
-QoS Class:         Burstable
-Node-Selectors:    <none>
-Tolerations:       :NoExecute
-Events:
-  Type     Reason     Age                From                     Message
-  ----     ------     ----               ----                     -------
-  Warning  Unhealthy  16m                kubelet, vmw-dev-k8s-01  Liveness probe failed: Get https://192.168.45.128:6443/healthz: net/http: TLS handshake timeout
-  Normal   Created    15m (x2 over 17m)  kubelet, vmw-dev-k8s-01  Created container kube-apiserver
-  Normal   Started    15m (x2 over 17m)  kubelet, vmw-dev-k8s-01  Started container kube-apiserver
-  Warning  Unhealthy  14m                kubelet, vmw-dev-k8s-01  Liveness probe failed: Get https://192.168.45.128:6443/healthz: net/http: request canceled (Client.Timeout exceeded while awaiting headers)
-  Warning  Unhealthy  14m (x8 over 16m)  kubelet, vmw-dev-k8s-01  Liveness probe failed: HTTP probe failed with statuscode: 403
-  Warning  Unhealthy  13m (x6 over 14m)  kubelet, vmw-dev-k8s-01  Liveness probe failed: HTTP probe failed with statuscode: 500
-  Normal   Killing    13m (x2 over 15m)  kubelet, vmw-dev-k8s-01  Container kube-apiserver failed liveness probe, will be restarted
-  Normal   Pulled     13m (x3 over 17m)  kubelet, vmw-dev-k8s-01  Container image "gcr.azk8s.cn/google_containers/kube-apiserver:v1.17.0" already present on machine
+Your Kubernetes control-plane has initialized successfully!
+
+To start using your cluster, you need to run the following as a regular user:
+
+  mkdir -p $HOME/.kube
+  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+You should now deploy a pod network to the cluster.
+Run "kubectl apply -f [podnetwork].yaml" with one of the options listed at:
+  https://kubernetes.io/docs/concepts/cluster-administration/addons/
+
+Then you can join any number of worker nodes by running the following on each as root:
+
+kubeadm join 192.168.45.128:6443 --token abcdef.0123456789abcdef \
+    --discovery-token-ca-cert-hash sha256:18817722e655a33fdf8502bb0db16954329898357608369baeff44294a5d25bc 
 
 ```
-kubeadm 安装过程不涉及 CNI 网络插件初始化，故初步安装完成后集群不具网络功能，故出现报错。
+
