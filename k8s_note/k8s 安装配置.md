@@ -277,7 +277,7 @@ localAPIEndpoint:
   bindPort: 6443
 nodeRegistration:
   criSocket: /var/run/dockershim.sock
-  name: 192.168.45.128  # master 节点 ip，若填主机名需保证解析
+  name: vmw-dev-k8s-01  # master 节点 ip，若填主机名需保证解析
   taints:
   - effect: NoSchedule
     key: node-role.kubernetes.io/master
