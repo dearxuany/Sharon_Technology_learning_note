@@ -353,5 +353,116 @@ gcr.azk8s.cn/google_containers/pause                     3.1                 da8
 ```
 根据配置文件，初始化安装 k8s master
 ```
+# kubeadm init --config=init-config.yaml  --ignore-preflight-errors=NumCPU
+[kubelet-check] Initial timeout of 40s passed.
+
+Unfortunately, an error has occurred:
+	timed out waiting for the condition
+
+This error is likely caused by:
+	- The kubelet is not running
+	- The kubelet is unhealthy due to a misconfiguration of the node in some way (required cgroups disabled)
+
+If you are on a systemd-powered system, you can try to troubleshoot the error with the following commands:
+	- 'systemctl status kubelet'
+	- 'journalctl -xeu kubelet'
+
+Additionally, a control plane component may have crashed or exited when started by the container runtime.
+```
+提示 kubelket 服务未启动，拉完镜像后需要先启动 kubelet 再进行 init
+```
+# systemctl start kubelet
+# systemctl status kubelet
+● kubelet.service - kubelet: The Kubernetes Node Agent
+   Loaded: loaded (/usr/lib/systemd/system/kubelet.service; enabled; vendor preset: disabled)
+  Drop-In: /usr/lib/systemd/system/kubelet.service.d
+           └─10-kubeadm.conf
+   Active: active (running) since 四 2020-01-30 23:11:13 CST; 10s ago
+     Docs: https://kubernetes.io/docs/
+ Main PID: 16230 (kubelet)
+   CGroup: /system.slice/kubelet.service
+           └─16230 /usr/bin/kubelet --bootstrap-kubeconfig=/etc/kubernetes/bootstrap-kubelet.conf --...
+
+1月 30 23:11:23 vmw-dev-k8s-01 kubelet[16230]: E0130 23:11:23.617240   16230 kubelet.go:2263] no...und
+1月 30 23:11:23 vmw-dev-k8s-01 kubelet[16230]: E0130 23:11:23.718456   16230 kubelet.go:2263] no...und
+1月 30 23:11:23 vmw-dev-k8s-01 kubelet[16230]: E0130 23:11:23.760041   16230 reflector.go:153] k...sed
+1月 30 23:11:23 vmw-dev-k8s-01 kubelet[16230]: I0130 23:11:23.763200   16230 kubelet_node_status...ach
+1月 30 23:11:23 vmw-dev-k8s-01 kubelet[16230]: I0130 23:11:23.773849   16230 kubelet_node_status...128
+1月 30 23:11:23 vmw-dev-k8s-01 kubelet[16230]: E0130 23:11:23.819246   16230 kubelet.go:2263] no...und
+1月 30 23:11:23 vmw-dev-k8s-01 kubelet[16230]: E0130 23:11:23.919845   16230 kubelet.go:2263] no...und
+1月 30 23:11:23 vmw-dev-k8s-01 kubelet[16230]: W0130 23:11:23.958008   16230 status_manager.go:530]...
+1月 30 23:11:23 vmw-dev-k8s-01 kubelet[16230]: W0130 23:11:23.992313   16230 cni.go:237] Unable ...t.d
+1月 30 23:11:24 vmw-dev-k8s-01 kubelet[16230]: E0130 23:11:24.020547   16230 kubelet.go:2263] no...und
+Hint: Some lines were ellipsized, use -l to show in full.
+```
+重新 init 会报错，显示部分 docker images 及配置文件已存在
+```
+# docker ps -a | grep kube | grep -v pause
+f8314330d651        0cae8d5cc64c                               "kube-apiserver --..."   20 seconds ago      Exited (1) 17 seconds ago                       k8s_kube-apiserver_kube-apiserver-192.168.45.128_kube-system_398df73673d361199c6c20a9c254e739_30
+3fdddf4b34e8        5eb3b7486872                               "kube-controller-m..."   21 seconds ago      Exited (1) 15 seconds ago                       k8s_kube-controller-manager_kube-controller-manager-192.168.45.128_kube-system_ba8dda8b1a8bb912a9a71bbb8f225d3d_29
+6bc0ca09a6dd        303ce5db0e90                               "etcd --advertise-..."   22 seconds ago      Exited (1) 21 seconds ago                       k8s_etcd_etcd-192.168.45.128_kube-system_6c39f6c38e2e58352df6adbe8d05f843_35
+4e7814b1248a        78c190f736b1                               "kube-scheduler --..."   12 minutes ago      Up 12 minutes                                   k8s_kube-scheduler_kube-scheduler-192.168.45.128_kube-system_8470cb06b5da19ba2e447333859ecefa_0
+```
+删除已存在的配置文件
+```
+# cd /etc/kubernetes/manifests/
+# ls
+etcd.yaml  kube-apiserver.yaml  kube-controller-manager.yaml  kube-scheduler.yaml
+# rm -rf ./*.yaml
+```
+停止并删除所有已在运行容器
+```
+# docker stop $(docker ps -q)
+4e7814b1248a
+1b43560478da
+42e8aae812b0
+84c77ee9f128
+23ff50db42d1
+# docker rm $(docker ps -a -q)
+f0035f8eb544
+3b83fb7141bd
+64e1e75e249e
+4e7814b1248a
+1b43560478da
+42e8aae812b0
+84c77ee9f128
+23ff50db42d1
+# docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+```
+重新 init 依然报端口占用，则需重启 kubeadm
+```
+# kubeadm reset
+```
+重新 init 后出现以下报错
+```
+1月 30 23:32:18 vmw-dev-k8s-01 kubelet[24790]: I0130 23:32:18.396612   24790 kubelet_node_status.go:294] Setting node annotation to enable volume controller attach/detach
+1月 30 23:32:18 vmw-dev-k8s-01 kubelet[24790]: E0130 23:32:18.398863   24790 kubelet.go:2263] node "192.168.45.128" not found
+1月 30 23:32:18 vmw-dev-k8s-01 kubelet[24790]: I0130 23:32:18.401270   24790 kubelet_node_status.go:70] Attempting to register node 192.168.45.128
+1月 30 23:32:18 vmw-dev-k8s-01 kubelet[24790]: E0130 23:32:18.499656   24790 kubelet.go:2263] node "192.168.45.128" not found
+1月 30 23:32:18 vmw-dev-k8s-01 kubelet[24790]: E0130 23:32:18.595154   24790 reflector.go:153] k8s.io/kubernetes/pkg/kubelet/kubelet.go:458: Failed to list *v1.Node: Get https://192
+1月 30 23:32:18 vmw-dev-k8s-01 kubelet[24790]: E0130 23:32:18.600534   24790 kubelet.go:2263] node "192.168.45.128" not found
+1月 30 23:32:18 vmw-dev-k8s-01 kubelet[24790]: E0130 23:32:18.701027   24790 kubelet.go:2263] node "192.168.45.128" not found
+1月 30 23:32:18 vmw-dev-k8s-01 kubelet[24790]: E0130 23:32:18.802022   24790 kubelet.go:2263] node "192.168.45.128" not found
+1月 30 23:32:18 vmw-dev-k8s-01 kubelet[24790]: E0130 23:32:18.902912   24790 kubelet.go:2263] node "192.168.45.128" not found
+1月 30 23:32:18 vmw-dev-k8s-01 kubelet[24790]: E0130 23:32:18.994496   24790 reflector.go:153] k8s.io/kubernetes/pkg/kubelet/kubelet.go:449: Failed to list *v1.Service: Get https://
+1月 30 23:32:19 vmw-dev-k8s-01 kubelet[24790]: E0130 23:32:19.003784   24790 kubelet.go:2263] node "192.168.45.128" not found
+1月 30 23:32:19 vmw-dev-k8s-01 kubelet[24790]: E0130 23:32:19.104827   24790 kubelet.go:2263] node "192.168.45.128" not found
+1月 30 23:32:19 vmw-dev-k8s-01 kubelet[24790]: E0130 23:32:19.194404   24790 kubelet_node_status.go:92] Unable to register node "192.168.45.128" with API server: Post https://192.16
+1月 30 23:32:19 vmw-dev-k8s-01 kubelet[24790]: E0130 23:32:19.205778   24790 kubelet.go:2263] node "192.168.45.128" not found
+1月 30 23:32:19 vmw-dev-k8s-01 kubelet[24790]: W0130 23:32:19.251770   24790 cni.go:237] Unable to update cni config: no networks found in /etc/cni/net.d
+1月 30 23:32:19 vmw-dev-k8s-01 kubelet[24790]: E0130 23:32:19.306694   24790 kubelet.go:2263] node "192.168.45.128" not found
+1月 30 23:32:19 vmw-dev-k8s-01 kubelet[24790]: E0130 23:32:19.394130   24790 reflector.go:153] k8s.io/kubernetes/pkg/kubelet/config/apiserver.go:46: Failed to list *v1.Pod: Get http
+1月 30 23:32:19 vmw-dev-k8s-01 kubelet[24790]: E0130 23:32:19.407617   24790 kubelet.go:2263] node "192.168.45.128" not found
+1月 30 23:32:19 vmw-dev-k8s-01 kubelet[24790]: E0130 23:32:19.508574   24790 kubelet.go:2263] node "192.168.45.128" not found
+1月 30 23:32:19 vmw-dev-k8s-01 kubelet[24790]: E0130 23:32:19.594976   24790 reflector.go:153] k8s.io/client-go/informers/factory.go:135: Failed to list *v1beta1.CSIDriver: Get http
+1月 30 23:32:19 vmw-dev-k8s-01 kubelet[24790]: E0130 23:32:19.609548   24790 kubelet.go:2263] node "192.168.45.128" not found
+1月 30 23:32:19 vmw-dev-k8s-01 kubelet[24790]: E0130 23:32:19.710498   24790 kubelet.go:2263] node "192.168.45.128" not found
+1月 30 23:32:19 vmw-dev-k8s-01 kubelet[24790]: E0130 23:32:19.795086   24790 csi_plugin.go:267] Failed to initialize CSINodeInfo: error updating CSINode annotation: timed out waitin
+1月 30 23:32:19 vmw-dev-k8s-01 kubelet[24790]: F0130 23:32:19.795126   24790 csi_plugin.go:281] Failed to initialize CSINodeInfo after retrying
+1月 30 23:32:19 vmw-dev-k8s-01 systemd[1]: kubelet.service: main process exited, code=exited, status=255/n/a
+1月 30 23:32:19 vmw-dev-k8s-01 systemd[1]: Unit kubelet.service entered failed state.
+1月 30 23:32:19 vmw-dev-k8s-01 systemd[1]: kubelet.service failed.
 
 ```
+
