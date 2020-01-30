@@ -43,3 +43,21 @@ Removed symlink /etc/systemd/system/dbus-org.fedoraproject.FirewallD1.service.
 ```
 [root@vmw-dev-k8s-01 ~]# setenforce 0
 ```
+
+# k8s 安装
+## kubeadm
+最好不要使用 yum install kubernetes 来安装 k8s 集群，因为使用此命令安装需要额外的配置。</br>
+k8s 官方提供了 kubeadm 工具简化 k8s 安装，k8s官网 yum 源是packages.cloud.google.com。国内无法访问，需修改为阿里云 yum 源。
+```
+[root@vmw-dev-k8s-01 ~]# cat <<EOF > /etc/yum.repos.d/kubernetes.repo
+> [kubernetes]
+> name=Kubernetes
+> baseurl=http://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64
+> enabled=1
+> gpgcheck=0
+> EOF
+```
+yum 安装 kubelet kubeadm kubectl
+```
+[root@vmw-dev-k8s-01 ~]# yum install -y kubelet kubeadm kubectl --disableexcludes=kubernetes
+```
