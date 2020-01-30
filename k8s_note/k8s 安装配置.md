@@ -302,3 +302,27 @@ networking:
 scheduler: {}
 
 ```
+修改 docker 镜像源为国内加速器
+```
+# echo '{"data-root":"/sdata/docker","registry-mirros":["https://registry.docker-cn.com"]}' > /etc/docker/deamon.json
+```
+重启 docker 
+```
+systemctl restart docker
+```
+使用 k8s 新配置文件拉取所需镜像
+```
+[root@vmw-dev-k8s-01 kubernetes]# kubeadm config images pull --config=init-config.yaml
+W0130 22:43:29.713082   10935 validation.go:28] Cannot validate kube-proxy config - no validator is available
+W0130 22:43:29.713214   10935 validation.go:28] Cannot validate kubelet config - no validator is available
+failed to pull image "docker.io/dustise/kube-apiserver:v1.17.0": output: Trying to pull repository docker.io/dustise/kube-apiserver ... 
+manifest for docker.io/dustise/kube-apiserver:v1.17.0 not found
+, error: exit status 1
+To see the stack trace of this error execute with --v=5 or higher
+```
+提示没有 1.17.0 这个版本的镜像，但由于当前版本 kubeadm 不能使用低于 1.16.0 版本的 k8s，故修改 gcr.azk8s.cn/google_containers
+```
+imageRepository:  gcr.azk8s.cn/google_containers   # 镜像仓库地址
+kind: ClusterConfiguration
+kubernetesVersion: v1.17.0
+```
