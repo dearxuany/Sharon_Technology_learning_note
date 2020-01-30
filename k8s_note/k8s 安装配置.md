@@ -648,3 +648,4 @@ Events:
   Normal   Pulled     13m (x3 over 17m)  kubelet, vmw-dev-k8s-01  Container image "gcr.azk8s.cn/google_containers/kube-apiserver:v1.17.0" already present on machine
 
 ```
+kubeadm 安装过程不涉及 CNI 网络插件初始化，故初步安装完成后集群不具网络功能，故出现报错。
