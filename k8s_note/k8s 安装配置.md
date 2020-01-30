@@ -430,7 +430,8 @@ f0035f8eb544
 # docker ps -a
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
 ```
-重新 init 依然报端口占用，则需重启 kubeadm
+重新 init 依然报端口占用，则需重启 kubeadm </br>
+注意：kubeadm reset 后会自动删除 init 所创建的容器并重启 kubeadmin 和 kubelet
 ```
 # kubeadm reset
 ```
@@ -465,4 +466,5 @@ CONTAINER ID        IMAGE               COMMAND             CREATED             
 1月 30 23:32:19 vmw-dev-k8s-01 systemd[1]: kubelet.service failed.
 
 ```
+
 
