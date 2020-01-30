@@ -499,4 +499,152 @@ Server: Docker Engine - Community
   GitCommit:        fec3683
 
 ```
+重新 kubeadm init 后出现新报错
+```
+1月 31 01:00:09 vmw-dev-k8s-01 kubelet[57148]: E0131 01:00:09.263098   57148 event.go:263] Server rejected event '&v1.Event{TypeMeta:v1.TypeMeta{Kind:"", APIVersion:""}, ObjectMeta
+1月 31 01:00:09 vmw-dev-k8s-01 kubelet[57148]: E0131 01:00:09.519567   57148 event.go:263] Server rejected event '&v1.Event{TypeMeta:v1.TypeMeta{Kind:"", APIVersion:""}, ObjectMeta
+1月 31 01:00:11 vmw-dev-k8s-01 kubelet[57148]: E0131 01:00:11.654901   57148 event.go:263] Server rejected event '&v1.Event{TypeMeta:v1.TypeMeta{Kind:"", APIVersion:""}, ObjectMeta
+1月 31 01:00:11 vmw-dev-k8s-01 kubelet[57148]: W0131 01:00:11.810774   57148 cni.go:237] Unable to update cni config: no networks found in /etc/cni/net.d
+1月 31 01:00:12 vmw-dev-k8s-01 kubelet[57148]: E0131 01:00:12.023497   57148 event.go:263] Server rejected event '&v1.Event{TypeMeta:v1.TypeMeta{Kind:"", APIVersion:""}, ObjectMeta
+1月 31 01:00:12 vmw-dev-k8s-01 kubelet[57148]: E0131 01:00:12.178529   57148 event.go:263] Server rejected event '&v1.Event{TypeMeta:v1.TypeMeta{Kind:"", APIVersion:""}, ObjectMeta
+1月 31 01:00:12 vmw-dev-k8s-01 kubelet[57148]: E0131 01:00:12.207479   57148 kubelet.go:2183] Container runtime network not ready: NetworkReady=false reason:NetworkPluginNotReady m
+1月 31 01:00:12 vmw-dev-k8s-01 kubelet[57148]: E0131 01:00:12.272782   57148 event.go:263] Server rejected event '&v1.Event{TypeMeta:v1.TypeMeta{Kind:"", APIVersion:""}, ObjectMeta
+1月 31 01:00:12 vmw-dev-k8s-01 kubelet[57148]: E0131 01:00:12.366089   57148 event.go:263] Server rejected event '&v1.Event{TypeMeta:v1.TypeMeta{Kind:"", APIVersion:""}, ObjectMeta
+1月 31 01:00:12 vmw-dev-k8s-01 kubelet[57148]: E0131 01:00:12.440707   57148 event.go:263] Server rejected event '&v1.Event{TypeMeta:v1.TypeMeta{Kind:"", APIVersion:""}, ObjectMeta
+1月 31 01:00:12 vmw-dev-k8s-01 kubelet[57148]: E0131 01:00:12.893375   57148 event.go:263] Server rejected event '&v1.Event{TypeMeta:v1.TypeMeta{Kind:"", APIVersion:""}, ObjectMeta
+1月 31 01:00:13 vmw-dev-k8s-01 kubelet[57148]: E0131 01:00:13.053711   57148 event.go:263] Server rejected event '&v1.Event{TypeMeta:v1.TypeMeta{Kind:"", APIVersion:""}, ObjectMeta
+1月 31 01:00:16 vmw-dev-k8s-01 kubelet[57148]: W0131 01:00:16.812536   57148 cni.go:237] Unable to update cni config: no networks found in /etc/cni/net.d
+1月 31 01:00:17 vmw-dev-k8s-01 kubelet[57148]: E0131 01:00:17.573629   57148 kubelet.go:2183] Container runtime network not ready: NetworkReady=false reason:NetworkPluginNotReady m
+1月 31 01:00:21 vmw-dev-k8s-01 kubelet[57148]: W0131 01:00:21.814068   57148 cni.go:237] Unable to update cni config: no networks found in /etc/cni/net.d
+1月 31 01:00:22 vmw-dev-k8s-01 kubelet[57148]: E0131 01:00:22.598542   57148 kubelet.go:2183] Container runtime network not ready: NetworkReady=false reason:NetworkPluginNotReady m
+1月 31 01:00:26 vmw-dev-k8s-01 kubelet[57148]: W0131 01:00:26.814694   57148 cni.go:237] Unable to update cni config: no networks found in /etc/cni/net.d
+1月 31 01:00:28 vmw-dev-k8s-01 kubelet[57148]: E0131 01:00:28.014471   57148 kubelet.go:2183] Container runtime network not ready: NetworkReady=false reason:NetworkPluginNotReady m
+1月 31 01:00:31 vmw-dev-k8s-01 kubelet[57148]: W0131 01:00:31.826612   57148 cni.go:237] Unable to update cni config: no networks found in /etc/cni/net.d
+1月 31 01:00:35 vmw-dev-k8s-01 kubelet[57148]: E0131 01:00:35.033249   57148 kubelet.go:2183] Container runtime network not ready: NetworkReady=false reason:NetworkPluginNotReady m
+1月 31 01:00:36 vmw-dev-k8s-01 kubelet[57148]: W0131 01:00:36.872487   57148 cni.go:237] Unable to update cni config: no networks found in /etc/cni/net.d
+1月 31 01:00:40 vmw-dev-k8s-01 kubelet[57148]: E0131 01:00:40.112232   57148 kubelet.go:2183] Container runtime network not ready: NetworkReady=false reason:NetworkPluginNotReady m
+1月 31 01:00:42 vmw-dev-k8s-01 kubelet[57148]: W0131 01:00:42.546173   57148 cni.go:237] Unable to update cni config: no networks found in /etc/cni/net.d
+1月 31 01:00:47 vmw-dev-k8s-01 kubelet[57148]: E0131 01:00:47.034225   57148 kubelet.go:2183] Container runtime network not ready: NetworkReady=false reason:NetworkPluginNotReady m
+1月 31 01:00:47 vmw-dev-k8s-01 kubelet[57148]: W0131 01:00:47.546464   57148 cni.go:237] Unable to update cni config: no networks found in /etc/cni/net.d
+1月 31 01:00:53 vmw-dev-k8s-01 kubelet[57148]: W0131 01:00:52.992057   57148 cni.go:237] Unable to update cni config: no networks found in /etc/cni/net.d
+1月 31 01:00:54 vmw-dev-k8s-01 kubelet[57148]: E0131 01:00:54.069958   57148 kubelet.go:2183] Container runtime network not ready: NetworkReady=false reason:NetworkPluginNotReady m
 
+```
+```
+# kubectl get nodes
+NAME             STATUS     ROLES    AGE     VERSION
+vmw-dev-k8s-01   NotReady   <none>   9m28s   v1.17.2
+
+# kubectl get pods -n kube-system -o wide |grep vmw-dev-k8s-01
+etcd-vmw-dev-k8s-01                      1/1     Running   0          9m27s   192.168.45.128   vmw-dev-k8s-01   <none>           <none>
+kube-apiserver-vmw-dev-k8s-01            1/1     Running   2          11m     192.168.45.128   vmw-dev-k8s-01   <none>           <none>
+kube-controller-manager-vmw-dev-k8s-01   1/1     Running   2          11m     192.168.45.128   vmw-dev-k8s-01   <none>           <none>
+kube-scheduler-vmw-dev-k8s-01            1/1     Running   2          11m     192.168.45.128   vmw-dev-k8s-01   <none>           <none>
+
+# kubectl --namespace kube-system logs kube-apiserver-vmw-dev-k8s-01 
+
+[root@vmw-dev-k8s-01 kubernetes]# kubectl describe pod kube-apiserver-vmw-dev-k8s-01 --namespace=kube-system
+Name:                 kube-apiserver-vmw-dev-k8s-01
+Namespace:            kube-system
+Priority:             2000000000
+Priority Class Name:  system-cluster-critical
+Node:                 vmw-dev-k8s-01/192.168.45.128
+Start Time:           Fri, 31 Jan 2020 00:55:23 +0800
+Labels:               component=kube-apiserver
+                      tier=control-plane
+Annotations:          kubernetes.io/config.hash: 398df73673d361199c6c20a9c254e739
+                      kubernetes.io/config.mirror: 398df73673d361199c6c20a9c254e739
+                      kubernetes.io/config.seen: 2020-01-31T00:55:17.110769358+08:00
+                      kubernetes.io/config.source: file
+Status:               Running
+IP:                   192.168.45.128
+IPs:
+  IP:           192.168.45.128
+Controlled By:  Node/vmw-dev-k8s-01
+Containers:
+  kube-apiserver:
+    Container ID:  docker://935dc6609b5a7b89fe44b819881a780066d5a47573c21e1f7fe6ccdbddada9df
+    Image:         gcr.azk8s.cn/google_containers/kube-apiserver:v1.17.0
+    Image ID:      docker-pullable://gcr.azk8s.cn/google_containers/kube-apiserver@sha256:e3ec33d533257902ad9ebe3d399c17710e62009201a7202aec941e351545d662
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      kube-apiserver
+      --advertise-address=192.168.45.128
+      --allow-privileged=true
+      --authorization-mode=Node,RBAC
+      --client-ca-file=/etc/kubernetes/pki/ca.crt
+      --enable-admission-plugins=NodeRestriction
+      --enable-bootstrap-token-auth=true
+      --etcd-cafile=/etc/kubernetes/pki/etcd/ca.crt
+      --etcd-certfile=/etc/kubernetes/pki/apiserver-etcd-client.crt
+      --etcd-keyfile=/etc/kubernetes/pki/apiserver-etcd-client.key
+      --etcd-servers=https://127.0.0.1:2379
+      --insecure-port=0
+      --kubelet-client-certificate=/etc/kubernetes/pki/apiserver-kubelet-client.crt
+      --kubelet-client-key=/etc/kubernetes/pki/apiserver-kubelet-client.key
+      --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
+      --proxy-client-cert-file=/etc/kubernetes/pki/front-proxy-client.crt
+      --proxy-client-key-file=/etc/kubernetes/pki/front-proxy-client.key
+      --requestheader-allowed-names=front-proxy-client
+      --requestheader-client-ca-file=/etc/kubernetes/pki/front-proxy-ca.crt
+      --requestheader-extra-headers-prefix=X-Remote-Extra-
+      --requestheader-group-headers=X-Remote-Group
+      --requestheader-username-headers=X-Remote-User
+      --secure-port=6443
+      --service-account-key-file=/etc/kubernetes/pki/sa.pub
+      --service-cluster-ip-range=10.96.0.0/12
+      --tls-cert-file=/etc/kubernetes/pki/apiserver.crt
+      --tls-private-key-file=/etc/kubernetes/pki/apiserver.key
+    State:          Running
+      Started:      Fri, 31 Jan 2020 00:59:21 +0800
+    Last State:     Terminated
+      Reason:       Completed
+      Exit Code:    0
+      Started:      Fri, 31 Jan 2020 00:57:38 +0800
+      Finished:     Fri, 31 Jan 2020 00:59:17 +0800
+    Ready:          True
+    Restart Count:  2
+    Requests:
+      cpu:        250m
+    Liveness:     http-get https://192.168.45.128:6443/healthz delay=15s timeout=15s period=10s #success=1 #failure=8
+    Environment:  <none>
+    Mounts:
+      /etc/kubernetes/pki from k8s-certs (ro)
+      /etc/pki from etc-pki (ro)
+      /etc/ssl/certs from ca-certs (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  ca-certs:
+    Type:          HostPath (bare host directory volume)
+    Path:          /etc/ssl/certs
+    HostPathType:  DirectoryOrCreate
+  etc-pki:
+    Type:          HostPath (bare host directory volume)
+    Path:          /etc/pki
+    HostPathType:  DirectoryOrCreate
+  k8s-certs:
+    Type:          HostPath (bare host directory volume)
+    Path:          /etc/kubernetes/pki
+    HostPathType:  DirectoryOrCreate
+QoS Class:         Burstable
+Node-Selectors:    <none>
+Tolerations:       :NoExecute
+Events:
+  Type     Reason     Age                From                     Message
+  ----     ------     ----               ----                     -------
+  Warning  Unhealthy  16m                kubelet, vmw-dev-k8s-01  Liveness probe failed: Get https://192.168.45.128:6443/healthz: net/http: TLS handshake timeout
+  Normal   Created    15m (x2 over 17m)  kubelet, vmw-dev-k8s-01  Created container kube-apiserver
+  Normal   Started    15m (x2 over 17m)  kubelet, vmw-dev-k8s-01  Started container kube-apiserver
+  Warning  Unhealthy  14m                kubelet, vmw-dev-k8s-01  Liveness probe failed: Get https://192.168.45.128:6443/healthz: net/http: request canceled (Client.Timeout exceeded while awaiting headers)
+  Warning  Unhealthy  14m (x8 over 16m)  kubelet, vmw-dev-k8s-01  Liveness probe failed: HTTP probe failed with statuscode: 403
+  Warning  Unhealthy  13m (x6 over 14m)  kubelet, vmw-dev-k8s-01  Liveness probe failed: HTTP probe failed with statuscode: 500
+  Normal   Killing    13m (x2 over 15m)  kubelet, vmw-dev-k8s-01  Container kube-apiserver failed liveness probe, will be restarted
+  Normal   Pulled     13m (x3 over 17m)  kubelet, vmw-dev-k8s-01  Container image "gcr.azk8s.cn/google_containers/kube-apiserver:v1.17.0" already present on machine
+
+```
