@@ -45,7 +45,8 @@ Removed symlink /etc/systemd/system/dbus-org.fedoraproject.FirewallD1.service.
 ```
 
 # k8s 安装
-## kubeadm 安装
+## kubeadm 部署集群
+### kubeadm 安装 master
 最好不要使用 yum install kubernetes 来安装 k8s 集群，因为使用此命令安装需要额外的配置。</br>
 k8s 官方提供了 kubeadm 工具简化 k8s 安装，k8s官网 yum 源是packages.cloud.google.com。国内无法访问，需修改为阿里云 yum 源。
 ```
@@ -550,9 +551,7 @@ Environment="KUBELET_CGROUP_ARGS=--cgroup-driver=cgroupfs"
 systemctl daemon-reload
 systemctl start kubelet
 ```
-重新 kubeadm init 后，master 安装初始化成功。</br>
-kubeadm 安装过程不涉及 CNI 网络插件初始化，故初步安装完成后集群不具网络功能，故出现报错。</br>
-详情参考：https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/#pod-network
+重新 kubeadm init 后，master 安装初始化成功
 ```
 [root@vmw-dev-k8s-01 kubernetes]# kubeadm init --config=init-config.yaml  --ignore-preflight-errors=NumCPU
 W0131 02:03:26.637256    1940 validation.go:28] Cannot validate kube-proxy config - no validator is available
@@ -632,4 +631,22 @@ kubeadm join 192.168.45.128:6443 --token abcdef.0123456789abcdef \
     --discovery-token-ca-cert-hash sha256:18817722e655a33fdf8502bb0db16954329898357608369baeff44294a5d25bc 
 
 ```
+按照以上提示执行命令，复制配置文件到普通用户 home 下
+```
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+export KUBECONFIG=/etc/kubernetes/admin.conf
+```
+kubeadm init 最后输出部分为 node 加入到集群中的 token，需要自行记录，以上已给出添加新节点的 join 命令
+```
+kubeadm join 192.168.45.128:6443 --token abcdef.0123456789abcdef \
+    --discovery-token-ca-cert-hash sha256:18817722e655a33fdf8502bb0db16954329898357608369baeff44294a5d25bc 
+```
 
+kubeadm 安装过程不涉及 CNI 网络插件初始化，故初步安装完成后集群不具网络功能，故出现报错。</br>
+详情参考：https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/#pod-network
+```
+# 安装 CNI 网络插件
+# kubectl apply -f https://docs.projectcalico.org/v3.8/manifests/calico.yaml
+```
