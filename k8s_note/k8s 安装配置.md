@@ -302,7 +302,7 @@ networking:
 scheduler: {}
 
 ```
-修改 docker 镜像源为国内加速器
+设置 docker 国内加速器
 ```
 # echo '{"data-root":"/sdata/docker","registry-mirros":["https://registry.docker-cn.com"]}' > /etc/docker/deamon.json
 ```
@@ -325,4 +325,33 @@ To see the stack trace of this error execute with --v=5 or higher
 imageRepository:  gcr.azk8s.cn/google_containers   # 镜像仓库地址
 kind: ClusterConfiguration
 kubernetesVersion: v1.17.0
+```
+根据新配置文件拉取镜像
+```
+# kubeadm config images pull --config=init-config.yaml
+W0130 22:49:24.763926   11131 validation.go:28] Cannot validate kube-proxy config - no validator is available
+W0130 22:49:24.764040   11131 validation.go:28] Cannot validate kubelet config - no validator is available
+[config/images] Pulled gcr.azk8s.cn/google_containers/kube-apiserver:v1.17.0
+[config/images] Pulled gcr.azk8s.cn/google_containers/kube-controller-manager:v1.17.0
+[config/images] Pulled gcr.azk8s.cn/google_containers/kube-scheduler:v1.17.0
+[config/images] Pulled gcr.azk8s.cn/google_containers/kube-proxy:v1.17.0
+[config/images] Pulled gcr.azk8s.cn/google_containers/pause:3.1
+[config/images] Pulled gcr.azk8s.cn/google_containers/etcd:3.4.3-0
+[config/images] Pulled gcr.azk8s.cn/google_containers/coredns:1.6.5
+```
+查看 docker 镜像
+```
+# docker images
+REPOSITORY                                               TAG                 IMAGE ID            CREATED             SIZE
+gcr.azk8s.cn/google_containers/kube-proxy                v1.17.0             7d54289267dc        7 weeks ago         116 MB
+gcr.azk8s.cn/google_containers/kube-apiserver            v1.17.0             0cae8d5cc64c        7 weeks ago         171 MB
+gcr.azk8s.cn/google_containers/kube-controller-manager   v1.17.0             5eb3b7486872        7 weeks ago         161 MB
+gcr.azk8s.cn/google_containers/kube-scheduler            v1.17.0             78c190f736b1        7 weeks ago         94.4 MB
+gcr.azk8s.cn/google_containers/coredns                   1.6.5               70f311871ae1        2 months ago        41.6 MB
+gcr.azk8s.cn/google_containers/etcd                      3.4.3-0             303ce5db0e90        3 months ago        288 MB
+gcr.azk8s.cn/google_containers/pause                     3.1                 da86e6ba6ca1        2 years ago         742 kB
+```
+根据配置文件，初始化安装 k8s master
+```
+
 ```
