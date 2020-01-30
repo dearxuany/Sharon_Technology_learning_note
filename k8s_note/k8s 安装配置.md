@@ -550,6 +550,7 @@ Environment="KUBELET_CGROUP_ARGS=--cgroup-driver=cgroupfs"
 systemctl daemon-reload
 systemctl start kubelet
 ```
+重新 kubeadm init 后，master 安装初始化成功。</br>
 kubeadm 安装过程不涉及 CNI 网络插件初始化，故初步安装完成后集群不具网络功能，故出现报错。</br>
 详情参考：https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/#pod-network
 ```
