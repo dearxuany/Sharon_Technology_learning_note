@@ -70,3 +70,78 @@ yum install -y docker
 systemctl enable docker && systemctl start docker
 systemctl enable kubelet && systemctl start kubelet
 ```
+此处不能直接使用 systemctl start kubelet 命令启动 kubelet，否则会报错
+```
+# systemctl status kubelet
+● kubelet.service - kubelet: The Kubernetes Node Agent
+   Loaded: loaded (/usr/lib/systemd/system/kubelet.service; enabled; vendor preset: disabled)
+  Drop-In: /usr/lib/systemd/system/kubelet.service.d
+           └─10-kubeadm.conf
+   Active: activating (auto-restart) (Result: exit-code) since 四 2020-01-30 21:18:43 CST; 2s ago
+     Docs: https://kubernetes.io/docs/
+  Process: 7126 ExecStart=/usr/bin/kubelet $KUBELET_KUBECONFIG_ARGS $KUBELET_CONFIG_ARGS $KUBELET_KUBEADM_ARGS $KUBELET_EXTRA_ARGS (code=exited, status=255)
+ Main PID: 7126 (code=exited, status=255)
+
+1月 30 21:18:43 vmw-dev-k8s-01 systemd[1]: kubelet.service: main process exited, code=exited, st...n/a
+1月 30 21:18:43 vmw-dev-k8s-01 systemd[1]: Unit kubelet.service entered failed state.
+1月 30 21:18:43 vmw-dev-k8s-01 systemd[1]: kubelet.service failed.
+Hint: Some lines were ellipsized, use -l to show in full.
+
+# journalctl -f -u kubelet
+-- Logs begin at 四 2020-01-30 20:40:49 CST. --
+1月 30 21:17:00 vmw-dev-k8s-01 systemd[1]: kubelet.service: main process exited, code=exited, status=255/n/a
+1月 30 21:17:00 vmw-dev-k8s-01 systemd[1]: Unit kubelet.service entered failed state.
+1月 30 21:17:00 vmw-dev-k8s-01 systemd[1]: kubelet.service failed.
+1月 30 21:17:10 vmw-dev-k8s-01 systemd[1]: kubelet.service holdoff time over, scheduling restart.
+1月 30 21:17:10 vmw-dev-k8s-01 systemd[1]: Stopped kubelet: The Kubernetes Node Agent.
+1月 30 21:17:10 vmw-dev-k8s-01 systemd[1]: Started kubelet: The Kubernetes Node Agent.
+1月 30 21:17:10 vmw-dev-k8s-01 kubelet[7079]: F0130 21:17:10.462216    7079 server.go:198] failed to load Kubelet config file /var/lib/kubelet/config.yaml, error failed to read kubelet config file "/var/lib/kubelet/config.yaml", error: open /var/lib/kubelet/config.yaml: no such file or directory
+1月 30 21:17:10 vmw-dev-k8s-01 systemd[1]: kubelet.service: main process exited, code=exited, status=255/n/a
+1月 30 21:17:10 vmw-dev-k8s-01 systemd[1]: Unit kubelet.service entered failed state.
+1月 30 21:17:10 vmw-dev-k8s-01 systemd[1]: kubelet.service failed.
+1月 30 21:17:20 vmw-dev-k8s-01 systemd[1]: kubelet.service holdoff time over, scheduling restart.
+1月 30 21:17:20 vmw-dev-k8s-01 systemd[1]: Stopped kubelet: The Kubernetes Node Agent.
+1月 30 21:17:20 vmw-dev-k8s-01 systemd[1]: Started kubelet: The Kubernetes Node Agent.
+1月 30 21:17:20 vmw-dev-k8s-01 kubelet[7085]: F0130 21:17:20.875065    7085 server.go:198] failed to load Kubelet config file /var/lib/kubelet/config.yaml, error failed to read kubelet config file "/var/lib/kubelet/config.yaml", error: open /var/lib/kubelet/config.yaml: no such file or directory
+1月 30 21:17:20 vmw-dev-k8s-01 systemd[1]: kubelet.service: main process exited, code=exited, status=255/n/a
+1月 30 21:17:20 vmw-dev-k8s-01 systemd[1]: Unit kubelet.service entered failed state.
+1月 30 21:17:20 vmw-dev-k8s-01 systemd[1]: kubelet.service failed.
+```
+提示缺失 /var/lib/kubelet/config.yaml，需要先执行 kubeadm init
+```
+# kubeadm init
+W0130 21:27:03.717998    8070 version.go:101] could not fetch a Kubernetes version from the internet: unable to get URL "https://dl.k8s.io/release/stable-1.txt": Get https://dl.k8s.io/release/stable-1.txt: net/http: request canceled while waiting for connection (Client.Timeout exceeded while awaiting headers)
+W0130 21:27:03.718727    8070 version.go:102] falling back to the local client version: v1.17.2
+W0130 21:27:03.719755    8070 validation.go:28] Cannot validate kube-proxy config - no validator is available
+W0130 21:27:03.719797    8070 validation.go:28] Cannot validate kubelet config - no validator is available
+[init] Using Kubernetes version: v1.17.2
+[preflight] Running pre-flight checks
+	[WARNING Hostname]: hostname "vmw-dev-k8s-01" could not be reached
+	[WARNING Hostname]: hostname "vmw-dev-k8s-01": lookup vmw-dev-k8s-01 on 192.168.45.2:53: no such host
+error execution phase preflight: [preflight] Some fatal errors occurred:
+	[ERROR NumCPU]: the number of available CPUs 1 is less than the required 2
+	[ERROR FileContent--proc-sys-net-bridge-bridge-nf-call-iptables]: /proc/sys/net/bridge/bridge-nf-call-iptables contents are not set to 1
+[preflight] If you know what you are doing, you can make a check non-fatal with `--ignore-preflight-errors=...`
+To see the stack trace of this error execute with --v=5 or higher
+```
+提示 CPU 核数至少为 2 ，此处为虚拟测试环境直接忽略
+```
+# kubeadm init --ignore-preflight-errors=NumCPU
+W0130 21:33:28.243307    8315 version.go:101] could not fetch a Kubernetes version from the internet: unable to get URL "https://dl.k8s.io/release/stable-1.txt": Get https://dl.k8s.io/release/stable-1.txt: net/http: request canceled while waiting for connection (Client.Timeout exceeded while awaiting headers)
+W0130 21:33:28.245062    8315 version.go:102] falling back to the local client version: v1.17.2
+W0130 21:33:28.246511    8315 validation.go:28] Cannot validate kube-proxy config - no validator is available
+W0130 21:33:28.246568    8315 validation.go:28] Cannot validate kubelet config - no validator is available
+[init] Using Kubernetes version: v1.17.2
+[preflight] Running pre-flight checks
+	[WARNING NumCPU]: the number of available CPUs 1 is less than the required 2
+	[WARNING Hostname]: hostname "vmw-dev-k8s-01" could not be reached
+	[WARNING Hostname]: hostname "vmw-dev-k8s-01": lookup vmw-dev-k8s-01 on 192.168.45.2:53: no such host
+error execution phase preflight: [preflight] Some fatal errors occurred:
+	[ERROR FileContent--proc-sys-net-bridge-bridge-nf-call-iptables]: /proc/sys/net/bridge/bridge-nf-call-iptables contents are not set to 1
+[preflight] If you know what you are doing, you can make a check non-fatal with `--ignore-preflight-errors=...`
+To see the stack trace of this error execute with --v=5 or higher
+```
+提示  /proc/sys/net/bridge/bridge-nf-call-iptables 必须设置为 1
+```
+echo "1" >/proc/sys/net/bridge/bridge-nf-call-iptables
+```
