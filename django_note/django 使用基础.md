@@ -28,20 +28,65 @@ django-admin startproject mysite
 3 directories, 7 files
 ```
 ### setting.py 配置 
-#### 数据库
-数据库配置，用于定义需要在数据库中生成的表，常用于数据库迁移
+setting.py 中应用配置
 ```
+# 调试模式，输出所有没有被程序自身捕获的异常，显示到错误页面
+# 生成环境必须为 False
+DEBUG = True
+
+# 默认基础框架
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+    'django.contrib.admin',  # 管理站点
+    'django.contrib.auth',   # 验证框架
+    'django.contrib.contenttypes',  # 内容类型跨级啊
+    'django.contrib.sessions',  # 会话
+    'django.contrib.messages',  # 消息机制
+    'django.contrib.staticfiles',  # 静态文件管理
 ]
+
+# 中间件列表
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+# 根 URL 路径
+ROOT_URLCONF = 'mysite.urls'
+
+# 数据库全部配置，字典格式
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
+
+# 默认编码
+LANGUAGE_CODE = 'en-us'
+
+# 时区
+TIME_ZONE = 'UTC'
+
+USE_I18N = True
+
+USE_L10N = True
+
+# 时区支持启禁用
+USE_TZ = True
+
+# 静态文件提取输出相对路径
+STATIC_URL = '/static/'
 ```
-在 SQLite 3 中生成表
+#### 数据库
+数据库配置，用于定义需要在数据库中生成的表，常用于数据库迁移</br>
+生成表内容由 INSTALLED_APPS 应用决定
 ```
+# 在 SQLite 3 中生成表
 $ python manage.py migrate
 ```
 sqlite 版本过低需升级</br>
@@ -105,7 +150,7 @@ Starting development server at http://127.0.0.1:8000/
 Quit the server with CONTROL-C.
 [01/Feb/2020 15:33:03] "GET / HTTP/1.1" 200 16351
 ```
-访问虚拟机中 django 服务参考：https://www.cnblogs.com/coco-shi/p/8689996.html </br>
+访问虚拟机中 django 服务，需要将虚拟机上的 8000 端口在 nat 上设置映射到外部，参考：https://www.cnblogs.com/coco-shi/p/8689996.html </br>
 变更服务器地址为 0.0.0.0 后，外部主机依然无法访问，出现报错
 ```
 $ python manage.py runserver 0.0.0.0:8000
