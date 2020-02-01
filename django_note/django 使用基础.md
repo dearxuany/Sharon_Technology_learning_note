@@ -28,6 +28,7 @@ django-admin startproject mysite
 3 directories, 7 files
 ```
 ### setting.py 配置 
+#### 数据库
 数据库配置，用于定义需要在数据库中生成的表
 ```
 INSTALLED_APPS = [
