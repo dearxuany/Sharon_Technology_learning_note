@@ -191,3 +191,14 @@ $ python manage.py startapp blog
 
 1 directory, 7 files
 ```
+
+## 启用权限框架管理站点
+创建超级用户
+```
+$ python manage.py createsuperuser
+Username (leave blank to use 'sharonli'): admin
+Email address: ****@qq.com
+Password: 
+Password (again): 
+Superuser created successfully.
+```
