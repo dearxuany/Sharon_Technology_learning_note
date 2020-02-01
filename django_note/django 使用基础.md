@@ -171,3 +171,23 @@ Bad Request: /
 ```
 ALLOWED_HOSTS = ["*"]
 ```
+
+## 创建应用程序
+生成 blog 应用代码
+```
+$ python manage.py startapp blog
+```
+应用代码 blog 目录结构
+```
+.
+├── admin.py  # 注册模型
+├── apps.py   # 应用配置
+├── __init__.py 
+├── migrations # 数据库迁移目录
+│   └── __init__.py
+├── models.py  # 数据模型结构定义
+├── tests.py  # 测试代码
+└── views.py  # 视图，应用逻辑，一视图对应一 url
+
+1 directory, 7 files
+```
