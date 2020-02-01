@@ -29,7 +29,7 @@ django-admin startproject mysite
 ```
 ### setting.py 配置 
 #### 数据库
-数据库配置，用于定义需要在数据库中生成的表
+数据库配置，用于定义需要在数据库中生成的表，常用于数据库迁移
 ```
 INSTALLED_APPS = [
     'django.contrib.admin',
