@@ -105,3 +105,24 @@ Starting development server at http://127.0.0.1:8000/
 Quit the server with CONTROL-C.
 [01/Feb/2020 15:33:03] "GET / HTTP/1.1" 200 16351
 ```
+访问虚拟机中 django 服务参考：https://www.cnblogs.com/coco-shi/p/8689996.html </br>
+变更服务器地址为 0.0.0.0 后，外部主机依然无法访问，出现报错
+```
+$ python manage.py runserver 0.0.0.0:8000
+Watching for file changes with StatReloader
+Performing system checks...
+
+System check identified no issues (0 silenced).
+February 01, 2020 - 15:39:32
+Django version 3.0.2, using settings 'mysite.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+Invalid HTTP_HOST header: '192.168.45.129:8000'. You may need to add '192.168.45.129' to ALLOWED_HOSTS.
+Bad Request: /
+[01/Feb/2020 15:39:36] "GET / HTTP/1.1" 400 60169
+
+```
+需要将 setting.py 中的主机允许列表改为 *
+```
+ALLOWED_HOSTS = ["*"]
+```
