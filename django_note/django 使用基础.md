@@ -193,7 +193,7 @@ $ python manage.py startapp blog
 ```
 
 ## 启用权限框架管理站点
-创建超级用户
+创建超级用户，启用权限验证框架
 ```
 $ python manage.py createsuperuser
 Username (leave blank to use 'sharonli'): admin
@@ -202,3 +202,4 @@ Password:
 Password (again): 
 Superuser created successfully.
 ```
+访问 http://127.0.0.1:8000/admin 可见登录页面已启用
