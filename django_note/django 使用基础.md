@@ -205,8 +205,24 @@ from django.http import HttpResponse
 def index(request):
     return HttpResponse("Hello world, Test Sucess!")
 ```
-新建应用 urls.py
+path() 方法</br>
+路由系统 path() 方法，参数 route 及 view 必填、kwargs 和 name 可选</br>
+
+* route: </br>
+route 是一个匹配 URL 的准则（类似正则表达式）</br>
+当 Django 响应一个请求时，它会从 urlpatterns 的第一项开始，按顺序依次匹配列表中的项，直到找到匹配的项，然后执行该条目映射的视图函数或下级路由（route 不会匹配参数），其后的条目将不再继续匹配，故需注意 urlpatterns 的设置顺序。</br>
+
+* view：</br>
+view 为处理当前 url 请求的视图函数</br>
+当Django匹配到某个路由条目时，自动将封装的HttpRequest对象作为第一个参数，被“捕获”的参数以关键字参数的形式，传递给该条目指定的视图view。</br>
+
+* kwargs: </br>
+任意数量的关键字参数可以作为一个字典传递给目标视图。
+
+* name:</br>
+对 url 进行命名
 ```
+# 新建应用 urls.py
 # cat urls.py 
 from django.urls import path
 
@@ -216,7 +232,8 @@ urlpatterns = [
     path('', views.index, name='index'),
 ]
 ```
-编辑 project urls.py
+编辑 project urls.py 导入include模块，将 app 的 url 模块添加到文件中</br>
+注意：除了admin路由外，尽量给每个app设计自己独立的二级路由
 ```
 # cat urls.py 
 """supervisory_control URL Configuration
