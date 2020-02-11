@@ -173,9 +173,10 @@ ALLOWED_HOSTS = ["*"]
 ```
 
 ## 创建应用程序
-生成 blog 应用代码
+生成应用代码</br>
+注意：必须和 manage.py 同级，否则会找不到此模块，需进行额外配置
 ```
-$ python manage.py startapp blog
+$ python manage.py startapp helloworld
 ```
 应用代码 blog 目录结构
 ```
@@ -187,10 +188,61 @@ $ python manage.py startapp blog
 │   └── __init__.py
 ├── models.py  # 数据模型结构定义
 ├── tests.py  # 测试代码
-└── views.py  # 视图，应用逻辑，一视图对应一 url
+├── views.py  # 视图，应用逻辑，一视图对应一 url
+└── urls.py  # app 的路由，需自行创建，可在 project urls.py 主路由中导入
 
 1 directory, 7 files
 ```
+编辑应用 views.py
+```
+ # cat views.py 
+from django.shortcuts import render
+
+# Create your views here.
+
+from django.http import HttpResponse
+
+def index(request):
+    return HttpResponse("Hello world, Test Sucess!")
+```
+新建应用 urls.py
+```
+# cat urls.py 
+from django.urls import path
+
+from . import views
+
+urlpatterns = [
+    path('', views.index, name='index'),
+]
+```
+编辑 project urls.py
+```
+# cat urls.py 
+"""supervisory_control URL Configuration
+
+The `urlpatterns` list routes URLs to views. For more information please see:
+    https://docs.djangoproject.com/en/3.0/topics/http/urls/
+Examples:
+Function views
+    1. Add an import:  from my_app import views
+    2. Add a URL to urlpatterns:  path('', views.home, name='home')
+Class-based views
+    1. Add an import:  from other_app.views import Home
+    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
+Including another URLconf
+    1. Import the include() function: from django.urls import include, path
+    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+"""
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path('helloworld/', include('helloworld.urls')),
+    path('admin/', admin.site.urls),
+]
+```
+启动开发服务器，访问 127.0.0.1：8000/helloworld 即可
 
 ## 启用权限框架管理站点
 创建超级用户，启用权限验证框架
@@ -202,4 +254,5 @@ Password:
 Password (again): 
 Superuser created successfully.
 ```
-访问 http://127.0.0.1:8000/admin 可见登录页面已启用
+访问 http://127.0.0.1:8000/admin 可见登录页面已启用</br>
+无论是否有超级用户，这个页面都默认存在
