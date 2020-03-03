@@ -98,7 +98,7 @@ zookeeper.connection.timeout.ms=6000
 ```
 内外网的监听不能写 ip，因为如果写 ip 内网 listeners 必须写内网 ip，而外网 advertised.listeners 必须写 ecs 的公网 ip，否则外网 logstash 无法消费。这又导致生产和消费出现如下所示报错，大概是因为阿里云内网的主机无法用内网 ip 找到 kafka 的 leader，但又无法使用外网 ip 去链接在同一个 vpc 中的 kafka，所以必须将 kafka 设置为按照主机名和端口链接。</br>
 
-当在阿里云 vpc 中链接时，hostname 解析为 vpc 内网 ip。当链接来源于vpc外时，将 hostname 解析为 ecs 外网 ip。对于阿里云上的主机使用阿里云的 DNS 主机名解析，对于本地内网的消费者 logstash 则直接在该主机上编写 hostname 指向 kafka 主机或 NAT 网关的公网 ip。</br>
+当在阿里云 vpc 中链接时，hostname 解析为 vpc 内网 ip。当链接来源于vpc外时，将 hostname 解析为 ecs 或 NAT 网关公网 ip 。对于阿里云上的主机使用阿里云的 DNS 主机名解析，对于本地内网的消费者 logstash 则直接在该主机上编写 hostname 指向 kafka 主机或 NAT 网关的公网 ip。</br>
 
 ### 阿里云平台配置 kafka 节点 ECS 安全策略
 阿里云控制台开放 ecs 所在安全组入方向的19092，允许本地网络的出口 ip 及 阿里云 vpc ip 访问。</br>
