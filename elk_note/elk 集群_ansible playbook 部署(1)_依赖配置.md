@@ -49,7 +49,7 @@ ops  ALL=(ALL)   NOPASSWD:ALL
 免密 sudo 用户 ansible playbook
 ```
 ---
-- hosts: dev
+- hosts: elk_hosts
   gather_facts: F
   become: yes
   become_user: root
