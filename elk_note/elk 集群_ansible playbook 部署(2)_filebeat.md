@@ -23,15 +23,15 @@ filebeat ansible 部署 playbook
 - hosts: prd_streaming-01
   tasks:
   - name: Copy Package
-    copy: src=/sdata/app/ansible-deploy/alihn1-playbook/roles/filebeat/files/filebeat.tar.gz  dest=/sdata/usr/local/src/filebeat.tar.gz
+    copy: src=roles/filebeat/files/filebeat.tar.gz  dest=/sdata/usr/local/src/filebeat.tar.gz
   - name: Tar Packeage
     shell: cd /sdata/usr/local; tar -xvz -f /sdata/usr/local/src/filebeat.tar.gz -C /sdata/usr/local
   - name: Copy Filebeat Config
-    copy: src=/sdata/app/ansible-deploy/alihn1-playbook/roles/filebeat/files/elk-filebeat-conf/{{ server_names }}-filebeat.yml dest=/sdata/usr/local/filebeat/filebeat.yml
+    copy: src=roles/filebeat/files/elk-filebeat-conf/{{ server_names }}-filebeat.yml dest=/sdata/usr/local/filebeat/filebeat.yml
   - name: Copyt Filebeat Startup Script
-    copy: src=/sdata/app/ansible-deploy/alihn1-playbook/roles/filebeat/files/start_filebeat.sh dest=/sdata/usr/local/filebeat/start_filebeat.sh
+    copy: src=roles/filebeat/files/start_filebeat.sh dest=/sdata/usr/local/filebeat/start_filebeat.sh
   - name: Copy Filebeat Startup File To Systemd
-    copy: src=/sdata/app/ansible-deploy/alihn1-playbook/roles/filebeat/files/filebeat.service dest=/etc/systemd/system/filebeat.service
+    copy: src=roles/filebeat/files/filebeat.service dest=/etc/systemd/system/filebeat.service
   - name: Reload Filebeat Systemd Unit File
     shell: systemctl daemon-reload
   - name: open user lock
@@ -76,7 +76,7 @@ filebeat 配置变更 ansible playbook
   - name: stop filebeat
     shell: systemctl stop filebeat
   - name: copy filebeat config
-    copy: src=/sdata/app/ansible-deploy/alihn1-playbook/roles/filebeat/files/elk-filebeat-conf/{{ server_names }}-filebeat.yml dest=/sdata/usr/local/filebeat/filebeat.yml
+    copy: src=roles/filebeat/files/elk-filebeat-conf/{{ server_names }}-filebeat.yml dest=/sdata/usr/local/filebeat/filebeat.yml
   - name: Run Filebeat by ELK User
     shell: systemctl restart filebeat
 ```
