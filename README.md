@@ -6,9 +6,13 @@
 
 ## filebeat/kafka/logstash/elasticsearch/kibana
 * [elk 集群_ansible playbook 部署(1)_依赖配置](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/elk_note/elk%20%E9%9B%86%E7%BE%A4_ansible%20playbook%20%E9%83%A8%E7%BD%B2(1)_%E4%BE%9D%E8%B5%96%E9%85%8D%E7%BD%AE.md)
-* [elk 集群_ansible playbook 部署(2)_filebeat](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/elk_note/elk%20%E9%9B%86%E7%BE%A4_ansible%20playbook%20%E9%83%A8%E7%BD%B2(2)_filebeat.md#elk-%E9%9B%86%E7%BE%A4_ansible-playbook-%E9%83%A8%E7%BD%B22_filebeat)
+* [elk 集群_ansible playbook 部署(2)_filebeat 文本收集](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/elk_note/elk%20%E9%9B%86%E7%BE%A4_ansible%20playbook%20%E9%83%A8%E7%BD%B2(2)_filebeat.md#elk-%E9%9B%86%E7%BE%A4_ansible-playbook-%E9%83%A8%E7%BD%B22_filebeat)
 * [elk 集群_ansible playbook 部署(3)_kafka 消息队列](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/elk_note/elk%20%E9%9B%86%E7%BE%A4_ansible%20playbook%20%E9%83%A8%E7%BD%B2(3)_kafka%20%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97.md)
-
+* [elk 集群_ansible playbook 部署(4)_logstash 过滤分析](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/elk_note/elk%20%E9%9B%86%E7%BE%A4_ansible%20playbook%20%E9%83%A8%E7%BD%B2(4)_logstash.md)
+* [elk 集群_ansible playbook 部署(5)_elasticsearch 集群](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/elk_note/elk%20%E9%9B%86%E7%BE%A4_ansible%20playbook%20%E9%83%A8%E7%BD%B2(5)_elasticsearch%20%E9%9B%86%E7%BE%A4.md)
+* [elk 集群_ansible playbook 部署(6)_kibana 可视化](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/elk_note/elk%20%E9%9B%86%E7%BE%A4_ansible%20playbook%20%E9%83%A8%E7%BD%B2(6)_kibana%20%E5%8F%AF%E8%A7%86%E5%8C%96.md)
+* [elk 集群_ansible playbook 部署(7)_kafka SSL 加密传输](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/elk_note/elk%20%E9%9B%86%E7%BE%A4_ansible%20playbook%20%E9%83%A8%E7%BD%B2(7)_kafka%20SSL%20%E5%8A%A0%E5%AF%86%E4%BC%A0%E8%BE%93.md)
+* [elk 集群_ansible playbook 部署(8)_xpack 用户认证配置](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/elk_note/elk%20%E9%9B%86%E7%BE%A4_ansible%20playbook%20%E9%83%A8%E7%BD%B2(8)_xpack%20%E7%94%A8%E6%88%B7%E8%AE%A4%E8%AF%81%E9%85%8D%E7%BD%AE.md)
 
 ## Linux
 ### Linux 相关知识
