@@ -153,7 +153,7 @@ filebeat.inputs:
   tags: ["alihn1","opd","monitor","urlCheck","log","error"]
     
 output.kafka:
-  hosts: ["alihn1-opd-elk-01.snail:9092"]
+  hosts: ["alihn1-opd-elk-01:9092"]
   topic: '%{[fields][log_topics]}'
   partition.round_robin:
     reachable_only: false
