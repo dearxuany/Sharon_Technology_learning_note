@@ -197,3 +197,13 @@ filebeat 启动验证
 # ps -ef|grep filebeat
 elk      27254     1  0 10:07 ?        00:00:00 /sdata/usr/local/filebeat/filebeat -e -c /sdata/usr/local/filebeat/filebeat.yml
 ```
+## jenkins 一键部署 filebeat
+jenkins 配置 shell 执行本地主机脚本</br>
+注：ansible 和 jenkins 需要在同一台主机，否则需要通过 SSH 操作</br>
+```
+cd /sdata/app/ansible-deploy && git pull origin prd
+. /sdata/app/ansible-deploy/alihn1-playbook/venvActivate.sh
+sh /sdata/app/ansible-deploy/alihn1-playbook/roles/filebeat/deployScript/deployFilebeat.sh
+```
+
+
