@@ -53,7 +53,7 @@ logstash 链接配置
 # vim /sdata/usr/local/logstash/config/conf.d/gzyw53-logstash-01.conf
 input {
   kafka {
-    bootstrap_servers => "alihn1-opd-elk-01.snail:19092"
+    bootstrap_servers => "alihn1-opd-elk-01:19092"
     topics => ["kafkatest"]
     codec => "json"
     decorate_events => true
