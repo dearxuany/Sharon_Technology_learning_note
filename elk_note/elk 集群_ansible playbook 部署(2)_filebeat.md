@@ -1,5 +1,5 @@
 # elk 集群_ansible playbook 部署(2)_filebeat
-因为 filebeat 是作为 agent 分布在各个主机，配置分散。为方便统一管理，将各主机的 filebeat 的配置文件托管到 gitlab 上，jenkins 触发部署 filebeat 时从 gitlab 拉取最新的配置 ansible 所在主机并发送到目标主机。 filebeat 启动需依赖后部的 kafka，需 kafka 启动成功后才能成功启动，建议部署完 kafka 后再统一部署 filebeat，避免多次修改 filebeat 配置文件。
+因为 filebeat 是作为 agent 分布在各个主机，配置分散。为方便统一管理，将各主机的 filebeat 的配置文件托管到 gitlab 上，jenkins 触发部署 filebeat 时从 gitlab 拉取最新的配置到 ansible 所在主机并发送到目标主机。 filebeat 启动需依赖后部的 kafka，需 kafka 启动成功后才能成功启动，建议部署完 kafka 后再统一部署 filebeat，避免多次修改 filebeat 配置文件。
 ## ansible 虚拟环境激活
 启动阿里云 vpc 中的 ansible 服务
 ```
