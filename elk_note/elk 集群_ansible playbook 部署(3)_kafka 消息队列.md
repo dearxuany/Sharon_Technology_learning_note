@@ -64,9 +64,9 @@ server.1=172.18.65.46:2888:3888
 # 使用默认 broker id
 broker.id=0
 # 消费者（logstash）内网监听主机及端口
-listeners=PLAINTEXT://alihn1-opd-elk-01.snail:9092
+listeners=PLAINTEXT://alihn1-opd-elk-01:9092
 # 消费者（logstash）外网监听主机及端口
-advertised.listeners=PLAINTEXT://alihn1-opd-elk-01.snail:19092
+advertised.listeners=PLAINTEXT://alihn1-opd-elk-01:19092
 # 接收及发送网络信息线程数
 num.network.threads=3
 # 请求处理线程数
@@ -147,11 +147,11 @@ tcp        0      0 172.18.65.46:19092      0.0.0.0:*               LISTEN      
 ```
 添加测试 topic
 ```
-$ /sdata/usr/local/kafka/bin/kafka-topics.sh --create --zookeeper alihn1-opd-elk-01.snail:2181 --replication-factor 1 --partitions 1 --topic kafkatest
+$ /sdata/usr/local/kafka/bin/kafka-topics.sh --create --zookeeper alihn1-opd-elk-01:2181 --replication-factor 1 --partitions 1 --topic kafkatest
 Created topic "kafkatest".
 ```
 查看 topic 名单
 ```
-$ /sdata/usr/local/kafka/bin/kafka-topics.sh --zookeeper alihn1-opd-elk-01.snail:2181 --list
+$ /sdata/usr/local/kafka/bin/kafka-topics.sh --zookeeper alihn1-opd-elk-01:2181 --list
 kafkatest
 ```
