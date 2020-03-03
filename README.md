@@ -4,6 +4,11 @@
 实践中部分关键代码的实现方法及相关资源整理；</br>
 学习与实践中遇到的问题及其解决办法。</br>
 
+## filebeat/kafka/logstash/elasticsearch/kibana
+* [elk 集群_ansible playbook 部署(1)_依赖配置](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/elk_note/elk%20%E9%9B%86%E7%BE%A4_ansible%20playbook%20%E9%83%A8%E7%BD%B2(1)_%E4%BE%9D%E8%B5%96%E9%85%8D%E7%BD%AE.md)
+* [elk 集群_ansible playbook 部署(2)_filebeat](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/elk_note/elk%20%E9%9B%86%E7%BE%A4_ansible%20playbook%20%E9%83%A8%E7%BD%B2(2)_filebeat.md#elk-%E9%9B%86%E7%BE%A4_ansible-playbook-%E9%83%A8%E7%BD%B22_filebeat)
+* [elk 集群_ansible playbook 部署(3)_kafka 消息队列](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/elk_note/elk%20%E9%9B%86%E7%BE%A4_ansible%20playbook%20%E9%83%A8%E7%BD%B2(3)_kafka%20%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97.md)
+
 
 ## Linux
 ### Linux 相关知识
