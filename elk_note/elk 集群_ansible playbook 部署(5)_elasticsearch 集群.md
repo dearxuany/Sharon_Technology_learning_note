@@ -1,4 +1,4 @@
-# elk 集群_ansible playbook 部署(4)_elasticsearch 集群
+# elk 集群_ansible playbook 部署(5)_elasticsearch 集群
 此处搭建 elasticsearch 三节点集群，三节点均可选举为 master，均接受请求及存储数据。
 ```
 # elk 集群 ansible inventory
