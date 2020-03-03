@@ -165,7 +165,7 @@ ansible-playbook -i /sdata/app/ansible-deploy/alihn1-playbook/inventory/elk_host
 elasticsearch.yml 修改集群信息，注意集群名不能用默认的，否则网段内任何使用默认集群名的 es 节点都会被 es 自动加入集群中。
 ```
 # 集群名
-cluster.name: insnail-elasticsearch-01
+cluster.name: cluster-elasticsearch-01
 # 节点名
 node.name: gzyw53-elasticsearch-01
 path.data: /sdata/data/elasticsearch
@@ -205,7 +205,7 @@ tcp6       0      0 10.0.0.152:19300        :::*                    LISTEN      
 ```
 {
   "name" : "gzyw53-elasticsearch-01",
-  "cluster_name" : "insnail-elasticsearch-01",
+  "cluster_name" : "cluster-elasticsearch-01",
   "cluster_uuid" : "b0u2IJIERfu29L8-lQsFKg",
   "version" : {
     "number" : "7.1.1",
@@ -221,3 +221,136 @@ tcp6       0      0 10.0.0.152:19300        :::*                    LISTEN      
   "tagline" : "You Know, for Search"
 }
 ```
+
+### es 节点2配置
+elasticsearch.yml 修改集群信息
+```
+cluster.name: cluster-elasticsearch-01
+node.name: gzyw53-elasticsearch-02
+path.data: /sdata/data/elasticsearch
+path.logs: /sdata/var/log/elasticsearch
+bootstrap.memory_lock: true
+network.host: 10.0.0.153
+http.port: 19200
+transport.tcp.port: 19300
+discovery.seed_hosts: ["10.0.0.152:19300", "10.0.0.153:19300","10.0.0.154:19300"]
+cluster.initial_master_nodes: ["gzyw53-elasticsearch-01"]
+```
+jvm.options 修改 JVM 堆内存
+```
+-Xms8g
+-Xmx8g
+```
+启动 es 节点2
+```
+su - elk
+sh /sdata/usr/local/elasticsearch/start_elasticsearsh.sh
+```
+查看 es 节点2 启动状况
+```
+$ curl http://10.0.0.153:19200
+{
+  "name" : "gzyw53-elasticsearch-02",
+  "cluster_name" : "cluster-elasticsearch-01",
+  "cluster_uuid" : "_na_",
+  "version" : {
+    "number" : "7.1.1",
+    "build_flavor" : "default",
+    "build_type" : "tar",
+    "build_hash" : "7a013de",
+    "build_date" : "2019-05-23T14:04:00.380842Z",
+    "build_snapshot" : false,
+    "lucene_version" : "8.0.0",
+    "minimum_wire_compatibility_version" : "6.8.0",
+    "minimum_index_compatibility_version" : "6.0.0-beta1"
+  },
+  "tagline" : "You Know, for Search"
+}
+```
+### es 节点3配置
+elasticsearch.yml 修改集群信息
+```
+cluster.name: cluster-elasticsearch-01
+node.name: gzyw53-elasticsearch-03
+path.data: /sdata/data/elasticsearch
+path.logs: /sdata/var/log/elasticsearch
+bootstrap.memory_lock: true
+network.host: 10.0.0.154
+http.port: 19200
+transport.tcp.port: 19300
+discovery.seed_hosts: ["10.0.0.152:19300", "10.0.0.153:19300", "10.0.0.154:19300"]
+# 可获得 master 资格节点个数 N/2+1
+discovery.zen.minimum_master_nodes: 2
+# 节点发现超时时间
+discovery.zen.ping_timeout: 120s
+# 初始化主节点
+cluster.initial_master_nodes: ["gzyw53-elasticsearch-01"]
+```
+jvm.options 修改 JVM 堆内存
+```
+-Xms12g
+-Xmx12g
+```
+启动 es 节点3
+```
+su - elk
+sh /sdata/usr/local/elasticsearch/start_elasticsearsh.sh
+```
+查看 es 节点3 启动状况
+```
+$ curl http://10.0.0.154:19200
+{
+  "name" : "cluster-elasticsearch-03",
+  "cluster_name" : "insnail-elasticsearch-01",
+  "cluster_uuid" : "_na_",
+  "version" : {
+    "number" : "7.1.1",
+    "build_flavor" : "default",
+    "build_type" : "tar",
+    "build_hash" : "7a013de",
+    "build_date" : "2019-05-23T14:04:00.380842Z",
+    "build_snapshot" : false,
+    "lucene_version" : "8.0.0",
+    "minimum_wire_compatibility_version" : "6.8.0",
+    "minimum_index_compatibility_version" : "6.0.0-beta1"
+  },
+  "tagline" : "You Know, for Search"
+}
+```
+
+## es 节点防火墙配置
+查看系统防火墙状态
+```
+# systemctl status firewalld
+● firewalld.service - firewalld - dynamic firewall daemon
+   Loaded: loaded (/usr/lib/systemd/system/firewalld.service; enabled; vendor preset: enabled)
+   Active: active (running) since 一 2019-09-30 10:04:16 CST; 3s ago
+```
+查看 iptables 配置策略
+```
+# iptables -L
+```
+es 各个节点开启 19200，允许 10.0.0.151 即 logstash 及 kibana 所在主机访问
+```
+# firewall-cmd --permanent --add-rich-rule="rule family="ipv4" source address="10.0.0.151" port protocol="tcp" port="19200" accept"
+```
+es 各个节点开启 19300，允许 es 其余节点访问，用于 es 节点间通信
+```
+# firewall-cmd --permanent --add-rich-rule="rule family="ipv4" source address="10.0.0.153" port protocol="tcp" port="19300" accept"
+# firewall-cmd --permanent --add-rich-rule="rule family="ipv4" source address="10.0.0.154" port protocol="tcp" port="19300" accept"
+```
+配置完毕后重新加载防火墙
+```
+# firewall-cmd --reload
+```
+验证配置
+```
+# iptables -L
+Chain IN_public_allow (1 references)
+target     prot opt source               destination         
+ACCEPT     tcp  --  10.0.0.151           anywhere             tcp dpt:19200 ctstate NEW
+ACCEPT     tcp  --  10.0.0.153           anywhere             tcp dpt:19300 ctstate NEW
+ACCEPT     tcp  --  10.0.0.154           anywhere             tcp dpt:19300 ctstate NEW
+```
+各主机配置完毕后，相互使用 telnet 测试端口是否能使用正常，同时保证除安全策略允许外的主机无法访问端口。
+
