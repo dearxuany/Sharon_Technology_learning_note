@@ -165,3 +165,8 @@ Java(TM) SE Runtime Environment (build 1.8.0_171-b11)
 Java HotSpot(TM) 64-Bit Server VM (build 25.171-b11, mixed mode)
 ```
 
+## git 安装
+为方便统一自动化管理，使用 gitlab 统一管理 ansible playbook 以及 filebeat/logstash/elasticsearch/kibana 的配置。
+```
+yum -y install git
+```
