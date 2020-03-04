@@ -1,4 +1,4 @@
-# elk_nginx 日志分析_logstash grok
+# elk_nginx 日志分析_logstash grok & filter
 ## nginx log
 nginx log config
 ```
