@@ -37,6 +37,77 @@ Structured Data
 }
 ```
 
+## logstash filter
+```
+input {
+
+  kafka {
+    bootstrap_servers => "opd-elk-01:19092"
+
+    security_protocol => "SSL"
+    ssl_keystore_location => "/sdata/usr/local/kafka/ca/client/client.keystore.jks"
+    ssl_key_password => "passwd"
+    ssl_keystore_password => "passwd"
+    ssl_truststore_location => "/sdata/usr/local/kafka/ca/trust/client.truststore.jks"
+    ssl_truststore_password => "passwd"
+
+
+    topics => ["prdNginx02"]
+    codec => "json"
+    decorate_events => true
+    type => "prd-nginx"
+  }
+}
+
+filter {
+
+  if [type] == "prd-nginx"{
+    if "nginx" in [tags] and "access" in [tags] and "log" in [tags] {
+      grok {
+        match => {
+          "message" => '%{IPORHOST:client_ip} - (%{USERNAME:user}|-) \[%{HTTPDATE:timestamp}\] "(?:%{WORD:request_method} %{NOTSPACE:request}(?: HTTP/%{NUMBER:http_version})?|%{DATA:raw_request})" %{NUMBER:status} %{NUMBER:response_size} %{NUMBER:request_time} "%{NOTSPACE:url_referer}" "%{GREEDYDATA:user_agent}"'
+        }
+      }
+      mutate {
+        convert => [ "request_time", "float"]
+      }
+      geoip {
+        source => "client_ip"
+        target => "geoip"
+        add_field => [ "[geoip][coordinates]", "%{[geoip][longitude]}" ]
+        add_field => [ "[geoip][coordinates]", "%{[geoip][latitude]}"  ]
+      }
+      mutate {
+        convert => [ "[geoip][coordinates]", "float"]
+      }
+    }
+  }
+}
+
+
+output {
+  if [type] == "prd-nginx" {
+    elasticsearch {
+      hosts => ["10.0.0.152:19200","10.0.0.153:19200","10.0.0.154:19200"]
+      index => "logstash-%{[type]}-%{+YYYY.MM.dd}"
+      workers => 1
+      user => "elastic"
+      password => "passwd"
+    } 
+  }
+
+ if [type] != "prd-nginx" {
+    elasticsearch {
+      hosts => ["10.0.0.152:19200","10.0.0.153:19200","10.0.0.154:19200"]
+      index => "%{[type]}-%{+YYYY.MM.dd}"
+      workers => 1
+      user => "elastic"
+      password => "passwd"
+    }
+  }
+}
+```
+
 
 ## elasticsearch output
 ```
