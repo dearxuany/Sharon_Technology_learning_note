@@ -1,4 +1,4 @@
-# elk 日志分析_ java logback json 业务日志_logstash grok & filter
+# elk 日志分析_ java logback json 业务日志_logstash filter
 ## java logback json 日志配置
 ### logback 配置
 * 业务日志以 json 格式输出，方便 logstash 拆分解析
@@ -76,4 +76,78 @@
 1. 捕获异常日志记录 - ERROR</br>
 2. 参数校验为空，走默认策略且需记录的情况 - WARN</br></br>
 3. 信息记录 - INFO</br>
+
+## Sample Data
+sample log data
+```
+{"timestamp":"2020-03-05 11:28:28.397","level":"ERROR","thread":"qtp1356236848-51326","class":"com.companyname.api.demand.DemandAssessmentControllerV2_0","message":"{\"exception\":\"java.lang.NumberFormatException\",\"desc\":\"func[getAssessmentResultApp],432903339471159296执行锁DemandAssessmentControllerV2_0#getAssessmentResultApp报错\"}","service_name":"servicename","stack_trace":"java.lang.NumberFormatException: null\n\tat java.lang.Integer.parseInt(Integer.java:542)\n\tat java.lang.Integer.valueOf(Integer.java:766)\n\tat com.companyname.service.demand.DemandAssessmentServiceV2_0.getAllRoleBaseMsg(DemandAssessmentServiceV2_0.java:1037)\n\tat com.companyname.service.demand.DemandAssessmentServiceV2_0.analyticAnswer(DemandAssessmentServiceV2_0.java:1159)\n\tat com.companyname.service.demand.DemandAssessmentServiceV2_0.getAssessmentResult(DemandAssessmentServiceV2_0.java:2747)\n"}
+```
+## logstash filter
+```
+input {
+  kafka {
+    bootstrap_servers => "alihn1-opd-elk-01:19092"
+
+    security_protocol => "SSL"
+    ssl_keystore_location => "/sdata/usr/local/kafka/ca/client/client.keystore.jks"
+    ssl_key_password => "passed"
+    ssl_keystore_password => "passed"
+    ssl_truststore_location => "/sdata/usr/local/kafka/ca/trust/client.truststore.jks"
+    ssl_truststore_password => "passed"
+
+
+    topics => ["prdservicename01"]
+    codec => "json"
+    decorate_events => true
+    type => "prd-servicename"
+  }
+
+  kafka {
+    bootstrap_servers => "alihn1-opd-elk-01:19092"
+
+    security_protocol => "SSL"
+    ssl_keystore_location => "/sdata/usr/local/kafka/ca/client/client.keystore.jks"
+    ssl_key_password => "passed"
+    ssl_keystore_password => "passed"
+    ssl_truststore_location => "/sdata/usr/local/kafka/ca/trust/client.truststore.jks"
+    ssl_truststore_password => "passed"
+
+
+    topics => ["prdservicename02"]
+    codec => "json"
+    decorate_events => true
+    type => "prd-servicename"
+  }
+}
+
+filter {
+
+  if [type] == "prd-servicename" {
+    if "servicename" in [tags] and "log" in [tags]{
+      json{
+        source => "message"
+        target => "servicename"
+      }
+      json{
+        source => "[servicename][message]"
+        target => "[servicename][msg]"
+      }
+      mutate {
+        remove_field => "[servicename][message]"
+      }
+    }
+  }
+
+}
+
+output {
+  elasticsearch {
+    hosts => ["10.0.0.152:19200","10.0.0.153:19200","10.0.0.154:19200"]
+    index => "%{[type]}-%{+YYYY.MM.dd}"
+    workers => 1
+    user => "elastic"
+    password => "passwd"
+  }
+}
+```
 
