@@ -150,4 +150,81 @@ output {
   }
 }
 ```
-
+## kibana output
+```
+{
+  "_index": "prd-servicename-2020.03.05",
+  "_type": "_doc",
+  "_id": "zKu9qHABF6ha_Oy4REWA",
+  "_version": 1,
+  "_score": null,
+  "_source": {
+    "type": "prd-servicename",
+    "ecs": {
+      "version": "1.0.0"
+    },
+    "tags": [
+      "alihn1",
+      "prd",
+      "servicename",
+      "log"
+    ],
+    "@timestamp": "2020-03-05T03:28:28.636Z",
+    "message": "{\"timestamp\":\"2020-03-05 11:28:28.397\",\"level\":\"ERROR\",\"thread\":\"qtp1356236848-51326\",\"class\":\"com.companyname.api.demand.DemandAssessmentControllerV2_0\",\"message\":\"{\\\"exception\\\":\\\"java.lang.NumberFormatException\\\",\\\"desc\\\":\\\"func[getAssessmentResultApp],432903339471159296执行锁DemandAssessmentControllerV2_0#getAssessmentResultApp报错\\\"}\",\"service_name\":\"servicename\",\"stack_trace\":\"java.lang.NumberFormatException: null\\n\\tat java.lang.Integer.parseInt(Integer.java:542)\\n\\tat java.lang.Integer.valueOf(Integer.java:766)\\n\\tat com.companyname.service.demand.DemandAssessmentServiceV2_0.getAllRoleBaseMsg(DemandAssessmentServiceV2_0.java:1037)\\n\\tat com.companyname.service.demand.DemandAssessmentServiceV2_0.analyticAnswer(DemandAssessmentServiceV2_0.java:1159)\\n\\tat com.companyname.service.demand.DemandAssessmentServiceV2_0.getAssessmentResult(DemandAssessmentServiceV2_0.java:2747)\\n\"}",
+    "fields": {
+      "log_source": "prd-servicename-01"
+    },
+    "host": {
+      "name": "alihn1-prd-servicename-03"
+    },
+    "@version": "1",
+    "agent": {
+      "hostname": "alihn1-prd-servicename-03",
+      "type": "filebeat",
+      "id": "f8063e8e-8b0a-4850-9d7c-8d259b36141b",
+      "version": "7.1.0",
+      "ephemeral_id": "2638885a-d5ec-4c5f-9114-10b552128d11"
+    },
+    "log": {
+      "file": {
+        "path": "/sdata/var/log/servicename/servicename.log"
+      },
+      "offset": 30326781
+    },
+    "input": {
+      "type": "log"
+    },
+    "servicename": {
+      "level": "ERROR",
+      "stack_trace": "java.lang.NumberFormatException: null\n\tat java.lang.Integer.parseInt(Integer.java:542)\n\tat java.lang.Integer.valueOf(Integer.java:766)\n\tat com.companyname.service.demand.DemandAssessmentServiceV2_0.getAllRoleBaseMsg(DemandAssessmentServiceV2_0.java:1037)\n\tat com.companyname.service.demand.DemandAssessmentServiceV2_0.analyticAnswer(DemandAssessmentServiceV2_0.java:1159)\n\tat com.companyname.service.demand.DemandAssessmentServiceV2_0.getAssessmentResult(DemandAssessmentServiceV2_0.java:2747)\n",
+      "msg": {
+        "exception": "java.lang.NumberFormatException",
+        "desc": "func[getAssessmentResultApp],432903339471159296执行锁DemandAssessmentControllerV2_0#getAssessmentResultApp报错"
+      },
+      "thread": "qtp1356236848-51326",
+      "class": "com.companyname.api.demand.DemandAssessmentControllerV2_0",
+      "timestamp": "2020-03-05 11:28:28.397",
+      "service_name": "servicename"
+    }
+  },
+  "fields": {
+    "@timestamp": [
+      "2020-03-05T03:28:28.636Z"
+    ]
+  },
+  "highlight": {
+    "log.file.path": [
+      "/@kibana-highlighted-field@sdata@/kibana-highlighted-field@/@kibana-highlighted-field@var@/kibana-highlighted-field@/@kibana-highlighted-field@log@/kibana-highlighted-field@/@kibana-highlighted-field@servicename@/kibana-highlighted-field@/@kibana-highlighted-field@servicename.log@/kibana-highlighted-field@"
+    ],
+    "servicename.level": [
+      "@kibana-highlighted-field@ERROR@/kibana-highlighted-field@"
+    ],
+    "servicename.thread": [
+      "@kibana-highlighted-field@qtp1356236848@/kibana-highlighted-field@-@kibana-highlighted-field@51326@/kibana-highlighted-field@"
+    ]
+  },
+  "sort": [
+    1583378908636
+  ]
+}
+```
