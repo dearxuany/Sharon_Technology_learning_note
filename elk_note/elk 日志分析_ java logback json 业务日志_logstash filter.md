@@ -1,4 +1,8 @@
 # elk 日志分析_ java logback json 业务日志_logstash filter
+* json 格式可将单条日志的多行输出合并，防止在elk接收过程中单条日志被拆分成多行传输及显示，影响日志查询体验；
+* json 格式标准化以便 elk 对日志内容进行字段拆分分析，方便做聚类统计及敏感字段过滤；
+* 字段拆分后，按照字段内容搜索可提高 elasticsearch 查询速率，以避免全文查询。
+
 ## java logback json 日志配置
 ### logback 配置
 * 业务日志以 json 格式输出，方便 logstash 拆分解析
