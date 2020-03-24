@@ -106,7 +106,7 @@ elasticsearch 初始化安装 playbook</br>
 elasticsearch 初始化 playbook 执行
 ```
 #! /bin/bash
-ansible-playbook -i /sdata/app/ansible-deploy/alihn1-playbook/inventory/elk_hosts --user=ops --private-key=/sdata/snail/.ssh/id_rsa -s /sdata/app/ansible-deploy/alihn1-playbook/roles/elasticsearch/main.yml
+ansible-playbook -i /sdata/app/ansible-deploy/alihn1-playbook/inventory/elk_hosts --user=username --private-key=/sdata/snail/.ssh/id_rsa -s /sdata/app/ansible-deploy/alihn1-playbook/roles/elasticsearch/main.yml
 ```
 登录到 es 节点，启动 elasticsearch
 ```
@@ -157,7 +157,7 @@ es 配置部署 ansible playbook
 ansible playbook 推送配置文件
 ```
 #! /bin/bash
-ansible-playbook -i /sdata/app/ansible-deploy/alihn1-playbook/inventory/elk_hosts --user=ops --private-key=/sdata/snail/.ssh/id_rsa -s /sdata/app/ansible-deploy/alihn1-playbook/roles/elasticsearch/changeConfig.yml
+ansible-playbook -i /sdata/app/ansible-deploy/alihn1-playbook/inventory/elk_hosts --user=username --private-key=/sdata/username/.ssh/id_rsa -s /sdata/app/ansible-deploy/alihn1-playbook/roles/elasticsearch/changeConfig.yml
 ```
 
 ## es 节点配置
