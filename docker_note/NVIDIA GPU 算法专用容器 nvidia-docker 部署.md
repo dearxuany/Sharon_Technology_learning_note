@@ -1,5 +1,9 @@
 # NVIDIA GPU 算法专用容器 nvidia-docker 部署
-原生 docker 不支持直接使用 Nvidia GPU 作为硬件资源，nvidia-docker 是 nvidia 对原生 docker 的封装处理以支持使用  Nvidia GPU 作为容器资源，官网地址  https://github.com/NVIDIA/nvidia-docker
+原生 docker 不支持直接使用 Nvidia GPU 作为硬件资源，nvidia-docker 是 nvidia 对原生 docker 的封装处理以支持使用  Nvidia GPU 作为容器资源，官网地址  https://github.com/NVIDIA/nvidia-docker </br>
+
+![](https://cloud.githubusercontent.com/assets/3028125/12213714/5b208976-b632-11e5-8406-38d379ec46aa.png)
+
+
 
 ## NVIDIA driver
 ### 查看版本信息
