@@ -151,7 +151,7 @@ Result = PASS
 ```
 
 ## nvidia-docker 部署
-原生 docker 不支持直接使用 Nvidia GPU 作为硬件资源，nvidia-docker 是 nvidia 对原生 docker 的封装处理以支持使用  Nvidia GPU 作为容器资源，官网地址  https://github.com/NVIDIA/nvidia-docker。
+原生 docker 不支持直接使用 Nvidia GPU 作为硬件资源，nvidia-docker 是 nvidia 对原生 docker 的封装处理以支持使用  Nvidia GPU 作为容器资源，官网地址  https://github.com/NVIDIA/nvidia-docker
 
 
 
