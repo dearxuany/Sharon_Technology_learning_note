@@ -1,6 +1,7 @@
 # NVIDIA GPU 算法专用容器 nvidia-docker 部署
+原生 docker 不支持直接使用 Nvidia GPU 作为硬件资源，nvidia-docker 是 nvidia 对原生 docker 的封装处理以支持使用  Nvidia GPU 作为容器资源，官网地址  https://github.com/NVIDIA/nvidia-docker
 
-## NVIDIA driver 安装
+## NVIDIA driver
 ### 查看版本信息
 nvidia 官方文档  https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#redhat-installation </br>
 注意：需注意系统、内核、GCC版本等底层参数</br>
@@ -150,11 +151,7 @@ Result = PASS
 
 ```
 
-## nvidia-docker 部署
-原生 docker 不支持直接使用 Nvidia GPU 作为硬件资源，nvidia-docker 是 nvidia 对原生 docker 的封装处理以支持使用  Nvidia GPU 作为容器资源，官网地址  https://github.com/NVIDIA/nvidia-docker
-
-
-
+## nvidia-docker
 ### docker-ce 
 官网地址 https://docs.docker.com/engine/install/centos/  </br>
 安装依赖
