@@ -271,3 +271,53 @@ sslcacert=/etc/pki/tls/certs/ca-bundle.crt
 # yum install -y nvidia-container-toolkit
 # systemctl restart docker
 ```
+## nvidia-docker 使用测试
+使用单个 GPU 启动容器
+```
+#docker run --gpus 1 nvidia/cuda:10.0-base nvidia-smi
+
+Unable to find image 'nvidia/cuda:10.0-base' locally
+10.0-base: Pulling from nvidia/cuda
+7ddbc47eeb70: Pull complete
+c1bbdc448b72: Pull complete
+8c3b70e39044: Pull complete
+45d437916d57: Pull complete
+d8f1569ddae6: Pull complete
+de5a2c57c41d: Pull complete
+ea6f04a00543: Pull complete
+Digest: sha256:e6e1001f286d084f8a3aea991afbcfe92cd389ad1f4883491d43631f152f175e
+Status: Downloaded newer image for nvidia/cuda:10.0-base
+Mon Apr 13 01:30:29 2020       
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 440.33.01    Driver Version: 440.33.01    CUDA Version: 10.2     |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|===============================+======================+======================|
+|   0  Tesla P4            On   | 00000000:00:08.0 Off |                    0 |
+| N/A   30C    P8     7W /  75W |      0MiB /  7611MiB |      0%      Default |
++-------------------------------+----------------------+----------------------+
+                                                                               
++-----------------------------------------------------------------------------+
+| Processes:                                                       GPU Memory |
+|  GPU       PID   Type   Process name                             Usage      |
+|=============================================================================|
+|  No running processes found                                                 |
++-----------------------------------------------------------------------------+
+```
+其他 GPU 调用参数启动方式
+```
+#### Test nvidia-smi with the latest official CUDA image
+docker run --gpus all nvidia/cuda:10.0-base nvidia-smi
+
+# Start a GPU enabled container on two GPUs
+docker run --gpus 2 nvidia/cuda:10.0-base nvidia-smi
+
+# Starting a GPU enabled container on specific GPUs
+docker run --gpus '"device=1,2"' nvidia/cuda:10.0-base nvidia-smi
+docker run --gpus '"device=UUID-ABCDEF,1"' nvidia/cuda:10.0-base nvidia-smi
+
+# Specifying a capability (graphics, compute, ...) for my container
+# Note this is rarely if ever used this way
+docker run --gpus all,capabilities=utility nvidia/cuda:10.0-base nvidia-smi
+```
