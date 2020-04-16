@@ -26,6 +26,7 @@
 * [Nginx 流量及并发连接数限制](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/server_note/Nginx_note/Nginx%20%E6%B5%81%E9%87%8F%E5%8F%8A%E5%B9%B6%E5%8F%91%E8%BF%9E%E6%8E%A5%E6%95%B0%E9%99%90%E5%88%B6%20.md)
 * [Nginx 访问控制及 DDOS 预防](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/server_note/Nginx_note/Nginx%20%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6%E5%8F%8A%20DDOS%20%E9%A2%84%E9%98%B2.md)
 * [Nginx 日志显示真实IP](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/server_note/Nginx_note/Nginx%20%E6%97%A5%E5%BF%97%E6%98%BE%E7%A4%BA%E7%9C%9F%E5%AE%9EIP.md)
+* [Nginx 动态加载模块](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/server_note/Nginx_note/Nginx%20%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BD%E6%A8%A1%E5%9D%97.md)
 
 
 ## Python
