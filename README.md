@@ -16,45 +16,6 @@
 * [elk 日志分析_nginx_logstash grok & filter](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/elk_note/elk%20%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90_nginx_logstash%20grok%20&%20filter.md)
 * [elk 日志分析_ java logback json 业务日志_logstash filter](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/elk_note/elk%20%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90_%20java%20logback%20json%20%E4%B8%9A%E5%8A%A1%E6%97%A5%E5%BF%97_logstash%20filter.md)
 
-## Linux
-### Linux 相关知识
-* [Linux 常用命令(无格式)](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20command%20%26%20SHELL%20collection)
-* [Linux 目录结构](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84.md)
-* [Linux 文件目录命名规则](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E6%96%87%E4%BB%B6%E5%90%8D%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99.MD)
-* [Linux 文件搜索 whereis、locate、which、find](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E6%96%87%E4%BB%B6%E6%90%9C%E7%B4%A2%20whereis%E3%80%81locate%E3%80%81which%E3%80%81find.md)
-* [Linux 打包压缩和解压 tar](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E6%89%93%E5%8C%85%E5%8E%8B%E7%BC%A9%E5%91%BD%E4%BB%A4%20tar.md)
-* [Linux 用户及文件权限管理](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E7%94%A8%E6%88%B7%E5%8F%8A%E6%96%87%E4%BB%B6%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86.md)
-* [Linux 特殊权限管理 ACL、SUID、SGID、Sticky BIT](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E7%89%B9%E6%AE%8A%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86.md)
-* [Linux 系统性能监控常用命令](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7.md)
-
-
-### Linux 设备与文件系统
-* [Linux 删除多余无用分区 （命令 df lsblk fdisk）](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E5%88%A0%E9%99%A4%E5%A4%9A%E4%BD%99%E6%97%A0%E7%94%A8%E5%88%86%E5%8C%BA.MD)
-* [Linux 文件系统根目录所在磁盘扩容 LVM](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E6%A0%B9%E7%9B%AE%E5%BD%95%E6%89%80%E5%9C%A8%E7%A3%81%E7%9B%98%E6%89%A9%E5%AE%B9.MD)
-
-### Linux 进程与服务
-* [Linux 内核、进程、线程 （命令 ps top kill）](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E5%86%85%E6%A0%B8%E3%80%81%E8%BF%9B%E7%A8%8B%E3%80%81%E7%BA%BF%E7%A8%8B.MD)
-* [Linux IO模型：同步、异步、阻塞、非阻塞](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20IO%E6%A8%A1%E5%9E%8B%EF%BC%9A%E5%90%8C%E6%AD%A5%E3%80%81%E5%BC%82%E6%AD%A5%E3%80%81%E9%98%BB%E5%A1%9E%E3%80%81%E9%9D%9E%E9%98%BB%E5%A1%9E.MD)
-* [Linux daemons 启动与管理 init、systemd](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20daemons%20%E5%90%AF%E5%8A%A8%E4%B8%8E%E7%AE%A1%E7%90%86%20init%E3%80%81systemd%20.MD)
-* [Linux 端口与网络服务管理](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E7%AB%AF%E5%8F%A3%E4%B8%8E%E7%BD%91%E7%BB%9C%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86.md)
-* [Linux 日志系统 rsyslog logrotate systemd-journal logwatch](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F%20rsyslog%20logrotate%20systemd-journal%20logwatch.md)
-* [Linux 时间同步 NTP](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E6%97%B6%E9%97%B4%E5%90%8C%E6%AD%A5.MD)
-* [Linux 例行性工作 crontab](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E4%BE%8B%E8%A1%8C%E6%80%A7%E5%B7%A5%E4%BD%9C.MD)
-* [Linux 进程后台运行 nohup](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E8%BF%9B%E7%A8%8B%E5%90%8E%E5%8F%B0%E8%BF%90%E8%A1%8C%20nohup.md)
-
-### Linux 软件安装
-#### 数据库
-* [Linux yum安装配置 MySQL（MariaDB）](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEMySQL%EF%BC%88MariaDB%EF%BC%89.MD)
-* [Linux 源码安装 MongoDB](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E5%AE%89%E8%A3%85MongoDB.MD)
-#### 编程语言
-* [Linux 源码安装 python3](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E5%AE%89%E8%A3%85Python%203.MD)
-* [Linux CentOS7 在 python2、python3 共存状态下安装 pip2 和 pip3](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20CentOS7%20%E5%9C%A8python2%E3%80%81python3%E5%85%B1%E5%AD%98%E4%B8%8B%E5%AE%89%E8%A3%85pip2%E5%92%8Cpip3.MD)
-* [Linux 源码安装 Node.js](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AENode.js%20.MD)
-
-### Linux 相关工具
-* [Linux win使用putty通过ssh传文件](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20win%E4%BD%BF%E7%94%A8putty%E9%80%9A%E8%BF%87ssh%E4%BC%A0%E6%96%87%E4%BB%B6.md)
-* [Linux git 配置与使用](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/github_note/git%20%E9%85%8D%E7%BD%AE%E4%B8%8E%E4%BD%BF%E7%94%A8.md)
-
 ## Server
 ### NginX
 * [Linux(ubuntu)-Nginx-MySQL-PHP 架构 apt-get 安装配置](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/server_note/Nginx_note/Linux%20Nginx%20MySQL%20PHP%20%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE.MD)
@@ -65,15 +26,6 @@
 * [Nginx 流量及并发连接数限制](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/server_note/Nginx_note/Nginx%20%E6%B5%81%E9%87%8F%E5%8F%8A%E5%B9%B6%E5%8F%91%E8%BF%9E%E6%8E%A5%E6%95%B0%E9%99%90%E5%88%B6%20.md)
 * [Nginx 访问控制及 DDOS 预防](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/server_note/Nginx_note/Nginx%20%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6%E5%8F%8A%20DDOS%20%E9%A2%84%E9%98%B2.md)
 * [Nginx 日志显示真实IP](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/server_note/Nginx_note/Nginx%20%E6%97%A5%E5%BF%97%E6%98%BE%E7%A4%BA%E7%9C%9F%E5%AE%9EIP.md)
-
-## shell
-* [shell linux 默认shell bash](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/shell_note/shell%20linux%E9%BB%98%E8%AE%A4shell%20bash.MD)
-* [shell 变量功能](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/shell_note/shell%20%E5%8F%98%E9%87%8F%E5%8A%9F%E8%83%BD.MD)
-* [shell 特殊字符、数据流重定向](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/shell_note/shell%20%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6%E3%80%81%E6%95%B0%E6%8D%AE%E6%B5%81%E9%87%8D%E5%AE%9A%E5%90%91.MD)
-* [shell 正则表达式](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/shell_note/shell%20%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F.MD)
-* [shell 管道命令](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/shell_note/shell%20%E7%AE%A1%E9%81%93%E5%91%BD%E4%BB%A4.MD)
-* [shell script 逻辑判断](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/shell_note/shell%20%E9%80%BB%E8%BE%91%E5%88%A4%E6%96%AD.MD)
-* [shell script 变量、函数、循环、追踪调试](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/shell_note/shell%20%E5%8F%98%E9%87%8F%E3%80%81%E5%87%BD%E6%95%B0%E3%80%81%E5%BE%AA%E7%8E%AF%E3%80%81%E8%BF%BD%E8%B8%AA%E8%B0%83%E8%AF%95.MD)
 
 
 ## Python
@@ -127,6 +79,59 @@
 * [python3 连接并操作 MySQL(MariaDB)](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/database_note/database%20python3%E8%BF%9E%E6%8E%A5%E5%B9%B6%E6%93%8D%E4%BD%9CMySQL(MariaDB).MD)
 * [MySQL 数据类型优化](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/database_note/database%20MySQL%20%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%BC%98%E5%8C%96.md)
 * [MySQL InnoDB锁机制](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/database_note/database%20MySQL%20InnoDB%E9%94%81%E6%9C%BA%E5%88%B6.md)
+
+
+
+## Linux
+### Linux 相关知识
+* [Linux 常用命令(无格式)](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20command%20%26%20SHELL%20collection)
+* [Linux 目录结构](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84.md)
+* [Linux 文件目录命名规则](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E6%96%87%E4%BB%B6%E5%90%8D%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99.MD)
+* [Linux 文件搜索 whereis、locate、which、find](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E6%96%87%E4%BB%B6%E6%90%9C%E7%B4%A2%20whereis%E3%80%81locate%E3%80%81which%E3%80%81find.md)
+* [Linux 打包压缩和解压 tar](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E6%89%93%E5%8C%85%E5%8E%8B%E7%BC%A9%E5%91%BD%E4%BB%A4%20tar.md)
+* [Linux 用户及文件权限管理](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E7%94%A8%E6%88%B7%E5%8F%8A%E6%96%87%E4%BB%B6%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86.md)
+* [Linux 特殊权限管理 ACL、SUID、SGID、Sticky BIT](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E7%89%B9%E6%AE%8A%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86.md)
+* [Linux 系统性能监控常用命令](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7.md)
+
+
+### Linux 设备与文件系统
+* [Linux 删除多余无用分区 （命令 df lsblk fdisk）](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E5%88%A0%E9%99%A4%E5%A4%9A%E4%BD%99%E6%97%A0%E7%94%A8%E5%88%86%E5%8C%BA.MD)
+* [Linux 文件系统根目录所在磁盘扩容 LVM](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E6%A0%B9%E7%9B%AE%E5%BD%95%E6%89%80%E5%9C%A8%E7%A3%81%E7%9B%98%E6%89%A9%E5%AE%B9.MD)
+
+### Linux 进程与服务
+* [Linux 内核、进程、线程 （命令 ps top kill）](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E5%86%85%E6%A0%B8%E3%80%81%E8%BF%9B%E7%A8%8B%E3%80%81%E7%BA%BF%E7%A8%8B.MD)
+* [Linux IO模型：同步、异步、阻塞、非阻塞](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20IO%E6%A8%A1%E5%9E%8B%EF%BC%9A%E5%90%8C%E6%AD%A5%E3%80%81%E5%BC%82%E6%AD%A5%E3%80%81%E9%98%BB%E5%A1%9E%E3%80%81%E9%9D%9E%E9%98%BB%E5%A1%9E.MD)
+* [Linux daemons 启动与管理 init、systemd](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20daemons%20%E5%90%AF%E5%8A%A8%E4%B8%8E%E7%AE%A1%E7%90%86%20init%E3%80%81systemd%20.MD)
+* [Linux 端口与网络服务管理](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E7%AB%AF%E5%8F%A3%E4%B8%8E%E7%BD%91%E7%BB%9C%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86.md)
+* [Linux 日志系统 rsyslog logrotate systemd-journal logwatch](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F%20rsyslog%20logrotate%20systemd-journal%20logwatch.md)
+* [Linux 时间同步 NTP](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E6%97%B6%E9%97%B4%E5%90%8C%E6%AD%A5.MD)
+* [Linux 例行性工作 crontab](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E4%BE%8B%E8%A1%8C%E6%80%A7%E5%B7%A5%E4%BD%9C.MD)
+* [Linux 进程后台运行 nohup](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E8%BF%9B%E7%A8%8B%E5%90%8E%E5%8F%B0%E8%BF%90%E8%A1%8C%20nohup.md)
+
+### Linux 软件安装
+#### 数据库
+* [Linux yum安装配置 MySQL（MariaDB）](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEMySQL%EF%BC%88MariaDB%EF%BC%89.MD)
+* [Linux 源码安装 MongoDB](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E5%AE%89%E8%A3%85MongoDB.MD)
+#### 编程语言
+* [Linux 源码安装 python3](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E5%AE%89%E8%A3%85Python%203.MD)
+* [Linux CentOS7 在 python2、python3 共存状态下安装 pip2 和 pip3](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20CentOS7%20%E5%9C%A8python2%E3%80%81python3%E5%85%B1%E5%AD%98%E4%B8%8B%E5%AE%89%E8%A3%85pip2%E5%92%8Cpip3.MD)
+* [Linux 源码安装 Node.js](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AENode.js%20.MD)
+
+### Linux 相关工具
+* [Linux win使用putty通过ssh传文件](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/linux_note/Linux%20win%E4%BD%BF%E7%94%A8putty%E9%80%9A%E8%BF%87ssh%E4%BC%A0%E6%96%87%E4%BB%B6.md)
+* [Linux git 配置与使用](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/github_note/git%20%E9%85%8D%E7%BD%AE%E4%B8%8E%E4%BD%BF%E7%94%A8.md)
+
+
+## shell
+* [shell linux 默认shell bash](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/shell_note/shell%20linux%E9%BB%98%E8%AE%A4shell%20bash.MD)
+* [shell 变量功能](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/shell_note/shell%20%E5%8F%98%E9%87%8F%E5%8A%9F%E8%83%BD.MD)
+* [shell 特殊字符、数据流重定向](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/shell_note/shell%20%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6%E3%80%81%E6%95%B0%E6%8D%AE%E6%B5%81%E9%87%8D%E5%AE%9A%E5%90%91.MD)
+* [shell 正则表达式](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/shell_note/shell%20%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F.MD)
+* [shell 管道命令](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/shell_note/shell%20%E7%AE%A1%E9%81%93%E5%91%BD%E4%BB%A4.MD)
+* [shell script 逻辑判断](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/shell_note/shell%20%E9%80%BB%E8%BE%91%E5%88%A4%E6%96%AD.MD)
+* [shell script 变量、函数、循环、追踪调试](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/shell_note/shell%20%E5%8F%98%E9%87%8F%E3%80%81%E5%87%BD%E6%95%B0%E3%80%81%E5%BE%AA%E7%8E%AF%E3%80%81%E8%BF%BD%E8%B8%AA%E8%B0%83%E8%AF%95.MD)
+
+
 
 
 ## VMware
