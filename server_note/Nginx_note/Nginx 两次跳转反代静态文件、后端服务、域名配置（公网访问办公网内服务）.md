@@ -4,7 +4,7 @@
 
 * 办公网入网 nat 只开放 443 指向固定的 ip，此 ip 为入网 nginx 虚ip，入网 nginx 部署较多服务，禁止除运维以外人员登陆。
 * 开发环境的静态文件需要使用 nginx 做代理，使用阿里云上备案的域名，使用阿里云上的云解析服务来将此域名指向我司办公环境的入网 ip。
-* nginx 无法代理位于不同服务器上的静态文件，故需要两个 nginx ，一个将入网请求反代到后端服务器，一个在开发服务器上用于代理静态文件。
+* nginx 无法代理位于不同服务器上的静态文件，但开发环境下开发人员需频繁修改开发环境的代码，故需要两个 nginx ，一个将入网请求反代到后端服务器，一个在开发服务器上用于代理静态文件。
 ![](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/note_images/Nginx_images/nginx%20%E4%B8%A4%E6%AC%A1%E8%B7%B3%E8%BD%AC%E5%8F%8D%E4%BB%A3%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6%E3%80%81%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E3%80%81%E5%9F%9F%E5%90%8D%E9%85%8D%E7%BD%AE%EF%BC%88%E5%85%AC%E7%BD%91%E8%AE%BF%E9%97%AE%E5%8A%9E%E5%85%AC%E7%BD%91%E5%86%85%E6%9C%8D%E5%8A%A1%EF%BC%89.png?raw=true)
 
 
