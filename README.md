@@ -17,7 +17,7 @@
 * [elk 日志分析_ java logback json 业务日志_logstash filter](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/elk_note/elk%20%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90_%20java%20logback%20json%20%E4%B8%9A%E5%8A%A1%E6%97%A5%E5%BF%97_logstash%20filter.md)
 
 ## Server
-### NginX
+### Ngin
 * [Nginx 两次跳转反代静态文件、后端服务、域名配置（公网访问办公网内服务）](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/server_note/Nginx_note/Nginx%20%E4%B8%A4%E6%AC%A1%E8%B7%B3%E8%BD%AC%E5%8F%8D%E4%BB%A3%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6%E3%80%81%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E3%80%81%E5%9F%9F%E5%90%8D%E9%85%8D%E7%BD%AE%EF%BC%88%E5%85%AC%E7%BD%91%E8%AE%BF%E9%97%AE%E5%8A%9E%E5%85%AC%E7%BD%91%E5%86%85%E6%9C%8D%E5%8A%A1%EF%BC%89.md)
 * [Linux(ubuntu)-Nginx-MySQL-PHP 架构 apt-get 安装配置](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/server_note/Nginx_note/Linux%20Nginx%20MySQL%20PHP%20%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE.MD)
 * [Linux(CentOS7)-Nginx-MariaDB-PHP 架构 源码安装及配置](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/server_note/Nginx_note/Linux(CentOS7)-Nginx-MariaDB-PHP%20%E6%9E%B6%E6%9E%84%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85%E5%8F%8A%E9%85%8D%E7%BD%AE.MD)</br>
