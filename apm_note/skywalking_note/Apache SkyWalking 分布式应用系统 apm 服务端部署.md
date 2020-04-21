@@ -1,4 +1,4 @@
-# Apache SkyWalking 分布式应用系统 apm 部署
+# Apache SkyWalking 分布式应用系统 apm 服务端部署
 
 ## 依赖
 此处依赖郡使用 ansible playbook 安装
