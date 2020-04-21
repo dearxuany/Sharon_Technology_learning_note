@@ -11,7 +11,9 @@ Java(TM) SE Runtime Environment (build 1.8.0_171-b11)
 Java HotSpot(TM) 64-Bit Server VM (build 25.171-b11, mixed mode)
 ```
 ### elasticsearch 7.1.1
-由于 skywalking 写入 es 的索引较多（主要支持历史数据保留），而 es 7 之后单个 es 节点限制 1000 个分片，故需要部署三节点 es 集群保证 skywalking 数据写入。
+由于 skywalking 写入 es 的索引较多（主要支持历史数据保留），而 es 7 之后单个 es 节点限制 1000 个分片，故需要部署三节点 es 集群保证 skywalking 数据写入。</br>
+</br>
+关于 elasticsearch 集群部署参见： [elasticsearch 集群部署](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/elk_note/elk%20%E9%9B%86%E7%BE%A4_ansible%20playbook%20%E9%83%A8%E7%BD%B2(5)_elasticsearch%20%E9%9B%86%E7%BE%A4.md)
 ```
 # curl http://10.0.0.57:19200/_cluster/health?pretty=true
 {
