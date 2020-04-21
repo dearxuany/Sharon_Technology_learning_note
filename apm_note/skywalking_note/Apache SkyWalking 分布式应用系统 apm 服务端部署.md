@@ -1,5 +1,7 @@
 # Apache SkyWalking 分布式应用系统 apm 服务端部署
-
+skywalking 结构
+![](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/note_images/apm_images/skywalking_Image_01.png)</br>
+![](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/note_images/apm_images/skywalking_Image_02.png)
 ## 依赖
 此处依赖均使用 ansible playbook 批量安装
 ### java
