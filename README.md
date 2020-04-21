@@ -30,6 +30,13 @@
 * [Nginx 动态加载模块](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/server_note/Nginx_note/Nginx%20%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BD%E6%A8%A1%E5%9D%97.md)
 
 
+## APM
+### Apache SkyWalking
+* [Apache SkyWalking 分布式应用系统 apm 服务端部署](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/apm_note/skywalking_note/Apache%20SkyWalking%20%E5%88%86%E5%B8%83%E5%BC%8F%E5%BA%94%E7%94%A8%E7%B3%BB%E7%BB%9F%20apm%20%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%83%A8%E7%BD%B2.md)
+* [Apache SkyWalking 客户端 java-agent 接入](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/apm_note/skywalking_note/Apache%20SkyWalking%20%E5%AE%A2%E6%88%B7%E7%AB%AF%20java-agent%20%E6%8E%A5%E5%85%A5.md)
+
+
+
 ## Python
 ### Python3 基础
 * [Python 基础语法](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/python_note/Python%20%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95.MD)
