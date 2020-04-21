@@ -311,7 +311,13 @@ SkyWalking Web Application started successfully!
 查看监听端口
 ```
 # netstat -tunpl|grep 8080
-tcp6       0      0 :::8080                 :::*                    LISTEN      30532/java     
+tcp6       0      0 :::8080                 :::*                    LISTEN      30532/java 
+
+# netstat -tunpl|grep 11800
+tcp6       0      0 10.0.0.57:11800         :::*                    LISTEN      2207/java  
+
+# netstat -tunpl|grep 12800
+tcp6       0      0 10.0.0.57:12800         :::*                    LISTEN      2207/java
 ```
 访问 skywalking 页面
 ```
