@@ -44,7 +44,7 @@ logging.level=${SW_LOGGING_LEVEL:INFO}
 
 
 # Logging dir
-logging.dir=${SW_LOGGING_DIR:"/sdata/var/log/skywalking-agent"}
+logging.dir=${SW_LOGGING_DIR:/sdata/var/log/skywalking-agent}
 ```
 skywalking-agent 包放置在 nginx 代理的目录里，以 jenkins 调用 ansible playbook 请求 url 获取包远程部署到各主机
 ```
@@ -102,7 +102,7 @@ skywalking-agent 包放置在 nginx 代理的目录里，以 jenkins 调用 ansi
     - { regexp: '^collector.backend_service', line: 'collector.backend_service=${SW_AGENT_COLLECTOR_BACKEND_SERVICES:{{ skywalking_server }}}'}
     - { regexp: '^logging.file_name', line: 'logging.file_name=${SW_LOGGING_FILE_NAME:skywalking-agent.log}'}
     - { regexp: '^logging.level', line: 'logging.level=${SW_LOGGING_LEVEL:INFO}'}
-    - { regexp: '^logging.dir', line: 'logging.dir=${SW_LOGGING_DIR:"/sdata/var/log/skywalking-agent"}'}
+    - { regexp: '^logging.dir', line: 'logging.dir=${SW_LOGGING_DIR:/sdata/var/log/skywalking-agent}'}
     
 
 
