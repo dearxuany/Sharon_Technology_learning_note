@@ -1,4 +1,4 @@
-# es 集群滚动更新
+# es 集群节点滚动更新
 https://www.elastic.co/guide/cn/elasticsearch/guide/current/_rolling_restarts.html
 
 ## 滚动更新操作
