@@ -109,3 +109,4 @@ $ curl http://10.0.0.57:19200/_cluster/health?pretty=true
   "active_shards_percent_as_number" : 40.92349479402444
 }
 ```
+等待集群状态为 yellow 时，则集群能恢复对外的正常访问能力，所有 Index 均有可用分片，但有 index 没有副本分片；待集群状态恢复为 green 时，则所有 index 分片健康，集群正常。如果要重启 es 节点，则需保证 es 集群状态以及每个 index 的分片状态均为 green，否则容易导致故障。
