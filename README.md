@@ -19,6 +19,7 @@
 * [elk 日志分析_ java logback json 业务日志_logstash filter](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/elk_note/elk%20%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90_%20java%20logback%20json%20%E4%B8%9A%E5%8A%A1%E6%97%A5%E5%BF%97_logstash%20filter.md)
 ### 优化
 * [es 集群优化_elasticsearch 节点重启后报 master not discovered or elected yet 无法选举 master 问题解决](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/elk_note/es%20%E9%9B%86%E7%BE%A4%E4%BC%98%E5%8C%96_elasticsearch%20%E8%8A%82%E7%82%B9%E9%87%8D%E5%90%AF%E5%90%8E%E6%8A%A5%20master%20not%20discovered%20or%20elected%20yet%20%E6%97%A0%E6%B3%95%E9%80%89%E4%B8%BE%20master%20%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3.md)
+* [es 集群优化_程序无法在 es 集群自动创建 index 问题解决](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/elk_note/es%20%E9%9B%86%E7%BE%A4%E4%BC%98%E5%8C%96_%E7%A8%8B%E5%BA%8F%E6%97%A0%E6%B3%95%E5%9C%A8%20es%20%E9%9B%86%E7%BE%A4%E8%87%AA%E5%8A%A8%E5%88%9B%E5%BB%BA%20index%20%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3.md)
 
 ## Server
 ### Nginx
