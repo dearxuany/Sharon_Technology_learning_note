@@ -5,7 +5,7 @@
 学习与实践中遇到的问题及其解决办法。</br>
 
 ## Elastic Stack
-### 部署
+#### 部署
 * [elk 集群_ansible playbook 部署(1)_依赖配置](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/elk_note/elk%20%E9%9B%86%E7%BE%A4_ansible%20playbook%20%E9%83%A8%E7%BD%B2(1)_%E4%BE%9D%E8%B5%96%E9%85%8D%E7%BD%AE.md)
 * [elk 集群_ansible playbook 部署(2)_filebeat 文本收集](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/elk_note/elk%20%E9%9B%86%E7%BE%A4_ansible%20playbook%20%E9%83%A8%E7%BD%B2(2)_filebeat.md#elk-%E9%9B%86%E7%BE%A4_ansible-playbook-%E9%83%A8%E7%BD%B22_filebeat)
 * [elk 集群_ansible playbook 部署(3)_kafka 消息队列](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/elk_note/elk%20%E9%9B%86%E7%BE%A4_ansible%20playbook%20%E9%83%A8%E7%BD%B2(3)_kafka%20%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97.md)
@@ -14,10 +14,10 @@
 * [elk 集群_ansible playbook 部署(6)_kibana 可视化](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/elk_note/elk%20%E9%9B%86%E7%BE%A4_ansible%20playbook%20%E9%83%A8%E7%BD%B2(6)_kibana%20%E5%8F%AF%E8%A7%86%E5%8C%96.md)
 * [elk 集群_ansible playbook 部署(7)_kafka SSL 加密传输](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/elk_note/elk%20%E9%9B%86%E7%BE%A4_ansible%20playbook%20%E9%83%A8%E7%BD%B2(7)_kafka%20SSL%20%E5%8A%A0%E5%AF%86%E4%BC%A0%E8%BE%93.md)
 * [elk 集群_ansible playbook 部署(8)_xpack 用户认证配置](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/elk_note/elk%20%E9%9B%86%E7%BE%A4_ansible%20playbook%20%E9%83%A8%E7%BD%B2(8)_xpack%20%E7%94%A8%E6%88%B7%E8%AE%A4%E8%AF%81%E9%85%8D%E7%BD%AE.md)
-### 使用
+#### 使用
 * [elk 日志分析_nginx_logstash grok & filter](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/elk_note/elk%20%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90_nginx_logstash%20grok%20&%20filter.md)
 * [elk 日志分析_ java logback json 业务日志_logstash filter](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/elk_note/elk%20%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90_%20java%20logback%20json%20%E4%B8%9A%E5%8A%A1%E6%97%A5%E5%BF%97_logstash%20filter.md)
-### 优化
+#### 优化
 * [es 集群优化_elasticsearch 节点重启后报 master not discovered or elected yet 无法选举 master 问题解决](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/elk_note/es%20%E9%9B%86%E7%BE%A4%E4%BC%98%E5%8C%96_elasticsearch%20%E8%8A%82%E7%82%B9%E9%87%8D%E5%90%AF%E5%90%8E%E6%8A%A5%20master%20not%20discovered%20or%20elected%20yet%20%E6%97%A0%E6%B3%95%E9%80%89%E4%B8%BE%20master%20%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3.md)
 * [es 集群优化_程序无法在 es 集群自动创建 index 问题解决](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/elk_note/es%20%E9%9B%86%E7%BE%A4%E4%BC%98%E5%8C%96_%E7%A8%8B%E5%BA%8F%E6%97%A0%E6%B3%95%E5%9C%A8%20es%20%E9%9B%86%E7%BE%A4%E8%87%AA%E5%8A%A8%E5%88%9B%E5%BB%BA%20index%20%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3.md)
 * [es 集群优化_设置 fielddata 缓存自动清理](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/elk_note/es%20%E9%9B%86%E7%BE%A4%E4%BC%98%E5%8C%96_%E8%AE%BE%E7%BD%AE%20fielddata%20%E7%BC%93%E5%AD%98%E8%87%AA%E5%8A%A8%E6%B8%85%E7%90%86.md)
