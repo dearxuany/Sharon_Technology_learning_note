@@ -221,7 +221,90 @@ GET _analyze?pretty
   ]
 }
 ```
+## ansible playbook 部署
+由于需要操作多个节点，建议使用 ansible playbook 部署
+```
+---
 
 
+- hosts: dev_es-03
+  become: yes
+  become_user: root
+  vars:
+    remote_ext_dict_url: "http://10.0.0.149:5000/model_data/word_dict.txt"
+    remote_ext_stopwords_url: "http://10.0.0.149:5000/model_data/stopwords.txt"
+  tasks:
+  - name: Download package
+    get_url:
+      url: https://pkg.domainname.com/elasticsearch/elasticsearch-7.1.1/elasticsearch-analysis-ik-7.1.1.zip
+      dest: /sdata/usr/local/src/
+      mode: '0644'
+      url_username: pkg
+      url_password: passwd
+      
+  - name: check old ik dir
+    shell: ls /sdata/usr/local/elasticsearch/plugins/ik
+    ignore_errors: True
+    register: result
+    
+  - name: remove old ik dir if exist
+    file:
+      path: /sdata/usr/local/elasticsearch/plugins/ik
+      state: absent
+    when: result|succeeded
+
+
+  - name: create goal dir
+    file: path=/sdata/usr/local/elasticsearch/plugins/ik state=directory mode=0755
+
+
+  - name: release package
+    shell: unzip /sdata/usr/local/src/elasticsearch-analysis-ik-7.1.1.zip -d /sdata/usr/local/elasticsearch/plugins/ik/
+
+
+  - name: change owner
+    shell: chown -R elk:elk /sdata/usr/local/elasticsearch/plugins/ik
+
+
+  - name: show package
+    shell: ls -al /sdata/usr/local/elasticsearch/plugins/ik/
+    register: cmd_stdout
+
+
+  - name: show command stdout
+    debug: var=cmd_stdout verbosity=0
+
+
+  - name: set ik config
+    become: yes
+    become_user: elk
+    lineinfile:
+      dest: /sdata/usr/local/elasticsearch/plugins/ik/config/IKAnalyzer.cfg.xml
+      insertafter: '{{ item.insertafter }}'
+      line: '{{ item.line }}'
+    with_items:        
+      - { insertafter: '\t<!-- <entry key=\"remote_ext_dict\">words_location</entry> -->', line: '  <entry key="remote_ext_dict">{{ remote_ext_dict_url }}</entry>'}
+      - { insertafter: '\t<!-- <entry key=\"remote_ext_stopwords\">words_location</entry> -->', line: ' <entry key="remote_ext_stopwords">{{ remote_ext_stopwords_url }}</entry>'}
+
+
+
+
+  - name: show config
+    shell: cat /sdata/usr/local/elasticsearch/plugins/ik/config/IKAnalyzer.cfg.xml
+    register: cmd_stdout
+
+
+  - name: show command stdout
+    debug: var=cmd_stdout verbosity=0
+
+
+  - name: stop es
+    shell: kill $(ps -ef|grep -v grep|grep elasticsearch|awk '{print $2}')
+    
+  - name: start es
+    become: yes
+    become_user: elk
+    shell: sh /sdata/usr/local/elasticsearch/start_elasticsearsh.sh
+```
 
 
