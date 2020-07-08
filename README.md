@@ -40,7 +40,7 @@
 * [Nginx 日志显示真实IP](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/server_note/Nginx_note/Nginx%20%E6%97%A5%E5%BF%97%E6%98%BE%E7%A4%BA%E7%9C%9F%E5%AE%9EIP.md)
 * [Nginx 动态加载模块](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/server_note/Nginx_note/Nginx%20%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BD%E6%A8%A1%E5%9D%97.md)
 
-## kubernetes & docker
+## docker & kubernetes
 * [docker、docker-compose 安装、镜像源修改](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/docker_note/docker%E3%80%81docker-compose%20%E5%AE%89%E8%A3%85%E3%80%81%E9%95%9C%E5%83%8F%E6%BA%90%E4%BF%AE%E6%94%B9.md)
 * [docker 常用命令、dockerfile_python flask example](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/docker_note/docker%20%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E3%80%81dockerfile_python%20flask%20example.md)
 * [docker-compose 部署 sentry 多语言错误跟踪工具](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/docker_note/docker-compose%20%E9%83%A8%E7%BD%B2%20sentry%20%E5%A4%9A%E8%AF%AD%E8%A8%80%E9%94%99%E8%AF%AF%E8%B7%9F%E8%B8%AA%E5%B7%A5%E5%85%B7.md)
