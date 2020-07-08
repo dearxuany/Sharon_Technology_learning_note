@@ -46,7 +46,8 @@
 * [Apache SkyWalking 分布式应用系统 apm 服务端部署](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/apm_note/skywalking_note/Apache%20SkyWalking%20%E5%88%86%E5%B8%83%E5%BC%8F%E5%BA%94%E7%94%A8%E7%B3%BB%E7%BB%9F%20apm%20%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%83%A8%E7%BD%B2.md)
 * [Apache SkyWalking 客户端 java-agent 接入](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/apm_note/skywalking_note/Apache%20SkyWalking%20%E5%AE%A2%E6%88%B7%E7%AB%AF%20java-agent%20%E6%8E%A5%E5%85%A5.md)
 
-
+## kubernetes
+* [k8s helm 部署使用](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/k8s_note/k8s%20helm%20%E9%83%A8%E7%BD%B2%E4%BD%BF%E7%94%A8.md)
 
 ## Python
 ### Python3 基础
