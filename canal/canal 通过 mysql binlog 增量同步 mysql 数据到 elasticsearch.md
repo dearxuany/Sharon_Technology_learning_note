@@ -1,4 +1,5 @@
 # canal 通过 mysql binlog 增量同步 mysql 数据到 elasticsearch
+关于 canal https://github.com/alibaba/canal </br>
 ## canal 依赖
 ### java 1.8+
 ```
