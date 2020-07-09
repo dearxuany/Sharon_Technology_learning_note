@@ -1,5 +1,7 @@
 # canal 通过 mysql binlog 增量同步 mysql 数据到 elasticsearch
-关于 canal https://github.com/alibaba/canal </br>
+## 关于 canal 
+canal 为阿里巴巴开源中间件，主要用于通过 MySQL binlog 解析，提供增量数据订阅和消费服务，可进行 mysql 到 elasticsearch、kafka、hbase、rocketmq 等数据实时增量同步，官网 https://github.com/alibaba/canal 。 </br>
+
 ## canal 依赖
 ### java 1.8+
 ```
