@@ -46,6 +46,7 @@
 
 ## docker & kubernetes
 * [docker、docker-compose 安装、镜像源修改](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/docker_note/docker%E3%80%81docker-compose%20%E5%AE%89%E8%A3%85%E3%80%81%E9%95%9C%E5%83%8F%E6%BA%90%E4%BF%AE%E6%94%B9.md)
+* [docker 使用阿里云容器镜像仓库](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/docker_note/docker%20%E4%BD%BF%E7%94%A8%E9%98%BF%E9%87%8C%E4%BA%91%E5%AE%B9%E5%99%A8%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93.md)
 * [docker 常用命令、dockerfile_python flask example](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/docker_note/docker%20%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E3%80%81dockerfile_python%20flask%20example.md)
 * [docker-compose 部署 sentry 多语言错误跟踪工具](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/docker_note/docker-compose%20%E9%83%A8%E7%BD%B2%20sentry%20%E5%A4%9A%E8%AF%AD%E8%A8%80%E9%94%99%E8%AF%AF%E8%B7%9F%E8%B8%AA%E5%B7%A5%E5%85%B7.md)
 * [NVIDIA GPU 算法专用容器 nvidia-docker 部署](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/docker_note/NVIDIA%20GPU%20%E7%AE%97%E6%B3%95%E4%B8%93%E7%94%A8%E5%AE%B9%E5%99%A8%20nvidia-docker%20%E9%83%A8%E7%BD%B2.md)
@@ -54,7 +55,7 @@
 ## APM
 ### Apache SkyWalking
 * [Apache SkyWalking 分布式应用系统 apm 服务端部署](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/apm_note/skywalking_note/Apache%20SkyWalking%20%E5%88%86%E5%B8%83%E5%BC%8F%E5%BA%94%E7%94%A8%E7%B3%BB%E7%BB%9F%20apm%20%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%83%A8%E7%BD%B2.md)
-* [Apache SkyWalking 客户端 java-agent 接入](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/apm_note/skywalking_note/Apache%20SkyWalking%20%E5%AE%A2%E6%88%B7%E7%AB%AF%20java-agent%20%E6%8E%A5%E5%85%A5.md)
+* [Apache SkyWalking 客户端 java-agent 接入 jar、jetty、tomcat](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/apm_note/skywalking_note/Apache%20SkyWalking%20%E5%AE%A2%E6%88%B7%E7%AB%AF%20java-agent%20%E6%8E%A5%E5%85%A5.md)
 
 
 
