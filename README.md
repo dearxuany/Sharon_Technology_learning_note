@@ -19,13 +19,17 @@
 * [elk 日志分析_ java logback json 业务日志_logstash filter](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/elk_note/elk%20%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90_%20java%20logback%20json%20%E4%B8%9A%E5%8A%A1%E6%97%A5%E5%BF%97_logstash%20filter.md)
 * [es 插件_Elasticsearch 7.1.1 安装 pinyin 分词器插件](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/elk_note/es%20%E6%8F%92%E4%BB%B6_Elasticsearch%207.1.1%20%E5%AE%89%E8%A3%85%20pinyin%20%E5%88%86%E8%AF%8D%E5%99%A8%E6%8F%92%E4%BB%B6.md)
 * [es 插件_ ik 中文分词器、自定义词典](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/elk_note/es%20%E6%8F%92%E4%BB%B6_%20ik%20%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D%E5%99%A8%E3%80%81%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AF%8D%E5%85%B8.md)
-* [es 数据迁移_elasticsearch-dump 全量迁移 es 数据](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/elk_note/es%20%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB_elasticsearch-dump%20%E5%85%A8%E9%87%8F%E8%BF%81%E7%A7%BB%20es%20%E6%95%B0%E6%8D%AE.md)
 * [es 集群节点滚动更新](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/elk_note/es%20%E9%9B%86%E7%BE%A4%E8%8A%82%E7%82%B9%E6%BB%9A%E5%8A%A8%E6%9B%B4%E6%96%B0.md)
 #### 优化
 * [es 集群优化_elasticsearch 节点重启后报 master not discovered or elected yet 无法选举 master 问题解决](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/elk_note/es%20%E9%9B%86%E7%BE%A4%E4%BC%98%E5%8C%96_elasticsearch%20%E8%8A%82%E7%82%B9%E9%87%8D%E5%90%AF%E5%90%8E%E6%8A%A5%20master%20not%20discovered%20or%20elected%20yet%20%E6%97%A0%E6%B3%95%E9%80%89%E4%B8%BE%20master%20%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3.md)
 * [es 集群优化_程序无法在 es 集群自动创建 index 问题解决](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/elk_note/es%20%E9%9B%86%E7%BE%A4%E4%BC%98%E5%8C%96_%E7%A8%8B%E5%BA%8F%E6%97%A0%E6%B3%95%E5%9C%A8%20es%20%E9%9B%86%E7%BE%A4%E8%87%AA%E5%8A%A8%E5%88%9B%E5%BB%BA%20index%20%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3.md)
 * [es 集群优化_设置 fielddata 缓存自动清理](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/elk_note/es%20%E9%9B%86%E7%BE%A4%E4%BC%98%E5%8C%96_%E8%AE%BE%E7%BD%AE%20fielddata%20%E7%BC%93%E5%AD%98%E8%87%AA%E5%8A%A8%E6%B8%85%E7%90%86.md)
 * [es 集群优化_磁盘水印低 Low disk watermark 导致集群节点分片分配不均匀问题解决](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/elk_note/es%20%E9%9B%86%E7%BE%A4%E4%BC%98%E5%8C%96_%E7%A3%81%E7%9B%98%E6%B0%B4%E5%8D%B0%E4%BD%8E%20Low%20disk%20watermark%20%E5%AF%BC%E8%87%B4%E9%9B%86%E7%BE%A4%E8%8A%82%E7%82%B9%E5%88%86%E7%89%87%E5%88%86%E9%85%8D%E4%B8%8D%E5%9D%87%E5%8C%80%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3.md)
+
+#### 数据迁移同步
+* [es 数据迁移_elasticsearch-dump 全量迁移 es 数据 ](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/elk_note/es%20%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB_elasticsearch-dump%20%E5%85%A8%E9%87%8F%E8%BF%81%E7%A7%BB%20es%20%E6%95%B0%E6%8D%AE.md)
+* [es 数据同步_canal 通过 mysql binlog 实时增量同步 mysql 数据到 elasticsearch](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/canal/canal%20%E9%80%9A%E8%BF%87%20mysql%20binlog%20%E5%A2%9E%E9%87%8F%E5%90%8C%E6%AD%A5%20mysql%20%E6%95%B0%E6%8D%AE%E5%88%B0%20elasticsearch.md)
+
 
 ## Server
 ### Nginx
