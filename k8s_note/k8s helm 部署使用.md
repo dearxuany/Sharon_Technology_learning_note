@@ -215,3 +215,383 @@ release "mysql-1589334133" uninstalled
 ```
 helm status mysql-1589334133
 ```
+只生成 yaml 不部署
+```
+#  helm install  stable/mysql --dry-run --debug --generate-name
+install.go:159: [debug] Original chart version: ""
+install.go:176: [debug] CHART PATH: /root/.cache/helm/repository/mysql-1.6.3.tgz
+
+
+NAME: mysql-1590984246
+LAST DEPLOYED: Mon Jun  1 12:04:10 2020
+NAMESPACE: default
+STATUS: pending-install
+REVISION: 1
+USER-SUPPLIED VALUES:
+{}
+
+
+COMPUTED VALUES:
+affinity: {}
+args: []
+busybox:
+  image: busybox
+  tag: 1.29.3
+configurationFiles: {}
+configurationFilesPath: /etc/mysql/conf.d/
+deploymentAnnotations: {}
+extraInitContainers: |
+  # - name: do-something
+  #   image: busybox
+  #   command: ['do', 'something']
+extraVolumeMounts: |
+  # - name: extras
+  #   mountPath: /usr/share/extras
+  #   readOnly: true
+extraVolumes: |
+  # - name: extras
+  #   emptyDir: {}
+image: mysql
+imagePullPolicy: IfNotPresent
+imageTag: 5.7.28
+initContainer:
+  resources:
+    requests:
+      cpu: 10m
+      memory: 10Mi
+initializationFiles: {}
+livenessProbe:
+  failureThreshold: 3
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  successThreshold: 1
+  timeoutSeconds: 5
+metrics:
+  annotations: {}
+  enabled: false
+  flags: []
+  image: prom/mysqld-exporter
+  imagePullPolicy: IfNotPresent
+  imageTag: v0.10.0
+  livenessProbe:
+    initialDelaySeconds: 15
+    timeoutSeconds: 5
+  readinessProbe:
+    initialDelaySeconds: 5
+    timeoutSeconds: 1
+  resources: {}
+  serviceMonitor:
+    additionalLabels: {}
+    enabled: false
+nodeSelector: {}
+persistence:
+  accessMode: ReadWriteOnce
+  annotations: {}
+  enabled: true
+  size: 8Gi
+podAnnotations: {}
+podLabels: {}
+readinessProbe:
+  failureThreshold: 3
+  initialDelaySeconds: 5
+  periodSeconds: 10
+  successThreshold: 1
+  timeoutSeconds: 1
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+securityContext:
+  enabled: false
+  fsGroup: 999
+  runAsUser: 999
+service:
+  annotations: {}
+  port: 3306
+  type: ClusterIP
+serviceAccount:
+  create: false
+ssl:
+  certificates: null
+  enabled: false
+  secret: mysql-ssl-certs
+strategy:
+  type: Recreate
+testFramework:
+  enabled: true
+  image: dduportal/bats
+  tag: 0.4.0
+tolerations: []
+
+
+HOOKS:
+---
+# Source: mysql/templates/tests/test.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mysql-1590984246-test
+  namespace: default
+  labels:
+    app: mysql-1590984246
+    chart: "mysql-1.6.3"
+    heritage: "Helm"
+    release: "mysql-1590984246"
+  annotations:
+    "helm.sh/hook": test-success
+spec:
+  initContainers:
+    - name: test-framework
+      image: "dduportal/bats:0.4.0"
+      command:
+      - "bash"
+      - "-c"
+      - |
+        set -ex
+        # copy bats to tools dir
+        cp -R /usr/local/libexec/ /tools/bats/
+      volumeMounts:
+      - mountPath: /tools
+        name: tools
+  containers:
+    - name: mysql-1590984246-test
+      image: "mysql:5.7.28"
+      command: ["/tools/bats/bats", "-t", "/tests/run.sh"]
+      volumeMounts:
+      - mountPath: /tests
+        name: tests
+        readOnly: true
+      - mountPath: /tools
+        name: tools
+  volumes:
+  - name: tests
+    configMap:
+      name: mysql-1590984246-test
+  - name: tools
+    emptyDir: {}
+  restartPolicy: Never
+MANIFEST:
+---
+# Source: mysql/templates/secrets.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysql-1590984246
+  namespace: default
+  labels:
+    app: mysql-1590984246
+    chart: "mysql-1.6.3"
+    release: "mysql-1590984246"
+    heritage: "Helm"
+type: Opaque
+data:
+  
+  
+  mysql-root-password: "MThYbGtjU0E0NQ=="
+  
+  
+  
+  
+  mysql-password: "b2dGRktRRFVINw=="
+---
+# Source: mysql/templates/tests/test-configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-1590984246-test
+  namespace: default
+  labels:
+    app: mysql-1590984246
+    chart: "mysql-1.6.3"
+    heritage: "Helm"
+    release: "mysql-1590984246"
+data:
+  run.sh: |-
+---
+# Source: mysql/templates/pvc.yaml
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: mysql-1590984246
+  namespace: default
+  labels:
+    app: mysql-1590984246
+    chart: "mysql-1.6.3"
+    release: "mysql-1590984246"
+    heritage: "Helm"
+spec:
+  accessModes:
+    - "ReadWriteOnce"
+  resources:
+    requests:
+      storage: "8Gi"
+---
+# Source: mysql/templates/svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-1590984246
+  namespace: default
+  labels:
+    app: mysql-1590984246
+    chart: "mysql-1.6.3"
+    release: "mysql-1590984246"
+    heritage: "Helm"
+  annotations:
+spec:
+  type: ClusterIP
+  ports:
+  - name: mysql
+    port: 3306
+    targetPort: mysql
+  selector:
+    app: mysql-1590984246
+---
+# Source: mysql/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-1590984246
+  namespace: default
+  labels:
+    app: mysql-1590984246
+    chart: "mysql-1.6.3"
+    release: "mysql-1590984246"
+    heritage: "Helm"
+
+
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: mysql-1590984246
+      release: mysql-1590984246
+  template:
+    metadata:
+      labels:
+        app: mysql-1590984246
+        release: mysql-1590984246
+    spec:
+      serviceAccountName: default
+      initContainers:
+      - name: "remove-lost-found"
+        image: "busybox:1.29.3"
+        imagePullPolicy: "IfNotPresent"
+        resources:
+          requests:
+            cpu: 10m
+            memory: 10Mi
+        command:  ["rm", "-fr", "/var/lib/mysql/lost+found"]
+        volumeMounts:
+        - name: data
+          mountPath: /var/lib/mysql
+      # - name: do-something
+      #   image: busybox
+      #   command: ['do', 'something']
+      
+      containers:
+      - name: mysql-1590984246
+        image: "mysql:5.7.28"
+        imagePullPolicy: "IfNotPresent"
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-1590984246
+              key: mysql-root-password
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-1590984246
+              key: mysql-password
+              optional: true
+        - name: MYSQL_USER
+          value: ""
+        - name: MYSQL_DATABASE
+          value: ""
+        ports:
+        - name: mysql
+          containerPort: 3306
+        livenessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - "mysqladmin ping -u root -p${MYSQL_ROOT_PASSWORD}"
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 3
+        readinessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - "mysqladmin ping -u root -p${MYSQL_ROOT_PASSWORD}"
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 1
+          successThreshold: 1
+          failureThreshold: 3
+        volumeMounts:
+        - name: data
+          mountPath: /var/lib/mysql
+        # - name: extras
+        #   mountPath: /usr/share/extras
+        #   readOnly: true
+        
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: mysql-1590984246
+      # - name: extras
+      #   emptyDir: {}
+
+
+NOTES:
+MySQL can be accessed via port 3306 on the following DNS name from within your cluster:
+mysql-1590984246.default.svc.cluster.local
+
+
+To get your root password run:
+
+
+    MYSQL_ROOT_PASSWORD=$(kubectl get secret --namespace default mysql-1590984246 -o jsonpath="{.data.mysql-root-password}" | base64 --decode; echo)
+
+
+To connect to your database:
+
+
+1. Run an Ubuntu pod that you can use as a client:
+
+
+    kubectl run -i --tty ubuntu --image=ubuntu:16.04 --restart=Never -- bash -il
+
+
+2. Install the mysql client:
+
+
+    $ apt-get update && apt-get install mysql-client -y
+
+
+3. Connect using the mysql cli, then provide your password:
+    $ mysql -h mysql-1590984246 -p
+
+
+To connect to your database directly from outside the K8s cluster:
+    MYSQL_HOST=127.0.0.1
+    MYSQL_PORT=3306
+
+
+    # Execute the following command to route the connection:
+    kubectl port-forward svc/mysql-1590984246 3306
+
+
+    mysql -h ${MYSQL_HOST} -P${MYSQL_PORT} -u root -p${MYSQL_ROOT_PASSWORD}
+```
