@@ -51,7 +51,8 @@
 * [docker 常用命令、dockerfile_python flask example](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/docker_note/docker%20%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E3%80%81dockerfile_python%20flask%20example.md)
 * [docker-compose 部署 sentry 多语言错误跟踪工具](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/docker_note/docker-compose%20%E9%83%A8%E7%BD%B2%20sentry%20%E5%A4%9A%E8%AF%AD%E8%A8%80%E9%94%99%E8%AF%AF%E8%B7%9F%E8%B8%AA%E5%B7%A5%E5%85%B7.md)
 * [NVIDIA GPU 算法专用容器 nvidia-docker 部署](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/docker_note/NVIDIA%20GPU%20%E7%AE%97%E6%B3%95%E4%B8%93%E7%94%A8%E5%AE%B9%E5%99%A8%20nvidia-docker%20%E9%83%A8%E7%BD%B2.md)
-* [k8s helm 部署使用](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/k8s_note/k8s%20helm%20%E9%83%A8%E7%BD%B2%E4%BD%BF%E7%94%A8.md)
+* [Kubernetes helm 部署使用](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/k8s_note/k8s%20helm%20%E9%83%A8%E7%BD%B2%E4%BD%BF%E7%94%A8.md)
+
 
 ## APM
 ### Apache SkyWalking
