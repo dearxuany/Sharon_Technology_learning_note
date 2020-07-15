@@ -62,6 +62,9 @@
 * [Apache SkyWalking 客户端 java-agent 接入 jar、jetty、tomcat](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/apm_note/skywalking_note/Apache%20SkyWalking%20%E5%AE%A2%E6%88%B7%E7%AB%AF%20java-agent%20%E6%8E%A5%E5%85%A5.md)
 
 
+## JAVA
+* [JVM 性能_jstack 排查 java 进程 CPU 占用率高](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/java_note/java%20%E8%BF%9B%E7%A8%8B%20CPU%20%E4%BD%BF%E7%94%A8%E7%8E%87%E9%AB%98%20jstack%20%E6%8E%92%E6%9F%A5%E6%96%B9%E6%B3%95.md)
+* [JVM 性能_jmap 排查 java 进程内存使用率高](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/java_note/java%20%E8%BF%9B%E7%A8%8B%E5%86%85%E5%AD%98%E4%BD%BF%E7%94%A8%E7%8E%87%E9%AB%98%20jmap%20%E6%8E%92%E6%9F%A5%E6%96%B9%E6%B3%95.md)
 
 ## Python
 ### Python3 基础
