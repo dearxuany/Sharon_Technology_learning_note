@@ -81,3 +81,10 @@ GET /_cluster/settings
 }
 ```
 注意：会导致部分分片重新分片，均衡分片过程中，易导致集群节点负载过高故障
+```
+#cluster.routing.allocation.disk.threshold_enabled: true
+cluster.routing.allocation.disk.watermark.low: 30gb
+cluster.routing.allocation.disk.watermark.high: 20gb
+cluster.routing.allocation.disk.watermark.flood_stage: 10gb
+cluster.info.update.interval: 1m
+```
