@@ -54,7 +54,7 @@
 
 * [Kubernetes In Docker Kind 部署使用](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/k8s_note/Kubernetes%20In%20Docker%20Kind%20%E9%83%A8%E7%BD%B2%E4%BD%BF%E7%94%A8.md)
 * [Kubernetes helm 部署使用](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/k8s_note/k8s%20helm%20%E9%83%A8%E7%BD%B2%E4%BD%BF%E7%94%A8.md)
-
+* [k8s ImagePullSecrets 设置使用阿里云私有镜像仓库](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/k8s_note/k8s%20%20ImagePullSecrets%20%E8%AE%BE%E7%BD%AE%E4%BD%BF%E7%94%A8%E9%98%BF%E9%87%8C%E4%BA%91%E7%A7%81%E6%9C%89%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93.md)
 
 ## APM
 ### Apache SkyWalking
