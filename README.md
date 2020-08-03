@@ -31,6 +31,17 @@
 * [es 数据迁移_elasticsearch-dump 全量迁移 es 数据 ](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/elk_note/es%20%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB_elasticsearch-dump%20%E5%85%A8%E9%87%8F%E8%BF%81%E7%A7%BB%20es%20%E6%95%B0%E6%8D%AE.md)
 * [es 数据同步_canal 通过 mysql binlog 实时增量同步 mysql 数据到 elasticsearch](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/canal/canal%20%E9%80%9A%E8%BF%87%20mysql%20binlog%20%E5%A2%9E%E9%87%8F%E5%90%8C%E6%AD%A5%20mysql%20%E6%95%B0%E6%8D%AE%E5%88%B0%20elasticsearch.md)
 
+## docker & kubernetes
+* [docker、docker-compose 安装、镜像源修改](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/docker_note/docker%E3%80%81docker-compose%20%E5%AE%89%E8%A3%85%E3%80%81%E9%95%9C%E5%83%8F%E6%BA%90%E4%BF%AE%E6%94%B9.md)
+* [docker 使用阿里云容器镜像仓库](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/docker_note/docker%20%E4%BD%BF%E7%94%A8%E9%98%BF%E9%87%8C%E4%BA%91%E5%AE%B9%E5%99%A8%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93.md)
+* [docker 常用命令、dockerfile_python flask example](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/docker_note/docker%20%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E3%80%81dockerfile_python%20flask%20example.md)
+* [docker-compose 部署 sentry 多语言错误跟踪工具](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/docker_note/docker-compose%20%E9%83%A8%E7%BD%B2%20sentry%20%E5%A4%9A%E8%AF%AD%E8%A8%80%E9%94%99%E8%AF%AF%E8%B7%9F%E8%B8%AA%E5%B7%A5%E5%85%B7.md)
+* [NVIDIA GPU 算法专用容器 nvidia-docker 部署](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/docker_note/NVIDIA%20GPU%20%E7%AE%97%E6%B3%95%E4%B8%93%E7%94%A8%E5%AE%B9%E5%99%A8%20nvidia-docker%20%E9%83%A8%E7%BD%B2.md)
+
+* [Kubernetes In Docker Kind 部署使用](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/k8s_note/Kubernetes%20In%20Docker%20Kind%20%E9%83%A8%E7%BD%B2%E4%BD%BF%E7%94%A8.md)
+* [Kubernetes helm 部署使用](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/k8s_note/k8s%20helm%20%E9%83%A8%E7%BD%B2%E4%BD%BF%E7%94%A8.md)
+* [k8s ImagePullSecrets 设置使用阿里云私有镜像仓库](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/k8s_note/k8s%20%20ImagePullSecrets%20%E8%AE%BE%E7%BD%AE%E4%BD%BF%E7%94%A8%E9%98%BF%E9%87%8C%E4%BA%91%E7%A7%81%E6%9C%89%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93.md)
+* [k8s 集群新增 gpu 节点并基于 NodeLabel 通过 nodeSelector 调度部署应用](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/k8s_note/k8s%20%E9%9B%86%E7%BE%A4%E6%96%B0%E5%A2%9E%20gpu%20%E8%8A%82%E7%82%B9%E5%B9%B6%E5%9F%BA%E4%BA%8E%20NodeLabel%20%E9%80%9A%E8%BF%87%20nodeSelector%20%E8%B0%83%E5%BA%A6%E9%83%A8%E7%BD%B2%E5%BA%94%E7%94%A8.md)
 
 ## Server
 ### Nginx
@@ -44,18 +55,6 @@
 * [Nginx 访问控制及 DDOS 预防](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/server_note/Nginx_note/Nginx%20%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6%E5%8F%8A%20DDOS%20%E9%A2%84%E9%98%B2.md)
 * [Nginx 日志显示真实IP](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/server_note/Nginx_note/Nginx%20%E6%97%A5%E5%BF%97%E6%98%BE%E7%A4%BA%E7%9C%9F%E5%AE%9EIP.md)
 * [Nginx 动态加载模块](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/server_note/Nginx_note/Nginx%20%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BD%E6%A8%A1%E5%9D%97.md)
-
-## docker & kubernetes
-* [docker、docker-compose 安装、镜像源修改](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/docker_note/docker%E3%80%81docker-compose%20%E5%AE%89%E8%A3%85%E3%80%81%E9%95%9C%E5%83%8F%E6%BA%90%E4%BF%AE%E6%94%B9.md)
-* [docker 使用阿里云容器镜像仓库](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/docker_note/docker%20%E4%BD%BF%E7%94%A8%E9%98%BF%E9%87%8C%E4%BA%91%E5%AE%B9%E5%99%A8%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93.md)
-* [docker 常用命令、dockerfile_python flask example](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/docker_note/docker%20%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E3%80%81dockerfile_python%20flask%20example.md)
-* [docker-compose 部署 sentry 多语言错误跟踪工具](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/docker_note/docker-compose%20%E9%83%A8%E7%BD%B2%20sentry%20%E5%A4%9A%E8%AF%AD%E8%A8%80%E9%94%99%E8%AF%AF%E8%B7%9F%E8%B8%AA%E5%B7%A5%E5%85%B7.md)
-* [NVIDIA GPU 算法专用容器 nvidia-docker 部署](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/docker_note/NVIDIA%20GPU%20%E7%AE%97%E6%B3%95%E4%B8%93%E7%94%A8%E5%AE%B9%E5%99%A8%20nvidia-docker%20%E9%83%A8%E7%BD%B2.md)
-
-* [Kubernetes In Docker Kind 部署使用](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/k8s_note/Kubernetes%20In%20Docker%20Kind%20%E9%83%A8%E7%BD%B2%E4%BD%BF%E7%94%A8.md)
-* [Kubernetes helm 部署使用](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/k8s_note/k8s%20helm%20%E9%83%A8%E7%BD%B2%E4%BD%BF%E7%94%A8.md)
-* [k8s ImagePullSecrets 设置使用阿里云私有镜像仓库](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/k8s_note/k8s%20%20ImagePullSecrets%20%E8%AE%BE%E7%BD%AE%E4%BD%BF%E7%94%A8%E9%98%BF%E9%87%8C%E4%BA%91%E7%A7%81%E6%9C%89%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93.md)
-* [k8s 集群新增 gpu 节点并基于 NodeLabel 通过 nodeSelector 调度部署应用](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/k8s_note/k8s%20%E9%9B%86%E7%BE%A4%E6%96%B0%E5%A2%9E%20gpu%20%E8%8A%82%E7%82%B9%E5%B9%B6%E5%9F%BA%E4%BA%8E%20NodeLabel%20%E9%80%9A%E8%BF%87%20nodeSelector%20%E8%B0%83%E5%BA%A6%E9%83%A8%E7%BD%B2%E5%BA%94%E7%94%A8.md)
 
 
 ## APM
