@@ -6,6 +6,122 @@
 ```
 > kubectl versionClient Version: version.Info{Major:"1", Minor:"16", GitVersion:"v1.16.8", GitCommit:"ec6eb119b81be488b030e849b9e64fda4caaf33c", GitTreeState:"clean", BuildDate:"2020-03-12T21:00:06Z", GoVersion:"go1.13.8", Compiler:"gc", Platform:"linux/amd64"}Server Version: version.Info{Major:"1", Minor:"16+", GitVersion:"v1.16.9-aliyun.1", GitCommit:"4f7ea78", GitTreeState:"", BuildDate:"2020-05-08T07:29:59Z", GoVersion:"go1.13.9", Compiler:"gc", Platform:"linux/amd64"}
 ```
+kubernetes 从 v1.8 起推荐通过设备插件的方式来使用 GPU，v1.10 版本后 DevicePlugins 默认开启不需要操作，参考文档  https://kubernetes.io/zh/docs/concepts/extend-kubernetes/compute-storage-net/device-plugins/ 。扩展资源仅可作为整数资源使用，并且不能被过量使用，且设备不能在容器之间共享，即是比如一个 pod 需要 2核 gpu，则此 pod 仅能被调度到拥有 2核及以上的 gpu 节点，而不能跨节点使用在两个不同节点上的单核 gpu。
+
+### kubernetes gpu 节点安装厂商设备驱动
+gpu 版本
+```
+2 vCPU 8 GiB （I/O优化）
+GPU：NVIDIA P4  
+ecs.gn5i-c2g1.large   0Mbps （峰值）
+```
+在 k8s gpu 节点安装  NVIDIA/k8s-device-plugin，参考文档 https://github.com/NVIDIA/k8s-device-plugin ，其中有以下限制
+* NVIDIA drivers ~= 384.81
+* nvidia-docker version > 2.0 (see how to install and it's prerequisites)
+* docker configured with nvidia as the default runtime.
+* Kubernetes version >= 1.10 </br>
+
+查看 NVIDIA drivers 版本
+```
+# nvidia-smi
+Tue Jul 21 10:51:19 2020       
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 440.33.01    Driver Version: 440.33.01    CUDA Version: 10.2     |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|===============================+======================+======================|
+|   0  Tesla P4            On   | 00000000:00:08.0 Off |                    0 |
+| N/A   43C    P0    24W /  75W |   2811MiB /  7611MiB |      0%      Default |
++-------------------------------+----------------------+----------------------+
+                                                                               
++-----------------------------------------------------------------------------+
+| Processes:                                                       GPU Memory |
+|  GPU       PID   Type   Process name                             Usage      |
+|=============================================================================|
+|    0     29248      C   python                                      2801MiB |
++-----------------------------------------------------------------------------+
+```
+查看 docker 版本（ docker 19.03.5 + nvidia-container-toolkit）
+```
+# docker --version
+Docker version 19.03.5, build 633a0ea
+```
+NVIDIA/k8s-device-plugin 要求安装 nvidia-docker2，而不是 nvidia-container-toolkit，nvidia-container-toolkit 尚不支持 kubernetes，此处需安装  nvidia-docker2。 nvidia-docker2 依赖 docker-CE 以及 nvidia-container-toolkit，所以此前的安装无需变更。
+```
+yum install -y nvidia-docker2
+
+
+Running transaction
+  Updating   : libnvidia-container1-1.2.0-1.x86_64                                                                                                                                                                   1/8
+  Updating   : libnvidia-container-tools-1.2.0-1.x86_64                                                                                                                                                              2/8
+  Updating   : nvidia-container-toolkit-1.2.0-2.x86_64                                                                                                                                                               3/8
+  Installing : nvidia-container-runtime-3.3.0-1.x86_64                                                                                                                                                               4/8
+  Installing : nvidia-docker2-2.4.0-1.noarch                                                                                                                                                                         5/8
+  Cleanup    : nvidia-container-toolkit-1.0.5-2.x86_64                                                                                                                                                               6/8
+  Cleanup    : libnvidia-container-tools-1.0.7-1.x86_64                                                                                                                                                              7/8
+  Cleanup    : libnvidia-container1-1.0.7-1.x86_64                                                                                                                                                                   8/8
+  Verifying  : libnvidia-container-tools-1.2.0-1.x86_64                                                                                                                                                              1/8
+  Verifying  : nvidia-container-toolkit-1.2.0-2.x86_64                                                                                                                                                               2/8
+  Verifying  : libnvidia-container1-1.2.0-1.x86_64                                                                                                                                                                   3/8
+  Verifying  : nvidia-docker2-2.4.0-1.noarch                                                                                                                                                                         4/8
+  Verifying  : nvidia-container-runtime-3.3.0-1.x86_64                                                                                                                                                               5/8
+  Verifying  : libnvidia-container-tools-1.0.7-1.x86_64                                                                                                                                                              6/8
+  Verifying  : libnvidia-container1-1.0.7-1.x86_64                                                                                                                                                                   7/8
+  Verifying  : nvidia-container-toolkit-1.0.5-2.x86_64                   
+```
+重启容器服务
+```
+# systemctl restart docker
+```
+注意：由于变更了插件，/etc/docker/daemon.json 的配置会被覆盖，需注意重新配置路径，否则 docker 重启后原有镜像和 docker 记录将无法被找到。
+```
+# cat /etc/docker/daemon.json
+{
+    "runtimes": {
+        "nvidia": {
+            "path": "nvidia-container-runtime",
+            "runtimeArgs": []
+        }
+    }
+}
+```
+新增原有的存储路径及镜像仓库
+```
+# cat /etc/docker/daemon.json
+{
+    "runtimes": {
+        "nvidia": {
+            "path": "nvidia-container-runtime",
+            "runtimeArgs": []
+        }
+    },
+"data-root":"/sdata/docker",
+"registry-mirrors": ["https://8uu7pygr.mirror.aliyuncs.com"]
+}
+```
+nvidia-docker2 使用测试
+```
+# docker run --runtime=nvidia --rm nvidia/cuda nvidia-smi
+Tue Jul 21 03:54:21 2020       
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 440.33.01    Driver Version: 440.33.01    CUDA Version: 11.0     |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|===============================+======================+======================|
+|   0  Tesla P4            On   | 00000000:00:08.0 Off |                    0 |
+| N/A   29C    P8     6W /  75W |      0MiB /  7611MiB |      0%      Default |
++-------------------------------+----------------------+----------------------+
+                                                                               
++-----------------------------------------------------------------------------+
+| Processes:                                                       GPU Memory |
+|  GPU       PID   Type   Process name                             Usage      |
+|=============================================================================|
+|  No running processes found                                                 |
++-----------------------------------------------------------------------------+
+```
+
 
 ### 将 gpu 节点新加到 kubernetes 集群
 由于现在使用的阿里云 ecs gpu 实例规格无法支持阿里自研的 k8s 网络组件 Terway，故还是需要更换实例规格。</br>
@@ -107,7 +223,7 @@ Labels:             ack.aliyun.com=c366b4ab1094e4e85bcb4c3dd64fa32c6
                     failure-domain.beta.kubernetes.io/region=cn-shenzhen
                     failure-domain.beta.kubernetes.io/zone=cn-shenzhen-d
                     kubernetes.io/arch=amd64
-                    kubernetes.io/hostname=alihn1-qas-k8s-w31212.snail
+                    kubernetes.io/hostname=alihn1-qas-k8s-w31212
                     kubernetes.io/os=linux
                     topology.diskplugin.csi.alibabacloud.com/zone=cn-shenzhen-d
 Annotations:        csi.volume.kubernetes.io/nodeid:
@@ -351,9 +467,6 @@ ingress:
     paths:
       path: /admin
 
-
-#  tls:
-#   secretName: insnail-images
 ```
 
 helm _helpers.tpl  定义 helm 嵌套模板，可被其他模板引用
@@ -376,7 +489,116 @@ release: {{ .Release.Name }}
 {{- end -}}
 
 
-{{/*
+{{/*1.2 kubernetes gpu 节点安装厂商设备驱动
+gpu 版本
+
+2 vCPU 8 GiB （I/O优化）
+GPU：NVIDIA P4  
+ecs.gn5i-c2g1.large   0Mbps （峰值）
+在 k8s gpu 节点安装  NVIDIA/k8s-device-plugin，参考文档 https://github.com/NVIDIA/k8s-device-plugin，其中有以下限制
+
+* NVIDIA drivers ~= 384.81
+* nvidia-docker version > 2.0 (see how to install and it's prerequisites)
+* docker configured with nvidia as the default runtime.
+* Kubernetes version >= 1.10
+查看 NVIDIA drivers 版本
+
+# nvidia-smi
+Tue Jul 21 10:51:19 2020       
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 440.33.01    Driver Version: 440.33.01    CUDA Version: 10.2     |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|===============================+======================+======================|
+|   0  Tesla P4            On   | 00000000:00:08.0 Off |                    0 |
+| N/A   43C    P0    24W /  75W |   2811MiB /  7611MiB |      0%      Default |
++-------------------------------+----------------------+----------------------+
+                                                                               
++-----------------------------------------------------------------------------+
+| Processes:                                                       GPU Memory |
+|  GPU       PID   Type   Process name                             Usage      |
+|=============================================================================|
+|    0     29248      C   python                                      2801MiB |
++-----------------------------------------------------------------------------+
+查看 docker 版本（ docker 19.03.5 + nvidia-container-toolkit）
+
+# docker --version
+Docker version 19.03.5, build 633a0ea
+NVIDIA/k8s-device-plugin 要求安装 nvidia-docker2，而不是 nvidia-container-toolkit，nvidia-container-toolkit 尚不支持 kubernetes，此处需安装  nvidia-docker2。 nvidia-docker2 依赖 docker-CE 以及 nvidia-container-toolkit，所以此前的安装无需变更。
+
+yum install -y nvidia-docker2
+
+
+Running transaction
+  Updating   : libnvidia-container1-1.2.0-1.x86_64                                                                                                                                                                   1/8
+  Updating   : libnvidia-container-tools-1.2.0-1.x86_64                                                                                                                                                              2/8
+  Updating   : nvidia-container-toolkit-1.2.0-2.x86_64                                                                                                                                                               3/8
+  Installing : nvidia-container-runtime-3.3.0-1.x86_64                                                                                                                                                               4/8
+  Installing : nvidia-docker2-2.4.0-1.noarch                                                                                                                                                                         5/8
+  Cleanup    : nvidia-container-toolkit-1.0.5-2.x86_64                                                                                                                                                               6/8
+  Cleanup    : libnvidia-container-tools-1.0.7-1.x86_64                                                                                                                                                              7/8
+  Cleanup    : libnvidia-container1-1.0.7-1.x86_64                                                                                                                                                                   8/8
+  Verifying  : libnvidia-container-tools-1.2.0-1.x86_64                                                                                                                                                              1/8
+  Verifying  : nvidia-container-toolkit-1.2.0-2.x86_64                                                                                                                                                               2/8
+  Verifying  : libnvidia-container1-1.2.0-1.x86_64                                                                                                                                                                   3/8
+  Verifying  : nvidia-docker2-2.4.0-1.noarch                                                                                                                                                                         4/8
+  Verifying  : nvidia-container-runtime-3.3.0-1.x86_64                                                                                                                                                               5/8
+  Verifying  : libnvidia-container-tools-1.0.7-1.x86_64                                                                                                                                                              6/8
+  Verifying  : libnvidia-container1-1.0.7-1.x86_64                                                                                                                                                                   7/8
+  Verifying  : nvidia-container-toolkit-1.0.5-2.x86_64                   
+重启容器服务
+
+# systemctl restart docker
+注意：由于变更了插件，/etc/docker/daemon.json 的配置会被覆盖，需注意重新配置路径，否则 docker 重启后原有镜像和 docker 记录将无法被找到。
+
+# cat /etc/docker/daemon.json
+{
+    "runtimes": {
+        "nvidia": {
+            "path": "nvidia-container-runtime",
+            "runtimeArgs": []
+        }
+    }
+}
+新增原有的存储路径及镜像仓库
+
+# cat /etc/docker/daemon.json
+{
+    "runtimes": {
+        "nvidia": {
+            "path": "nvidia-container-runtime",
+            "runtimeArgs": []
+        }
+    },
+"data-root":"/sdata/docker",
+"registry-mirrors": ["https://8uu7pygr.mirror.aliyuncs.com"]
+}
+nvidia-docker2 使用测试
+
+# docker run --runtime=nvidia --rm nvidia/cuda nvidia-smi
+Tue Jul 21 03:54:21 2020       
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 440.33.01    Driver Version: 440.33.01    CUDA Version: 11.0     |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|===============================+======================+======================|
+|   0  Tesla P4            On   | 00000000:00:08.0 Off |                    0 |
+| N/A   29C    P8     6W /  75W |      0MiB /  7611MiB |      0%      Default |
++-------------------------------+----------------------+----------------------+
+                                                                               
++-----------------------------------------------------------------------------+
+| Processes:                                                       GPU Memory |
+|  GPU       PID   Type   Process name                             Usage      |
+|=============================================================================|
+|  No running processes found                                                 |
++-----------------------------------------------------------------------------+
+
+
+
+
+
 Pod标签
 */}}
 {{- define "selectlabels" -}}
