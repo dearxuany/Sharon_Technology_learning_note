@@ -388,8 +388,9 @@ description: python chart
 type: application
 version: 0.1.0
 appVersion: 1.16.0
+```
 helm values.yaml 定义项目变量值
-
+```
 # cat values.yaml
 dp:
   namespace: dev
@@ -639,4 +640,170 @@ spec:
         path: {{ .Values.ingress.http.paths.path }}
 {{- end }}
 ```
+helm 实际生成 yaml
+```
+---
+# Source: dev/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: ocr-server
+  labels:
+    app: ocr-server
+    release: ocr-server
+spec:
+  type: ClusterIP
+  ports:
+    - name: ocr-server
+      port: 8080
+      targetPort: 5000
+      protocol: TCP
+  selector:
+    app: ocr-server
+---
+# Source: dev/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ocr-server
+  labels:
+    app: ocr-server
+    release: ocr-server
+  namespace: prd-domain
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ocr-server
+  template:
+    metadata:
+      labels:
+        app: ocr-server
+    spec:
+      nodeSelector:
+        aliyun.accelerator/nvidia_name: Tesla-P4
+      imagePullSecrets:
+      - name: aliyun-docker-registry
+      containers:
+        - name: ocr-server
+          image: registry-vpc.cn-shenzhen.aliyuncs.com/domain/ocr-server:build_7
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: port
+              containerPort: 5000
+              protocol: TCP
+          command: [sh]
+          args: ["run.sh"]
+          readinessProbe:
+            failureThreshold: 3
+            tcpSocket:
+              port: 5000
+            initialDelaySeconds: 60
+            periodSeconds: 2
+            successThreshold: 2
+            timeoutSeconds: 2
+          livenessProbe:
+            failureThreshold: 3
+            tcpSocket:
+              port: 5000
+            initialDelaySeconds: 120
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 3
+          resources:
+            limits:
+              nvidia.com/gpu: 1
+          env:
+            - name : APOLLO_APP_ID
+              value : "ai-coeus"
+            - name : APOLLO_CLUSTER
+              value : "default"
+            - name : APOLLO_CONFIGSERVICE
+              value : "http://apollo.domain.com:8080"
+            - name : APOLLO_SERVER_URL
+              value : "http://apollo.domain.com:8080"
+            - name : APP_LOG_PATH
+              value : "/root/logs"
+            - name : APP_WORKDIR
+              value : "/root"
+            - name : DEPLOY_ENV
+              value : "prd"
+            - name : JAVA_OPTS
+              value : ""
+            - name : OUTPUT_REDIRECT
+              value : "/dev/stdout"
+            - name : SKYWALKING_BACKEND_SERVICE
+              value : "10.0.0.57:11800"
+            - name : SKYWALKING_SERVICE_NAME
+              value : "prd_ocr-server"
+            - name : TOOLS_PATH
+              value : "/root/tools"
+            - name : USE_APOLLO
+              value : "1"
+          volumeMounts:
+          - mountPath: /root/data/models
+            name: vol3
+          - mountPath: /root/logs
+            name: vol1
+          - mountPath: /root/tools
+            name: vol2
+      volumes:
+      - name: vol1
+        hostPath:
+          path: /share_log_mount/prd/ocr-server
+      - name: vol2
+        hostPath:
+          path: /share_log_mount/tools
+      - name: vol3
+        hostPath:
+          path: /share_log_mount/models/ocr-server
+---
+# Source: dev/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+#    kubernetes.io/ingress.class: nginx
+#    nginx.ingress.kubernetes.io/rewrite-target: /$2
+#    nginx.ingress.kubernetes.io/configuration-snippet: |
+#      proxy_set_header Upgrade "websocket";
+#      proxy_set_header Connection "Upgrade";
+  name: ocr-server
+  labels:
+    app: ocr-server
+    release: ocr-server
+spec:
+#
+  rules:
+  - host: "internal.domain.com"
+    http:
+      paths:
+      - backend:
+          serviceName: ocr-server
+          servicePort: 8080
+        path: /ocr-server(/|$)(.*)
+```
 
+##  服务使用 k8s gpu 结果
+登录节点查看 gpu 使用状况
+```
+[root@alihn1-prd-k8s-w30098 ~]# nvidia-smi
+Thu Jul 30 11:32:17 2020       
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 418.87.01    Driver Version: 418.87.01    CUDA Version: 10.1     |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|===============================+======================+======================|
+|   0  Tesla P4            On   | 00000000:00:07.0 Off |                    0 |
+| N/A   41C    P0    24W /  75W |   3469MiB /  7611MiB |      0%      Default |
++-------------------------------+----------------------+----------------------+
+                                                                               
++-----------------------------------------------------------------------------+
+| Processes:                                                       GPU Memory |
+|  GPU       PID   Type   Process name                             Usage      |
+|=============================================================================|
+|    0     14974      C   python                                      3459MiB |
++-----------------------------------------------------------------------------+
+```
