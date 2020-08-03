@@ -55,6 +55,8 @@
 * [Kubernetes In Docker Kind 部署使用](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/k8s_note/Kubernetes%20In%20Docker%20Kind%20%E9%83%A8%E7%BD%B2%E4%BD%BF%E7%94%A8.md)
 * [Kubernetes helm 部署使用](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/k8s_note/k8s%20helm%20%E9%83%A8%E7%BD%B2%E4%BD%BF%E7%94%A8.md)
 * [k8s ImagePullSecrets 设置使用阿里云私有镜像仓库](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/k8s_note/k8s%20%20ImagePullSecrets%20%E8%AE%BE%E7%BD%AE%E4%BD%BF%E7%94%A8%E9%98%BF%E9%87%8C%E4%BA%91%E7%A7%81%E6%9C%89%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93.md)
+* [k8s 集群新增 gpu 节点并基于 NodeLabel 通过 nodeSelector 调度部署应用](https://github.com/dearxuany/Sharon_Technology_learning_note/blob/master/k8s_note/k8s%20%E9%9B%86%E7%BE%A4%E6%96%B0%E5%A2%9E%20gpu%20%E8%8A%82%E7%82%B9%E5%B9%B6%E5%9F%BA%E4%BA%8E%20NodeLabel%20%E9%80%9A%E8%BF%87%20nodeSelector%20%E8%B0%83%E5%BA%A6%E9%83%A8%E7%BD%B2%E5%BA%94%E7%94%A8.md)
+
 
 ## APM
 ### Apache SkyWalking
