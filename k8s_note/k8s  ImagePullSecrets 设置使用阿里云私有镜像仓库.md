@@ -30,7 +30,7 @@ aliyun-docker-registry   kubernetes.io/dockerconfigjson   1      2m21s
 # kubectl  --namespace dev get secret aliyun-docker-registry -o yaml
 apiVersion: v1
 data:
-  .dockerconfigjson: eyJhdXRocyI6eyJyZWdpc3RyeS55hbWUiOiJvcHNfYWNyQDEwNjA4OTYyMzQzMzQyODQiLCJwYXNzd29yZCIXRoIjoiYjNCelg1qZzBPbkJVTlc5dVFtRjBZM2hsUmtac1RHcz0ifX19
+  .dockerconfigjson: eyJhdXRocyI6eyJyZWdpc3RyeS55hbWUiOiJvcHNfYWNyQDEwNjA4OTYyMzQzMzQyODQiLCJwac1RHcz0ifX19
 kind: Secret
 metadata:
   creationTimestamp: "2020-06-01T11:12:09Z"
