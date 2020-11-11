@@ -49,5 +49,28 @@ ocr-display-front                          ClusterIP   172.21.6.207    <none>   
 > kubectl delete service ocr-server -n qas
 service "ocr-server" deleted
 ```
-
+helm 正常部署的 service 描述会带有 helm 相关的 Labels 和 Annotations</br>
+Labels </br>
+* app.kubernetes.io/managed-by=Helm
+Annotations </br>
+* meta.helm.sh/release-name: <RELEASE_NAME>
+* meta.helm.sh/release-namespace: <RELEASE_NAMESPACE>
+```
+> kubectl describe service ocr-server -n qas
+Name:              ocr-server
+Namespace:         qas
+Labels:            app=ocr-server
+                   app.kubernetes.io/managed-by=Helm
+                   release=ocr-server
+Annotations:       meta.helm.sh/release-name: ocr-server
+                   meta.helm.sh/release-namespace: qas
+Selector:          app=ocr-server
+Type:              ClusterIP
+IP:                172.21.13.234
+Port:              ocr-server  8080/TCP
+TargetPort:        5000/TCP
+Endpoints:         172.18.117.19:5000
+Session Affinity:  None
+Events:            <none>
+```
 
