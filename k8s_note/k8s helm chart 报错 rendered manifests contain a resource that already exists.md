@@ -51,7 +51,7 @@ service "ocr-server" deleted
 ```
 helm 正常部署的 service 描述会带有 helm 相关的 Labels 和 Annotations</br>
 Labels </br>
-* app.kubernetes.io/managed-by=Helm
+* app.kubernetes.io/managed-by=Helm </br>
 Annotations </br>
 * meta.helm.sh/release-name: <RELEASE_NAME>
 * meta.helm.sh/release-namespace: <RELEASE_NAMESPACE>
