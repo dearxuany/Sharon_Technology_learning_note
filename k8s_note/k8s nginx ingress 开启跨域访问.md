@@ -22,8 +22,11 @@ metadata:
     nginx.ingress.kubernetes.io/enable-cors: "true"
     nginx.ingress.kubernetes.io/rewrite-target: /short-link/$2 # 接口跳转
 ```
+cors-allow-methods 最好按实际需求设置，仅开放常用的请求方法，以免导致安全问题
+```
+nginx.ingress.kubernetes.io/cors-allow-methods: GET, PUT, POST
+```
 参考文章
 * Vue 加入 withCredentials 后无法进行跨域请求 https://blog.csdn.net/liyuling52011/article/details/80013725
 * k8s ingress 增加跨域配置 https://www.cnblogs.com/lixinliang/p/13521787.html
-
-
+* HTTP1.1 8种请求方法 https://www.cnblogs.com/weibanggang/p/9454581.html
