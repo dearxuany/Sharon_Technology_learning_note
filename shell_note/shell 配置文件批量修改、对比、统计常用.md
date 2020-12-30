@@ -28,4 +28,8 @@ grep "jar" * -R| awk -F: {'print $1'}| sort| uniq |xargs sed -i '/start_command/
 ```
 grep "Dev:" * -R| awk -F: {'print $1'}| sort| uniq |xargs sed -i '/Dev:/a\Dev_NodeAppTag_Status=no\nDev_nodeSelect_appTag_value='
 ```
+单个文本，关键字后新增一行内容
+```
+sed -i '/Allow\ root\ to\ run\ any\ commands\ anywhere/aosp     ALL=(ALL)       NOPASSWD: ALL'  /etc/sudoers
+```
 
