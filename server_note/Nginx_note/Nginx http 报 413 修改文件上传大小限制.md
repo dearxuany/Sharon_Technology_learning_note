@@ -29,7 +29,7 @@ Nginx 限制了上传文件大小，修改nginx配置文件，配置客户端请
     client_body_buffer_size 10M;
 ```
 client_max_body_size 默认 1M，表示 客户端请求服务器最大允许大小，在“Content-Length”请求头中指定。如果请求的正文数据大于client_max_body_size，HTTP协议会报错 413 Request Entity Too Large。
-传输的数据大于client_max_body_size，一定是传不成功的。小于client_body_buffer_size直接在内存中高效存储。如果大于client_body_buffer_size小于client_max_body_size会存储临时文件，临时文件一定要有权限，client_body_temp 可指定路径，默认该路径值是/tmp/.
+传输的数据大于client_max_body_size，一定是传不成功的。小于client_body_buffer_size直接在内存中高效存储。如果大于client_body_buffer_size小于client_max_body_size会存储临时文件，临时文件一定要有权限，client_body_temp 可指定路径，默认该路径值是/tmp。
 如果追求效率，就设置 client_max_body_size client_body_buffer_size相同的值，这样就不会存储临时文件，直接存储在内存了。
 
 ```
