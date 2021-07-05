@@ -1,5 +1,5 @@
-# cdn 内容分发网络网站加速原理
-## cdn 内容分发网络 Content Delivery Network
+# CDN 内容分发网络网站加速原理
+## CDN 内容分发网络 Content Delivery Network
 内容分发网络（Content Delivery Network，简称CDN）是建立并覆盖在承载网之上，由分布在不同区域的边缘节点服务器群组成的分布式网络。
 CDN分担源站压力，避免网络拥塞，确保在不同区域、不同场景下加速网站内容的分发，提高资源访问速度。
 
